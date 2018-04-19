@@ -45,8 +45,8 @@ export class RoomPopup extends Popup implements Subscriber {
       Dispatcher.notify(AppEvent.Load, null);
     });
 
-    this.ctrlName = new IdInput('.js-name').addEventListener('input', () =>  { this.room.name = this.ctrlName.value; });
-    this.ctrlSubtitle = new IdInput('.js-subtitle').addEventListener('input', () =>  { this.room.subtitle = this.ctrlSubtitle.value; });
+    this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () =>  { this.room.name = this.ctrlName.value; });
+    this.ctrlSubtitle = new IdInput('.js-subtitle', this.elem).addEventListener('input', () =>  { this.room.subtitle = this.ctrlSubtitle.value; });
 
     let btns = this.elem.querySelectorAll('.js-fill id-popup');
     for(var i = 0; i < btns.length; i++) {

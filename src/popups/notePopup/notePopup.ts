@@ -17,14 +17,14 @@ export class NotePopup extends Popup implements Subscriber {
 
     Dispatcher.subscribe(this);
 
-    new IdPopup('#notepopup .js-basic');
-    new IdPopup('#notepopup .js-color');
-    new IdPopup('#notepopup .js-line');
-    new IdPopup('#notepopup .js-position');
-    new IdPopup('#notepopup .js-delete').addEventListener('click', () => { this.deleteNote(); });
-    new IdPopup('#notepopup .js-more').addEventListener('click', () => { this.showMore(); });    
+    new IdPopup('.js-basic', this.elem);
+    new IdPopup('.js-color', this.elem);
+    new IdPopup('.js-line', this.elem);
+    new IdPopup('.js-position', this.elem);
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteNote(); });
+    new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });    
 
-    this.ctrlText = new IdInput('.js-text').addEventListener('input', () =>  { this.note.text = this.ctrlText.value; });
+    this.ctrlText = new IdInput('.js-text', this.elem).addEventListener('input', () =>  { this.note.text = this.ctrlText.value; });
 
     let btns = this.elem.querySelectorAll('.js-color id-popup');
     for(var i = 0; i < btns.length; i++) {
@@ -34,14 +34,14 @@ export class NotePopup extends Popup implements Subscriber {
       popup.addEventListener('click', () => { this.setColor(color); });
     }
 
-    new IdPopup('#notepopup .js-linestyle-solid').addEventListener('click', () => { this.note.lineStyle = LineStyle.Solid; });
-    new IdPopup('#notepopup .js-linestyle-dash').addEventListener('click', () => { this.note.lineStyle = LineStyle.Dash; });
-    new IdPopup('#notepopup .js-linestyle-dashdot').addEventListener('click', () => { this.note.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#notepopup .js-linestyle-dashdotdot').addEventListener('click', () => { this.note.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#notepopup .js-linestyle-dot').addEventListener('click', () => { this.note.lineStyle = LineStyle.Dot; });
-    new IdPopup('#notepopup .js-linestyle-none').addEventListener('click', () => { this.note.lineStyle = LineStyle.None; }); 
+    new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.note.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.note.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-linestyle-dashdot', this.elem).addEventListener('click', () => { this.note.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-linestyle-dashdotdot', this.elem).addEventListener('click', () => { this.note.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-linestyle-dot', this.elem).addEventListener('click', () => { this.note.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-linestyle-none', this.elem).addEventListener('click', () => { this.note.lineStyle = LineStyle.None; }); 
 
-    this.ctrlLinewidth = new IdRange('#notepopup .js-linewidth').addEventListener('input', () => { this.note.lineWidth = this.ctrlLinewidth.value; });
+    this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.note.lineWidth = this.ctrlLinewidth.value; });
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
       this.note.bringToFront();

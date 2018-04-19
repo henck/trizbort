@@ -1,3 +1,9 @@
+//
+// This is a base class for custom HTML elements. To instantiate,
+// you pass in either an HTML element, or a selector string. 
+// With a selector string, you can also provide a base element
+// that querySelector will run on.
+// 
 export class Control {
   protected elem: HTMLElement;
 

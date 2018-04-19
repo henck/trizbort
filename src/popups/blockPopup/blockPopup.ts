@@ -16,11 +16,11 @@ export class BlockPopup extends Popup implements Subscriber {
 
     Dispatcher.subscribe(this);
 
-    new IdPopup('#blockpopup .js-color');
-    new IdPopup('#blockpopup .js-line');
-    new IdPopup('#blockpopup .js-position');
-    new IdPopup('#blockpopup .js-delete').addEventListener('click', () => { this.deleteBlock(); });
-    new IdPopup('#blockpopup .js-more').addEventListener('click', () => { this.showMore(); });    
+    new IdPopup('.js-color', this.elem);
+    new IdPopup('.js-line', this.elem);
+    new IdPopup('.js-position', this.elem);
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteBlock(); });
+    new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });    
 
     let btns = this.elem.querySelectorAll('.js-color id-popup');
     for(var i = 0; i < btns.length; i++) {
@@ -30,14 +30,14 @@ export class BlockPopup extends Popup implements Subscriber {
       popup.addEventListener('click', () => { this.setColor(color); });
     }
 
-    new IdPopup('#blockpopup .js-linestyle-solid').addEventListener('click', () => { this.block.lineStyle = LineStyle.Solid; });
-    new IdPopup('#blockpopup .js-linestyle-dash').addEventListener('click', () => { this.block.lineStyle = LineStyle.Dash; });
-    new IdPopup('#blockpopup .js-linestyle-dashdot').addEventListener('click', () => { this.block.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#blockpopup .js-linestyle-dashdotdot').addEventListener('click', () => { this.block.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#blockpopup .js-linestyle-dot').addEventListener('click', () => { this.block.lineStyle = LineStyle.Dot; });
-    new IdPopup('#blockpopup .js-linestyle-none').addEventListener('click', () => { this.block.lineStyle = LineStyle.None; }); 
+    new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.block.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.block.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-linestyle-dashdot', this.elem).addEventListener('click', () => { this.block.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-linestyle-dashdotdot', this.elem).addEventListener('click', () => { this.block.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-linestyle-dot', this.elem).addEventListener('click', () => { this.block.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-linestyle-none', this.elem).addEventListener('click', () => { this.block.lineStyle = LineStyle.None; }); 
 
-    this.ctrlLinewidth = new IdRange('#blockpopup .js-linewidth').addEventListener('input', () => { this.block.lineWidth = this.ctrlLinewidth.value; });
+    this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.block.lineWidth = this.ctrlLinewidth.value; });
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
       this.block.bringToFront();

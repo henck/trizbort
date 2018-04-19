@@ -16,13 +16,13 @@ export class ConnectorPopup extends Popup implements Subscriber {
     super('connectorpopup', Handlebars.templates.connectorPopup, { colors: Values.COLORS_STANDARD });
     Dispatcher.subscribe(this);
 
-    new IdPopup('#connectorpopup .js-color');
-    new IdPopup('#connectorpopup .js-line');
-    new IdPopup('#connectorpopup .js-basic');
-    new IdPopup('#connectorpopup .js-delete').addEventListener('click', () => { this.deleteConnector(); });
-    new IdPopup('#connectorpopup .js-more').addEventListener('click', () => { this.showMore(); });
+    new IdPopup('.js-color', this.elem);
+    new IdPopup('.js-line', this.elem);
+    new IdPopup('.js-basic', this.elem);
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteConnector(); });
+    new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });
 
-    this.ctrlName = new IdInput('.js-name').addEventListener('input', () =>  { this.connector.name = this.ctrlName.value; });
+    this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () =>  { this.connector.name = this.ctrlName.value; });
 
     let btns = this.elem.querySelectorAll('.js-color id-popup');
     for(var i = 0; i < btns.length; i++) {
@@ -32,13 +32,13 @@ export class ConnectorPopup extends Popup implements Subscriber {
       popup.addEventListener('click', () => { this.setColor(color); });
     }
 
-    new IdPopup('#connectorpopup .js-linestyle-solid').addEventListener('click', () => { this.connector.lineStyle = LineStyle.Solid; });
-    new IdPopup('#connectorpopup .js-linestyle-dash').addEventListener('click', () => { this.connector.lineStyle = LineStyle.Dash; });
-    new IdPopup('#connectorpopup .js-linestyle-dashdot').addEventListener('click', () => { this.connector.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#connectorpopup .js-linestyle-dashdotdot').addEventListener('click', () => { this.connector.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#connectorpopup .js-linestyle-dot').addEventListener('click', () => { this.connector.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-linestyle-dashdot', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-linestyle-dashdotdot', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-linestyle-dot', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.Dot; });
     
-    this.ctrlLinewidth = new IdRange('#connectorpopup .js-linewidth').addEventListener('input', () => { this.connector.lineWidth = this.ctrlLinewidth.value; });    
+    this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.connector.lineWidth = this.ctrlLinewidth.value; });    
   }
 
   notify(event: AppEvent, model: Model) {

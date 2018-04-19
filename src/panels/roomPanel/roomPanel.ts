@@ -35,21 +35,21 @@ export class RoomPanel extends Panel implements Subscriber {
     super('roompanel', Handlebars.templates.roomPanel, {});
     Dispatcher.subscribe(this);
 
-    this.ctrlName = new IdInput('#roompanel .js-room-name').addEventListener('input', () => { this.room.name = this.ctrlName.value; });
-    this.ctrlSubtitle = new IdInput('#roompanel .js-room-subtitle').addEventListener('input', () => { this.room.subtitle = this.ctrlSubtitle.value; });
-    this.ctrlDark = new IdCheck('#roompanel .js-room-dark').addEventListener('input', () => { this.room.dark = this.ctrlDark.checked; })
-    this.ctrlStartroom = new IdCheck('#roompanel .js-room-startroom').addEventListener('input', () => { this.room.setStartRoom(this.ctrlStartroom.checked); })
-    this.ctrlEndroom = new IdCheck('#roompanel .js-room-endroom').addEventListener('input', () => { this.room.endroom = this.ctrlEndroom.checked; })
-    this.ctrlDescription = new IdTextarea('#roompanel .js-room-description').addEventListener('input', () => { this.room.description = this.ctrlDescription.value; });
-    this.colorPicker = new IdColorPicker('#roompanel .js-room-color').addEventListener('change', () => { this.setRoomColor(this.colorPicker.color); });
+    this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.room.name = this.ctrlName.value; });
+    this.ctrlSubtitle = new IdInput('.js-subtitle', this.elem).addEventListener('input', () => { this.room.subtitle = this.ctrlSubtitle.value; });
+    this.ctrlDark = new IdCheck('.js-dark', this.elem).addEventListener('input', () => { this.room.dark = this.ctrlDark.checked; })
+    this.ctrlStartroom = new IdCheck('.js-startroom', this.elem).addEventListener('input', () => { this.room.setStartRoom(this.ctrlStartroom.checked); })
+    this.ctrlEndroom = new IdCheck('.js-endroom', this.elem).addEventListener('input', () => { this.room.endroom = this.ctrlEndroom.checked; })
+    this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { this.room.description = this.ctrlDescription.value; });
+    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.colorPicker.color); });
 
-    this.ctrlShapeRectangle = new IdPopup('#roompanel .js-room-shape-rectangle').addEventListener('click', () => { this.room.shape = RoomShape.Rectangle; });
-    this.ctrlShapeEllipse = new IdPopup('#roompanel .js-room-shape-ellipse').addEventListener('click', () => { this.room.shape = RoomShape.Ellipse; });
-    this.ctrlShapeOctagon = new IdPopup('#roompanel .js-room-shape-octagon').addEventListener('click', () => { this.room.shape = RoomShape.Octagon; });
-    this.ctrlRounding = new IdRange('#roompanel .js-room-rounding').addEventListener('input', () => { this.room.rounding = this.ctrlRounding.value; });
+    this.ctrlShapeRectangle = new IdPopup('.js-shape-rectangle', this.elem).addEventListener('click', () => { this.room.shape = RoomShape.Rectangle; });
+    this.ctrlShapeEllipse = new IdPopup('.js-shape-ellipse', this.elem).addEventListener('click', () => { this.room.shape = RoomShape.Ellipse; });
+    this.ctrlShapeOctagon = new IdPopup('.js-shape-octagon', this.elem).addEventListener('click', () => { this.room.shape = RoomShape.Octagon; });
+    this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.room.rounding = this.ctrlRounding.value; });
 
     // Find color buttons:
-    let buttons = document.querySelectorAll(`#roompanel .colortype`);
+    let buttons = this.elem.querySelectorAll(`.colortype`);
     this.colorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);

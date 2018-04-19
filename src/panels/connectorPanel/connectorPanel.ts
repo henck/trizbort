@@ -27,17 +27,17 @@ export class ConnectorPanel extends Panel implements Subscriber {
     super('connectorpanel', Handlebars.templates.connectorPanel, {});
     Dispatcher.subscribe(this);
     
-    this.ctrlName = new IdInput('#connectorpanel .js-connector-name').addEventListener('input', () => { this.connector.name = this.ctrlName.value; });
-    this.ctrlCurve = new IdCheck('#connectorpanel .js-connector-curve').addEventListener('input', () => { this.connector.isCurve = this.ctrlCurve.checked; });
-    this.ctrlOneWay = new IdCheck('#connectorpanel .js-connector-oneway').addEventListener('input', () => { this.connector.oneWay = this.ctrlOneWay.checked; });
-    this.ctrlColor = new IdColorPicker('#connectorpanel .js-connector-color').addEventListener('change', () => { this.connector.color = this.ctrlColor.color; });
+    this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.connector.name = this.ctrlName.value; });
+    this.ctrlCurve = new IdCheck('.js-curve', this.elem).addEventListener('input', () => { this.connector.isCurve = this.ctrlCurve.checked; });
+    this.ctrlOneWay = new IdCheck('.js-oneway', this.elem).addEventListener('input', () => { this.connector.oneWay = this.ctrlOneWay.checked; });
+    this.ctrlColor = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.connector.color = this.ctrlColor.color; });
     this.btnReverse = this.elem.querySelector('.js-reverse');
     this.btnReverse.addEventListener('click', () => { App.pushUndo(); this.connector.reverse(); });
 
-    this.ctrlStartType = new IdConnectorType('#connectorpanel .js-connector-starttype').addEventListener('input', () => { this.connector.startType = this.ctrlStartType.value; });
-    this.ctrlEndType = new IdConnectorType('#connectorpanel .js-connector-endtype').addEventListener('input', () => { this.connector.endType = this.ctrlEndType.value; });
-    this.ctrlStartLabel = new IdInput('#connectorpanel .js-connector-startlabel').addEventListener('input', () => { this.connector.startLabel = this.ctrlStartLabel.value; });
-    this.ctrlEndLabel = new IdInput('#connectorpanel .js-connector-endlabel').addEventListener('input', () => { this.connector.endLabel = this.ctrlEndLabel.value; });
+    this.ctrlStartType = new IdConnectorType('.js-starttype', this.elem).addEventListener('input', () => { this.connector.startType = this.ctrlStartType.value; });
+    this.ctrlEndType = new IdConnectorType('.js-endtype', this.elem).addEventListener('input', () => { this.connector.endType = this.ctrlEndType.value; });
+    this.ctrlStartLabel = new IdInput('.js-startlabel', this.elem).addEventListener('input', () => { this.connector.startLabel = this.ctrlStartLabel.value; });
+    this.ctrlEndLabel = new IdInput('.js-endlabel', this.elem).addEventListener('input', () => { this.connector.endLabel = this.ctrlEndLabel.value; });
   }
 
   notify(event: AppEvent, obj: any) {
@@ -51,7 +51,7 @@ export class ConnectorPanel extends Panel implements Subscriber {
         this.connector = connector;
         this.open();
 
-        // Show connector data.
+        //  Update connector data.
         this.ctrlName.value = connector.name; 
         this.ctrlCurve.checked = connector.isCurve;
         this.ctrlOneWay.checked = connector.oneWay;

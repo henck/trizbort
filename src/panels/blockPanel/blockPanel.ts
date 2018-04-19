@@ -23,15 +23,15 @@ export class BlockPanel extends Panel implements Subscriber {
     super('blockpanel', Handlebars.templates.blockPanel, {});
     Dispatcher.subscribe(this);
 
-    this.colorPicker = new IdColorPicker('#blockpanel .js-block-color').addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
+    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
 
-    this.ctrlShapeRectangle = new IdPopup('#blockpanel .js-block-shape-rectangle').addEventListener('click', () => { this.block.shape = RoomShape.Rectangle; });
-    this.ctrlShapeEllipse = new IdPopup('#blockpanel .js-block-shape-ellipse').addEventListener('click', () => { this.block.shape = RoomShape.Ellipse; });
-    this.ctrlShapeOctagon = new IdPopup('#blockpanel .js-block-shape-octagon').addEventListener('click', () => { this.block.shape = RoomShape.Octagon; });    
-    this.ctrlRounding = new IdRange('#blockpanel .js-block-rounding').addEventListener('input', () => { this.block.rounding = this.ctrlRounding.value; });
+    this.ctrlShapeRectangle = new IdPopup('.js-shape-rectangle', this.elem).addEventListener('click', () => { this.block.shape = RoomShape.Rectangle; });
+    this.ctrlShapeEllipse = new IdPopup('.js-shape-ellipse', this.elem).addEventListener('click', () => { this.block.shape = RoomShape.Ellipse; });
+    this.ctrlShapeOctagon = new IdPopup('.js-shape-octagon', this.elem).addEventListener('click', () => { this.block.shape = RoomShape.Octagon; });    
+    this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.block.rounding = this.ctrlRounding.value; });
 
     // Find color buttons:
-    let buttons = document.querySelectorAll(`#blockpanel .colortype`);
+    let buttons = this.elem.querySelectorAll(`.colortype`);
     this.colorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);

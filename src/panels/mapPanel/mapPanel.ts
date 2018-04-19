@@ -56,40 +56,40 @@ export class MapPanel extends Panel implements Subscriber {
     super('mappanel', Handlebars.templates.mapPanel, { assets: Values.BITMAP_ASSETS });
     Dispatcher.subscribe(this);
 
-    this.ctrlTitle = new IdInput('#mappanel .js-map-title').addEventListener('input', () => { App.map.title = this.ctrlTitle.value; });
-    this.ctrlAuthor = new IdInput('#mappanel .js-map-author').addEventListener('input', () => { App.map.author = this.ctrlAuthor.value; });
-    this.ctrlDescription = new IdTextarea('#mappanel .js-map-description').addEventListener('input', () => { App.map.description = this.ctrlDescription.value; });
-    this.ctrlGridVisible = new IdCheck('#mappanel .js-map-grid-visible').addEventListener('input', () => { App.map.settings.grid.visible = this.ctrlGridVisible.checked; })
-    this.ctrlGridOrigin = new IdCheck('#mappanel .js-map-grid-origin').addEventListener('input', () => { App.map.settings.grid.origin = this.ctrlGridOrigin.checked; })
-    this.ctrlGridSnap = new IdCheck('#mappanel .js-map-grid-snap').addEventListener('input', () => { App.map.settings.grid.snap = this.ctrlGridSnap.checked; })
-    this.ctrlGridSize = new IdRange('#mappanel .js-map-grid-size').addEventListener('input', () => { App.map.settings.grid.size = this.ctrlGridSize.value; });
+    this.ctrlTitle = new IdInput('.js-title', this.elem).addEventListener('input', () => { App.map.title = this.ctrlTitle.value; });
+    this.ctrlAuthor = new IdInput('.js-author', this.elem).addEventListener('input', () => { App.map.author = this.ctrlAuthor.value; });
+    this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { App.map.description = this.ctrlDescription.value; });
+    this.ctrlGridVisible = new IdCheck('.js-grid-visible', this.elem).addEventListener('input', () => { App.map.settings.grid.visible = this.ctrlGridVisible.checked; })
+    this.ctrlGridOrigin = new IdCheck('.js-grid-origin', this.elem).addEventListener('input', () => { App.map.settings.grid.origin = this.ctrlGridOrigin.checked; })
+    this.ctrlGridSnap = new IdCheck('.js-grid-snap', this.elem).addEventListener('input', () => { App.map.settings.grid.snap = this.ctrlGridSnap.checked; })
+    this.ctrlGridSize = new IdRange('.js-grid-size', this.elem).addEventListener('input', () => { App.map.settings.grid.size = this.ctrlGridSize.value; });
 
     // Map backgrounds
-    new IdPopup('#mappanel .js-map-bg-none').addEventListener('click', () => { App.map.settings.background = 'none'; } );
+    new IdPopup('.js-bg-none', this.elem).addEventListener('click', () => { App.map.settings.background = 'none'; } );
     Values.BITMAP_ASSETS.forEach((asset) => {
-      new IdPopup(`#mappanel .js-map-bg-${asset}`).addEventListener('click', () => { App.map.settings.background = asset; } );
+      new IdPopup(`.js-bg-${asset}`, this.elem).addEventListener('click', () => { App.map.settings.background = asset; } );
     });
 
-    this.ctrlRoomWidth = new IdRange('#mappanel .js-map-room-width').addEventListener('input', () => { App.map.settings.room.width = this.ctrlRoomWidth.value; });
-    this.ctrlRoomHeight = new IdRange('#mappanel .js-map-room-height').addEventListener('input', () => { App.map.settings.room.height = this.ctrlRoomHeight.value; });
-    this.ctrlRoomLinewidth = new IdRange('#mappanel .js-map-room-linewidth').addEventListener('input', () => { App.map.settings.room.lineWidth = this.ctrlRoomLinewidth.value; });
-    this.ctrlRoomRounding = new IdRange('#mappanel .js-map-room-rounding').addEventListener('input', () => { App.map.settings.room.rounding = this.ctrlRoomRounding.value; });
-    this.ctrlRoomDarknessSize = new IdRange('#mappanel .js-map-room-darkness-size').addEventListener('input', () => { App.map.settings.room.darknessSize = this.ctrlRoomDarknessSize.value; });
+    this.ctrlRoomWidth = new IdRange('.js-room-width', this.elem).addEventListener('input', () => { App.map.settings.room.width = this.ctrlRoomWidth.value; });
+    this.ctrlRoomHeight = new IdRange('.js-room-height', this.elem).addEventListener('input', () => { App.map.settings.room.height = this.ctrlRoomHeight.value; });
+    this.ctrlRoomLinewidth = new IdRange('.js-room-linewidth', this.elem).addEventListener('input', () => { App.map.settings.room.lineWidth = this.ctrlRoomLinewidth.value; });
+    this.ctrlRoomRounding = new IdRange('.js-room-rounding', this.elem).addEventListener('input', () => { App.map.settings.room.rounding = this.ctrlRoomRounding.value; });
+    this.ctrlRoomDarknessSize = new IdRange('.js-room-darkness-size', this.elem).addEventListener('input', () => { App.map.settings.room.darknessSize = this.ctrlRoomDarknessSize.value; });
 
-    new IdPopup('#mappanel .js-room-shape-rectangle').addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Rectangle; });
-    new IdPopup('#mappanel .js-room-shape-ellipse').addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Ellipse; });
-    new IdPopup('#mappanel .js-room-shape-octagon').addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Octagon; });
+    new IdPopup('.js-room-shape-rectangle', this.elem).addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Rectangle; });
+    new IdPopup('.js-room-shape-ellipse', this.elem).addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Ellipse; });
+    new IdPopup('.js-room-shape-octagon', this.elem).addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Octagon; });
 
-    new IdPopup('#mappanel .js-room-linestyle-solid').addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Solid; });
-    new IdPopup('#mappanel .js-room-linestyle-dash').addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Dash; });
-    new IdPopup('#mappanel .js-room-linestyle-dashdot').addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#mappanel .js-room-linestyle-dashdotdot').addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#mappanel .js-room-linestyle-dot').addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Dot; });
-    new IdPopup('#mappanel .js-room-linestyle-none').addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.None; });    
+    new IdPopup('.js-room-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-room-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-room-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-room-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-room-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-room-linestyle-none', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.None; });    
 
-    this.roomColorPicker = new IdColorPicker('#mappanel .js-map-room-color').addEventListener('change', () => { this.setRoomColor(this.roomColorPicker.color); });
+    this.roomColorPicker = new IdColorPicker('.js-room-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.roomColorPicker.color); });
     // Find room color buttons:
-    var buttons = document.querySelectorAll(`#mappanel .room-colortype`);
+    var buttons = this.elem.querySelectorAll('.room-colortype');
     this.roomColorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);
@@ -98,38 +98,38 @@ export class MapPanel extends Panel implements Subscriber {
       buttons[i].addEventListener('click', () => { this.onRoomColorButton(popup); });
     }
 
-    this.ctrlConnectorLinewidth = new IdRange('#mappanel .js-map-connector-linewidth').addEventListener('input', () => { App.map.settings.connector.lineWidth = this.ctrlConnectorLinewidth.value; });
-    this.ctrlConnectorStalk = new IdRange('#mappanel .js-map-connector-stalk').addEventListener('input', () => { App.map.settings.connector.stalk = this.ctrlConnectorStalk.value; });
-    this.ctrlConnectorLabelDistance = new IdRange('#mappanel .js-map-connector-label-distance').addEventListener('input', () => { App.map.settings.connector.labelDistance = this.ctrlConnectorLabelDistance.value; });
-    this.ctrlConnectorArrowSize = new IdRange('#mappanel .js-map-connector-arrow-size').addEventListener('input', () => { App.map.settings.connector.arrowSize = this.ctrlConnectorArrowSize.value; });
-    this.ctrlConnectorCurve = new IdCheck('#mappanel .js-map-connector-curve').addEventListener('input', () => { App.map.settings.connector.isCurve = this.ctrlConnectorCurve.checked; })
-    this.ctrlConnectorCurveStrength = new IdRange('#mappanel .js-map-connector-curve-strength').addEventListener('input', () => { App.map.settings.connector.curveStrength = this.ctrlConnectorCurveStrength.value / 10; });
-    new IdPopup('#mappanel .js-connector-linestyle-solid').addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Solid; });
-    new IdPopup('#mappanel .js-connector-linestyle-dash').addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Dash; });
-    new IdPopup('#mappanel .js-connector-linestyle-dashdot').addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#mappanel .js-connector-linestyle-dashdotdot').addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#mappanel .js-connector-linestyle-dot').addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Dot; });    
-    this.connectorColorPicker = new IdColorPicker('#mappanel .js-map-connector-color').addEventListener('change', () => { App.map.settings.connector.color = this.connectorColorPicker.color; });
+    this.ctrlConnectorLinewidth = new IdRange('.js-connector-linewidth', this.elem).addEventListener('input', () => { App.map.settings.connector.lineWidth = this.ctrlConnectorLinewidth.value; });
+    this.ctrlConnectorStalk = new IdRange('.js-connector-stalk', this.elem).addEventListener('input', () => { App.map.settings.connector.stalk = this.ctrlConnectorStalk.value; });
+    this.ctrlConnectorLabelDistance = new IdRange('.js-connector-label-distance', this.elem).addEventListener('input', () => { App.map.settings.connector.labelDistance = this.ctrlConnectorLabelDistance.value; });
+    this.ctrlConnectorArrowSize = new IdRange('.js-connector-arrow-size', this.elem).addEventListener('input', () => { App.map.settings.connector.arrowSize = this.ctrlConnectorArrowSize.value; });
+    this.ctrlConnectorCurve = new IdCheck('.js-connector-curve', this.elem).addEventListener('input', () => { App.map.settings.connector.isCurve = this.ctrlConnectorCurve.checked; })
+    this.ctrlConnectorCurveStrength = new IdRange('.js-connector-curve-strength', this.elem).addEventListener('input', () => { App.map.settings.connector.curveStrength = this.ctrlConnectorCurveStrength.value / 10; });
+    new IdPopup('.js-connector-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-connector-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-connector-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-connector-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-connector-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Dot; });    
+    this.connectorColorPicker = new IdColorPicker('.js-connector-color', this.elem).addEventListener('change', () => { App.map.settings.connector.color = this.connectorColorPicker.color; });
 
-    this.ctrlNoteWidth = new IdRange('#mappanel .js-map-note-width').addEventListener('input', () => { App.map.settings.note.width = this.ctrlNoteWidth.value; });
-    this.ctrlNoteHeight = new IdRange('#mappanel .js-map-note-height').addEventListener('input', () => { App.map.settings.note.height = this.ctrlNoteHeight.value; });
-    this.ctrlNoteLinewidth = new IdRange('#mappanel .js-map-note-linewidth').addEventListener('input', () => { App.map.settings.note.lineWidth = this.ctrlNoteLinewidth.value; });
-    this.ctrlNoteRounding = new IdRange('#mappanel .js-map-note-rounding').addEventListener('input', () => { App.map.settings.note.rounding = this.ctrlNoteRounding.value; });
+    this.ctrlNoteWidth = new IdRange('.js-note-width', this.elem).addEventListener('input', () => { App.map.settings.note.width = this.ctrlNoteWidth.value; });
+    this.ctrlNoteHeight = new IdRange('.js-note-height', this.elem).addEventListener('input', () => { App.map.settings.note.height = this.ctrlNoteHeight.value; });
+    this.ctrlNoteLinewidth = new IdRange('.js-note-linewidth', this.elem).addEventListener('input', () => { App.map.settings.note.lineWidth = this.ctrlNoteLinewidth.value; });
+    this.ctrlNoteRounding = new IdRange('.js-note-rounding', this.elem).addEventListener('input', () => { App.map.settings.note.rounding = this.ctrlNoteRounding.value; });
 
-    new IdPopup('#mappanel .js-note-shape-rectangle').addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Rectangle; });
-    new IdPopup('#mappanel .js-note-shape-ellipse').addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Ellipse; });
-    new IdPopup('#mappanel .js-note-shape-octagon').addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Octagon; });
+    new IdPopup('.js-note-shape-rectangle', this.elem).addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Rectangle; });
+    new IdPopup('.js-note-shape-ellipse', this.elem).addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Ellipse; });
+    new IdPopup('.js-note-shape-octagon', this.elem).addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Octagon; });
 
-    new IdPopup('#mappanel .js-note-linestyle-solid').addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Solid; });
-    new IdPopup('#mappanel .js-note-linestyle-dash').addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Dash; });
-    new IdPopup('#mappanel .js-note-linestyle-dashdot').addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#mappanel .js-note-linestyle-dashdotdot').addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#mappanel .js-note-linestyle-dot').addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Dot; });
-    new IdPopup('#mappanel .js-note-linestyle-none').addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.None; });    
+    new IdPopup('.js-note-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-note-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-note-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-note-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-note-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-note-linestyle-none', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.None; });    
 
-    this.noteColorPicker = new IdColorPicker('#mappanel .js-map-note-color').addEventListener('change', () => { this.setNoteColor(this.noteColorPicker.color); });
+    this.noteColorPicker = new IdColorPicker('.js-note-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.noteColorPicker.color); });
     // Find note color buttons:
-    var buttons = document.querySelectorAll(`#mappanel .note-colortype`);
+    var buttons = this.elem.querySelectorAll(`.note-colortype`);
     this.noteColorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);
@@ -138,25 +138,25 @@ export class MapPanel extends Panel implements Subscriber {
       buttons[i].addEventListener('click', () => { this.onNoteColorButton(popup); });
     }    
 
-    this.ctrlBlockWidth = new IdRange('#mappanel .js-map-block-width').addEventListener('input', () => { App.map.settings.block.width = this.ctrlBlockWidth.value; });
-    this.ctrlBlockHeight = new IdRange('#mappanel .js-map-block-height').addEventListener('input', () => { App.map.settings.block.height = this.ctrlBlockHeight.value; });
-    this.ctrlBlockLinewidth = new IdRange('#mappanel .js-map-block-linewidth').addEventListener('input', () => { App.map.settings.block.lineWidth = this.ctrlBlockLinewidth.value; });
-    this.ctrlBlockRounding = new IdRange('#mappanel .js-map-block-rounding').addEventListener('input', () => { App.map.settings.block.rounding = this.ctrlBlockRounding.value; });
+    this.ctrlBlockWidth = new IdRange('.js-block-width', this.elem).addEventListener('input', () => { App.map.settings.block.width = this.ctrlBlockWidth.value; });
+    this.ctrlBlockHeight = new IdRange('.js-block-height', this.elem).addEventListener('input', () => { App.map.settings.block.height = this.ctrlBlockHeight.value; });
+    this.ctrlBlockLinewidth = new IdRange('.js-block-linewidth', this.elem).addEventListener('input', () => { App.map.settings.block.lineWidth = this.ctrlBlockLinewidth.value; });
+    this.ctrlBlockRounding = new IdRange('.js-block-rounding', this.elem).addEventListener('input', () => { App.map.settings.block.rounding = this.ctrlBlockRounding.value; });
 
-    new IdPopup('#mappanel .js-block-shape-rectangle').addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Rectangle; });
-    new IdPopup('#mappanel .js-block-shape-ellipse').addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Ellipse; });
-    new IdPopup('#mappanel .js-block-shape-octagon').addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Octagon; });
+    new IdPopup('.js-block-shape-rectangle', this.elem).addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Rectangle; });
+    new IdPopup('.js-block-shape-ellipse', this.elem).addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Ellipse; });
+    new IdPopup('.js-block-shape-octagon', this.elem).addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Octagon; });
 
-    new IdPopup('#mappanel .js-block-linestyle-solid').addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Solid; });
-    new IdPopup('#mappanel .js-block-linestyle-dash').addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Dash; });
-    new IdPopup('#mappanel .js-block-linestyle-dashdot').addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#mappanel .js-block-linestyle-dashdotdot').addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#mappanel .js-block-linestyle-dot').addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Dot; });
-    new IdPopup('#mappanel .js-block-linestyle-none').addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.None; });    
+    new IdPopup('.js-block-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-block-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-block-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-block-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-block-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-block-linestyle-none', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.None; });    
 
-    this.blockColorPicker = new IdColorPicker('#mappanel .js-map-block-color').addEventListener('change', () => { this.setBlockColor(this.blockColorPicker.color); });
+    this.blockColorPicker = new IdColorPicker('.js-block-color', this.elem).addEventListener('change', () => { this.setBlockColor(this.blockColorPicker.color); });
     // Find block color buttons:
-    var buttons = document.querySelectorAll(`#mappanel .block-colortype`);
+    var buttons = this.elem.querySelectorAll('.block-colortype');
     this.blockColorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);

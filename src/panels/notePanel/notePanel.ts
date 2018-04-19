@@ -24,16 +24,16 @@ export class NotePanel extends Panel implements Subscriber {
     super('notepanel', Handlebars.templates.notePanel, {});
     Dispatcher.subscribe(this);
 
-    this.ctrlText = new IdTextarea('#notepanel .js-note-text').addEventListener('input', () => { this.note.text = this.ctrlText.value; });    
-    this.colorPicker = new IdColorPicker('#notepanel .js-note-color').addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
+    this.ctrlText = new IdTextarea('.js-text', this.elem).addEventListener('input', () => { this.note.text = this.ctrlText.value; });    
+    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
 
-    this.ctrlShapeRectangle = new IdPopup('#notepanel .js-note-shape-rectangle').addEventListener('click', () => { this.note.shape = RoomShape.Rectangle; });
-    this.ctrlShapeEllipse = new IdPopup('#notepanel .js-note-shape-ellipse').addEventListener('click', () => { this.note.shape = RoomShape.Ellipse; });
-    this.ctrlShapeOctagon = new IdPopup('#notepanel .js-note-shape-octagon').addEventListener('click', () => { this.note.shape = RoomShape.Octagon; });    
-    this.ctrlRounding = new IdRange('#notepanel .js-note-rounding').addEventListener('input', () => { this.note.rounding = this.ctrlRounding.value; });
+    this.ctrlShapeRectangle = new IdPopup('.js-shape-rectangle', this.elem).addEventListener('click', () => { this.note.shape = RoomShape.Rectangle; });
+    this.ctrlShapeEllipse = new IdPopup('.js-shape-ellipse', this.elem).addEventListener('click', () => { this.note.shape = RoomShape.Ellipse; });
+    this.ctrlShapeOctagon = new IdPopup('.js-shape-octagon', this.elem).addEventListener('click', () => { this.note.shape = RoomShape.Octagon; });    
+    this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.note.rounding = this.ctrlRounding.value; });
 
     // Find color buttons:
-    let buttons = document.querySelectorAll(`#notepanel .colortype`);
+    let buttons = this.elem.querySelectorAll(`.colortype`);
     this.colorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);

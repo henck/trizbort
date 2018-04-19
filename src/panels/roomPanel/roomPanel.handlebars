@@ -8,27 +8,27 @@
 </div>
 
 <div class="tab-body" id="tab-room-info">
-  <id-input class="js-room-name" data-label="Room name"></id-input>
-  <in-input class="js-room-subtitle" data-label="Room subtitle"></in-input>
-  <id-check class="js-room-dark" data-label="Dark"></id-check>
-  <id-check class="js-room-startroom" data-label="Start room"></id-check>
-  <id-check class="js-room-endroom" data-label="End room"></id-check>
+  <id-input class="js-name" data-label="Room name"></id-input>
+  <in-input class="js-subtitle" data-label="Room subtitle"></in-input>
+  <id-check class="js-dark" data-label="Dark"></id-check>
+  <id-check class="js-startroom" data-label="Start room"></id-check>
+  <id-check class="js-endroom" data-label="End room"></id-check>
 
   <label style="margin-top:25px">Room shape</label> 
   <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-room-shape-rectangle">
+    <id-popup class="js-shape-rectangle">
       <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
     </id-popup>
-    <id-popup class="js-room-shape-ellipse">
+    <id-popup class="js-shape-ellipse">
       <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
     </id-popup>
-    <id-popup class="js-room-shape-octagon">
+    <id-popup class="js-shape-octagon">
       <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
     </id-popup>
   </div>    
-  <id-range class="js-room-rounding" data-min="0" data-max="100" data-label="Rectangle rounding"></id-range>
+  <id-range class="js-rounding" data-min="0" data-max="100" data-label="Rectangle rounding"></id-range>
 
-  <id-textarea class="js-room-description" data-label="Room description"></id-textarea>
+  <id-textarea class="js-description" data-label="Room description"></id-textarea>
 </div>
 
 <div class="tab-body" id="tab-room-color">
@@ -47,6 +47,6 @@
         <svg class="icon"><use xlink:href="dist/icons.svg#room-subtitle"></use></svg>
       </id-popup>
     </div>
-    <id-colorpicker class="js-room-color"></id-colorpicker>
+    <id-colorpicker class="js-color"></id-colorpicker>
   </div>
 </div>
