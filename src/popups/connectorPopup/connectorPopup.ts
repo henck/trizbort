@@ -5,11 +5,12 @@ import { Model } from '../../models/model.js'
 import { Connector } from '../../models/connector.js'
 import { ConnectorView } from '../../views/connectorView.js'
 import { Popup } from '../popups.js'
-import { IdInput, IdRange, IdPopup } from '../../controls/controls.js'
+import { IdInput, IdRange, IdPopup,IdLineStyle } from '../../controls/controls.js'
 
 export class ConnectorPopup extends Popup implements Subscriber {
   private connector: Connector;
   private ctrlName: IdInput;
+  private ctrlLineStyle: IdLineStyle;
   private ctrlLinewidth: IdRange;
   
   constructor() {
@@ -32,12 +33,7 @@ export class ConnectorPopup extends Popup implements Subscriber {
       popup.addEventListener('click', () => { this.setColor(color); });
     }
 
-    new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.Solid; });
-    new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.Dash; });
-    new IdPopup('.js-linestyle-dashdot', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.DashDot; });
-    new IdPopup('.js-linestyle-dashdotdot', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('.js-linestyle-dot', this.elem).addEventListener('click', () => { this.connector.lineStyle = LineStyle.Dot; });
-    
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.connector.lineStyle = this.ctrlLineStyle.value; });
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.connector.lineWidth = this.ctrlLinewidth.value; });    
   }
 

@@ -5,12 +5,13 @@ import { Model } from '../../models/model.js'
 import { Room } from '../../models/room.js'
 import { RoomView } from '../../views/roomView.js'
 import { Popup } from '../popups.js'
-import { IdPopup, IdRange, IdInput } from '../../controls/controls.js';
+import { IdPopup, IdRange, IdInput, IdLineStyle } from '../../controls/controls.js';
 
 export class RoomPopup extends Popup implements Subscriber {
   private room: Room;
   private ctrlName: IdInput;
   private ctrlSubtitle: IdInput;
+  private ctrlLineStyle: IdLineStyle;
   private ctrlLinewidth: IdRange;
 
   constructor() {
@@ -56,13 +57,7 @@ export class RoomPopup extends Popup implements Subscriber {
       popup.addEventListener('click', () => { this.setColor(color); });
     }
 
-    new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.Solid; });
-    new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.Dash; });
-    new IdPopup('.js-linestyle-dashdot', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.DashDot; });
-    new IdPopup('.js-linestyle-dashdotdot', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('.js-linestyle-dot', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.Dot; });
-    new IdPopup('.js-linestyle-none', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.None; });
-    
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.room.lineStyle = this.ctrlLineStyle.value; });
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.room.lineWidth = this.ctrlLinewidth.value; });
   }
 
