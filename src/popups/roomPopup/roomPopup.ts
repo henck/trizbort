@@ -18,12 +18,12 @@ export class RoomPopup extends Popup implements Subscriber {
 
     Dispatcher.subscribe(this);
 
-    new IdPopup('#roompopup .js-basic');
-    new IdPopup('#roompopup .js-fill');
-    new IdPopup('#roompopup .js-border');
-    new IdPopup('#roompopup .js-position');
-    new IdPopup('#roompopup .js-delete').addEventListener('click', () => { this.deleteRoom(); });
-    new IdPopup('#roompopup .js-more').addEventListener('click', () => { this.showMore(); });
+    new IdPopup('.js-basic', this.elem);
+    new IdPopup('.js-fill', this.elem);
+    new IdPopup('.js-border', this.elem);
+    new IdPopup('.js-position', this.elem);
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteRoom(); });
+    new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
       this.room.bringToFront();
@@ -56,14 +56,14 @@ export class RoomPopup extends Popup implements Subscriber {
       popup.addEventListener('click', () => { this.setColor(color); });
     }
 
-    new IdPopup('#roompopup .js-linestyle-solid').addEventListener('click', () => { this.room.lineStyle = LineStyle.Solid; });
-    new IdPopup('#roompopup .js-linestyle-dash').addEventListener('click', () => { this.room.lineStyle = LineStyle.Dash; });
-    new IdPopup('#roompopup .js-linestyle-dashdot').addEventListener('click', () => { this.room.lineStyle = LineStyle.DashDot; });
-    new IdPopup('#roompopup .js-linestyle-dashdotdot').addEventListener('click', () => { this.room.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('#roompopup .js-linestyle-dot').addEventListener('click', () => { this.room.lineStyle = LineStyle.Dot; });
-    new IdPopup('#roompopup .js-linestyle-none').addEventListener('click', () => { this.room.lineStyle = LineStyle.None; });
+    new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.Solid; });
+    new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.Dash; });
+    new IdPopup('.js-linestyle-dashdot', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.DashDot; });
+    new IdPopup('.js-linestyle-dashdotdot', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.DashDotDot; });
+    new IdPopup('.js-linestyle-dot', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.Dot; });
+    new IdPopup('.js-linestyle-none', this.elem).addEventListener('click', () => { this.room.lineStyle = LineStyle.None; });
     
-    this.ctrlLinewidth = new IdRange('#roompopup .js-linewidth').addEventListener('input', () => { this.room.lineWidth = this.ctrlLinewidth.value; });
+    this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.room.lineWidth = this.ctrlLinewidth.value; });
   }
 
   notify(event: AppEvent, model: Model) {
