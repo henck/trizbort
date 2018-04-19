@@ -1,3 +1,9 @@
+//
+// IdRange support the following data-attributes:
+// - data-min: Min value (default 0)
+// - data-max: Max value (default 100)
+// - data-label: Input label
+// 
 export class IdRange {
   private elem: HTMLElement;
   private input: HTMLInputElement;
@@ -20,8 +26,11 @@ export class IdRange {
     let max = this.elem.dataset.max;
     if(!max) max = "100";
 
+    // Get label attribute:
+    let label = this.elem.dataset.label;    
+
     // Expand a handlebars template into the top element.
-    this.elem.innerHTML = Handlebars.templates.idRange({ min: min, max: max });
+    this.elem.innerHTML = Handlebars.templates.idRange({ min: min, max: max, label: label });
     this.input = this.elem.querySelector('input');
     this.label = this.elem.querySelector('.range-label');
 

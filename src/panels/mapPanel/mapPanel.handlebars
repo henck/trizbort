@@ -21,7 +21,7 @@
   <id-check class="js-map-grid-visible" data-label="Visible"></id-check>
   <id-check class="js-map-grid-origin" data-label="Show origin"></id-check>
   <id-check class="js-map-grid-snap" data-label="Snap to grid"></id-check>
-  <id-range class="js-map-grid-size" data-min="16" data-max="128"></id-range>
+  <id-range class="js-map-grid-size" data-min="16" data-max="128" data-label="Grid size"></id-range>
 
   <label>Map background</label>
   <div style="display:flex">
@@ -35,16 +35,11 @@
 </div>
 
 <div class="tab-body" id="tab-map-rooms">
-  <label>Default room width</label>
-  <id-range class='js-map-room-width' data-min="64" data-max="256"></id-range>
-  <label>Default room height</label>
-  <id-range class='js-map-room-height' data-min="64" data-max="256"></id-range>
-  <label>Default room line width</label>
-  <id-range class='js-map-room-linewidth' data-min="1" data-max="10"></id-range>
-  <label>Default room rounding</label>
-  <id-range class='js-map-room-rounding' data-min="0" data-max="30"></id-range>
-  <label>Darkness stripe size</label>
-  <id-range class='js-map-room-darkness-size' data-min="50" data-max="100"></id-range>
+  <id-range class='js-map-room-width' data-min="64" data-max="256" data-label="Default room width"></id-range>
+  <id-range class='js-map-room-height' data-min="64" data-max="256" data-label="Default room height"></id-range>
+  <id-range class='js-map-room-linewidth' data-min="1" data-max="10" data-label="Default room line width"></id-range>
+  <id-range class='js-map-room-rounding' data-min="0" data-max="30" data-label="Default room rounding"></id-range>
+  <id-range class='js-map-room-darkness-size' data-min="50" data-max="100" data-label="Darkness stripe size"></id-range>
 
   <label>Default room shape</label>
   <div style="display: flex; flex-wrap: no-wrap">
@@ -109,8 +104,7 @@
 </div>
 
 <div class="tab-body" id="tab-map-connectors">
-  <label>Default connector line width</label>
-  <id-range class='js-map-connector-linewidth' data-min="1" data-max="10"></id-range>  
+  <id-range class='js-map-connector-linewidth' data-min="1" data-max="10" data-label="Default connector line width"></id-range>  
 
   <label>Default connector line style</label>
   <div style="display: flex; flex-wrap: no-wrap">
@@ -131,33 +125,21 @@
     </id-popup>
   </div>
 
-  <label>Default connector stalk length</label>
-  <id-range class='js-map-connector-stalk' data-min="16" data-max="64"></id-range>    
-
-  <label>Label distance</label>
-  <id-range class='js-map-connector-label-distance' data-min="10" data-max="20"></id-range>    
-
-  <label>One-way arrow size</label>
-  <id-range class='js-map-connector-arrow-size' data-min="3" data-max="10"></id-range>      
-
+  <id-range class='js-map-connector-stalk' data-min="16" data-max="64" data-label="Default connector stalk length"></id-range>    
+  <id-range class='js-map-connector-label-distance' data-min="10" data-max="20" data-label="Label distance"></id-range>    
+  <id-range class='js-map-connector-arrow-size' data-min="3" data-max="10" data-label="One-way arrow size"></id-range>      
   <id-check class="js-map-connector-curve" data-label="Use curves"></id-check>
-
-  <label>Default connector curve strength</label>
-  <id-range class='js-map-connector-curve-strength' data-min="1" data-max="8"></id-range>      
+  <id-range class='js-map-connector-curve-strength' data-min="1" data-max="8" data-label="Default connector curve strength"></id-range>      
 
   <label>Default connector color</label>
   <id-colorpicker class="js-map-connector-color"></id-colorpicker>
 </div>
 
 <div class="tab-body" id="tab-map-notes">
-  <label>Default note width</label>
-  <id-range class='js-map-note-width' data-min="64" data-max="256"></id-range>
-  <label>Default note height</label>
-  <id-range class='js-map-note-height' data-min="64" data-max="256"></id-range>
-  <label>Default note line width</label>
-  <id-range class='js-map-note-linewidth' data-min="1" data-max="10"></id-range>
-  <label>Default note rounding</label>
-  <id-range class='js-map-note-rounding' data-min="0" data-max="30"></id-range>
+  <id-range class='js-map-note-width' data-min="64" data-max="256" data-label="Default note width"></id-range>
+  <id-range class='js-map-note-height' data-min="64" data-max="256" data-label="Default note height"></id-range>
+  <id-range class='js-map-note-linewidth' data-min="1" data-max="10" data-label="Default note line width"></id-range>
+  <id-range class='js-map-note-rounding' data-min="0" data-max="30" data-label="Default note rounding"></id-range>
 
   <label>Default note shape</label>
   <div style="display: flex; flex-wrap: no-wrap">
@@ -210,14 +192,10 @@
 </div>
 
 <div class="tab-body" id="tab-map-blocks">
-  <label>Default block width</label>
-  <id-range class='js-map-block-width' data-min="64" data-max="256"></id-range>
-  <label>Default block height</label>
-  <id-range class='js-map-block-height' data-min="64" data-max="256"></id-range>
-  <label>Default block line width</label>
-  <id-range class='js-map-block-linewidth' data-min="1" data-max="10"></id-range>
-  <label>Default block rounding</label>
-  <id-range class='js-map-block-rounding' data-min="0" data-max="30"></id-range>
+  <id-range class='js-map-block-width' data-min="64" data-max="256" data-label="Default block width"></id-range>
+  <id-range class='js-map-block-height' data-min="64" data-max="256" data-label="Default block height"></id-range>
+  <id-range class='js-map-block-linewidth' data-min="1" data-max="10" data-label="Default block line width"></id-range>
+  <id-range class='js-map-block-rounding' data-min="0" data-max="30" data-label="Default block rounding"></id-range>
 
   <label>Default block shape</label>
   <div style="display: flex; flex-wrap: no-wrap">
