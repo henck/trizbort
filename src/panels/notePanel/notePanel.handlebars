@@ -8,18 +8,7 @@
 </div>
 
 <div class="tab-body" id="tab-note-info">
-  <label style="margin-top:25px">Note shape</label> 
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-shape-rectangle">
-      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
-    </id-popup>
-    <id-popup class="js-shape-ellipse">
-      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
-    </id-popup>
-    <id-popup class="js-shape-octagon">
-      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
-    </id-popup>
-  </div>    
+  <id-shape class="js-shape" data-label="Note shape"></id-shape>   
   <id-range class="js-rounding" data-min="0" data-max="100" data-label="Rectangle rounding"></id-range>
   <id-textarea class="js-text" data-label="Note text"></id-textarea>
 </div>

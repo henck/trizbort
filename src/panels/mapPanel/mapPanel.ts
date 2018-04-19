@@ -5,7 +5,7 @@ import { Room } from '../../models/room.js';
 import { App } from '../../app.js';
 import { RoomShape, LineStyle, Values } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker } from '../../controls/controls.js';
+import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
 import { Map } from '../../models/map.js';
 
 export class MapPanel extends Panel implements Subscriber {
@@ -26,6 +26,8 @@ export class MapPanel extends Panel implements Subscriber {
   private roomColorPicker: IdColorPicker;
   private roomColorType: string;
   private roomColorButtons: Array<IdPopup>;
+  private ctrlRoomShape: IdShape;
+  private ctrlRoomLine: IdLineStyle;
 
   private ctrlConnectorLinewidth: IdRange;
   private ctrlConnectorStalk: IdRange;
@@ -34,6 +36,7 @@ export class MapPanel extends Panel implements Subscriber {
   private ctrlConnectorCurve: IdCheck;
   private ctrlConnectorCurveStrength: IdRange;
   private connectorColorPicker: IdColorPicker;
+  private ctrlConnectorLine: IdLineStyle;
 
   private ctrlNoteWidth: IdRange;
   private ctrlNoteHeight: IdRange;
@@ -42,6 +45,8 @@ export class MapPanel extends Panel implements Subscriber {
   private noteColorPicker: IdColorPicker;
   private noteColorType: string;
   private noteColorButtons: Array<IdPopup>;
+  private ctrlNoteShape: IdShape;
+  private ctrlNoteLine: IdLineStyle;
 
   private ctrlBlockWidth: IdRange;
   private ctrlBlockHeight: IdRange;
@@ -50,6 +55,8 @@ export class MapPanel extends Panel implements Subscriber {
   private blockColorPicker: IdColorPicker;
   private blockColorType: string;
   private blockColorButtons: Array<IdPopup>;  
+  private ctrlBlockShape: IdShape;
+  private ctrlBlockLine: IdLineStyle;
   
 
   constructor() {
@@ -76,16 +83,8 @@ export class MapPanel extends Panel implements Subscriber {
     this.ctrlRoomRounding = new IdRange('.js-room-rounding', this.elem).addEventListener('input', () => { App.map.settings.room.rounding = this.ctrlRoomRounding.value; });
     this.ctrlRoomDarknessSize = new IdRange('.js-room-darkness-size', this.elem).addEventListener('input', () => { App.map.settings.room.darknessSize = this.ctrlRoomDarknessSize.value; });
 
-    new IdPopup('.js-room-shape-rectangle', this.elem).addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Rectangle; });
-    new IdPopup('.js-room-shape-ellipse', this.elem).addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Ellipse; });
-    new IdPopup('.js-room-shape-octagon', this.elem).addEventListener('click', () => { App.map.settings.room.shape = RoomShape.Octagon; });
-
-    new IdPopup('.js-room-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Solid; });
-    new IdPopup('.js-room-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Dash; });
-    new IdPopup('.js-room-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.DashDot; });
-    new IdPopup('.js-room-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('.js-room-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.Dot; });
-    new IdPopup('.js-room-linestyle-none', this.elem).addEventListener('click', () => { App.map.settings.room.lineStyle = LineStyle.None; });    
+    this.ctrlRoomShape = new IdShape('.js-room-shape', this.elem).addEventListener('change', () => { App.map.settings.room.shape = this.ctrlRoomShape.value; });
+    this.ctrlRoomLine = new IdLineStyle('.js-room-line', this.elem).addEventListener('change', () => { App.map.settings.room.lineStyle = this.ctrlRoomLine.value; });
 
     this.roomColorPicker = new IdColorPicker('.js-room-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.roomColorPicker.color); });
     // Find room color buttons:
@@ -104,11 +103,7 @@ export class MapPanel extends Panel implements Subscriber {
     this.ctrlConnectorArrowSize = new IdRange('.js-connector-arrow-size', this.elem).addEventListener('input', () => { App.map.settings.connector.arrowSize = this.ctrlConnectorArrowSize.value; });
     this.ctrlConnectorCurve = new IdCheck('.js-connector-curve', this.elem).addEventListener('input', () => { App.map.settings.connector.isCurve = this.ctrlConnectorCurve.checked; })
     this.ctrlConnectorCurveStrength = new IdRange('.js-connector-curve-strength', this.elem).addEventListener('input', () => { App.map.settings.connector.curveStrength = this.ctrlConnectorCurveStrength.value / 10; });
-    new IdPopup('.js-connector-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Solid; });
-    new IdPopup('.js-connector-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Dash; });
-    new IdPopup('.js-connector-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.DashDot; });
-    new IdPopup('.js-connector-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('.js-connector-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.connector.lineStyle = LineStyle.Dot; });    
+    this.ctrlConnectorLine = new IdLineStyle('.js-connector-line', this.elem).addEventListener('change', () => { App.map.settings.connector.lineStyle = this.ctrlConnectorLine.value; });
     this.connectorColorPicker = new IdColorPicker('.js-connector-color', this.elem).addEventListener('change', () => { App.map.settings.connector.color = this.connectorColorPicker.color; });
 
     this.ctrlNoteWidth = new IdRange('.js-note-width', this.elem).addEventListener('input', () => { App.map.settings.note.width = this.ctrlNoteWidth.value; });
@@ -116,16 +111,9 @@ export class MapPanel extends Panel implements Subscriber {
     this.ctrlNoteLinewidth = new IdRange('.js-note-linewidth', this.elem).addEventListener('input', () => { App.map.settings.note.lineWidth = this.ctrlNoteLinewidth.value; });
     this.ctrlNoteRounding = new IdRange('.js-note-rounding', this.elem).addEventListener('input', () => { App.map.settings.note.rounding = this.ctrlNoteRounding.value; });
 
-    new IdPopup('.js-note-shape-rectangle', this.elem).addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Rectangle; });
-    new IdPopup('.js-note-shape-ellipse', this.elem).addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Ellipse; });
-    new IdPopup('.js-note-shape-octagon', this.elem).addEventListener('click', () => { App.map.settings.note.shape = RoomShape.Octagon; });
+    this.ctrlNoteShape = new IdShape('.js-note-shape', this.elem).addEventListener('change', () => { App.map.settings.note.shape = this.ctrlNoteShape.value; });
 
-    new IdPopup('.js-note-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Solid; });
-    new IdPopup('.js-note-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Dash; });
-    new IdPopup('.js-note-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.DashDot; });
-    new IdPopup('.js-note-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('.js-note-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.Dot; });
-    new IdPopup('.js-note-linestyle-none', this.elem).addEventListener('click', () => { App.map.settings.note.lineStyle = LineStyle.None; });    
+    this.ctrlNoteLine = new IdLineStyle('.js-note-line', this.elem).addEventListener('change', () => { App.map.settings.note.lineStyle = this.ctrlNoteLine.value; });
 
     this.noteColorPicker = new IdColorPicker('.js-note-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.noteColorPicker.color); });
     // Find note color buttons:
@@ -143,16 +131,9 @@ export class MapPanel extends Panel implements Subscriber {
     this.ctrlBlockLinewidth = new IdRange('.js-block-linewidth', this.elem).addEventListener('input', () => { App.map.settings.block.lineWidth = this.ctrlBlockLinewidth.value; });
     this.ctrlBlockRounding = new IdRange('.js-block-rounding', this.elem).addEventListener('input', () => { App.map.settings.block.rounding = this.ctrlBlockRounding.value; });
 
-    new IdPopup('.js-block-shape-rectangle', this.elem).addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Rectangle; });
-    new IdPopup('.js-block-shape-ellipse', this.elem).addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Ellipse; });
-    new IdPopup('.js-block-shape-octagon', this.elem).addEventListener('click', () => { App.map.settings.block.shape = RoomShape.Octagon; });
+    this.ctrlBlockShape = new IdShape('.js-block-shape', this.elem).addEventListener('change', () => { App.map.settings.block.shape = this.ctrlBlockShape.value; });
 
-    new IdPopup('.js-block-linestyle-solid', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Solid; });
-    new IdPopup('.js-block-linestyle-dash', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Dash; });
-    new IdPopup('.js-block-linestyle-dashdot', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.DashDot; });
-    new IdPopup('.js-block-linestyle-dashdotdot', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.DashDotDot; });
-    new IdPopup('.js-block-linestyle-dot', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.Dot; });
-    new IdPopup('.js-block-linestyle-none', this.elem).addEventListener('click', () => { App.map.settings.block.lineStyle = LineStyle.None; });    
+    this.ctrlBlockLine = new IdLineStyle('.js-block-line', this.elem).addEventListener('change', () => { App.map.settings.block.lineStyle = this.ctrlBlockLine.value; });
 
     this.blockColorPicker = new IdColorPicker('.js-block-color', this.elem).addEventListener('change', () => { this.setBlockColor(this.blockColorPicker.color); });
     // Find block color buttons:

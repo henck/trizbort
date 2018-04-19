@@ -5,7 +5,7 @@ import { Room } from '../../models/room.js';
 import { App } from '../../app.js';
 import { RoomShape } from '../../enums/enums.js';
 import { Panel } from '../panels.js';
-import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup } from '../../controls/controls.js';
+import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape } from '../../controls/controls.js';
 
 export class RoomPanel extends Panel implements Subscriber {
   private room: Room;
@@ -16,20 +16,11 @@ export class RoomPanel extends Panel implements Subscriber {
   private ctrlStartroom: IdCheck;
   private ctrlEndroom: IdCheck;
   private ctrlDescription: IdTextarea;
-  private inputShapeRectangle: HTMLInputElement;
   private ctrlRounding: IdRange;
-  private divRoomRounding: HTMLElement;
-  private inputRoomRounding: HTMLInputElement;
-  private labelRoomRounding: HTMLElement;
-  private inputShapeEllipse: HTMLInputElement;
-  private inputShapeOctagon: HTMLInputElement;
   private colorPicker: IdColorPicker;
-  private ctrlShapeRectangle: IdPopup;
-  private ctrlShapeEllipse: IdPopup;
-  private ctrlShapeOctagon: IdPopup;
-
   private colorType: string;
   private colorButtons: Array<IdPopup>;
+  private ctrlShape: IdShape;
 
   constructor() {
     super('roompanel', Handlebars.templates.roomPanel, {});
@@ -43,9 +34,7 @@ export class RoomPanel extends Panel implements Subscriber {
     this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { this.room.description = this.ctrlDescription.value; });
     this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.colorPicker.color); });
 
-    this.ctrlShapeRectangle = new IdPopup('.js-shape-rectangle', this.elem).addEventListener('click', () => { this.room.shape = RoomShape.Rectangle; });
-    this.ctrlShapeEllipse = new IdPopup('.js-shape-ellipse', this.elem).addEventListener('click', () => { this.room.shape = RoomShape.Ellipse; });
-    this.ctrlShapeOctagon = new IdPopup('.js-shape-octagon', this.elem).addEventListener('click', () => { this.room.shape = RoomShape.Octagon; });
+    this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.room.shape = this.ctrlShape.value; });
     this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.room.rounding = this.ctrlRounding.value; });
 
     // Find color buttons:

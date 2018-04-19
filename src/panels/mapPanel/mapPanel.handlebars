@@ -38,41 +38,10 @@
   <id-range class='js-room-width' data-min="64" data-max="256" data-label="Default room width"></id-range>
   <id-range class='js-room-height' data-min="64" data-max="256" data-label="Default room height"></id-range>
   <id-range class='js-room-linewidth' data-min="1" data-max="10" data-label="Default room line width"></id-range>
-  <id-range class='js-room-rounding' data-min="0" data-max="30" data-label="Default room rounding"></id-range>
   <id-range class='js-room-darkness-size' data-min="50" data-max="100" data-label="Darkness stripe size"></id-range>
-
-  <label>Default room shape</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-room-shape-rectangle">
-      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-shape-ellipse">
-      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-shape-octagon">
-      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
-    </id-popup>
-  </div>  
-
-  <label>Default room border style</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-room-linestyle-solid">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-linestyle-dash">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-linestyle-dashdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-linestyle-dashdotdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-linestyle-dot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
-    </id-popup>
-    <id-popup class="js-room-linestyle-none"></id-popup>
-  </div>  
+  <id-shape class="js-room-shape" data-label="Default room shape"></id-shape>   
+  <id-range class='js-room-rounding' data-min="0" data-max="30" data-label="Default room rounding"></id-range>
+  <id-linestyle class="js-room-line" data-none="true" data-label="Default room border style"></id-linestyle>
 
   <label>Default room colors</label>
   <div style="display: flex">
@@ -105,26 +74,7 @@
 
 <div class="tab-body" id="tab-map-connectors">
   <id-range class='js-connector-linewidth' data-min="1" data-max="10" data-label="Default connector line width"></id-range>  
-
-  <label>Default connector line style</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-connector-linestyle-solid">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
-    </id-popup>
-    <id-popup class="js-connector-linestyle-dash">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
-    </id-popup>
-    <id-popup class="js-connector-linestyle-dashdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-connector-linestyle-dashdotdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-connector-linestyle-dot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
-    </id-popup>
-  </div>
-
+  <id-linestyle class="js-connector-line" data-label="Default connector line style"></id-linestyle>
   <id-range class='js-connector-stalk' data-min="16" data-max="64" data-label="Default connector stalk length"></id-range>    
   <id-range class='js-connector-label-distance' data-min="10" data-max="20" data-label="Label distance"></id-range>    
   <id-range class='js-connector-arrow-size' data-min="3" data-max="10" data-label="One-way arrow size"></id-range>      
@@ -139,40 +89,9 @@
   <id-range class='js-note-width' data-min="64" data-max="256" data-label="Default note width"></id-range>
   <id-range class='js-note-height' data-min="64" data-max="256" data-label="Default note height"></id-range>
   <id-range class='js-note-linewidth' data-min="1" data-max="10" data-label="Default note line width"></id-range>
+  <id-shape class="js-note-shape" data-label="Default note shape"></id-shape>   
   <id-range class='js-note-rounding' data-min="0" data-max="30" data-label="Default note rounding"></id-range>
-
-  <label>Default note shape</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-note-shape-rectangle">
-      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-shape-ellipse">
-      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-shape-octagon">
-      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
-    </id-popup>
-  </div>  
-
-  <label>Default note border style</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-note-linestyle-solid">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-linestyle-dash">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-linestyle-dashdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-linestyle-dashdotdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-linestyle-dot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
-    </id-popup>
-    <id-popup class="js-note-linestyle-none"></id-popup>
-  </div>  
+  <id-linestyle class="js-note-line" data-none="true" data-label="Default note border style"></id-linestyle>
 
   <label>Default note colors</label>
   <div style="display: flex">
@@ -195,40 +114,9 @@
   <id-range class='js-block-width' data-min="64" data-max="256" data-label="Default block width"></id-range>
   <id-range class='js-block-height' data-min="64" data-max="256" data-label="Default block height"></id-range>
   <id-range class='js-block-linewidth' data-min="1" data-max="10" data-label="Default block line width"></id-range>
+  <id-shape class="js-block-shape" data-label="Default block shape"></id-shape>    
   <id-range class='js-block-rounding' data-min="0" data-max="30" data-label="Default block rounding"></id-range>
-
-  <label>Default block shape</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-block-shape-rectangle">
-      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-shape-ellipse">
-      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-shape-octagon">
-      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
-    </id-popup>
-  </div>  
-
-  <label>Default block border style</label>
-  <div style="display: flex; flex-wrap: no-wrap">
-    <id-popup class="js-block-linestyle-solid">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-linestyle-dash">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-linestyle-dashdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-linestyle-dashdotdot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-linestyle-dot">
-      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
-    </id-popup>
-    <id-popup class="js-block-linestyle-none"></id-popup>
-  </div>  
+  <id-linestyle class="js-block-line" data-none="true" data-label="Default block border style"></id-linestyle>
 
   <label>Default block colors</label>
   <div style="display: flex">

@@ -16,8 +16,11 @@ export class IdLineStyle extends Control {
     // Get 'none' attribute:
     let hasNone = this.elem.dataset.none || false;
 
+    // Get 'label' attribute:
+    let label = this.elem.dataset.label;
+
     // Expand a handlebars template into the top element.
-    this.elem.innerHTML = Handlebars.templates.idLineStyle({ noneDisplay: hasNone ? 'block' : 'none' });
+    this.elem.innerHTML = Handlebars.templates.idLineStyle({ noneDisplay: hasNone ? 'block' : 'none', label: label });
 
     new IdPopup('.js-linestyle-solid', this.elem).addEventListener('click', () => { this.value = LineStyle.Solid; });
     new IdPopup('.js-linestyle-dash', this.elem).addEventListener('click', () => { this.value = LineStyle.Dash; });

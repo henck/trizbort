@@ -5,7 +5,7 @@ import { Note } from '../../models/note.js';
 import { App } from '../../app.js';
 import { RoomShape } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdColorPicker, IdRange, IdTextarea, IdPopup } from '../../controls/controls.js';
+import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape } from '../../controls/controls.js';
 
 export class NotePanel extends Panel implements Subscriber {
   private note: Note;
@@ -13,10 +13,7 @@ export class NotePanel extends Panel implements Subscriber {
   private ctrlText: IdTextarea;
   private ctrlRounding: IdRange;
   private colorPicker: IdColorPicker;
-  private ctrlShapeRectangle: IdPopup;
-  private ctrlShapeEllipse: IdPopup;
-  private ctrlShapeOctagon: IdPopup;
-
+  private ctrlShape: IdShape;
   private colorType: string;
   private colorButtons: Array<IdPopup>;
 
@@ -27,9 +24,7 @@ export class NotePanel extends Panel implements Subscriber {
     this.ctrlText = new IdTextarea('.js-text', this.elem).addEventListener('input', () => { this.note.text = this.ctrlText.value; });    
     this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
 
-    this.ctrlShapeRectangle = new IdPopup('.js-shape-rectangle', this.elem).addEventListener('click', () => { this.note.shape = RoomShape.Rectangle; });
-    this.ctrlShapeEllipse = new IdPopup('.js-shape-ellipse', this.elem).addEventListener('click', () => { this.note.shape = RoomShape.Ellipse; });
-    this.ctrlShapeOctagon = new IdPopup('.js-shape-octagon', this.elem).addEventListener('click', () => { this.note.shape = RoomShape.Octagon; });    
+    this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.note.shape = this.ctrlShape.value; });
     this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.note.rounding = this.ctrlRounding.value; });
 
     // Find color buttons:
