@@ -1,23 +1,23 @@
-export class IdCheck {
-  private elem: HTMLElement;
+import { Control } from "../control";
+
+export class IdCheck extends Control {
   private input: HTMLInputElement;
 
   // 
   // Create a new instance of IdCheck by providing a query selector that
   // yields an id-check element.
   //
-  constructor(selector: string) {
-    // Find element by selector:
-    this.elem = document.querySelector(selector);
-    if(!this.elem) {
-      throw(`Failed to instantiate idCheck: selector ${selector} not found in DOM.`);
-    }
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
 
     // Get label attribute:
     let label = this.elem.dataset.label;
 
     // Expand a handlebars template into the top element.
     this.elem.innerHTML = Handlebars.templates.idCheck({ label: label });
+
+    // Save inner <input> element so we can attach
+    // an event listener to it.
     this.input = this.elem.querySelector('input');
   }
 

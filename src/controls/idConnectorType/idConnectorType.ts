@@ -1,9 +1,9 @@
 import { IdRadio } from "../idRadio/idRadio";
 import { ConnectorType } from "../../enums/connectorType";
+import { Control } from "../control";
 
-export class IdConnectorType {
+export class IdConnectorType extends Control {
   private static id = 0;
-  private elem: HTMLElement;
   private radioDefault: IdRadio;
   private radioIn: IdRadio;
   private radioOut: IdRadio;
@@ -14,13 +14,9 @@ export class IdConnectorType {
   // Create a new instance of IdConnectorType by providing a query selector that
   // yields an id-connector-type element.
   //
-  constructor(selector: string) {
-    // Find element by selector:
-    this.elem = document.querySelector(selector);
-    if(!this.elem) {
-      throw(`Failed to instantiate idConnectorType: selector ${selector} not found in DOM.`);
-    }
-
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
+    
     // Expand a handlebars template into the top element.
     // Every connectortype has a unique ID.
     this.elem.innerHTML = Handlebars.templates.idConnectorType({ name: `connector${IdConnectorType.id}` });

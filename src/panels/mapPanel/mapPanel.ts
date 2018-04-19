@@ -93,7 +93,7 @@ export class MapPanel extends Panel implements Subscriber {
     this.roomColorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);
-      if(popup.elem.classList.contains('selected')) this.roomColorType = popup.elem.dataset.type;
+      if(popup.selected) this.roomColorType = popup.type;
       this.roomColorButtons.push(popup);
       buttons[i].addEventListener('click', () => { this.onRoomColorButton(popup); });
     }
@@ -133,7 +133,7 @@ export class MapPanel extends Panel implements Subscriber {
     this.noteColorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);
-      if(popup.elem.classList.contains('selected')) this.noteColorType = popup.elem.dataset.type;
+      if(popup.selected) this.noteColorType = popup.type;
       this.noteColorButtons.push(popup);
       buttons[i].addEventListener('click', () => { this.onNoteColorButton(popup); });
     }    
@@ -160,7 +160,7 @@ export class MapPanel extends Panel implements Subscriber {
     this.blockColorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);
-      if(popup.elem.classList.contains('selected')) this.blockColorType = popup.elem.dataset.type;
+      if(popup.selected) this.blockColorType = popup.type;
       this.blockColorButtons.push(popup);
       buttons[i].addEventListener('click', () => { this.onBlockColorButton(popup); });
     }        
@@ -218,14 +218,14 @@ export class MapPanel extends Panel implements Subscriber {
   onRoomColorButton(button: IdPopup) {
     // Unselect all buttons.
     this.roomColorButtons.forEach((button) => {
-      button.elem.classList.remove('selected');
+      button.selected = false;
     });
 
     // Select this button.
-    button.elem.classList.add('selected');
+    button.selected = true;
 
     // Make the buttons' data-type the current color type.
-    this.roomColorType = button.elem.dataset.type;
+    this.roomColorType = button.type;
 
     // Set colorPicker to color.
     this.setRoomPickerColor();
@@ -254,14 +254,14 @@ export class MapPanel extends Panel implements Subscriber {
   onNoteColorButton(button: IdPopup) {
     // Unselect all buttons.
     this.noteColorButtons.forEach((button) => {
-      button.elem.classList.remove('selected');
+      button.selected = false;
     });
 
     // Select this button.
-    button.elem.classList.add('selected');
+    button.selected = true;
 
     // Make the buttons' data-type the current color type.
-    this.noteColorType = button.elem.dataset.type;
+    this.noteColorType = button.type;
 
     // Set colorPicker to color.
     this.setNotePickerColor();
@@ -282,14 +282,14 @@ export class MapPanel extends Panel implements Subscriber {
   onBlockColorButton(button: IdPopup) {
     // Unselect all buttons.
     this.blockColorButtons.forEach((button) => {
-      button.elem.classList.remove('selected');
+      button.selected = false;
     });
 
     // Select this button.
-    button.elem.classList.add('selected');
+    button.selected = true;
 
     // Make the buttons' data-type the current color type.
-    this.blockColorType = button.elem.dataset.type;
+    this.blockColorType = button.type;
 
     // Set colorPicker to color.
     this.setBlockPickerColor();

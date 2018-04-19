@@ -1,11 +1,12 @@
+import { Control } from "../control";
+
 //
 // IdRange support the following data-attributes:
 // - data-min: Min value (default 0)
 // - data-max: Max value (default 100)
 // - data-label: Input label
 // 
-export class IdRange {
-  private elem: HTMLElement;
+export class IdRange extends Control {
   private input: HTMLInputElement;
   private label: HTMLElement;
 
@@ -13,13 +14,9 @@ export class IdRange {
   // Create a new instance of IdRange by providing a query selector that
   // yields an id-range element.
   //
-  constructor(selector: string) {
-    // Find element by selector:
-    this.elem = document.querySelector(selector);
-    if(!this.elem) {
-      throw(`Failed to instantiate idRange: selector ${selector} not found in DOM.`);
-    }
-
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
+    
     // Get min/max values. If not specified, assume 0..100
     let min = this.elem.dataset.min;
     if(!min) min = "0";

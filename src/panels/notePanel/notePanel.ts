@@ -37,7 +37,7 @@ export class NotePanel extends Panel implements Subscriber {
     this.colorButtons = new Array<IdPopup>();
     for(let i = 0; i < buttons.length; i++) {
       let popup = new IdPopup(buttons[i] as HTMLElement);
-      if(popup.elem.classList.contains('selected')) this.colorType = popup.elem.dataset.type;
+      if(popup.selected) this.colorType = popup.type;
       this.colorButtons.push(popup);
       buttons[i].addEventListener('click', () => { this.onColorButton(popup); });
     }
@@ -70,14 +70,14 @@ export class NotePanel extends Panel implements Subscriber {
   onColorButton(button: IdPopup) {
     // Unselect all buttons.
     this.colorButtons.forEach((button) => {
-      button.elem.classList.remove('selected');
+      button.selected = false;
     });
 
     // Select this button.
-    button.elem.classList.add('selected');
+    button.selected = true;
 
     // Make the buttons' data-type the current color type.
-    this.colorType = button.elem.dataset.type;
+    this.colorType = button.type;
 
     // Set colorPicker to color.
     this.setColor();

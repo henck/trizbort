@@ -1,21 +1,15 @@
-export class IdPopup {
-  public elem: HTMLElement;
+import { Control } from "../control";
+
+export class IdPopup extends Control {
   private div: HTMLElement;
+  private dataType: string;
 
   // 
   // Create a new instance of IdPopup by providing a query selector that
   // yields an id-popup element.
   //
-  constructor(selector: string|HTMLElement) {
-    // Find element by selector:
-    if(selector instanceof HTMLElement) {
-      this.elem = selector;
-    } else {
-      this.elem = document.querySelector(selector);
-      if(!this.elem) {
-        throw(`Failed to instantiate idPopup: selector ${selector} not found in DOM.`);
-      }
-    }
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
 
     // Find element's children and remove them.
     let children = new Array<Element>();
@@ -29,6 +23,9 @@ export class IdPopup {
 
     // Get a reference to the button's div:
     this.div = this.elem.querySelector('div');
+    
+    // Store button data-type field, if any
+    this.dataType = this.elem.dataset.type;
 
     // Add the children back:
     children.forEach((child) => { this.div.appendChild(child); });
@@ -88,6 +85,22 @@ export class IdPopup {
 
   get backgroundColor() {
     return this.div.style.backgroundColor;
+  }
+
+  get selected() {
+    return this.elem.classList.contains('selected');
+  }
+
+  set selected(select: boolean) {
+    if(select) {
+      this.elem.classList.add('selected');
+    } else {
+      this.elem.classList.remove('selected');
+    }
+  }
+
+  get type() {
+    return this.dataType;
   }
 
   //

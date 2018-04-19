@@ -1,8 +1,8 @@
 import { IdPopup } from "../controls";
 import { Values } from "../../enums/enums";
+import { Control } from "../control";
 
-export class IdColorPicker {
-  private elem: HTMLElement;
+export class IdColorPicker extends Control {
   private canvasHSL: HTMLCanvasElement;
   private canvasHue: HTMLCanvasElement;
   private ctxHSL: CanvasRenderingContext2D;
@@ -22,13 +22,9 @@ export class IdColorPicker {
   // Create a new instance of IdColorPicker by providing a query selector that
   // yields an id-colorpicker element.
   //
-  constructor(selector: string) {
-    // Find element by selector:
-    this.elem = document.querySelector(selector);
-    if(!this.elem) {
-      throw(`Failed to instantiate IdColorPicker: selector ${selector} not found in DOM.`);
-    }
-
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
+    
     // Expand a handlebars template into the top element.
     this.elem.innerHTML = Handlebars.templates.idColorPicker({
       'recentcolors': IdColorPicker.recentColors,

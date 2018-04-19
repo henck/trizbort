@@ -1,21 +1,14 @@
-export class IdRadio {
-  private elem: HTMLElement;
+import { Control } from "../control";
+
+export class IdRadio extends Control {
   private input: HTMLInputElement;
 
   // 
   // Create a new instance of IdRadio by providing a query selector that
   // yields an id-radio element.
   //
-  constructor(selector: string, base: HTMLElement) {
-    // Find element by selector:
-    if(!base){
-      this.elem = document.querySelector(selector)
-    } else {
-      this.elem = base.querySelector(selector);
-    }
-    if(!this.elem) {
-      throw(`Failed to instantiate idRadio: selector ${selector} not found in DOM.`);
-    }
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
 
     // Get label attribute:
     let label = this.elem.dataset.label;
@@ -26,6 +19,8 @@ export class IdRadio {
     // Expand a handlebars template into the top element.
     this.elem.innerHTML = Handlebars.templates.idRadio({ label: label, name: name });
 
+    // Save the inner <input> element so we can attach an
+    // event listener to it.
     this.input = this.elem.querySelector('input');
   }
 

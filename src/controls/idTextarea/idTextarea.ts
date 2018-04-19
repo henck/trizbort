@@ -1,23 +1,23 @@
-export class IdTextarea {
-  private elem: HTMLElement;
+import { Control } from "../control";
+
+export class IdTextarea extends Control {
   private textarea: HTMLTextAreaElement;
 
   // 
   // Create a new instance of IdTextarea by providing a query selector that
   // yields an id-textarea element.
   //
-  constructor(selector: string) {
-    // Find element by selector:
-    this.elem = document.querySelector(selector);
-    if(!this.elem) {
-      throw(`Failed to instantiate idTextarea: selector ${selector} not found in DOM.`);
-    }
+  constructor(elem: HTMLElement|string, base?: HTMLElement) {
+    super(elem, base);
 
     // Get label attribute:
     let label = this.elem.dataset.label;
 
     // Expand a handlebars template into the top element.
     this.elem.innerHTML = Handlebars.templates.idTextarea({ label: label });
+
+    // Save inner <textarea> element so we can attach
+    // an event listener to it.
     this.textarea = this.elem.querySelector('textarea');
   }
 
