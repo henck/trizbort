@@ -70,7 +70,7 @@ export class RoomView extends BoxView {
         .lineTo(this.room.width - this.room.height * darknessSize / 100, 0)
         .lineTo(this.room.width, this.room.height * darknessSize / 100)
         .fill();
-    }       
+    }
 
     // Room border
     if(this.room.lineStyle != LineStyle.None) { 

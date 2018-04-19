@@ -325,9 +325,10 @@ export class Canvas implements IScreen {
 
   // Draw text centered at (x, y), inside an area no wider than <maxWidth>
   drawText(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
+    let fontStr = `${fontSize}px Roboto`;
+    this.ctx.font = fontStr;
     let lineHeight = Math.ceil(fontSize)+1;
     let lines = this.splitText(width, text);
-    let fontStr = `${fontSize}px Roboto`;
     let xPos = x + width / 2;
     let yPos = y - (lines.length - 1) * lineHeight / 2 + height / 2;
     for(let i = 0; i < lines.length; i++) {
@@ -338,9 +339,10 @@ export class Canvas implements IScreen {
   }
 
   drawTextBottom(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
+    let fontStr = `${fontSize}px Roboto`;
+    this.ctx.font = fontStr;
     let lineHeight = Math.ceil(fontSize)+1;
     let lines = this.splitText(width, text);
-    let fontStr = `${fontSize}px Roboto`;
     let xPos = x + width / 2;
     let yPos = y + height - (lines.length - 1) * lineHeight;
     for(let i = 0; i < lines.length; i++) {
