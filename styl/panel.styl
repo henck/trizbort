@@ -1,0 +1,34 @@
+.panel
+  position absolute
+  z-index 2
+  right -350px
+  top 50px
+  bottom 0
+  width 350px
+  background #fff
+  box-shadow -2px 0px 12px #888
+  padding 20px 20px 20px 20px
+  transition all ease 0.3s
+  box-sizing border-box
+
+.panel-left
+  left -350px
+  right auto
+.panel-left.show 
+  left 0  
+
+.panel-right 
+  right -350px
+  left auto
+.panel-right.show
+  right 0
+
+.panel-close
+  position absolute
+  top 16px
+  right 16px
+  transition all ease 0.25s
+  cursor pointer
+  font-size 140%
+  &:hover
+    color black

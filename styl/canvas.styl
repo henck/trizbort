@@ -1,0 +1,23 @@
+body
+  width 100%
+  height 100%
+
+//
+// The editor is a container for the canvas. Without it,
+// the canvas doesn't properly stretch across the space
+// available to it.
+#editor
+  position absolute
+  left 0
+  top 50px
+  right 0
+  bottom 0
+  overflow hidden
+
+canvas
+  width 100%
+  height 100%
+
+canvas.dragcursor
+  cursor pointer
+  

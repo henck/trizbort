@@ -1,0 +1,23 @@
+div.menuitem
+  display block
+  a 
+    display flex
+    align-items center
+    outline none
+    padding 10px 10px 10px 10px 
+    color #333
+    text-decoration none
+    svg
+      fill #888
+    &:hover
+      background #f0f0f0
+      text-decoration none
+    &:hover svg 
+      fill #333
+  div.menuitem
+    display none
+    a
+      padding-left 58px
+  a.open ~ div.menuitem
+    display block
+    

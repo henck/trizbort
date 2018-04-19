@@ -1,0 +1,49 @@
+.popup
+  position absolute
+  z-index 1
+  top 0
+  left 0
+  border solid 1px #DFDFDF
+  border-radius 3px
+  padding 8px 8px 0 16px
+  background #fff
+  display none // flex when visibile
+  flex-wrap nowrap
+  box-shadow 0 0 3px #ccc
+
+.popup-button
+  position relative
+  width 32px
+  height 32px
+  flex-shrink 0
+  flex-grow 0
+  border solid 1px #DFDFDF
+  border-radius 2px
+  display flex           // This is
+  justify-content center // for fa-icon
+  align-items center     // positioning
+  background #fff
+  margin-right 8px
+  margin-bottom 8px
+  transition all ease 0.2s
+  cursor pointer
+  &:hover 
+    border solid 1px #6557D2
+
+id-popup.selected .popup-button
+  background #eeeeee
+  border solid 1px #333
+  // You can add the .alpha class to add opacity on hover:
+id-popup.alpha .popup-button:hover
+  opacity 0.6
+
+.popup-overlay
+  position absolute
+  top 34px
+  left 0px
+  padding 8px 8px 0 16px
+  background #fff
+  border-radius 3
+  border solid 1px #dfdfdf
+  display none
+  cursor default

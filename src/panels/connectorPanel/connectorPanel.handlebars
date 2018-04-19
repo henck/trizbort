@@ -1,0 +1,32 @@
+{{> closePanel}}
+
+<h2>Connector</h2> 
+
+<div class="tabs">
+  <div class="tab selected" data-body="tab-connector-info">Info</div>
+  <div class="tab" data-body="tab-connector-color">Color</div>
+</div>
+
+<div class="tab-body" id="tab-connector-info">
+  <id-input class="js-connector-name" data-label="Connector name"></id-input>
+  <id-check class="js-connector-curve" data-label="Curve"></id-check>
+  <id-check class="js-connector-oneway" data-label="One way"></id-check>
+  <button class="btn-primary js-reverse">Reverse</button>
+
+  <div style="display: flex; margin-top: 20px">
+    <div style="flex: 1; display: flex; flex-direction: column; padding-right: 10px">
+      <label>Start type</label>
+      <id-connector-type class="js-connector-starttype"></id-connector-type>
+      <id-input style="margin-top:20px" class="js-connector-startlabel" data-label="Start label"></id-input>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; padding-left: 10px">
+      <label>End type</label>
+      <id-connector-type class="js-connector-endtype"></id-connector-type>
+      <id-input style="margin-top:20px" class="js-connector-endlabel" data-label="End label"></id-input>
+    </div>
+  </div>
+</div>
+
+<div class="tab-body" id="tab-connector-color">
+  <id-colorpicker class="js-connector-color"></id-colorpicker>
+</div>

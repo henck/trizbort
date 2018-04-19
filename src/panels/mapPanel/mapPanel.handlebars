@@ -1,0 +1,267 @@
+{{> closePanel}}
+
+<h2>Map</h2>
+
+<div class="tabs"> 
+  <div class="tab selected" data-body="tab-map-info">Info</div>
+  <div class="tab" data-body="tab-map-grid">Grid</div>
+  <div class="tab" data-body="tab-map-rooms">Room</div>
+  <div class="tab" data-body="tab-map-connectors">Line</div>
+  <div class="tab" data-body="tab-map-notes">Note</div>
+  <div class="tab" data-body="tab-map-blocks">Block</div>
+</div>
+
+<div class="tab-body" id="tab-map-info">
+  <id-input class="js-map-title" data-label="Map title"></id-input>
+  <id-input class="js-map-author" data-label="Map author"></id-input>
+  <id-textarea class="js-map-description" data-label="Description"></id-textarea>
+</div>
+
+<div class="tab-body" id="tab-map-grid">
+  <id-check class="js-map-grid-visible" data-label="Visible"></id-check>
+  <id-check class="js-map-grid-origin" data-label="Show origin"></id-check>
+  <id-check class="js-map-grid-snap" data-label="Snap to grid"></id-check>
+  <id-range class="js-map-grid-size" data-min="16" data-max="128"></id-range>
+
+  <label>Map background</label>
+  <div style="display:flex">
+    <id-popup class="js-map-bg-none"></id-popup>  
+    {{#each assets}}
+    <id-popup class="js-map-bg-{{this}}">
+      <div style="width:24px; height: 24px; background-size: 24px 24px; background-image: url('assets/{{this}}.jpg');"></div>
+    </id-popup>  
+    {{/each}}
+  </div>
+</div>
+
+<div class="tab-body" id="tab-map-rooms">
+  <label>Default room width</label>
+  <id-range class='js-map-room-width' data-min="64" data-max="256"></id-range>
+  <label>Default room height</label>
+  <id-range class='js-map-room-height' data-min="64" data-max="256"></id-range>
+  <label>Default room line width</label>
+  <id-range class='js-map-room-linewidth' data-min="1" data-max="10"></id-range>
+  <label>Default room rounding</label>
+  <id-range class='js-map-room-rounding' data-min="0" data-max="30"></id-range>
+  <label>Darkness stripe size</label>
+  <id-range class='js-map-room-darkness-size' data-min="50" data-max="100"></id-range>
+
+  <label>Default room shape</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-room-shape-rectangle">
+      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-shape-ellipse">
+      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-shape-octagon">
+      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
+    </id-popup>
+  </div>  
+
+  <label>Default room border style</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-room-linestyle-solid">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-linestyle-dash">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-linestyle-dashdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-linestyle-dashdotdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-linestyle-dot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
+    </id-popup>
+    <id-popup class="js-room-linestyle-none"></id-popup>
+  </div>  
+
+  <label>Default room colors</label>
+  <div style="display: flex">
+    <div style="display: flex; flex-direction: column; flex-wrap: wrap">
+      <id-popup title="Room fill" class="room-colortype selected" data-type="fill">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-fill"></use></svg>
+      </id-popup>
+      <id-popup title="Room border" class="room-colortype" data-type="border">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-border"></use></svg>
+      </id-popup>
+      <id-popup title="Room name" class="room-colortype" data-type="name">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-name"></use></svg>
+      </id-popup>
+      <id-popup title="Room subtitle" class="room-colortype" data-type="subtitle">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-subtitle"></use></svg>
+      </id-popup>
+      <id-popup title="Darkness stripe" class="room-colortype" data-type="dark">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-darkness"></use></svg>
+      </id-popup>
+      <id-popup title="Start room" class="room-colortype" data-type="start">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-start"></use></svg>
+      </id-popup>
+      <id-popup title="End room" class="room-colortype" data-type="end">
+        <svg class="icon"><use xlink:href="dist/icons.svg#room-end"></use></svg>
+      </id-popup>                  
+    </div>
+    <id-colorpicker class="js-map-room-color"></id-colorpicker>
+  </div>
+</div>
+
+<div class="tab-body" id="tab-map-connectors">
+  <label>Default connector line width</label>
+  <id-range class='js-map-connector-linewidth' data-min="1" data-max="10"></id-range>  
+
+  <label>Default connector line style</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-connector-linestyle-solid">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
+    </id-popup>
+    <id-popup class="js-connector-linestyle-dash">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
+    </id-popup>
+    <id-popup class="js-connector-linestyle-dashdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-connector-linestyle-dashdotdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-connector-linestyle-dot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
+    </id-popup>
+  </div>
+
+  <label>Default connector stalk length</label>
+  <id-range class='js-map-connector-stalk' data-min="16" data-max="64"></id-range>    
+
+  <label>Label distance</label>
+  <id-range class='js-map-connector-label-distance' data-min="10" data-max="20"></id-range>    
+
+  <label>One-way arrow size</label>
+  <id-range class='js-map-connector-arrow-size' data-min="3" data-max="10"></id-range>      
+
+  <id-check class="js-map-connector-curve" data-label="Use curves"></id-check>
+
+  <label>Default connector curve strength</label>
+  <id-range class='js-map-connector-curve-strength' data-min="1" data-max="8"></id-range>      
+
+  <label>Default connector color</label>
+  <id-colorpicker class="js-map-connector-color"></id-colorpicker>
+</div>
+
+<div class="tab-body" id="tab-map-notes">
+  <label>Default note width</label>
+  <id-range class='js-map-note-width' data-min="64" data-max="256"></id-range>
+  <label>Default note height</label>
+  <id-range class='js-map-note-height' data-min="64" data-max="256"></id-range>
+  <label>Default note line width</label>
+  <id-range class='js-map-note-linewidth' data-min="1" data-max="10"></id-range>
+  <label>Default note rounding</label>
+  <id-range class='js-map-note-rounding' data-min="0" data-max="30"></id-range>
+
+  <label>Default note shape</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-note-shape-rectangle">
+      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-shape-ellipse">
+      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-shape-octagon">
+      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
+    </id-popup>
+  </div>  
+
+  <label>Default note border style</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-note-linestyle-solid">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-linestyle-dash">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-linestyle-dashdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-linestyle-dashdotdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-linestyle-dot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
+    </id-popup>
+    <id-popup class="js-note-linestyle-none"></id-popup>
+  </div>  
+
+  <label>Default note colors</label>
+  <div style="display: flex">
+    <div style="display: flex; flex-direction: column; flex-wrap: wrap">
+      <id-popup title="Note fill" class="note-colortype selected" data-type="fill">
+        <svg class="icon"><use xlink:href="dist/icons.svg#note-fill"></use></svg>
+      </id-popup>
+      <id-popup title="Note border" class="note-colortype" data-type="border">
+        <svg class="icon"><use xlink:href="dist/icons.svg#note-border"></use></svg>
+      </id-popup>
+      <id-popup title="Note text" class="note-colortype" data-type="text">
+        <svg class="icon"><use xlink:href="dist/icons.svg#note-text"></use></svg>
+      </id-popup>
+    </div>
+    <id-colorpicker class="js-map-note-color"></id-colorpicker>  
+  </div>
+</div>
+
+<div class="tab-body" id="tab-map-blocks">
+  <label>Default block width</label>
+  <id-range class='js-map-block-width' data-min="64" data-max="256"></id-range>
+  <label>Default block height</label>
+  <id-range class='js-map-block-height' data-min="64" data-max="256"></id-range>
+  <label>Default block line width</label>
+  <id-range class='js-map-block-linewidth' data-min="1" data-max="10"></id-range>
+  <label>Default block rounding</label>
+  <id-range class='js-map-block-rounding' data-min="0" data-max="30"></id-range>
+
+  <label>Default block shape</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-block-shape-rectangle">
+      <svg class="icon"><use xlink:href="dist/icons.svg#rectangle"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-shape-ellipse">
+      <svg class="icon"><use xlink:href="dist/icons.svg#ellipse"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-shape-octagon">
+      <svg class="icon"><use xlink:href="dist/icons.svg#octagon"></use></svg>
+    </id-popup>
+  </div>  
+
+  <label>Default block border style</label>
+  <div style="display: flex; flex-wrap: no-wrap">
+    <id-popup class="js-block-linestyle-solid">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-solid"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-linestyle-dash">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dash"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-linestyle-dashdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-linestyle-dashdotdot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dashdotdot"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-linestyle-dot">
+      <svg class="icon"><use xlink:href="dist/icons.svg#line-dot"></use></svg>
+    </id-popup>
+    <id-popup class="js-block-linestyle-none"></id-popup>
+  </div>  
+
+  <label>Default block colors</label>
+  <div style="display: flex">
+    <div style="display: flex; flex-direction: column; flex-wrap: wrap">
+      <id-popup title="Block fill" class="block-colortype selected" data-type="fill">
+        <svg class="icon"><use xlink:href="dist/icons.svg#block-fill"></use></svg>
+      </id-popup>
+      <id-popup title="Block border" class="block-colortype" data-type="border">
+        <svg class="icon"><use xlink:href="dist/icons.svg#block-border"></use></svg>
+      </id-popup>
+    </div>
+    <id-colorpicker class="js-map-block-color"></id-colorpicker>  
+  </div>
+</div>

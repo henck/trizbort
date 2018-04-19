@@ -1,0 +1,24 @@
+<div class="color-picker">
+  <div>
+    <div class="hsl">
+      <canvas></canvas>
+      <div class="selection">
+        <div class="current-color"></div>
+        <div class="hover-color"></div>
+      </div>
+    </div>
+    <canvas></canvas>
+  </div>
+  <p>Recent colors</p>
+  <div class="recent">
+    {{#each recentcolors}}
+      <id-popup class="alpha"></id-popup>
+    {{/each}}
+  </div>
+  <p>Standard colors</p>
+  <div class="standard">
+    {{#each standardcolors}}
+      <id-popup class="alpha"></id-popup>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.color-picker
+  min-width 260px
+  display flex
+  flex-direction column
+  div
+    box-sizing border-box
+    display flex
+  .hsl
+    flex-direction column
+    width 100%
+    height 100%
+  .selection
+    margin-top 8px
+  canvas
+    cursor crosshair
+    box-sizing border-box
+    border solid 1px #333
+    border-radius 2px
+    &:first-child
+      width 100%
+      height 200px
+    &:last-child 
+      width 50px
+      margin-left 8px
+  p
+    font-weight 500
+    margin-top 8px
+    margin-bottom 4px
+  .current-color, .hover-color
+    flex 1
+    height 48px
+    border solid 1px #333
+  .current-color
+    border-right none
+    border-radius 2px 0 0 2px
+  .hover-color
+    border-left none
+    border-radius 0 2px 2px 0
+  .recent, .standard
+    display flex
+    justify-content flex-start
+    flex-wrap wrap

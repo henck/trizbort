@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Trizbort</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+     <svg id="menu" class="icon" style="cursor: pointer; fill:#fff"><use xlink:href="dist/icons.svg#bars"></use></svg>
+     <h1>Trizbort</h1>
+  </header>
+      
+  <canvas id="hittest" style="display: none; width: 1px; height: 1px"></canvas>
+
+  <div id="window">
+    <div class="window-body">
+      <h1 class="title">(title)</h1>
+      <p class="content">(content)</p>
+    </div>
+    <div class="window-buttons">
+      <button class="btn ok">OK</button>
+      <button class="btn cancel">Cancel</button>
+    </div>
+  </div>
+
+  <div id="editor">
+    <div id="debug">
+      <table>
+        <tr>
+          <td style="padding-right:7px; color: #ddd">Zoom</td>
+          <td id="debug-zoom"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="controls">
+      <div id="control-center" class="control">
+        <svg class="icon" style="fill:#fff"><use xlink:href="dist/icons.svg#center"></use></svg>
+      </div>
+      <div id="control-zoomin" class="control">
+        <svg class="icon" style="fill:#fff"><use xlink:href="dist/icons.svg#zoom-in"></use></svg>
+      </div>
+      <div id="control-zoomout" class="control">
+        <svg class="icon" style="fill:#fff"><use xlink:href="dist/icons.svg#zoom-out"></use></svg>
+      </div>
+    </div>
+
+    <canvas id="canvas" tabindex='1'></canvas>
+  </div>
+
+  <div id="toolpanel" class="panel panel-left show" style="width:75px"></div>
+  <div id="menupanel" class="panel panel-left" style="padding-left: 0; padding-right: 0"></div>  
+  <div id="mappanel" class="panel panel-right"></div>
+  <div id="roompanel" class="panel panel-right"></div>
+  <div id="connectorpanel" class="panel panel-right"></div>  
+  <div id="notepanel" class="panel panel-right"></div>  
+  <div id="blockpanel" class="panel panel-right"></div>  
+  
+  <div id="roompopup" class="popup"></div>
+  <div id="notepopup" class="popup"></div>
+  <div id="blockpopup" class="popup"></div>
+  <div id="connectorpopup" class="popup"></div>  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.runtime.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.21.0/system.js"></script>
+  <script src="dist/app.min.js"></script>
+  <script>
+    System.import('app').then(function(m) {
+      m.App.initialize();
+    });
+  </script>
+</body>
+</html>
