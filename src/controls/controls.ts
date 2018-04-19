@@ -6,6 +6,7 @@ export * from './idColorPicker/idColorPicker.js'
 export * from './idPopup/idPopup.js'
 export * from './idConnectorType/idConnectorType.js'
 export * from './idLineStyle/idLineStyle.js'
+export * from './idQuickColor/idQuickColor.js'
 
 export * from './tabs.js'
 export * from './window.js'

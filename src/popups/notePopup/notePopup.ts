@@ -5,13 +5,14 @@ import { Model } from '../../models/model.js'
 import { Note } from '../../models/note.js'
 import { NoteView } from '../../views/noteView.js'
 import { Popup } from '../popups.js'
-import { IdPopup, IdInput, IdTextarea, IdRange, IdLineStyle } from '../../controls/controls.js'
+import { IdPopup, IdInput, IdTextarea, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls.js'
 
 export class NotePopup extends Popup implements Subscriber {
   private note: Note;
   private ctrlText: IdInput;
   private ctrlLineStyle: IdLineStyle;
   private ctrlLinewidth: IdRange;
+  private ctrlColor: IdQuickColor;
 
   constructor() {
     super('notepopup', Handlebars.templates.notePopup, { colors: Values.COLORS_STANDARD });
@@ -19,22 +20,15 @@ export class NotePopup extends Popup implements Subscriber {
     Dispatcher.subscribe(this);
 
     new IdPopup('.js-basic', this.elem);
-    new IdPopup('.js-color', this.elem);
+    new IdPopup('.js-fill', this.elem);
     new IdPopup('.js-line', this.elem);
     new IdPopup('.js-position', this.elem);
-    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteNote(); });
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.delete(); });
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });    
 
     this.ctrlText = new IdInput('.js-text', this.elem).addEventListener('input', () =>  { this.note.text = this.ctrlText.value; });
 
-    let btns = this.elem.querySelectorAll('.js-color id-popup');
-    for(var i = 0; i < btns.length; i++) {
-      let popup = new IdPopup(btns[i] as HTMLElement);
-      let color = Values.COLORS_STANDARD[i];
-      popup.backgroundColor = color;
-      popup.addEventListener('click', () => { this.setColor(color); });
-    }
-
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.note.fillColor = this.ctrlColor.value; });
     this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.note.lineStyle = this.ctrlLineStyle.value; });
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.note.lineWidth = this.ctrlLinewidth.value; });
 
@@ -63,11 +57,7 @@ export class NotePopup extends Popup implements Subscriber {
     if(event == AppEvent.MouseMove || event == AppEvent.Select) this.toggle();
   }  
 
-  setColor(color: string) {
-    this.note.fillColor = color;
-  }
-
-  deleteNote() {
+  delete() {
     App.pushUndo();
     this.note.delete();
     this.toggle();

@@ -5,32 +5,26 @@ import { Model } from '../../models/model.js'
 import { Block } from '../../models/block.js'
 import { BlockView } from '../../views/blockView.js'
 import { Popup } from '../popups.js'
-import { IdPopup, IdInput, IdTextarea, IdRange, IdLineStyle } from '../../controls/controls.js'
+import { IdPopup, IdInput, IdTextarea, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls.js'
 
 export class BlockPopup extends Popup implements Subscriber {
   private block: Block;
   private ctrlLineStyle: IdLineStyle;
   private ctrlLinewidth: IdRange;
+  private ctrlColor: IdQuickColor;
 
   constructor() {
     super('blockpopup', Handlebars.templates.blockPopup, { colors: Values.COLORS_STANDARD });
 
     Dispatcher.subscribe(this);
 
-    new IdPopup('.js-color', this.elem);
+    new IdPopup('.js-fill', this.elem);
     new IdPopup('.js-line', this.elem);
     new IdPopup('.js-position', this.elem);
-    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteBlock(); });
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.delete(); });
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });    
 
-    let btns = this.elem.querySelectorAll('.js-color id-popup');
-    for(var i = 0; i < btns.length; i++) {
-      let popup = new IdPopup(btns[i] as HTMLElement);
-      let color = Values.COLORS_STANDARD[i];
-      popup.backgroundColor = color;
-      popup.addEventListener('click', () => { this.setColor(color); });
-    }
-
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.block.fillColor = this.ctrlColor.value; });
     this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.block.lineStyle = this.ctrlLineStyle.value; });
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.block.lineWidth = this.ctrlLinewidth.value; });
 
@@ -59,11 +53,7 @@ export class BlockPopup extends Popup implements Subscriber {
     if(event == AppEvent.MouseMove || event == AppEvent.Select) this.toggle();
   }  
 
-  setColor(color: string) {
-    this.block.fillColor = color;
-  }
-
-  deleteBlock() {
+  delete() {
     App.pushUndo();
     this.block.delete();
     this.toggle();

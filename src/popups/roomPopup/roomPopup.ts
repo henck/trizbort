@@ -5,7 +5,7 @@ import { Model } from '../../models/model.js'
 import { Room } from '../../models/room.js'
 import { RoomView } from '../../views/roomView.js'
 import { Popup } from '../popups.js'
-import { IdPopup, IdRange, IdInput, IdLineStyle } from '../../controls/controls.js';
+import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls/controls.js';
 
 export class RoomPopup extends Popup implements Subscriber {
   private room: Room;
@@ -13,6 +13,7 @@ export class RoomPopup extends Popup implements Subscriber {
   private ctrlSubtitle: IdInput;
   private ctrlLineStyle: IdLineStyle;
   private ctrlLinewidth: IdRange;
+  private ctrlColor: IdQuickColor;
 
   constructor() {
     super('roompopup', Handlebars.templates.roomPopup, { colors: Values.COLORS_STANDARD });
@@ -23,7 +24,7 @@ export class RoomPopup extends Popup implements Subscriber {
     new IdPopup('.js-fill', this.elem);
     new IdPopup('.js-border', this.elem);
     new IdPopup('.js-position', this.elem);
-    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteRoom(); });
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.delete(); });
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
@@ -48,15 +49,7 @@ export class RoomPopup extends Popup implements Subscriber {
 
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () =>  { this.room.name = this.ctrlName.value; });
     this.ctrlSubtitle = new IdInput('.js-subtitle', this.elem).addEventListener('input', () =>  { this.room.subtitle = this.ctrlSubtitle.value; });
-
-    let btns = this.elem.querySelectorAll('.js-fill id-popup');
-    for(var i = 0; i < btns.length; i++) {
-      let popup = new IdPopup(btns[i] as HTMLElement);
-      let color = Values.COLORS_STANDARD[i];
-      popup.backgroundColor = color;
-      popup.addEventListener('click', () => { this.setColor(color); });
-    }
-
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.room.fillColor = this.ctrlColor.value; });
     this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.room.lineStyle = this.ctrlLineStyle.value; });
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.room.lineWidth = this.ctrlLinewidth.value; });
   }
@@ -65,11 +58,7 @@ export class RoomPopup extends Popup implements Subscriber {
     if(event == AppEvent.MouseMove || event == AppEvent.Select) this.toggle();
   }  
 
-  setColor(color: string) {
-    this.room.fillColor = color;
-  }
-
-  deleteRoom() {
+  delete() {
     App.pushUndo();
     this.room.delete();
     this.toggle();

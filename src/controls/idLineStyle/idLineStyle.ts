@@ -8,7 +8,7 @@ export class IdLineStyle extends Control {
 
   // 
   // Create a new instance of IdLineStyle by providing a query selector that
-  // yields an id-check element.
+  // yields an id-linestyle element.
   //
   constructor(elem: HTMLElement|string, base?: HTMLElement) {
     super(elem, base);

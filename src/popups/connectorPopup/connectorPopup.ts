@@ -5,34 +5,27 @@ import { Model } from '../../models/model.js'
 import { Connector } from '../../models/connector.js'
 import { ConnectorView } from '../../views/connectorView.js'
 import { Popup } from '../popups.js'
-import { IdInput, IdRange, IdPopup,IdLineStyle } from '../../controls/controls.js'
+import { IdInput, IdRange, IdPopup,IdLineStyle, IdQuickColor } from '../../controls/controls.js'
 
 export class ConnectorPopup extends Popup implements Subscriber {
   private connector: Connector;
   private ctrlName: IdInput;
   private ctrlLineStyle: IdLineStyle;
   private ctrlLinewidth: IdRange;
+  private ctrlColor: IdQuickColor;
   
   constructor() {
     super('connectorpopup', Handlebars.templates.connectorPopup, { colors: Values.COLORS_STANDARD });
     Dispatcher.subscribe(this);
 
-    new IdPopup('.js-color', this.elem);
+    new IdPopup('.js-fill', this.elem);
     new IdPopup('.js-line', this.elem);
     new IdPopup('.js-basic', this.elem);
-    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.deleteConnector(); });
+    new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.delete(); });
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });
 
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () =>  { this.connector.name = this.ctrlName.value; });
-
-    let btns = this.elem.querySelectorAll('.js-color id-popup');
-    for(var i = 0; i < btns.length; i++) {
-      let popup = new IdPopup(btns[i] as HTMLElement);
-      let color = Values.COLORS_STANDARD[i];
-      popup.backgroundColor = color;
-      popup.addEventListener('click', () => { this.setColor(color); });
-    }
-
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.connector.color = this.ctrlColor.value; });
     this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.connector.lineStyle = this.ctrlLineStyle.value; });
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.connector.lineWidth = this.ctrlLinewidth.value; });    
   }
@@ -41,11 +34,7 @@ export class ConnectorPopup extends Popup implements Subscriber {
     if(event == AppEvent.MouseMove || event == AppEvent.Select) this.toggle();
   }  
 
-  setColor(color: string) {
-    this.connector.color = color;
-  }
-
-  deleteConnector() {
+  delete() {
     App.pushUndo();
     this.connector.delete();
     this.toggle();
