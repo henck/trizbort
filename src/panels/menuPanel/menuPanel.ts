@@ -7,6 +7,7 @@ import { MapJSON } from '../../io/mapJSON.js'
 import { Panel } from '../panels.js';
 import { MapSettings } from '../../models/mapSettings.js';
 import { Map } from '../../models/map.js';
+import { TadsGenerator } from '../../codegen/TadsGenerator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -120,7 +121,8 @@ export class MenuPanel extends Panel {
   }
 
   actionExportTads() {
-
+    let generator = new TadsGenerator(App.map);
+    generator.generate();
   }
 
 }
