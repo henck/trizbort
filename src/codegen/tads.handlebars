@@ -23,6 +23,10 @@ gameMain: GameMainDef
   {{ dirToStr this.dir }}: {{className this.room.name}}
   {{/each}}
 ;
+
+{{#each this.objects}}
+{{> tadsObject}} 
+{{/each}}
 {{/each}} 
 
 

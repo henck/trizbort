@@ -5,8 +5,7 @@ export class CodeGenerator {
 
   constructor(map: Map) {
     this.map = map;
-
-    Handlebars.registerHelper('className', this.className);
+    Handlebars.registerHelper('className', (str:string) => { return this.className(str); });
   }
 
   protected removeAccents(str: string): string {
@@ -20,6 +19,11 @@ export class CodeGenerator {
         return accentIndex !== -1 ? accentsOut[accentIndex] : letter;
       })
       .join("");
+  }
+
+  protected removeSpecialChars(str: string): string {
+    if (typeof str !== "string") return str; 
+    return str.replace(/[^\w\s]/gi, '');
   }
 
   protected camelCase(str: string): string {
@@ -39,6 +43,6 @@ export class CodeGenerator {
   }
 
   protected className(str: string) {
-    return this.capitalize(this.camelCase(this.removeAccents(str)));
+    return this.capitalize(this.camelCase(this.removeSpecialChars(this.removeAccents(str))));
   }  
 }

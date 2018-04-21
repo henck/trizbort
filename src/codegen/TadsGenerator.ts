@@ -2,19 +2,21 @@ import { Map } from "../models/map";
 import { Room } from "../models/room";
 import { Connector } from "../models/connector";
 import { Model } from "../models/model";
-import { Direction } from "../enums/enums";
+import { Direction, ObjectKind } from "../enums/enums";
 import { CodeGenerator } from "./CodeGenerator";
 
 export class TadsGenerator extends CodeGenerator {
   
   constructor(map: Map) {
     super(map);
-    Handlebars.registerHelper('dirToStr', this.dirToStr); 
+    Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); }); 
+    Handlebars.registerHelper('kindToStr', (kind:ObjectKind) => { return this.kindToStr(kind); }); 
+    Handlebars.registerPartial('tadsObject', Handlebars.templates.tadsObject);
   }
 
-  protected dirToStr(dir: Direction) {
+  protected dirToStr(dir: Direction): string {
     switch(dir) {
-      case Direction.N:   return "north";;
+      case Direction.N:   return "north";
       case Direction.NNE: return "northnortheast";
       case Direction.NE:  return "northeast";
       case Direction.ENE: return "eastnortheast";
@@ -32,6 +34,15 @@ export class TadsGenerator extends CodeGenerator {
       case Direction.NNW: return "northnorthwest";         
       default: return "";
     }    
+  }
+
+  protected kindToStr(dir: ObjectKind): string {
+    switch(dir) {
+      case ObjectKind.Actor:   return "Actor";
+      case ObjectKind.Item:   return "Item";
+      case ObjectKind.Scenery:   return "Decoration";
+      default: return "";
+    }     
   }
 
   public generate() {
