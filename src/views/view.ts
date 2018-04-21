@@ -15,6 +15,9 @@ export class View {
   draw(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
   }
 
+  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  }  
+
   drawHandles(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
   }  
 
@@ -31,6 +34,10 @@ export class View {
   }
 
   isIn(x: number, y: number, width: number, height: number) {
+    return false;
+  }
+
+  isPointIn(x: number, y: number) {
     return false;
   }
 }

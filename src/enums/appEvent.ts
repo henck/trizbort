@@ -3,5 +3,6 @@ export enum AppEvent {
   MouseMove,
   Delete,
   Load,
+  Refresh,
   More
 }

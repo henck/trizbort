@@ -152,13 +152,11 @@ export class ConnectorView extends View {
         let cp1x = startX + Direction.toCardinalVector(this.connector.startDir).x * dist;
         let cp1y = startY + Direction.toCardinalVector(this.connector.startDir).y * dist;      
         canvas.quadraticCurveTo(cp1x, cp1y, endX, endY);
-        for(let t = 0; t < 1; t = t + 0.1) {
-          var {x:arrow1x, y:arrow1y} = canvas.getQuadraticXY(0.1, startX, startY, cp1x, cp1y, endX, endY);
-          var arrow1a = canvas.getQuadraticAngle(0.1, startX, startY, cp1x, cp1y, endX, endY);
-          var {x:arrow2x, y:arrow2y} = canvas.getQuadraticXY(0.9, startX, startY, cp1x, cp1y, endX, endY);
-          var arrow2a = canvas.getQuadraticAngle(0.9, startX, startY, cp1x, cp1y, endX, endY);
-          var {x:centerx, y:centery} = canvas.getQuadraticXY(0.5, startX, startY, cp1x, cp1y, endX, endY);
-        }        
+        var {x:arrow1x, y:arrow1y} = canvas.getQuadraticXY(0.1, startX, startY, cp1x, cp1y, endX, endY);
+        var arrow1a = canvas.getQuadraticAngle(0.1, startX, startY, cp1x, cp1y, endX, endY);
+        var {x:arrow2x, y:arrow2y} = canvas.getQuadraticXY(0.9, startX, startY, cp1x, cp1y, endX, endY);
+        var arrow2a = canvas.getQuadraticAngle(0.9, startX, startY, cp1x, cp1y, endX, endY);
+        var {x:centerx, y:centery} = canvas.getQuadraticXY(0.5, startX, startY, cp1x, cp1y, endX, endY);
       } else {
         canvas.lineTo(endX, endY);
       }
@@ -237,6 +235,111 @@ export class ConnectorView extends View {
 
     canvas.restore();
   }
+
+  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+    var dockStartX: number = this.connector.startX;
+    var dockStartY: number = this.connector.startY;
+    var dockEndX: number = this.connector.endX;
+    var dockEndY: number = this.connector.endY;
+
+    var startX = this.connector.startX;
+    var startY = this.connector.startY;      
+    var endX = this.connector.endX;
+    var endY = this.connector.endY;
+
+    canvas
+      .save()
+      .beginPath();
+
+    // There are 4 possibilities:
+    // - undocked to undocked: can only be a straight line
+    // - docked to undocked: can be quadratic or straight
+    // - undocked to docked: can be quadratic or straight
+    // - docked to docked: can be bezier or straight
+
+    // Calculate (x,y) coordinates of dockStart, start, end and dockEnd
+
+    // Undocked -> Undocked
+    if(!this.connector.dockStart && !this.connector.dockEnd) {
+    }
+    // Docked -> Docked
+    else if(this.connector.dockStart && this.connector.dockEnd) {
+      var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);
+      var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);
+    }    
+    // Docked -> Undocked
+    else if(this.connector.dockStart && !this.connector.dockEnd) {
+      var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);    
+    }
+    // Undocked -> Docked
+    else {
+      var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);      
+    } 
+
+    // Docked -> undocked
+    if(!this.connector.dockStart && !this.connector.dockEnd) {
+      canvas.moveTo(startX, startY);
+      canvas.lineTo(endX, endY);
+    }
+
+    // Docked to docked:
+    else if(this.connector.dockStart && this.connector.dockEnd) {
+      canvas.moveTo(dockStartX, dockStartY);
+      canvas.lineTo(startX, startY);
+      if(this.connector.isCurve) {
+        let dist = Math.sqrt((endX-startX)*(endX-startX) + (endY-startY)*(endY-startY)) * App.map.settings.connector.curveStrength;
+        let cp1x = startX + Direction.toCardinalVector(this.connector.startDir).x * dist;
+        let cp1y = startY + Direction.toCardinalVector(this.connector.startDir).y * dist;
+        let cp2x = endX + Direction.toCardinalVector(this.connector.endDir).x * dist;
+        let cp2y = endY + Direction.toCardinalVector(this.connector.endDir).y * dist;
+        canvas.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+      } else {
+        canvas.lineTo(endX, endY);
+      }
+      canvas.lineTo(dockEndX, dockEndY);    
+    }
+    
+    // Docked to undocked:
+    else if(this.connector.dockStart && !this.connector.dockEnd) {
+      canvas.moveTo(dockStartX, dockStartY);
+      canvas.lineTo(startX, startY);
+
+      if(this.connector.isCurve) {
+        let dist = Math.sqrt((endX-startX)*(endX-startX) + (endY-startY)*(endY-startY)) * App.map.settings.connector.curveStrength;
+        let cp1x = startX + Direction.toCardinalVector(this.connector.startDir).x * dist;
+        let cp1y = startY + Direction.toCardinalVector(this.connector.startDir).y * dist;      
+        canvas.quadraticCurveTo(cp1x, cp1y, endX, endY);
+      } else {
+        canvas.lineTo(endX, endY);
+      }
+    }
+
+    // Undocked to docked:
+    else {
+      canvas.moveTo(startX, startY);
+
+      if(this.connector.isCurve) {
+        let dist = Math.sqrt((endX-startX)*(endX-startX) + (endY-startY)*(endY-startY)) * App.map.settings.connector.curveStrength;
+        let cp1x = endX + Direction.toCardinalVector(this.connector.endDir).x * dist;
+        let cp1y = endY + Direction.toCardinalVector(this.connector.endDir).y * dist;      
+        canvas.quadraticCurveTo(cp1x, cp1y, endX, endY);
+      } else {
+        canvas.lineTo(endX, endY);
+      }
+
+      canvas.lineTo(dockEndX, dockEndY);
+    }
+
+    // Stroke path with wide, nearly transparent background (for selection purposes):
+    canvas
+      .lineWidth(20)
+      .lineCap(CapStyle.Round)
+      .lineJoin(JoinStyle.Round)
+      .strokeStyle(Values.COLOR_TRANSPARENT)
+      .stroke();
+
+    canvas.restore();
+  }  
 
   drawHandles(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {  
     if(!this.selected || selectionSize != 1) return;

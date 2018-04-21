@@ -29,22 +29,22 @@ export class RoomPopup extends Popup implements Subscriber {
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
       this.room.bringToFront();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-forward').addEventListener('click', () => { 
       this.room.bringForward();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-backward').addEventListener('click', () => { 
       this.room.sendBackward();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-back').addEventListener('click', () => { 
       this.room.sendToBack();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () =>  { this.room.name = this.ctrlName.value; });

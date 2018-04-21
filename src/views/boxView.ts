@@ -117,7 +117,7 @@ export class BoxView extends View {
     return undefined;
   }  
 
-  // Used to determine if a Room is side a selection area. For simplicity,
+  // Used to determine if a Room is inside a selection area. For simplicity,
   // a rectangular approximation of the Room is used.
   isIn(x: number, y: number, width: number, height: number) {
     let r = new Rect(x, y, width, height);
@@ -126,7 +126,12 @@ export class BoxView extends View {
     if(r.contains(this.box.x, this.box.y + this.box.height)) return true;
     if(r.contains(this.box.x + this.box.width, this.box.y + this.box.height)) return true;
     return false;
-  }  
+  }
+
+  isPointIn(x: number, y: number) {
+    return (x >= this.box.x && x <= this.box.x + this.box.width
+         && y >= this.box.y && y <= this.box.y + this.box.height);
+  }
 
   // Resize box in given direction toward (x, y).
   // Clamps on minimum box width and height.

@@ -64,6 +64,7 @@ export class Editor implements Subscriber {
     this.htmlCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
     this.htmlCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
     this.htmlCanvas.addEventListener('wheel', (e:MouseWheelEvent) => { this.canvasMouseWheel(e) } );    
+    this.htmlCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
 
     document.getElementById('control-center').addEventListener('click', () => { this.cmdCenterView(); });
     document.getElementById('control-zoomin').addEventListener('click', () => { this.cmdZoomIn(); });
@@ -146,6 +147,13 @@ export class Editor implements Subscriber {
         }
       }
     }
+    if(event == AppEvent.Refresh) {
+      App.selection.unselectAll();
+      this.views.length = 0;
+      App.map.elements.forEach((model) => {
+        this.views.push(ViewFactory.create(model));
+      });
+    }
     if(event == AppEvent.Load) {
       App.selection.unselectAll();
       this.views.length = 0;
@@ -153,13 +161,14 @@ export class Editor implements Subscriber {
         this.views.push(ViewFactory.create(model));
       });
       this.cmdCenterView();
-    }
+      this.cmdZoomNormal();
+    }    
   }  
 
   makeTestMap() {
     let startRoom = new Room(App.map.settings);
     App.map.add(startRoom);
-    startRoom.name = 'hello';
+    startRoom.name = 'hello world this is a very long text';
     startRoom.x = 0;
     startRoom.y = 0;
     this.views.push(ViewFactory.create(startRoom));
@@ -259,7 +268,7 @@ export class Editor implements Subscriber {
       .translate(-x, -y);         // Translate canvas to match world mouse coordinates
     
     // Draw the view:
-    view.draw(this.hitTestCanvas, 0, 0, App.selection.size(), this.hover == view);
+    view.drawSimple(this.hitTestCanvas, 0, 0, App.selection.size(), this.hover == view);
 
     this.hitTestCanvas.restore();
     
@@ -318,6 +327,24 @@ export class Editor implements Subscriber {
       }
     }    
     return undefined;
+  }
+
+  canvasMouseDoubleClick(e: MouseEvent) {
+    // See if a view was doubleclicked. If not, do nothing.
+    let { x, y } = this.findMouseCoordinates(e);
+    let view = this.findViewByCoordinates(x, y);
+    if(view === undefined) return;
+
+    // Select the view.
+    App.selection.unselectAll();
+    App.selection.add([view]);
+    view.select();
+
+    // Some HTML may be selected by the double-click. Try to unselect it.
+    window.getSelection().removeAllRanges();
+
+    // Call up the view's panel.
+    this.cmdShowPanel();
   }
 
   canvasMouseDown(e: MouseEvent) {
@@ -469,9 +496,13 @@ export class Editor implements Subscriber {
     this.mouseY = y;
 
     // Update which view is currently hovered over:
-    let view = this.findViewByCoordinates(x, y);
-    if(view != this.hover) {
-      this.hover = view;
+    // (but not while scrolling, that slows things down).
+    let view = undefined;
+    if(App.mouseMode != MouseMode.Scroll) {
+      view = this.findViewByCoordinates(x, y);
+      if(view != this.hover) {
+        this.hover = view;
+      }
     }
 
     // We do different things for different mouse modes.

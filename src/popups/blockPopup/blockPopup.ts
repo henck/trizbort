@@ -30,22 +30,22 @@ export class BlockPopup extends Popup implements Subscriber {
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
       this.block.bringToFront();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-forward').addEventListener('click', () => { 
       this.block.bringForward();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-backward').addEventListener('click', () => { 
       this.block.sendBackward();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-back').addEventListener('click', () => { 
       this.block.sendToBack();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });    
   }
 

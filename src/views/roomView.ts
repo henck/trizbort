@@ -3,7 +3,7 @@ import { BoxView } from './boxView.js'
 import { Rect } from '../util/util.js'
 import { Room } from '../models/room.js'
 import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
-import { IScreen } from '../drawing/IScreen.js';
+import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen.js';
 
 export class RoomView extends BoxView {
   room: Room;
@@ -59,6 +59,7 @@ export class RoomView extends BoxView {
       .fill();
 
     // Darkness stripe
+    canvas.save(); // before clip
     canvas.clip();
     this.makeShape(canvas, false);
     if(this.room.dark) {
@@ -91,6 +92,35 @@ export class RoomView extends BoxView {
     canvas
       .fillStyle(this.room.subtitle)
       .drawTextBottom(0, 0, this.room.width, this.room.height - 5, 11.8, 'Roboto', this.room.subtitle);
+
+    canvas.restore(); // remove clip
+
+    // Objects in room
+    let x = this.room.width * 0.8;
+    let y = this.room.height + 20;
+    this.room.objects.forEach((obj) => {
+      canvas
+        .fillStyle(this.room.nameColor)
+        .fillText(obj.name, x, y, '11.8 Roboto', TextAlign.Left, TextBaseline.Middle);
+      y += 14;
+    });
+
+    canvas.restore();
+  }
+
+  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+
+    // Translate to room's coordinates, so we can offset everything from (0,0).
+    canvas
+      .save()
+      .translate(this.room.x, this.room.y);
+
+    this.makeShape(canvas, true);
+    
+    // Nearly transparent background (for selection purposes):
+    canvas
+      .fillStyle(Values.COLOR_TRANSPARENT)
+      .fill();  
 
     canvas.restore();
   }

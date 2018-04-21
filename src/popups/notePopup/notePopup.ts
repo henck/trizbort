@@ -34,22 +34,22 @@ export class NotePopup extends Popup implements Subscriber {
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
       this.note.bringToFront();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-forward').addEventListener('click', () => { 
       this.note.bringForward();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-backward').addEventListener('click', () => { 
       this.note.sendBackward();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });
 
     this.elem.querySelector('.js-back').addEventListener('click', () => { 
       this.note.sendToBack();
-      Dispatcher.notify(AppEvent.Load, null);
+      Dispatcher.notify(AppEvent.Refresh, null);
     });    
   }
 

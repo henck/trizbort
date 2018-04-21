@@ -62,7 +62,7 @@ export class App {
     if(this.undoStack.length == 0) return;
     let json = this.undoStack.pop();
     this.map = MapJSON.load(json);
-    Dispatcher.notify(AppEvent.Load, null);
+    Dispatcher.notify(AppEvent.Refresh, null);
   }
 }
 
