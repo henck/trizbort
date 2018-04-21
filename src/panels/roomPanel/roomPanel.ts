@@ -6,6 +6,8 @@ import { App } from '../../app.js';
 import { RoomShape } from '../../enums/enums.js';
 import { Panel } from '../panels.js';
 import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape } from '../../controls/controls.js';
+import { Obj } from '../../models/obj.js';
+import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor.js';
 
 export class RoomPanel extends Panel implements Subscriber {
   private room: Room;
@@ -21,6 +23,7 @@ export class RoomPanel extends Panel implements Subscriber {
   private colorType: string;
   private colorButtons: Array<IdPopup>;
   private ctrlShape: IdShape;
+  private objList: HTMLElement;
 
   constructor() {
     super('roompanel', Handlebars.templates.roomPanel, {});
@@ -46,6 +49,41 @@ export class RoomPanel extends Panel implements Subscriber {
       this.colorButtons.push(popup);
       buttons[i].addEventListener('click', () => { this.onColorButton(popup); });
     }
+
+    this.objList = this.elem.querySelector('.js-object-list');
+    this.elem.querySelector('.js-add-object').addEventListener('click', () => { this.addObject(); });
+  }
+
+  addObject() {
+    let obj = new Obj();
+    this.room.objects.push(obj);
+    this.refreshObjList();
+  }
+
+  removeObject(obj: Obj) {
+    let idx = this.room.objects.indexOf(obj);
+    this.room.objects.splice(idx, 1);
+    this.refreshObjList();
+  }
+
+  refreshObjList() {
+    this.objList.innerHTML = "";
+    if(this.room.objects.length == 0) {
+      this.objList.innerHTML = "<p>There are no objects in this location.</p>";
+    }
+    else {
+      this.room.objects.forEach((obj) => {
+        this.createObjEditor(obj);
+      });
+    }
+  }
+
+  createObjEditor(obj: Obj) {
+    let div = document.createElement('div');
+    this.objList.appendChild(div);
+    let editor = new IdObjectEditor(div);
+    editor.value = obj;
+    editor.addEventListener('delete', () => { this.removeObject(obj); });
   }
 
   notify(event: AppEvent, obj: any) {
@@ -70,6 +108,8 @@ export class RoomPanel extends Panel implements Subscriber {
         this.ctrlDescription.value = room.description;
         // Set color from currently selected color button:
         this.setColor();   
+        // Place objects in object list
+        this.refreshObjList();
       }
       else {
         this.close();

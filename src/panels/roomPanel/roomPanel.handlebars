@@ -4,6 +4,7 @@
 
 <div class="tabs"> 
   <div class="tab selected" data-body="tab-room-info">Info</div>
+  <div class="tab" data-body="tab-room-objects">Objects</div>
   <div class="tab" data-body="tab-room-color">Color</div>
 </div>
 
@@ -16,6 +17,13 @@
   <id-shape class="js-shape" data-label="Room shape"></id-shape>
   <id-range class="js-rounding" data-min="0" data-max="100" data-label="Rectangle rounding"></id-range>
   <id-textarea class="js-description" data-label="Room description"></id-textarea>
+</div>
+
+<div class="tab-body" id="tab-room-objects">
+  <div class="js-object-list"></div> 
+  <div style="display: flex; justify-content: flex-end">
+    <button class="btn btn-primary js-add-object">Add object</button>
+  </div>
 </div>
 
 <div class="tab-body" id="tab-room-color">
