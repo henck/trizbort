@@ -2,6 +2,7 @@ import { Model } from './model.js'
 import { Room } from './room.js'
 import { Values } from '../enums/enums.js'
 import { MapSettings } from './mapSettings.js';
+import { Connector } from './connector.js';
 
 export class Map {
   title: string;
@@ -71,5 +72,12 @@ export class Map {
     let idx = this.elements.indexOf(model);
     this.elements.splice(idx, 1);
     this.elements.unshift(model);  
+  }
+
+  // 
+  // List of rooms on the map.
+  // 
+  get rooms(): Array<Room> {
+    return this.elements.filter((elem) => { return elem instanceof Room; }) as Array<Room>;
   }
 }

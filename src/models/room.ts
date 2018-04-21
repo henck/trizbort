@@ -5,6 +5,7 @@ import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
 import { Xml } from '../io/xmlMap';
 import { MapSettings } from './mapSettings.js';
 import { Connector } from './connector.js';
+import { Obj } from './obj.js';
 
 export class Room extends Box {
   type: string;
@@ -17,6 +18,8 @@ export class Room extends Box {
   _nameColor: string;
   _subtitleColor: string;
 
+  objects: Array<Obj>;
+
   constructor(settings: MapSettings) {
     super(settings);
     this.type = "Room";
@@ -25,9 +28,9 @@ export class Room extends Box {
     this.description = '';
     this.dark = false;
     this.endroom = false;
-
     this.width = settings.room.width;
     this.height = settings.room.height;
+    this.objects = new Array<Obj>();
   }
 
   get nameColor() {
@@ -122,5 +125,32 @@ export class Room extends Box {
 
   clone(): Model {
     return this.cloneToTarget(new Room(new MapSettings()));
-  }  
+  }
+  
+  // 
+  // List of connectors that connect this room to 
+  // another room.
+  // 
+  get connectors(): Array<Connector> {
+    return this.map.elements.filter((conn) => { 
+      return conn instanceof Connector 
+          && conn.dockStart 
+          && conn.dockEnd 
+          && (conn.dockStart == this || conn.dockEnd == this); }) as Array<Connector>;
+  }
+
+  // 
+  // List of Direction, Room pairs representing connections
+  // from this room.
+  // 
+  get connections(): Array<{ dir: Direction, room: Room }> {
+    let connectors = this.connectors;
+    return connectors.map((conn) => { 
+      if(conn.dockStart == this) {
+        return {dir: conn.startDir, room: conn.dockEnd};
+      } else { 
+        return {dir: conn.endDir, room: conn.dockStart};
+      }
+    });
+  }
 }
