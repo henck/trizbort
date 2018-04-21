@@ -24,6 +24,7 @@ export class RoomPanel extends Panel implements Subscriber {
   private colorButtons: Array<IdPopup>;
   private ctrlShape: IdShape;
   private objList: HTMLElement;
+  private editors: Array<IdObjectEditor>;
 
   constructor() {
     super('roompanel', Handlebars.templates.roomPanel, {});
@@ -51,39 +52,98 @@ export class RoomPanel extends Panel implements Subscriber {
     }
 
     this.objList = this.elem.querySelector('.js-object-list');
-    this.elem.querySelector('.js-add-object').addEventListener('click', () => { this.addObject(); });
+    this.elem.querySelector('.js-add-object').addEventListener('click', () => { this.newObject(); });
   }
 
-  addObject() {
+  newObject() {
     let obj = new Obj();
     this.room.objects.push(obj);
     this.refreshObjList();
   }
 
+  // 
+  // Find the array in which the specified Obj lives.
+  //
+  findObjList(obj: Obj, src?: Array<Obj>): Array<Obj> {
+    // For recursion:
+    if(!src) src = this.room.objects;
+    // Is obj in the current list? Then return the list.
+    let idx = src.indexOf(obj);
+    if(idx != -1) return src;
+    // Check the sublists:
+    for(let i = 0; i < src.length; i++) {
+      let lst = this.findObjList(obj, src[i].content);
+      if(lst != null) return lst;
+    }
+    // Object not found.
+    return null;
+  }
+
+  isChildOf(parent: Obj, child: Obj) {
+    let idx = parent.content.indexOf(child);
+    if(idx != -1) return true;
+    for(let i = 0; i < parent.content.length; i++) {
+      if(this.isChildOf(parent.content[i], child)) return true;
+    }
+    return false;
+  }
+
   removeObject(obj: Obj) {
-    let idx = this.room.objects.indexOf(obj);
-    this.room.objects.splice(idx, 1);
-    this.refreshObjList();
+    let lst = this.findObjList(obj);
+    let idx = lst.indexOf(obj);
+    lst.splice(idx, 1);
+  }
+
+  addObjectAfter(obj: Obj, afterObj: Obj) {
+    // Is the dragged object a child of the "after" object? Then abort.
+    if(this.isChildOf(obj, afterObj)) return;
+
+    this.removeObject(obj);
+
+    // Find list and position of "after" object.
+    let lst = this.findObjList(afterObj);
+    let idx = lst.indexOf(afterObj);
+
+    // Add object after "after" object.
+    lst.splice(idx + 1, 0, obj);
+  }
+
+  addObjectIn(obj: Obj, inObj: Obj) {
+    // Is the dragged object a child of the "in" object? Then abort.
+    if(this.isChildOf(obj, inObj)) return;
+
+    this.removeObject(obj);
+    inObj.content.push(obj);
   }
 
   refreshObjList() {
     this.objList.innerHTML = "";
     if(this.room.objects.length == 0) {
       this.objList.innerHTML = "<p>There are no objects in this location.</p>";
-    }
+    } 
     else {
-      this.room.objects.forEach((obj) => {
-        this.createObjEditor(obj);
-      });
+      this.addEditors(this.room.objects, 0);
     }
   }
 
-  createObjEditor(obj: Obj) {
-    let div = document.createElement('div');
+  addEditors(objs: Array<Obj>, indent: number) {
+    objs.forEach((obj) => {
+      this.createObjEditor(obj, indent);
+      this.addEditors(obj.content, indent + 1);
+    });
+  }
+
+  createObjEditor(obj: Obj, indent: number) {
+    let div:HTMLElement = document.createElement('div');
+    div.classList.add('draggable');
+    div.style.marginLeft = `${indent*40}px`;
+    div.draggable = true;
     this.objList.appendChild(div);
     let editor = new IdObjectEditor(div);
     editor.value = obj;
-    editor.addEventListener('delete', () => { this.removeObject(obj); });
+    editor.addEventListener('delete', () => { this.removeObject(obj); this.refreshObjList(); });
+    editor.addEventListener('drop', (e:CustomEvent) => { this.addObjectAfter(e.detail, obj); this.refreshObjList(); });
+    editor.addEventListener('dropAsChild', (e:CustomEvent) => { this.addObjectIn(e.detail, obj); this.refreshObjList(); });
   }
 
   notify(event: AppEvent, obj: any) {

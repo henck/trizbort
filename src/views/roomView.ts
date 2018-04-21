@@ -4,6 +4,7 @@ import { Rect } from '../util/util.js'
 import { Room } from '../models/room.js'
 import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
 import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen.js';
+import { Obj } from '../models/obj.js';
 
 export class RoomView extends BoxView {
   room: Room;
@@ -98,14 +99,18 @@ export class RoomView extends BoxView {
     // Objects in room
     let x = this.room.width * 0.8;
     let y = this.room.height + 20;
-    this.room.objects.forEach((obj) => {
-      canvas
-        .fillStyle(this.room.nameColor)
-        .fillText(obj.name, x, y, '11.8 Roboto', TextAlign.Left, TextBaseline.Middle);
-      y += 14;
-    });
+    canvas.fillStyle(this.room.nameColor)
+    this.drawObjects(canvas, x, y, this.room.objects);
 
     canvas.restore();
+  }
+
+  drawObjects(canvas: IScreen, x: number, y: number, objList: Array<Obj>) {
+    objList.forEach((obj) => { 
+      canvas.fillText(obj.name, x, y, '11.8 Roboto', TextAlign.Left, TextBaseline.Middle);
+      y += 14;
+      this.drawObjects(canvas, x + 10, y, obj.content);
+    });
   }
 
   drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
