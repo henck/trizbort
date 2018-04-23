@@ -49,18 +49,11 @@ export class ConnectorPopup extends Popup implements Subscriber {
       this.connector = (App.selection.first().getModel() as Connector);
       let x = this.connector.dockStart ? this.connector.dockStart.x : this.connector.startX;
       let y = this.connector.dockStart ? this.connector.dockStart.y : this.connector.startY;
-      this.elem.style.left = App.canvas.offsetWidth / 2 + App.centerX + x * App.zoom + "px";
-      this.elem.style.top = App.canvas.offsetHeight / 2 + App.centerY + y - 64 + "px";
-      this.elem.style.display = 'flex';
-      // Close any open overlays inside popup.
-      let overlays = this.elem.querySelectorAll(".popup-overlay");
-      for(let i = 0; i < overlays.length; i++) {
-        (overlays[i] as HTMLElement).style.display = 'none';
-      }
+      this.showAt(x, y);
       this.ctrlName.value = this.connector.name;
       this.ctrlLinewidth.value = this.connector.lineWidth;
     } else {
-      this.elem.style.display = 'none';
+      this.hide();
     }
   }  
 }

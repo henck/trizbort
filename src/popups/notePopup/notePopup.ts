@@ -70,18 +70,11 @@ export class NotePopup extends Popup implements Subscriber {
   toggle() {
     if(App.selection.isSingle() && App.selection.first() instanceof NoteView && App.mouseMode == MouseMode.None) {
       this.note = (App.selection.first().getModel() as Note);
-      this.elem.style.left = App.canvas.offsetWidth / 2 + App.centerX + this.note.x * App.zoom + "px";
-      this.elem.style.top = App.canvas.offsetHeight / 2 + App.centerY + this.note.y - 64 + "px";
-      this.elem.style.display = 'flex';
-      // Close any open overlays inside popup.
-      let overlays = this.elem.querySelectorAll(".popup-overlay");
-      for(let i = 0; i < overlays.length; i++) {
-        (overlays[i] as HTMLElement).style.display = 'none';
-      }
+      this.showAt(this.note.x, this.note.y);
       this.ctrlText.value = this.note.text;
       this.ctrlLinewidth.value = this.note.lineWidth;
     } else {
-      this.elem.style.display = 'none';
+      this.hide();
     }
   }  
 }

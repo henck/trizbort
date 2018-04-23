@@ -66,17 +66,10 @@ export class BlockPopup extends Popup implements Subscriber {
   toggle() {
     if(App.selection.isSingle() && App.selection.first() instanceof BlockView && App.mouseMode == MouseMode.None) {
       this.block = (App.selection.first().getModel() as Block);
-      this.elem.style.left = App.canvas.offsetWidth / 2 + App.centerX + this.block.x * App.zoom + "px";
-      this.elem.style.top = App.canvas.offsetHeight / 2 + App.centerY + this.block.y - 64 + "px";
-      this.elem.style.display = 'flex';
-      // Close any open overlays inside popup.
-      let overlays = this.elem.querySelectorAll(".popup-overlay");
-      for(let i = 0; i < overlays.length; i++) {
-        (overlays[i] as HTMLElement).style.display = 'none';
-      }
+      this.showAt(this.block.x, this.block.y);
       this.ctrlLinewidth.value = this.block.lineWidth;
     } else {
-      this.elem.style.display = 'none';
+      this.hide();
     }
   }  
 }
