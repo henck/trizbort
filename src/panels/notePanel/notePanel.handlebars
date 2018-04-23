@@ -4,7 +4,7 @@
 
 <div class="tabs">
   <div class="tab selected" data-body="tab-note-info">Info</div>
-  <div class="tab" data-body="tab-note-color">Color</div>
+  <div class="tab" data-body="tab-note-style">Style</div>
 </div>
 
 <div class="tab-body" id="tab-note-info">
@@ -13,7 +13,10 @@
   <id-textarea class="js-text" data-label="Note text"></id-textarea>
 </div>
 
-<div class="tab-body" id="tab-note-color">
+<div class="tab-body" id="tab-note-style">
+  <id-linestyle class="js-linestyle" data-none="true" data-label="Border style"></id-linestyle>
+  <id-range class="js-linewidth" data-min="1" data-max="10"></id-range>  
+  <label>Colors</label>
   <div style="display: flex">
     <div style="display: flex; flex-direction: column; flex-wrap: wrap">
       <id-popup title="Note fill" class="colortype selected" data-type="fill">

@@ -5,7 +5,7 @@ import { Block } from '../../models/block.js';
 import { App } from '../../app.js';
 import { RoomShape } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape } from '../../controls/controls.js';
+import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls.js';
 
 export class BlockPanel extends Panel implements Subscriber {
   private block: Block;
@@ -13,6 +13,8 @@ export class BlockPanel extends Panel implements Subscriber {
   private ctrlRounding: IdRange;
   private colorPicker: IdColorPicker;
   private ctrlShape: IdShape;
+  private ctrlLineStyle: IdLineStyle;
+  private ctrlLineWidth: IdRange;  
   private colorType: string;
   private colorButtons: Array<IdPopup>;
 
@@ -23,6 +25,8 @@ export class BlockPanel extends Panel implements Subscriber {
     this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
     this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.block.shape = this.ctrlShape.value; });
     this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.block.rounding = this.ctrlRounding.value; });
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.block.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlLineWidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.block.lineWidth = this.ctrlLineWidth.value; });
 
     // Find color buttons:
     let buttons = this.elem.querySelectorAll(`.colortype`);
@@ -49,6 +53,7 @@ export class BlockPanel extends Panel implements Subscriber {
     
         // Show block data.
         this.ctrlRounding.value = block.rounding;
+        this.ctrlLineWidth.value = block.lineWidth;
         // Set color from currently selected color button:
         this.setColor();
       }

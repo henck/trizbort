@@ -5,7 +5,7 @@ import { Note } from '../../models/note.js';
 import { App } from '../../app.js';
 import { RoomShape } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape } from '../../controls/controls.js';
+import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls.js';
 
 export class NotePanel extends Panel implements Subscriber {
   private note: Note;
@@ -14,6 +14,8 @@ export class NotePanel extends Panel implements Subscriber {
   private ctrlRounding: IdRange;
   private colorPicker: IdColorPicker;
   private ctrlShape: IdShape;
+  private ctrlLineStyle: IdLineStyle;
+  private ctrlLineWidth: IdRange;  
   private colorType: string;
   private colorButtons: Array<IdPopup>;
 
@@ -23,7 +25,8 @@ export class NotePanel extends Panel implements Subscriber {
 
     this.ctrlText = new IdTextarea('.js-text', this.elem).addEventListener('input', () => { this.note.text = this.ctrlText.value; });    
     this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
-
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.note.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlLineWidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.note.lineWidth = this.ctrlLineWidth.value; });
     this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.note.shape = this.ctrlShape.value; });
     this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.note.rounding = this.ctrlRounding.value; });
 
@@ -50,8 +53,9 @@ export class NotePanel extends Panel implements Subscriber {
         this.note = note;
         this.open();
     
-        // Show room data.
+        // Show note data.
         this.ctrlText.value = note.text; 
+        this.ctrlLineWidth.value = note.lineWidth;
         this.ctrlRounding.value = note.rounding;
         // Set color from currently selected color button:
         this.setColor();

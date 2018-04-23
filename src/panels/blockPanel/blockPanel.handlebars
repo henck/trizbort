@@ -4,7 +4,7 @@
 
 <div class="tabs">
   <div class="tab selected" data-body="tab-block-info">Info</div>
-  <div class="tab" data-body="tab-block-color">Color</div>
+  <div class="tab" data-body="tab-block-style">Style</div>
 </div>
 
 <div class="tab-body" id="tab-block-info">
@@ -12,7 +12,10 @@
   <id-range class="js-rounding" data-min="0" data-max="100" data-label="Rectangle rounding"></id-range>
 </div>
 
-<div class="tab-body" id="tab-block-color">
+<div class="tab-body" id="tab-block-style">
+  <id-linestyle class="js-linestyle" data-none="true" data-label="Border style"></id-linestyle>
+  <id-range class="js-linewidth" data-min="1" data-max="10"></id-range>  
+  <label>Colors</label>
   <div style="display: flex">
     <div style="display: flex; flex-direction: column; flex-wrap: wrap">
       <id-popup title="Block fill" class="colortype selected" data-type="fill">

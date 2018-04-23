@@ -5,7 +5,7 @@
 <div class="tabs"> 
   <div class="tab selected" data-body="tab-room-info">Info</div>
   <div class="tab" data-body="tab-room-objects">Objects</div>
-  <div class="tab" data-body="tab-room-color">Color</div>
+  <div class="tab" data-body="tab-room-style">Style</div>
 </div>
 
 <div class="tab-body" id="tab-room-info">
@@ -26,7 +26,10 @@
   </div>
 </div>
 
-<div class="tab-body" id="tab-room-color">
+<div class="tab-body" id="tab-room-style">
+  <id-linestyle class="js-linestyle" data-none="true" data-label="Border style"></id-linestyle>
+  <id-range class="js-linewidth" data-min="1" data-max="10"></id-range>
+  <label>Colors</label>
   <div style="display: flex">
     <div style="display: flex; flex-direction: column; flex-wrap: wrap">
       <id-popup title="Room fill" class="colortype selected" data-type="fill">

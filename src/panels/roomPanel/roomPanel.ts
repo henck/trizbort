@@ -5,7 +5,7 @@ import { Room } from '../../models/room.js';
 import { App } from '../../app.js';
 import { RoomShape } from '../../enums/enums.js';
 import { Panel } from '../panels.js';
-import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape } from '../../controls/controls.js';
+import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls.js';
 import { Obj } from '../../models/obj.js';
 import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor.js';
 
@@ -19,6 +19,8 @@ export class RoomPanel extends Panel implements Subscriber {
   private ctrlEndroom: IdCheck;
   private ctrlDescription: IdTextarea;
   private ctrlRounding: IdRange;
+  private ctrlLineStyle: IdLineStyle;
+  private ctrlLineWidth: IdRange;
   private colorPicker: IdColorPicker;
   private colorType: string;
   private colorButtons: Array<IdPopup>;
@@ -36,6 +38,8 @@ export class RoomPanel extends Panel implements Subscriber {
     this.ctrlStartroom = new IdCheck('.js-startroom', this.elem).addEventListener('input', () => { this.room.setStartRoom(this.ctrlStartroom.checked); })
     this.ctrlEndroom = new IdCheck('.js-endroom', this.elem).addEventListener('input', () => { this.room.endroom = this.ctrlEndroom.checked; })
     this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { this.room.description = this.ctrlDescription.value; });
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.room.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlLineWidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.room.lineWidth = this.ctrlLineWidth.value; });
     this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.colorPicker.color); });
 
     this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.room.shape = this.ctrlShape.value; });
@@ -166,6 +170,7 @@ export class RoomPanel extends Panel implements Subscriber {
         this.ctrlEndroom.checked = room.endroom;
         this.ctrlRounding.value = room.rounding;
         this.ctrlDescription.value = room.description;
+        this.ctrlLineWidth.value = room.lineWidth;
         // Set color from currently selected color button:
         this.setColor();   
         // Place objects in object list
