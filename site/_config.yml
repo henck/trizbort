@@ -17,8 +17,9 @@ title: Trizbort.io
 email: info@independent-software.com
 author: Alexander van Oostenrijk
 description: >- # this means to ignore newlines until "baseurl:"
-  Trizbort.io is open-source adventure game mapping and code generation software. 
-  Create, view and share maps in your browser, and generate code for adventure design systems.
+  _Trizbort.io_ is open-source adventure game mapping and code generation software based on 
+  the [Trizbort](http://www.trizbort.com) desktop app by [genstein](http://http://trizbort.genstein.net/) 
+  and [Jason Lautzenheiser](https://github.com/JasonLautzenheiser).
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: IndependentSw
