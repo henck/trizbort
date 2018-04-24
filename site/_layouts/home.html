@@ -44,7 +44,25 @@ layout: default
 
   <div class="text-col-wrapper">
     <div class="text-col">
-      <img src="/assets/tadscode.png" alt="Trizbort.io TADS export"/>
+      <!-- <img src="/assets/tadscode.png" alt="Trizbort.io TADS export"/> -->
+{% highlight c %}
+versionInfo : GameID
+  name = 'Deadly Cave Adventure'
+  desc = 'A thrilling adventure 
+    deep in the earth'
+;
+
+OutsideCave: Room 'Outside Cave'
+  description = "You are standing outside a 
+    dark, forboding cave. "
+  north = EntryChamber
+;
+
++ lamp: Item 'lamp'
+  description = "An old-fashioned oil lamp. 
+    Rusty but servicable. "
+;
+{% endhighlight %}
     </div>
     <div class="text-col">
       <h1>Generate code from your map</h1>
