@@ -5,12 +5,12 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true,  // Decorators are included but not currently used
     "target": "es5",
     "module": "system",
     "moduleResolution": "node",
-    "rootDir": "./src",
-    "outFile": "./dist/app.js"
+    "rootDir": "./src",              // Source TypeScript files
+    "outFile": "./dist/app.js"       // App is build as a single big file
   },
   "exclude": [
     "node_modules"
