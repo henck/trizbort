@@ -4,7 +4,7 @@ title:  "A Zork map in Trizbort.io"
 date:   2018-04-23 10:37:09 +0200
 categories: trizbort update
 ---
-A good test case for Trizbort.io is drawing up a map of Zork. The original map contains lots of ideosyncracies for map drawing: angled connections, (nested) objects in the rooms, one-way passages, connectors that lead off the map, and a shaded block around the White House. 
+A good test case for Trizbort.io is drawing up a map of Zork. The original map contains lots of ideosyncracies for map drawing: angled connections, (nested) objects in the rooms, one-way passages, connectors that lead off the map, and a shaded block around the White House.  
 
 ![Original Zork map]({{ "/assets/zork-map-original.jpg" | absolute_url }})
 
