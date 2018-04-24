@@ -4,10 +4,10 @@
 #include <en_us.h>
 
 versionInfo: GameID
-  name = '{{map.name}}'
-  byline = 'by {{map.author}}'
+  name = '{{{map.name}}}'
+  byline = 'by {{{map.author}}}'
   version = '1.0'
-  desc = '"{{map.description}}'
+  desc = '"{{{map.description}}}'
 
 gameMain: GameMainDef
   initialPlayerChar = me
@@ -17,16 +17,12 @@ gameMain: GameMainDef
 ;
 
 {{#each map.rooms}} 
-{{className this.name}}: Room '{{this.name}}'
-  "{{this.description}}"
+{{className this.name}}: Room '{{{this.name}}}'
+  "{{{this.description}}}"
   {{#each this.connections}}
   {{ dirToStr this.dir }}: {{className this.room.name}}
   {{/each}}
 ;
 
-{{#each this.objects}}
-{{> tadsObject}} 
-{{/each}}
+{{#each this.objects}}{{buildObject this}}{{/each}}
 {{/each}} 
-
-
