@@ -1,0 +1,6 @@
+<object name="{{{object.name}}}">
+  <inherit name="editor_object" />
+  {{#each object.content}}
+  {{> questObject object=this}}
+  {{/each}}
+</object>

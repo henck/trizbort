@@ -1,0 +1,38 @@
+<!--Saved by Trizbort.io -->
+<asl version="550">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="{{{map.title}}}">
+    <gameid>9bb19c30-fec2-492b-b3f3-3a94e624b662</gameid>
+    <version>1.0</version>
+    <firstpublished>2018</firstpublished>
+    {{#if map.author}}<author>{{{map.author}}}</author>{{/if}}
+    <category>Comedy</category>
+    {{#if map.description}}<description>{{{map.description}}}</description>{{/if}}
+  </game>
+  {{!-- Loop through rooms. --}}
+  {{#each map.rooms}}
+  <object name="{{{this.name}}}">
+    <inherit name="editor_room" />
+    {{!-- Description is only included if it exists. --}}
+    {{#if this.description}}<description>{{{this.description}}}</description>{{/if}}
+    {{!-- Is this the startroom? Then put a player object in it. --}}
+    {{#if (isStartRoom this)}}
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+    </object>  
+    {{/if}}
+
+    {{#each this.connections}}
+    <exit alias="{{dirToStr this.startDir}}" to="{{{this.room.name}}}">
+      <inherit name="{{dirToStr this.startDir}}direction" />
+    </exit>
+    {{/each}}
+
+    {{#each this.objects}}
+    {{> questObject object=this}}
+    {{/each}}
+  </object>
+  {{/each}}
+</asl>
