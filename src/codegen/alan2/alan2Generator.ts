@@ -13,8 +13,8 @@ export class Alan2Generator extends CodeGenerator {
     Handlebars.registerHelper('className', (name:string) => { return this.className(name); }); 
     Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); }); 
     Handlebars.registerHelper('objName', (name:string) => { return this.objName(name); });
-  }
-
+  } 
+  
   protected objName(name: string): string {
     let str = "";
     let words = name.split(' ');
@@ -23,7 +23,7 @@ export class Alan2Generator extends CodeGenerator {
     });
     return str;
   }  
-  
+
   public generate() { 
     console.log(Handlebars.templates.alan2({ map: this.map }));
   }
