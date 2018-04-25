@@ -18,6 +18,8 @@ import { Canvas } from './drawing/canvas.js';
 import { Block } from './models/block.js';
 import { BlockView } from './views/blockView.js';
 import { ConnectorType } from './enums/connectorType.js';
+import { ZorkMap } from './maps/zorkMap.js';
+import { MapJSON } from './io/mapJSON.js';
 
 export class Editor implements Subscriber {
   private htmlCanvas: HTMLCanvasElement;
@@ -57,9 +59,6 @@ export class Editor implements Subscriber {
 
     this.views = new Array(); 
 
-    // Create a test map:
-    this.makeTestMap();
-
     window.addEventListener('resize', () => { this.resize(); } );    
     this.htmlCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
     this.htmlCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
@@ -73,12 +72,14 @@ export class Editor implements Subscriber {
     this.ctrlZoom = <HTMLInputElement> document.getElementById('control-zoom');
     this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
     this.updateZoomPercentage();
+    document.getElementById('canvas').addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
 
     this.resize();
 
-    window.requestAnimationFrame(this.render);
+    // Create a test map:
+    this.makeTestMap();    
 
-    document.getElementById('canvas').addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
+    window.requestAnimationFrame(this.render);
   }
 
   keyUp(e: KeyboardEvent) {
@@ -170,7 +171,7 @@ export class Editor implements Subscriber {
   }  
 
   makeTestMap() {
-    let startRoom = new Room(App.map.settings);
+    /* let startRoom = new Room(App.map.settings);
     App.map.add(startRoom);
     startRoom.name = 'hello world this is a very long text';
     startRoom.x = 0;
@@ -196,7 +197,11 @@ export class Editor implements Subscriber {
     this.views.push(ViewFactory.create(endRoom));
 
     connection.dockEnd = endRoom;
-    connection.endDir = Direction.W;
+    connection.endDir = Direction.W; */
+
+    App.map = MapJSON.load(ZorkMap.json);
+    // Broadcast that we've loaded a new map:
+    Dispatcher.notify(AppEvent.Load, null);    
   }
 
   clear() {
