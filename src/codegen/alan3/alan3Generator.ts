@@ -6,7 +6,7 @@ import { Direction, ObjectKind } from "../../enums/enums";
 import { CodeGenerator } from "../CodeGenerator";
 import { Obj } from "../../models/obj";
 
-export class Alan2Generator extends CodeGenerator {
+export class Alan3Generator extends CodeGenerator {
   
   constructor(map: Map) {
     super(map); 
@@ -14,7 +14,7 @@ export class Alan2Generator extends CodeGenerator {
     Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); }); 
   }
 
-  public generate() { 
-    console.log(Handlebars.templates.alan2({ map: this.map }));
+  public generate() {
+    console.log(Handlebars.templates.alan3({ map: this.map }));
   }
 }

@@ -10,6 +10,7 @@ import { Map } from '../../models/map.js';
 import { TadsGenerator } from '../../codegen/tads/TadsGenerator.js';
 import { Inform7Generator } from '../../codegen/inform7/Inform7Generator.js';
 import { Alan2Generator } from '../../codegen/alan2/alan2Generator.js';
+import { Alan3Generator } from '../../codegen/alan3/alan3Generator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -36,6 +37,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export-tads', () => { this.actionExportTads(); });
     this.createMenuItem('#menu-export-inform7', () => { this.actionExportInform7(); });
     this.createMenuItem('#menu-export-alan2', () => { this.actionExportAlan2(); });
+    this.createMenuItem('#menu-export-alan3', () => { this.actionExportAlan3(); });
 
     this.inputLoad.addEventListener('change', () => { this.load(this.inputLoad.files, this.loadMap); });
     this.inputImport.addEventListener('change', () => { this.load(this.inputImport.files, this.importMap); });
@@ -138,4 +140,9 @@ export class MenuPanel extends Panel {
     let generator = new Alan2Generator(App.map);
     generator.generate();
   }    
+
+  actionExportAlan3() {
+    let generator = new Alan3Generator(App.map);
+    generator.generate();
+  }  
 }
