@@ -30,6 +30,7 @@ export class Editor implements Subscriber {
   private roomHandle: Direction;
   private connectorHandle: ConnectorHandle;
   private copy: Array<Model> = new Array<Model>();
+  private ctrlZoom: HTMLInputElement;
 
   // Scroll/drag:
   private mouseX: number = -100;
@@ -69,6 +70,9 @@ export class Editor implements Subscriber {
     document.getElementById('control-center').addEventListener('click', () => { this.cmdCenterView(); });
     document.getElementById('control-zoomin').addEventListener('click', () => { this.cmdZoomIn(); });
     document.getElementById('control-zoomout').addEventListener('click', () => { this.cmdZoomOut(); });
+    this.ctrlZoom = <HTMLInputElement> document.getElementById('control-zoom');
+    this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
+    this.updateZoomPercentage();
 
     this.resize();
 
@@ -219,8 +223,6 @@ export class Editor implements Subscriber {
     this.clear();
     this.grid.draw(this.htmlCanvas, this.canvas);
     
-    document.getElementById('debug-zoom').textContent = `${Math.floor(App.zoom * 100)}%`;
-
     // Translate/scale the entire canvas to conform to world coordinates:
     this.canvas.translate(Math.floor(this.htmlCanvas.offsetWidth / 2) + App.centerX, Math.floor(this.htmlCanvas.offsetHeight / 2) + App.centerY);
     this.canvas.scale(App.zoom, App.zoom);
@@ -810,26 +812,53 @@ export class Editor implements Subscriber {
   // This seems to give the smoothest result without giant steps
   // at higher/lower zoom levels.  
 
+  updateZoomPercentage() {
+    this.ctrlZoom.value = Math.floor(App.zoom * 100) + '%';
+  }
+
+  cmdZoom() {
+    let zoomStr = this.ctrlZoom.value;
+    // Remove percentage sign if present
+    zoomStr.replace('%', ' ');
+    // Convert to number. Ignore result on failure.
+    let zoomPercentage = parseFloat(zoomStr);
+    if(!isNaN(zoomPercentage)) {
+      // Set zoom level (clamp range)
+      App.zoom = zoomPercentage / 100;
+      if(App.zoom >= 10) App.zoom = 10;
+      if(App.zoom <= 0.1) App.zoom = 0.1;
+    }
+    // Place new zoom percentage in control.
+    this.updateZoomPercentage();
+  }
+
   cmdZoomIn() {
-    if(App.zoom >= 10) return; // clamp zoom level
     if(App.zoom < 1) {
       App.zoom = App.zoom * Values.ZOOM_FRACTION;
     } else {
       App.zoom += Values.ZOOM_ADDITIVE;
     }
+    // Clamp zoom level
+    if(App.zoom >= 10) App.zoom = 10;
+    if(App.zoom <= 0.1) App.zoom = 0.1;
+    this.updateZoomPercentage();
   }
 
   cmdZoomOut() {
-    if(App.zoom <= 0.1) return; // clamp zoom level
     if(App.zoom <= 1) {
       App.zoom = App.zoom / Values.ZOOM_FRACTION;
     } else {
       App.zoom -= Values.ZOOM_ADDITIVE;
     }
+    // Clamp zoom level
+    if(App.zoom >= 10) App.zoom = 10;
+    if(App.zoom <= 0.1) App.zoom = 0.1;
+    this.updateZoomPercentage();
   }
 
   cmdZoomNormal() {
     App.zoom = 1;
+    this.updateZoomPercentage();
   }
 
   cmdCenterView() {
