@@ -4,7 +4,7 @@ title:  "Premilinary export to Inform7"
 date:   2018-04-25 10:37:09 +0200
 categories: trizbort update
 ---
-Trizbort.io can now exports maps to Inform 7 format. It can deal with rooms and connections - even in cases where the connection is angled, .e.g. going west takes you from A to B, but from B you need to go north to get to A. Work is in progress on one-way connections and objects.
+Trizbort.io can now export maps to Inform 7 format. It can deal with rooms and connections - even in cases where the connection is angled, .e.g. going west takes you from A to B, but from B you need to go north to get to A. Work is in progress on one-way connections and objects.
 
 Here is a sample snippet of Inform 7 code generation.
 
