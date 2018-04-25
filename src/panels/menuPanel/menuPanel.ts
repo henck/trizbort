@@ -7,8 +7,9 @@ import { MapJSON } from '../../io/mapJSON.js'
 import { Panel } from '../panels.js';
 import { MapSettings } from '../../models/mapSettings.js';
 import { Map } from '../../models/map.js';
-import { TadsGenerator } from '../../codegen/TadsGenerator.js';
-import { Inform7Generator } from '../../codegen/Inform7Generator.js';
+import { TadsGenerator } from '../../codegen/tads/TadsGenerator.js';
+import { Inform7Generator } from '../../codegen/inform7/Inform7Generator.js';
+import { AlanGenerator } from '../../codegen/alan/alanGenerator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -34,6 +35,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export');
     this.createMenuItem('#menu-export-tads', () => { this.actionExportTads(); });
     this.createMenuItem('#menu-export-inform7', () => { this.actionExportInform7(); });
+    this.createMenuItem('#menu-export-alan', () => { this.actionExportAlan(); });
 
     this.inputLoad.addEventListener('change', () => { this.load(this.inputLoad.files, this.loadMap); });
     this.inputImport.addEventListener('change', () => { this.load(this.inputImport.files, this.importMap); });
@@ -132,4 +134,8 @@ export class MenuPanel extends Panel {
     generator.generate();
   }  
 
+  actionExportAlan() {
+    let generator = new AlanGenerator(App.map);
+    generator.generate();
+  }    
 }

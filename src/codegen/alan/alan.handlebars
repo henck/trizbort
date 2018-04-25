@@ -1,0 +1,6 @@
+{{#each map.rooms}}
+LOCATION {{className this.name}} 
+END LOCATION.
+{{#if (isStartRoom this)}}START AT {{{className this.name}}}.{{/if}}
+{{/each}}
+
