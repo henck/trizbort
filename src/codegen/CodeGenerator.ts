@@ -1,11 +1,11 @@
 import { Map } from "../models/map";
+import { Direction } from "../enums/enums";
 
 export class CodeGenerator {
   protected map: Map;
 
   constructor(map: Map) {
     this.map = map;
-    Handlebars.registerHelper('className', (str:string) => { return this.className(str); });
   }
 
   //
@@ -63,4 +63,25 @@ export class CodeGenerator {
   protected className(str: string) {
     return new Handlebars.SafeString(this.capitalize(this.camelCase(this.removeSpecialChars(this.removeAccents(str)))));
   }  
-}
+
+  protected dirToStr(dir: Direction): string {
+    switch(dir) {
+      case Direction.N:   return "north";
+      case Direction.NNE: return "northnortheast";
+      case Direction.NE:  return "northeast";
+      case Direction.ENE: return "eastnortheast";
+      case Direction.E:   return "east";
+      case Direction.ESE: return "eastsoutheast";
+      case Direction.SE:  return "southeast";
+      case Direction.SSE: return "southsoutheast";
+      case Direction.S:   return "south";
+      case Direction.SSW: return "southsouthwest";
+      case Direction.SW:  return "southwest";
+      case Direction.WSW: return "westsouthwest";
+      case Direction.W:   return "west";
+      case Direction.WNW: return "westnorthwest";
+      case Direction.NW:  return "northwest";
+      case Direction.NNW: return "northnorthwest";         
+      default: return "";
+    }    
+  }}

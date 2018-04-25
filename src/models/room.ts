@@ -99,7 +99,7 @@ export class Room extends Box {
     this._lineWidth = width;
   }    
 
-  isStartRoom() {
+  isStartRoom(): boolean {
     return this.map.startRoom == this;
   }
 
@@ -107,7 +107,7 @@ export class Room extends Box {
     if(isStartRoom) {
       this.map.setStartRoom(this);
     } else {
-      if(this.isStartRoom()) this.map.setStartRoom(null);
+      if(this.isStartRoom) this.map.setStartRoom(null);
     }
   }
 
@@ -140,16 +140,16 @@ export class Room extends Box {
   }
 
   // 
-  // List of Direction, Room pairs representing connections
+  // List of StartDirection, EndDirection, Room tuples representing connections
   // from this room.
   // 
-  get connections(): Array<{ dir: Direction, room: Room }> {
+  get connections(): Array<{ startDir: Direction, endDir: Direction, room: Room }> {
     let connectors = this.connectors;
     return connectors.map((conn) => { 
       if(conn.dockStart == this) {
-        return {dir: conn.startDir, room: conn.dockEnd};
+        return {startDir: conn.startDir, endDir: conn.endDir, room: conn.dockEnd};
       } else { 
-        return {dir: conn.endDir, room: conn.dockStart};
+        return {startDir: conn.endDir, endDir: conn.startDir, room: conn.dockStart};
       }
     });
   }

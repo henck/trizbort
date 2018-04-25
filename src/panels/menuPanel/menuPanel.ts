@@ -8,6 +8,7 @@ import { Panel } from '../panels.js';
 import { MapSettings } from '../../models/mapSettings.js';
 import { Map } from '../../models/map.js';
 import { TadsGenerator } from '../../codegen/TadsGenerator.js';
+import { Inform7Generator } from '../../codegen/Inform7Generator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -32,6 +33,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
     this.createMenuItem('#menu-export');
     this.createMenuItem('#menu-export-tads', () => { this.actionExportTads(); });
+    this.createMenuItem('#menu-export-inform7', () => { this.actionExportInform7(); });
 
     this.inputLoad.addEventListener('change', () => { this.load(this.inputLoad.files, this.loadMap); });
     this.inputImport.addEventListener('change', () => { this.load(this.inputImport.files, this.importMap); });
@@ -124,5 +126,10 @@ export class MenuPanel extends Panel {
     let generator = new TadsGenerator(App.map);
     generator.generate();
   }
+
+  actionExportInform7() {
+    let generator = new Inform7Generator(App.map);
+    generator.generate();
+  }  
 
 }
