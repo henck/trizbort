@@ -11,4 +11,8 @@ There is a room called {{{validName this.name}}}. {{#if this.dark}}It is dark.{{
 {{ capitalize (dirToStr this.startDir) }} of {{{validName ../this.name}}} is {{dirToStr this.endDir}} of {{{validName this.room.name}}}.
 {{/each}}
 
+{{#each this.objects}}
+{{> inform7Object object=this}}
+{{/each}}
+
 {{/each}} 

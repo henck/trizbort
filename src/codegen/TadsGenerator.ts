@@ -9,7 +9,7 @@ import { Obj } from "../models/obj";
 export class TadsGenerator extends CodeGenerator {
   
   constructor(map: Map) {
-    super(map);
+    super(map); 
     Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); }); 
     Handlebars.registerHelper('kindToStr', (kind:ObjectKind) => { return this.kindToStr(kind); }); 
     Handlebars.registerPartial('tadsObject', Handlebars.templates.tadsObject);

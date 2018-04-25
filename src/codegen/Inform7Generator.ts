@@ -15,6 +15,7 @@ export class Inform7Generator extends CodeGenerator {
     Handlebars.registerHelper('capitalize', (str: string) => { return new Handlebars.SafeString(this.capitalize(str)); });
     Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); });  
     Handlebars.registerHelper('isStartRoom', (room: Room) => { return room.isStartRoom(); });
+    Handlebars.registerPartial('inform7Object', Handlebars.templates.inform7Object);
   }
  
   public generate() {
