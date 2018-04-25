@@ -6,7 +6,7 @@ import { Direction, ObjectKind } from "../../enums/enums";
 import { CodeGenerator } from "../CodeGenerator";
 import { Obj } from "../../models/obj";
 
-export class AlanGenerator extends CodeGenerator {
+export class Alan2Generator extends CodeGenerator {
   
   constructor(map: Map) {
     super(map); 

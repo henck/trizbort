@@ -1,0 +1,10 @@
+{{#each map.rooms}}
+LOCATION {{className this.name}} 
+  {{#each this.connections}}
+  EXIT {{ dirToStr this.startDir }} TO {{className this.room.name}}.
+  {{/each}}
+END LOCATION.
+{{#if (isStartRoom this)}}START AT {{{className this.name}}}.
+{{/if}}
+
+{{/each}}
