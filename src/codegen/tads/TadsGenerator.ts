@@ -1,15 +1,16 @@
-import { Map } from "../models/map";
-import { Room } from "../models/room";
-import { Connector } from "../models/connector";
-import { Model } from "../models/model";
-import { Direction, ObjectKind } from "../enums/enums";
-import { CodeGenerator } from "./CodeGenerator";
-import { Obj } from "../models/obj";
+import { Map } from "../../models/map";
+import { Room } from "../../models/room";
+import { Connector } from "../../models/connector";
+import { Model } from "../../models/model";
+import { Direction, ObjectKind } from "../../enums/enums";
+import { CodeGenerator } from "../CodeGenerator";
+import { Obj } from "../../models/obj";
 
 export class TadsGenerator extends CodeGenerator {
   
   constructor(map: Map) {
     super(map); 
+    Handlebars.registerHelper('className', (name:string) => { return this.className(name); }); 
     Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); }); 
     Handlebars.registerHelper('kindToStr', (kind:ObjectKind) => { return this.kindToStr(kind); }); 
     Handlebars.registerPartial('tadsObject', Handlebars.templates.tadsObject);

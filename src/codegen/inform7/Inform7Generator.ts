@@ -1,10 +1,10 @@
-import { Map } from "../models/map";
-import { Room } from "../models/room";
-import { Connector } from "../models/connector";
-import { Model } from "../models/model";
-import { Direction, ObjectKind } from "../enums/enums";
-import { CodeGenerator } from "./CodeGenerator";
-import { Obj } from "../models/obj";
+import { Map } from "../../models/map";
+import { Room } from "../../models/room";
+import { Connector } from "../../models/connector";
+import { Model } from "../../models/model";
+import { Direction, ObjectKind } from "../../enums/enums";
+import { CodeGenerator } from "../CodeGenerator";
+import { Obj } from "../../models/obj";
 
 export class Inform7Generator extends CodeGenerator {
   
