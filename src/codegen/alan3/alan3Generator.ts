@@ -12,6 +12,17 @@ export class Alan3Generator extends CodeGenerator {
     super(map); 
     Handlebars.registerHelper('className', (name:string) => { return this.className(name); }); 
     Handlebars.registerHelper('dirToStr', (dir:Direction) => { return this.dirToStr(dir); }); 
+    Handlebars.registerHelper('objName', (name:string) => { return this.objName(name); });
+    Handlebars.registerPartial('alan3Object', Handlebars.templates.alan3Object);
+  }
+
+  protected objName(name: string): string {
+    let str = "";
+    let words = name.split(' ');
+    words.forEach((word) => {
+      str = str + "'" + word.trim().replace("'", "''") + "' ";
+    });
+    return str;
   }
 
   public generate() {
