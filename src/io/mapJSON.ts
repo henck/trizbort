@@ -29,6 +29,10 @@ export class MapJSON {
         if(this.dockEnd == null) return 0;
         return this.dockEnd.id; 
       }
+      if(key == 'startRoom') { // replace room references with IDs
+        if(this.startRoom == null) return 0;
+        return this.startRoom.id;
+      }
       return value;
     });
 
@@ -72,6 +76,15 @@ export class MapJSON {
       }
       map.add(model);
     });
+
+    // The startRoom property still contains a room ID. 
+    // If the ID is not 0, replace it with an actual room.
+    // Otherwise set to null.
+    if(map.startRoom) {
+      map.startRoom = map.findById(<any> map.startRoom, Room) as Room;
+    } else {
+      map.startRoom = null;
+    }
 
     // The connectors still contain IDs for dockStart and dockEnd references.
     // Loop through all map elements,converting Connectors' dockStart and 
