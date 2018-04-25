@@ -1,1 +1,4 @@
-An object. {{{this.name}}}
+A {{{this.name}}} is in {{{container.name}}}.
+{{#each this.content}}
+{{> inform7Object object=this container=../this}}
+{{/each}}

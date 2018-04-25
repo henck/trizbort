@@ -12,7 +12,7 @@ There is a room called {{{validName this.name}}}. {{#if this.dark}}It is dark.{{
 {{/each}}
 
 {{#each this.objects}}
-{{> inform7Object object=this}}
+{{> inform7Object object=this container=../this}}
 {{/each}}
 
 {{/each}} 
