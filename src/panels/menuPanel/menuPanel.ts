@@ -9,7 +9,7 @@ import { MapSettings } from '../../models/mapSettings.js';
 import { Map } from '../../models/map.js';
 import { TadsGenerator } from '../../codegen/tads/TadsGenerator.js';
 import { Inform7Generator } from '../../codegen/inform7/Inform7Generator.js';
-import { Alan2Generator } from '../../codegen/alan/alan2Generator.js';
+import { Alan2Generator } from '../../codegen/alan2/alan2Generator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
