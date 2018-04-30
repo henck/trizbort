@@ -5,6 +5,7 @@ import { Note } from '../models/note.js'
 import { Connector } from '../models/connector.js'
 import { Direction, LineStyle } from '../enums/enums.js'
 import { Block } from '../models/block.js';
+import { MapSettings } from '../models/mapSettings.js';
 
 
 export class MapJSON {
@@ -58,6 +59,10 @@ export class MapJSON {
     // not instances of Map, Room or Connector.
     // We clone the root object into a Map instance.
     let map: Map = <Map> this.clone(new Map(), JSON.parse(text));
+
+    // The map settings are an ordinary object. Clone it into a real MapSettings
+    // instance.
+    map.settings = new MapSettings().cloneFrom(map.settings);
 
     // The elements array of the Map now contains a list of ordinary objects.
     // We remove the list contents from the Map, then loop through the list

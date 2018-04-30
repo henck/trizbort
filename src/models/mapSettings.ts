@@ -74,4 +74,26 @@ export class MapSettings {
   public connector: MapSettingsConnector = new MapSettingsConnector();
   public note: MapSettingsNote = new MapSettingsNote();
   public block: MapSettingsBlock = new MapSettingsBlock();
+
+  private cloneToTarget(src: object, target: object) {
+    for(let key in src) {
+      if(src.hasOwnProperty(key)) {
+        (<any>target)[key] = (<any>src)[key];
+      }
+    }
+  }
+
+  //
+  // Given a settings-like object, clone it into a real
+  // MapSettings instance and return it.
+  // 
+  public cloneFrom(src: object) {
+    let settings: MapSettings = src as MapSettings;
+    this.cloneToTarget(settings.grid, this.grid);
+    this.cloneToTarget(settings.room, this.room);
+    this.cloneToTarget(settings.connector, this.connector);
+    this.cloneToTarget(settings.note, this.note);
+    this.cloneToTarget(settings.block, this.block);
+    return this;
+  }  
 }
