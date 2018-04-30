@@ -4,9 +4,10 @@
 
 - [ ] Allow "hand drawn"
 - [ ] (Locked) doors
-- [ ] Object list
+- [x] Object list
 - [x] Export to TADS
 - [x] When double-clicking a room or other view, focus on first text field for quick typing
+- [ ] Add map themes; implies grid color and background and fonts
 
 ## Map-level settings
 - [ ] Fonts

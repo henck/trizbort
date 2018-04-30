@@ -22,16 +22,6 @@
   <id-check class="js-grid-origin" data-label="Show origin"></id-check>
   <id-check class="js-grid-snap" data-label="Snap to grid"></id-check>
   <id-range class="js-grid-size" data-min="16" data-max="128" data-label="Grid size"></id-range>
-
-  <label>Map background</label>
-  <div style="display:flex">
-    <id-popup class="js-bg-none"></id-popup>  
-    {{#each assets}}
-    <id-popup class="js-bg-{{this}}">
-      <div style="width:24px; height: 24px; background-size: 24px 24px; background-image: url('assets/{{this}}.jpg');"></div>
-    </id-popup>  
-    {{/each}}
-  </div>
 </div>
 
 <div class="tab-body" id="tab-map-rooms">

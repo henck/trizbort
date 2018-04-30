@@ -71,12 +71,6 @@ export class MapPanel extends Panel implements Subscriber {
     this.ctrlGridSnap = new IdCheck('.js-grid-snap', this.elem).addEventListener('input', () => { App.map.settings.grid.snap = this.ctrlGridSnap.checked; })
     this.ctrlGridSize = new IdRange('.js-grid-size', this.elem).addEventListener('input', () => { App.map.settings.grid.size = this.ctrlGridSize.value; });
 
-    // Map backgrounds
-    new IdPopup('.js-bg-none', this.elem).addEventListener('click', () => { App.map.settings.background = 'none'; } );
-    Values.BITMAP_ASSETS.forEach((asset) => {
-      new IdPopup(`.js-bg-${asset}`, this.elem).addEventListener('click', () => { App.map.settings.background = asset; } );
-    });
-
     this.ctrlRoomWidth = new IdRange('.js-room-width', this.elem).addEventListener('input', () => { App.map.settings.room.width = this.ctrlRoomWidth.value; });
     this.ctrlRoomHeight = new IdRange('.js-room-height', this.elem).addEventListener('input', () => { App.map.settings.room.height = this.ctrlRoomHeight.value; });
     this.ctrlRoomLinewidth = new IdRange('.js-room-linewidth', this.elem).addEventListener('input', () => { App.map.settings.room.lineWidth = this.ctrlRoomLinewidth.value; });

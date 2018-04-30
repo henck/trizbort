@@ -74,5 +74,4 @@ export class MapSettings {
   public connector: MapSettingsConnector = new MapSettingsConnector();
   public note: MapSettingsNote = new MapSettingsNote();
   public block: MapSettingsBlock = new MapSettingsBlock();
-  public background: string = 'wood';
 }
