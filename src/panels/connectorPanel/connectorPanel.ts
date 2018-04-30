@@ -61,6 +61,10 @@ export class ConnectorPanel extends Panel implements Subscriber {
         this.ctrlEndType.value = connector.endType;
         this.ctrlStartLabel.value = connector.startLabel;
         this.ctrlEndLabel.value = connector.endLabel;
+
+        setTimeout(() => {
+          this.ctrlName.focus().select(); 
+        }, 100);           
       }
       else {
         this.close();

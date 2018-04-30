@@ -59,6 +59,10 @@ export class NotePanel extends Panel implements Subscriber {
         this.ctrlRounding.value = note.rounding;
         // Set color from currently selected color button:
         this.setColor();
+
+        setTimeout(() => {
+          this.ctrlText.focus().select(); 
+        }, 100);        
       }
       else {
         this.close();

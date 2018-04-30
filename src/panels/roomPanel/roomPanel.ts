@@ -175,6 +175,10 @@ export class RoomPanel extends Panel implements Subscriber {
         this.setColor();   
         // Place objects in object list
         this.refreshObjList();
+
+        setTimeout(() => {
+          this.ctrlName.focus().select(); 
+        }, 100);
       }
       else {
         this.close();
