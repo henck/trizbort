@@ -5,7 +5,8 @@
 - [ ] Allow "hand drawn"
 - [ ] (Locked) doors
 - [ ] Object list
-- [ ] Export to TADS
+- [x] Export to TADS
+- [x] When double-clicking a room or other view, focus on first text field for quick typing
 
 ## Map-level settings
 - [ ] Fonts
@@ -57,3 +58,23 @@
 - [x] F2 = rename
 - [x] shift-arrow = Move to or create new room
 - [x] insert = center map
+
+## Code generation
+
+* ADL
+* Adrift
+* Alan 2
+* Alan 3
+* Heritage ? (requires only rooms in cardinal directions on a grid)
+* Hugo
+* Inform7
+* Gamefic (Ruby)
+* Quest
+* TADS
+* TextAdventure.js   (https://github.com/TheBroox/TextAdventure.js)
+
+Code generations may allow selection of options; chosen options have default 
+values and changes are saved in local storage. For instance, TADS may allow exporting
+everything to a single file or every room into its own file, where the result is offered
+as a ZIP.
+
