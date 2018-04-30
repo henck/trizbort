@@ -16,6 +16,18 @@
   <id-check class="js-grid-snap" data-label="Snap to grid"></id-check>
   <id-range class="js-grid-size" data-min="16" data-max="128" data-label="Grid size"></id-range>
 
+  <label>Map colors</label>
+  <div style="display: flex">
+    <div style="display: flex; flex-direction: column; flex-wrap: wrap">
+      <id-popup title="Map background" class="map-colortype selected" data-type="background">
+      </id-popup>
+      <id-popup title="Grid" class="map-colortype" data-type="grid">
+        <svg class="icon"><use xlink:href="dist/icons.svg#grid"></use></svg>
+      </id-popup>
+    </div>
+    <id-colorpicker class="js-map-color"></id-colorpicker>
+  </div>  
+
   <label>Quick themes</label>
   <div class="menuitem">
     <a href="#" class="js-theme-default"><svg class="icon small"><use xlink:href="dist/icons.svg#paintbrush"></use></svg> Default</a>

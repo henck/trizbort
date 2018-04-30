@@ -8,6 +8,8 @@
 - [x] Export to TADS
 - [x] When double-clicking a room or other view, focus on first text field for quick typing
 - [ ] Add map themes; implies grid color and background and fonts
+  - [ ] Let user choose map background color
+  - [ ] Fonts
 
 ## Map-level settings
 - [ ] Fonts
