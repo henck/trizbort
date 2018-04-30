@@ -12,6 +12,8 @@ import { Inform7Generator } from '../../codegen/inform7/Inform7Generator.js';
 import { Alan2Generator } from '../../codegen/alan2/alan2Generator.js';
 import { Alan3Generator } from '../../codegen/alan3/alan3Generator.js';
 import { QuestGenerator } from '../../codegen/quest/questGenerator.js';
+import { Canvas } from '../../drawing/canvas.js';
+import { Exporter } from '../../exporter.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -33,6 +35,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-load', () => { this.actionLoadMap(); });
     this.createMenuItem('#menu-save', () => { this.actionSaveMap(); });
     this.createMenuItem('#menu-import', () => { this.actionImportMap(); });
+    this.createMenuItem('#menu-image', () => { this.actionExport(); });
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
     this.createMenuItem('#menu-render', () => { this.actionRenderSettings(); });
     this.createMenuItem('#menu-export');
@@ -50,6 +53,11 @@ export class MenuPanel extends Panel {
     let elem: HTMLElement = document.querySelector(selector);
     if(f) elem.addEventListener('click', f);
     elem.addEventListener('click', () => { elem.classList.toggle('open') });
+  }
+
+  actionExport() {
+    let exporter = new Exporter();
+    exporter.export();
   }
 
   actionNewMap() {
