@@ -18,7 +18,7 @@ export class RoomView extends BoxView {
     return this.room;
   }
 
-  draw(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  draw(canvas: IScreen, hover: boolean) {
 
     // Translate to room's coordinates, so we can offset everything from (0,0).
     canvas
@@ -113,7 +113,7 @@ export class RoomView extends BoxView {
     });
   }
 
-  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  drawSimple(canvas: IScreen, hover: boolean) {
 
     // Translate to room's coordinates, so we can offset everything from (0,0).
     canvas

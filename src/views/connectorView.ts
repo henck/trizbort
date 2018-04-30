@@ -58,7 +58,7 @@ export class ConnectorView extends View {
     canvas.restore();    
   }
 
-  draw(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  draw(canvas: IScreen, hover: boolean) {
     var dockStartX: number = this.connector.startX;
     var dockStartY: number = this.connector.startY;
     var dockEndX: number = this.connector.endX;
@@ -236,7 +236,7 @@ export class ConnectorView extends View {
     canvas.restore();
   }
 
-  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  drawSimple(canvas: IScreen, hover: boolean) {
     var dockStartX: number = this.connector.startX;
     var dockStartY: number = this.connector.startY;
     var dockEndX: number = this.connector.endX;

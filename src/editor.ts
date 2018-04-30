@@ -237,21 +237,21 @@ export class Editor implements Subscriber {
     // Draw all blocks:
     this.views.forEach(view => {
       if(view instanceof BlockView) {
-        view.draw(this.canvas, this.mouseX, this.mouseY, App.mouseMode == MouseMode.Connect ? 0 : App.selection.size(), this.hover == view && App.mouseMode != MouseMode.Select);
+        view.draw(this.canvas, this.hover == view && App.mouseMode != MouseMode.Select);
       }
     });
 
     // Draw all connectors:
     this.views.forEach(view => {
       if(view instanceof ConnectorView) {
-        view.draw(this.canvas, this.mouseX, this.mouseY, App.mouseMode == MouseMode.Connect ? 0 : App.selection.size(), this.hover == view && App.mouseMode != MouseMode.Select);
+        view.draw(this.canvas, this.hover == view && App.mouseMode != MouseMode.Select);
       }
     });
 
     // Draw all rooms and notes:
     this.views.forEach(view => {
       if(view instanceof RoomView || view instanceof NoteView) {
-        view.draw(this.canvas, this.mouseX, this.mouseY, App.mouseMode == MouseMode.Connect ? 0 : App.selection.size(), this.hover == view && App.mouseMode != MouseMode.Select);
+        view.draw(this.canvas, this.hover == view && App.mouseMode != MouseMode.Select);
       }
     });
 
@@ -277,7 +277,7 @@ export class Editor implements Subscriber {
       .translate(-x, -y);         // Translate canvas to match world mouse coordinates
     
     // Draw the view:
-    view.drawSimple(this.hitTestCanvas, 0, 0, App.selection.size(), this.hover == view);
+    view.drawSimple(this.hitTestCanvas, this.hover == view);
 
     this.hitTestCanvas.restore();
     

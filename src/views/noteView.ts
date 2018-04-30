@@ -17,7 +17,7 @@ export class NoteView extends BoxView {
     return this.note;
   }
 
-  draw(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  draw(canvas: IScreen, hover: boolean) {
 
     // Translate to note's coordinates, so we can offset everything from (0,0).
     canvas
@@ -72,7 +72,7 @@ export class NoteView extends BoxView {
     canvas.restore();    
   }
 
-  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  drawSimple(canvas: IScreen, hover: boolean) {
 
     // Translate to note's coordinates, so we can offset everything from (0,0).
     canvas

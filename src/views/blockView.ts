@@ -17,7 +17,7 @@ export class BlockView extends BoxView {
     return this.block;
   }
 
-  draw(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  draw(canvas: IScreen, hover: boolean) {
 
     // Translate to block's coordinates, so we can offset everything from (0,0).
     canvas
@@ -57,7 +57,7 @@ export class BlockView extends BoxView {
     canvas.restore();    
   }
 
-  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  drawSimple(canvas: IScreen, hover: boolean) {
     // Translate to block's coordinates, so we can offset everything from (0,0).
     canvas
       .save()

@@ -12,10 +12,10 @@ export class View {
     return null;
   }  
 
-  draw(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  draw(canvas: IScreen, hover: boolean) {
   }
 
-  drawSimple(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
+  drawSimple(canvas: IScreen, hover: boolean) {
   }  
 
   drawHandles(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
