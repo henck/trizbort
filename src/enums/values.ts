@@ -24,6 +24,4 @@ export class Values {
   static readonly DIMEN_STARTROOM_MARGIN = 3;
   static readonly DIMEN_RESIZE_HANDLE = 6;
   static readonly DIMEN_CONNECTOR_HANDLE = 5;
-
-  static readonly BITMAP_ASSETS = ["paper", "metal", "wood"];
 }

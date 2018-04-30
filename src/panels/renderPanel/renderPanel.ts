@@ -8,7 +8,7 @@ import { Panel }  from '../panels.js'
 import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
 import { Map } from '../../models/map.js';
 
-export class MapPanel extends Panel implements Subscriber {
+export class RenderPanel extends Panel implements Subscriber {
 
   private ctrlTitle: IdInput;
   private ctrlAuthor: IdInput;
@@ -60,7 +60,7 @@ export class MapPanel extends Panel implements Subscriber {
   
 
   constructor() {
-    super('mappanel', Handlebars.templates.mapPanel, { assets: Values.BITMAP_ASSETS });
+    super('renderpanel', Handlebars.templates.renderPanel, { });
     Dispatcher.subscribe(this);
 
     this.ctrlTitle = new IdInput('.js-title', this.elem).addEventListener('input', () => { App.map.title = this.ctrlTitle.value; });

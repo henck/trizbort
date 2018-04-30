@@ -4,12 +4,10 @@ import { Dispatcher } from './dispatcher.js'
 import { AppEvent, MouseMode, Values } from './enums/enums.js'
 import { Editor } from './editor.js'
 import { Tabs } from './controls/controls.js'
-import { ConnectorPopup, NotePopup, RoomPopup } from './popups/popups.js'
-import { ConnectorPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels/panels.js'
+import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/popups.js'
+import { BlockPanel, ConnectorPanel, RenderPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels/panels.js'
 import { MapJSON } from './io/mapJSON.js'
 import { Selection } from './selection.js'
-import { BlockPopup } from './popups/blockPopup/blockPopup.js';
-import { BlockPanel } from './panels/blockPanel/blockPanel.js';
 
 export class App {
   // - App holds the current map.
@@ -31,9 +29,14 @@ export class App {
     
     // Intialize GUI components:
     let editor = new Editor();
-    let connectorPanel = new ConnectorPanel();
+    App.createPanels();
+
+    Tabs.initialize();
+  }
+
+  static createPanels() {
     let connectorPopup = new ConnectorPopup;
-    let mapPanel = new MapPanel();
+    let renderPanel = new RenderPanel();
     let menuPanel = new MenuPanel();
     let notePanel = new NotePanel();
     let notePopup = new NotePopup();
@@ -41,15 +44,9 @@ export class App {
     let blockPanel = new BlockPanel();
     let roomPopup = new RoomPopup();
     let roomPanel = new RoomPanel();
-    let blockPopup = new BlockPopup();
-
-    Values.BITMAP_ASSETS.forEach((asset) => {
-      let img = new Image();
-      img.src = `assets/${asset}.jpg`;
-    });
-    
-    Tabs.initialize();
-  }
+    let blockPopup = new BlockPopup();    
+    let connectorPanel = new ConnectorPanel();
+  }  
 
   static pushUndo() {
     this.undoStack.push(MapJSON.save(this.map));
