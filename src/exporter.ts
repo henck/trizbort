@@ -1,13 +1,17 @@
 import { Canvas } from "./drawing/canvas";
-import { App } from "./app";
 import { View } from "./views/view";
 import { ViewFactory } from "./views/viewFactory";
 import { BlockView } from "./views/blockView";
 import { ConnectorView } from "./views/connectorView";
 import { RoomView } from "./views/roomView";
 import { NoteView } from "./views/noteView";
+import { Map } from "./models/map";
 
+//
+// The Exporter exports the a map to an image file.
+// 
 export class Exporter {
+  private map: Map;
   private canvasElem: HTMLCanvasElement;
   private canvas: Canvas;
   private ctx: CanvasRenderingContext2D;
@@ -17,7 +21,8 @@ export class Exporter {
   private width: number;
   private height: number;
 
-  public constructor() {
+  public constructor(map: Map) {
+    this.map = map;
     this.canvasElem = <HTMLCanvasElement> document.getElementById('export');
     this.ctx = this.canvasElem.getContext('2d')
     this.canvas = new Canvas(this.ctx);
@@ -40,7 +45,7 @@ export class Exporter {
 
     if(withBackground) {
       this.canvas
-        .fillStyle(App.map.settings.grid.background)
+        .fillStyle(this.map.settings.grid.background)
         .fillRect(0, 0, this.width, this.height);
     } else {
       this.canvas
@@ -124,7 +129,7 @@ export class Exporter {
   public export() {
     // Create views for all models.
     this.views = new Array<View>();
-    App.map.elements.forEach((model) => {
+    this.map.elements.forEach((model) => {
       this.views.push(ViewFactory.create(model));
     });
 
@@ -169,7 +174,7 @@ export class Exporter {
 
   private downloadAsBlobCallback(blob: Blob) {
     // Create filename based on map title:
-    let title = App.map.title;
+    let title = this.map.title;
     if(!title) title = "untitled";
     // IE supports msSaveBlob:
     if(navigator.msSaveBlob) {

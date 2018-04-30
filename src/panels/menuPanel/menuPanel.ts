@@ -56,7 +56,7 @@ export class MenuPanel extends Panel {
   }
 
   actionExport() {
-    let exporter = new Exporter();
+    let exporter = new Exporter(App.map);
     exporter.export();
   }
 
