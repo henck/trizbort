@@ -5,7 +5,7 @@ import { AppEvent, MouseMode, Values } from './enums/enums.js'
 import { Editor } from './editor.js'
 import { Tabs } from './controls/controls.js'
 import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/popups.js'
-import { BlockPanel, ConnectorPanel, RenderPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels/panels.js'
+import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels/panels.js'
 import { MapJSON } from './io/mapJSON.js'
 import { Selection } from './selection.js'
 
@@ -37,6 +37,7 @@ export class App {
   static createPanels() {
     let connectorPopup = new ConnectorPopup;
     let renderPanel = new RenderPanel();
+    let mapPanel = new MapPanel();
     let menuPanel = new MenuPanel();
     let notePanel = new NotePanel();
     let notePopup = new NotePopup();

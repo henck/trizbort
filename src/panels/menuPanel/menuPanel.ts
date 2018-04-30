@@ -34,6 +34,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-save', () => { this.actionSaveMap(); });
     this.createMenuItem('#menu-import', () => { this.actionImportMap(); });
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
+    this.createMenuItem('#menu-render', () => { this.actionRenderSettings(); });
     this.createMenuItem('#menu-export');
     this.createMenuItem('#menu-export-tads', () => { this.actionExportTads(); });
     this.createMenuItem('#menu-export-inform7', () => { this.actionExportInform7(); });
@@ -128,6 +129,10 @@ export class MenuPanel extends Panel {
 
   actionMapSettings() {
     Dispatcher.notify(AppEvent.More, App.map);
+  }
+
+  actionRenderSettings() {
+    Dispatcher.notify(AppEvent.More, App.map.settings);
   }
 
   actionExportTads() {

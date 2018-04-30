@@ -1,30 +1,23 @@
 {{> closePanel}}
 
-<h2>Map</h2>
+<h2>Render settings</h2>
 
 <div class="tabs"> 
-  <div class="tab selected" data-body="tab-map-info">Info</div>
-  <div class="tab" data-body="tab-map-grid">Grid</div>
-  <div class="tab" data-body="tab-map-rooms">Room</div>
-  <div class="tab" data-body="tab-map-connectors">Line</div>
-  <div class="tab" data-body="tab-map-notes">Note</div>
-  <div class="tab" data-body="tab-map-blocks">Block</div>
+  <div class="tab selected" data-body="tab-settings-grid">Grid</div>
+  <div class="tab" data-body="tab-settings-rooms">Room</div>
+  <div class="tab" data-body="tab-settings-connectors">Line</div>
+  <div class="tab" data-body="tab-settings-notes">Note</div>
+  <div class="tab" data-body="tab-settings-blocks">Block</div>
 </div>
 
-<div class="tab-body" id="tab-map-info">
-  <id-input class="js-title" data-label="Map title"></id-input>
-  <id-input class="js-author" data-label="Map author"></id-input>
-  <id-textarea class="js-description" data-label="Description"></id-textarea>
-</div>
-
-<div class="tab-body" id="tab-map-grid">
+<div class="tab-body" id="tab-settings-grid">
   <id-check class="js-grid-visible" data-label="Visible"></id-check>
   <id-check class="js-grid-origin" data-label="Show origin"></id-check>
   <id-check class="js-grid-snap" data-label="Snap to grid"></id-check>
   <id-range class="js-grid-size" data-min="16" data-max="128" data-label="Grid size"></id-range>
 </div>
 
-<div class="tab-body" id="tab-map-rooms">
+<div class="tab-body" id="tab-settings-rooms">
   <id-range class='js-room-width' data-min="64" data-max="256" data-label="Default room width"></id-range>
   <id-range class='js-room-height' data-min="64" data-max="256" data-label="Default room height"></id-range>
   <id-range class='js-room-darkness-size' data-min="50" data-max="100" data-label="Darkness stripe size"></id-range>
@@ -62,7 +55,7 @@
   </div>
 </div>
 
-<div class="tab-body" id="tab-map-connectors">
+<div class="tab-body" id="tab-settings-connectors">
   <id-linestyle class="js-connector-line" data-label="Default connector line style"></id-linestyle>
   <id-range class='js-connector-linewidth' data-min="1" data-max="10"></id-range>  
   <id-range class='js-connector-stalk' data-min="16" data-max="64" data-label="Default connector stalk length"></id-range>    
@@ -75,7 +68,7 @@
   <id-colorpicker class="js-connector-color"></id-colorpicker>
 </div>
 
-<div class="tab-body" id="tab-map-notes">
+<div class="tab-body" id="tab-settings-notes">
   <id-range class='js-note-width' data-min="64" data-max="256" data-label="Default note width"></id-range>
   <id-range class='js-note-height' data-min="64" data-max="256" data-label="Default note height"></id-range>
   <id-shape class="js-note-shape" data-label="Default note shape"></id-shape>   
@@ -100,7 +93,7 @@
   </div>
 </div>
 
-<div class="tab-body" id="tab-map-blocks">
+<div class="tab-body" id="tab-settings-blocks">
   <id-range class='js-block-width' data-min="64" data-max="256" data-label="Default block width"></id-range>
   <id-range class='js-block-height' data-min="64" data-max="256" data-label="Default block height"></id-range>
   <id-shape class="js-block-shape" data-label="Default block shape"></id-shape>    
