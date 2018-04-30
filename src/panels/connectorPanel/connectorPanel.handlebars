@@ -4,7 +4,7 @@
 
 <div class="tabs">
   <div class="tab selected" data-body="tab-connector-info">Info</div>
-  <div class="tab" data-body="tab-connector-color">Color</div>
+  <div class="tab" data-body="tab-connector-style">Style</div>
 </div>
 
 <div class="tab-body" id="tab-connector-info">
@@ -27,6 +27,9 @@
   </div>
 </div>
 
-<div class="tab-body" id="tab-connector-color">
+<div class="tab-body" id="tab-connector-style">
+  <id-linestyle class="js-linestyle" data-label="Line style"></id-linestyle>
+  <id-range class="js-linewidth" data-min="1" data-max="10"></id-range>
+  <label>Line color</label>  
   <id-colorpicker class="js-color"></id-colorpicker>
 </div>
