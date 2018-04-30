@@ -8,6 +8,8 @@ import { Panel }  from '../panels.js'
 import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
 import { Map } from '../../models/map.js';
 import { MapSettings } from '../../models/mapSettings.js';
+import { Window } from '../../controls/window.js'
+import { ObsidianTheme } from '../../themes/themes.js';
 
 export class RenderPanel extends Panel implements Subscriber {
 
@@ -58,7 +60,6 @@ export class RenderPanel extends Panel implements Subscriber {
   private ctrlBlockShape: IdShape;
   private ctrlBlockLine: IdLineStyle;
   
-
   constructor() {
     super('renderpanel', Handlebars.templates.renderPanel, { });
     Dispatcher.subscribe(this);
@@ -67,6 +68,9 @@ export class RenderPanel extends Panel implements Subscriber {
     this.ctrlGridOrigin = new IdCheck('.js-grid-origin', this.elem).addEventListener('input', () => { this.settings.grid.origin = this.ctrlGridOrigin.checked; })
     this.ctrlGridSnap = new IdCheck('.js-grid-snap', this.elem).addEventListener('input', () => { this.settings.grid.snap = this.ctrlGridSnap.checked; })
     this.ctrlGridSize = new IdRange('.js-grid-size', this.elem).addEventListener('input', () => { this.settings.grid.size = this.ctrlGridSize.value; });
+
+    this.elem.querySelector('.js-theme-default').addEventListener('click', () => { this.applyTheme('default'); });
+    this.elem.querySelector('.js-theme-obsidian').addEventListener('click', () => { this.applyTheme('obsidian'); });
 
     this.ctrlRoomWidth = new IdRange('.js-room-width', this.elem).addEventListener('input', () => { this.settings.room.width = this.ctrlRoomWidth.value; });
     this.ctrlRoomHeight = new IdRange('.js-room-height', this.elem).addEventListener('input', () => { this.settings.room.height = this.ctrlRoomHeight.value; });
@@ -182,6 +186,22 @@ export class RenderPanel extends Panel implements Subscriber {
         this.close();
       }      
     }
+  }
+
+  applyTheme(theme: string) {
+    new Window('Apply theme', 'Applying a new theme will overwrite all render settings. Proceed?', () => {
+      // OK
+      switch(theme) {
+        case 'obsidian':
+          App.map.settings = new MapSettings().cloneFrom(new ObsidianTheme());
+          break;
+        default:
+          App.map.settings = new MapSettings();
+          break;
+      }
+    }, () => {
+      // Cancel
+    });    
   }
 
   onRoomColorButton(button: IdPopup) {

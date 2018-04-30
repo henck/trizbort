@@ -3,18 +3,26 @@
 <h2>Render settings</h2>
 
 <div class="tabs"> 
-  <div class="tab selected" data-body="tab-settings-grid">Grid</div>
+  <div class="tab selected" data-body="tab-settings-basic">Basic</div>
   <div class="tab" data-body="tab-settings-rooms">Room</div>
   <div class="tab" data-body="tab-settings-connectors">Line</div>
   <div class="tab" data-body="tab-settings-notes">Note</div>
   <div class="tab" data-body="tab-settings-blocks">Block</div>
 </div>
 
-<div class="tab-body" id="tab-settings-grid">
+<div class="tab-body" id="tab-settings-basic">
   <id-check class="js-grid-visible" data-label="Visible"></id-check>
   <id-check class="js-grid-origin" data-label="Show origin"></id-check>
   <id-check class="js-grid-snap" data-label="Snap to grid"></id-check>
   <id-range class="js-grid-size" data-min="16" data-max="128" data-label="Grid size"></id-range>
+
+  <label>Quick themes</label>
+  <div class="menuitem">
+    <a href="#" class="js-theme-default"><svg class="icon small"><use xlink:href="dist/icons.svg#paintbrush"></use></svg> Default</a>
+  </div>  
+  <div class="menuitem">
+    <a href="#" class="js-theme-obsidian"><svg class="icon small"><use xlink:href="dist/icons.svg#paintbrush"></use></svg> Obsidian</a>
+  </div>
 </div>
 
 <div class="tab-body" id="tab-settings-rooms">

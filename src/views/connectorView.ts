@@ -223,7 +223,7 @@ export class ConnectorView extends View {
     // Draw start and end types
     canvas 
       .beginPath()
-      .fillStyle('#333')
+      .fillStyle(this.connector.color)
       .fillText(this.connector.startLabel ? this.connector.startLabel : ConnectorType.toString(this.connector.startType), 
         arrow1x + Math.cos(arrow1a - Math.PI / 2) * App.map.settings.connector.labelDistance, 
         arrow1y + Math.sin(arrow1a - Math.PI / 2) * App.map.settings.connector.labelDistance,

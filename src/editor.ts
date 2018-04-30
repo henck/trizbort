@@ -205,7 +205,9 @@ export class Editor implements Subscriber {
   }
 
   clear() {
-    this.canvas.clearRect(0, 0, this.htmlCanvas.offsetWidth, this.htmlCanvas.offsetHeight);
+    this.canvas
+      .fillStyle(App.map.settings.grid.background)
+      .fillRect(0, 0, this.htmlCanvas.offsetWidth, this.htmlCanvas.offsetHeight);
   }
 
   drawSelectionArea() {

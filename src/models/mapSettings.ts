@@ -8,6 +8,7 @@ class MapSettingsGrid {
   color = '#f0f0f0';
   lineWidth = 1;
   originWidth = 5;
+  background = '#ffffff';
 }
 
 class MapSettingsRoom {
