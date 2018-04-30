@@ -36,6 +36,24 @@ export class IdTextarea extends Control {
   }
 
   //
+  // Move focus to input element
+  // Returns this for easy chaining.
+  // 
+  focus() {
+    this.textarea.focus();
+    return this;
+  }
+
+  //
+  // Select all text in input element
+  // Returns this for easy chaining.
+  // 
+  select() {
+    this.textarea.select();
+    return this;
+  }  
+
+  //
   // Add an event listener to the inner <textarea>
   // Returns reference to self for easy chaining.
   // 

@@ -36,6 +36,24 @@ export class IdInput extends Control {
   }
 
   //
+  // Move focus to input element
+  // Returns this for easy chaining.
+  // 
+  focus() {
+    this.input.focus();
+    return this;
+  }
+
+  //
+  // Select all text in input element
+  // Returns this for easy chaining.
+  // 
+  select() {
+    this.input.select();
+    return this;
+  }
+
+  //
   // Add an event listener to the inner <input>
   // Returns reference to self for easy chaining.
   // 
