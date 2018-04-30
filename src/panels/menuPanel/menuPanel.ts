@@ -68,7 +68,9 @@ export class MenuPanel extends Panel {
   actionSaveMap() {
     let json:string = MapJSON.save(App.map);
     let blob = new Blob([json], { type: "text/plain; charset:utf-8"});
-    window.saveAs(blob, 'map.json');
+    let title = App.map.title;
+    if(!title) title = "untitled";
+    window.saveAs(blob, `${title}.json`);
   }
 
   actionImportMap() {
