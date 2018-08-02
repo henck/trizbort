@@ -20,6 +20,8 @@ import { BlockView } from './views/blockView.js';
 import { ConnectorType } from './enums/connectorType.js';
 import { ZorkMap } from './maps/zorkMap.js';
 import { MapJSON } from './io/mapJSON.js';
+import { AdventureMap } from './maps/adventureMap.js';
+import { CastleofdoomMap } from './maps/castleofdoomMap.js';
 
 export class Editor implements Subscriber {
   private htmlCanvas: HTMLCanvasElement;
@@ -170,6 +172,16 @@ export class Editor implements Subscriber {
     }    
   }  
 
+  getParameterByName(name: string) {
+    let url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    let results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
   makeTestMap() {
     /* let startRoom = new Room(App.map.settings);
     App.map.add(startRoom);
@@ -199,9 +211,30 @@ export class Editor implements Subscriber {
     connection.dockEnd = endRoom;
     connection.endDir = Direction.W; */
 
-    App.map = MapJSON.load(ZorkMap.json);
-    // Broadcast that we've loaded a new map:
-    Dispatcher.notify(AppEvent.Load, null);    
+    // The test map to load can be specified as a URL argument,
+    // i.e. trizbort.io/?map=zork
+    // If nothing is specified, then no wap will be loaded.
+
+    // Find map to load.
+    let map = null;
+    switch(this.getParameterByName('map')) {
+      case "adventure":
+        map = AdventureMap;
+        break;
+      case "castleofdoom":
+        map = CastleofdoomMap;
+        break;
+      case "zork":
+        map = ZorkMap;
+        break;
+    }
+
+    // If a map was specified, load it.
+    if(map != null) {
+      App.map = MapJSON.load(map.json);
+      // Broadcast that we've loaded a new map:
+      Dispatcher.notify(AppEvent.Load, null);    
+    }
   }
 
   clear() {

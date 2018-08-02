@@ -21,7 +21,7 @@ export class App {
   static centerY: number = 0;
   static mouseMode: MouseMode = MouseMode.None;
   static undoStack: Array<string> = new Array<string>();
-  static selection: Selection;
+  static selection: Selection; 
 
   static initialize() {
     App.canvas = document.getElementById('canvas');
