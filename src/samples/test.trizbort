@@ -2,11 +2,13 @@
 <trizbort version="1.6.1.0">
 	<info />
 	<map>
-		<room id="1" name="Cave" subtitle="" x="-544" y="-192" w="160" h="96" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
-		<room id="2" name="Cave" subtitle="" x="-128" y="-160" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
-		<line id="3" name="" description="" flow="oneWay" startText="up" endText="down">
+		<room id="1" name="Outside Cave" subtitle="(the first room)" x="-544" y="-192" w="160" h="96" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isDark="yes" isStartRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0">
+			<objects>[m] Jack Spice|[f] Mary Olsen|[p] bearded goat|[!] Named Guy|[s] green bush|[u] wooden table|  [c] cardboard box|    [1] coin|    [2] water</objects>
+		</room>
+		<room id="2" name="Cave" subtitle="(The second room)" x="-256" y="-32" w="96" h="64" region="NoRegion" handDrawn="yes" allcornersequal="yes" ellipse="no" roundedCorners="no" octagonal="no" cornerTopLeft="15" cornerTopRight="15" cornerBottomLeft="15" cornerBottomRight="15" borderstyle="Solid" isEndRoom="yes" description="" roomFill="" secondFill="" secondFillLocation="Bottom" roomBorder="" roomLargeText="" roomSubtitleColor="" roomSmallText="" ZOrder="0" />
+		<line id="4" name="" description="">
 			<dock index="0" id="1" port="e" />
-			<dock index="1" id="2" port="w" />
+			<dock index="1" id="2" port="n" />
 		</line>
 	</map>
 	<settings>
