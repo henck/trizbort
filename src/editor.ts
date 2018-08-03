@@ -22,6 +22,7 @@ import { ZorkMap } from './maps/zorkMap.js';
 import { MapJSON } from './io/mapJSON.js';
 import { AdventureMap } from './maps/adventureMap.js';
 import { CastleofdoomMap } from './maps/castleofdoomMap.js';
+import { HitchhikersguideMap } from './maps/hhg.js';
 
 export class Editor implements Subscriber {
   private htmlCanvas: HTMLCanvasElement;
@@ -223,6 +224,9 @@ export class Editor implements Subscriber {
         break;
       case "castleofdoom":
         map = CastleofdoomMap;
+        break;
+      case "hhg":
+        map = HitchhikersguideMap;
         break;
       case "zork":
         map = ZorkMap;
