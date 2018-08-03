@@ -8,4 +8,4 @@ Trizbort.io wouldn't be an adventure game mapping package if it didn't include a
 
 [Open this map directly in Trizbort](/app/index.html?map=adventure){:class="btn"}
 
-![Castle of Doom Adventure Map]({{ "/assets/adventure-map.png" | absolute_url }})
+![Colossal Cave Adventure Map]({{ "/assets/adventure-map.png" | absolute_url }})
