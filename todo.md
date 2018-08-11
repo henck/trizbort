@@ -86,4 +86,4 @@ as a ZIP.
 - [ ] export of grid_width and grid_length for the room
 - [ ] export of grid_length for the exit 
 - [ ] export of gridborder path
-- [ ] export of room label 
+- [x] export of room label 
