@@ -13,3 +13,14 @@ At the moment, Trizbort.io supports code generation for the following design sys
 * TADS 3
 
 Code generation for Hugo and ZIL may be added in the future.
+
+## Contributing
+
+Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/). There is no server back-end. It is simple to get it to run locally so you can hack on it. To do so:
+
+* Install [Node.js](https://nodejs.org/). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
+* Fork the project to a local directory.
+* Run `npm install` to install all dependencies.
+* The dependencies include [Grunt](https://gruntjs.com/), the JavaScript task runner.
+* Build the project by running `grunt watch`. This will build the project whenever you make a change.
+* Open `index.html` in your browser.
