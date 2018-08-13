@@ -20,8 +20,8 @@ Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/)
 
 * Install [Node.js](https://nodejs.org/). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
 * Fork the project to a local directory.
-* Run `npm install` to install all dependencies.
-* Make sure you have typescript and handlebars installed.
-* The dependencies include [Grunt](https://gruntjs.com/), the JavaScript task runner.
-* Build the project by running `grunt watch`. This will build the project whenever you make a change. The first time, you will want to go to the gruntfile and run separately all the commands.
+* Run `npm install` to install all dependencies. This includes TypeScript, [Grunt](https://gruntjs.com/), Handlebars and Express.
+* Build the project by running `grunt build`. 
+* Run `grunt watch`. This process will rebuild parts of the project whenever you make a change.
+* Start an Express development server.
 * Open `index.html` in your browser.
