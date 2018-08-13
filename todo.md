@@ -81,3 +81,9 @@ values and changes are saved in local storage. For instance, TADS may allow expo
 everything to a single file or every room into its own file, where the result is offered
 as a ZIP.
 
+### Quest export
+- [ ] export of up/down direction
+- [ ] export of grid_width and grid_length for the room
+- [ ] export of grid_length for the exit 
+- [ ] export of gridborder path
+- [x] export of room label 
