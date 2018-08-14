@@ -18,7 +18,7 @@ export class Inform7Generator extends CodeGenerator {
     Handlebars.registerPartial('inform7Object', Handlebars.templates.inform7Object);
   }
  
-  public generate() {
-    console.log(Handlebars.templates.inform7({ map: this.map }));
+  public generate(): string {
+    return Handlebars.templates.inform7({ map: this.map });
   }
 }

@@ -39,7 +39,7 @@ export class TadsGenerator extends CodeGenerator {
     return new Handlebars.SafeString(str);
   }
 
-  public generate() {
-    console.log(Handlebars.templates.tads({ map: this.map }));
+  public generate() : string {
+    return Handlebars.templates.tads({ map: this.map });
   }
 }

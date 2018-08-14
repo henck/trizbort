@@ -25,7 +25,7 @@ export class Alan3Generator extends CodeGenerator {
     return str;
   }
 
-  public generate() {
-    console.log(Handlebars.templates.alan3({ map: this.map }));
+  public generate(): string {
+    return Handlebars.templates.alan3({ map: this.map });
   }
 }

@@ -14,6 +14,7 @@ import { Alan3Generator } from '../../codegen/alan3/alan3Generator.js';
 import { QuestGenerator } from '../../codegen/quest/questGenerator.js';
 import { Canvas } from '../../drawing/canvas.js';
 import { Exporter } from '../../exporter.js';
+import { CodeGenerator } from '../../codegen/CodeGenerator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -39,11 +40,11 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
     this.createMenuItem('#menu-render', () => { this.actionRenderSettings(); });
     this.createMenuItem('#menu-export');
-    this.createMenuItem('#menu-export-tads', () => { this.actionExportTads(); });
-    this.createMenuItem('#menu-export-inform7', () => { this.actionExportInform7(); });
-    this.createMenuItem('#menu-export-alan2', () => { this.actionExportAlan2(); });
-    this.createMenuItem('#menu-export-alan3', () => { this.actionExportAlan3(); });
-    this.createMenuItem('#menu-export-quest', () => { this.actionExportQuest(); });
+    this.createMenuItem('#menu-export-tads', () => { this.actionGenerateCode(new TadsGenerator(App.map), 't3'); });
+    this.createMenuItem('#menu-export-inform7', () => { this.actionGenerateCode(new Inform7Generator(App.map), 'ni'); });
+    this.createMenuItem('#menu-export-alan2', () => { this.actionGenerateCode(new Alan2Generator(App.map), 'a2c'); });
+    this.createMenuItem('#menu-export-alan3', () => { this.actionGenerateCode(new Alan3Generator(App.map), 'a3c'); });
+    this.createMenuItem('#menu-export-quest', () => { this.actionGenerateCode(new QuestGenerator(App.map), 'aslx'); });
 
     this.inputLoad.addEventListener('change', () => { this.load(this.inputLoad.files, this.loadMap); });
     this.inputImport.addEventListener('change', () => { this.load(this.inputImport.files, this.importMap); });
@@ -143,28 +144,11 @@ export class MenuPanel extends Panel {
     Dispatcher.notify(AppEvent.More, App.map.settings);
   }
 
-  actionExportTads() {
-    let generator = new TadsGenerator(App.map);
-    generator.generate();
+  actionGenerateCode(generator: CodeGenerator, extension: string) {
+    let code:string = generator.generate();
+    let blob = new Blob([code], { type: "text/plain; charset:utf-8"});
+    let title = App.map.title;
+    if(!title) title = "untitled";
+    window.saveAs(blob, `${title}.${extension}`);    
   }
-
-  actionExportInform7() {
-    let generator = new Inform7Generator(App.map);
-    generator.generate();
-  }  
-
-  actionExportAlan2() {
-    let generator = new Alan2Generator(App.map);
-    generator.generate();
-  }    
-
-  actionExportAlan3() {
-    let generator = new Alan3Generator(App.map);
-    generator.generate();
-  }  
-
-  actionExportQuest() {
-    let generator = new QuestGenerator(App.map);
-    generator.generate();
-  }    
 }

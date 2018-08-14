@@ -15,7 +15,7 @@ export class QuestGenerator extends CodeGenerator {
     Handlebars.registerPartial('questObject', Handlebars.templates.questObject);
   }
 
-  public generate() {
-    console.log(Handlebars.templates.quest({ map: this.map })); 
+  public generate() : string {
+    return Handlebars.templates.quest({ map: this.map }); 
   }
 }

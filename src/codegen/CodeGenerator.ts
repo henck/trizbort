@@ -9,6 +9,13 @@ export class CodeGenerator {
   }
 
   //
+  // Override this in concrete generator implementations.
+  //
+  public generate() : string {
+    return "";
+  }
+
+  //
   // Replace diacritics in a string with ordinary letters.
   // 
   protected removeAccents(str: string): string {
