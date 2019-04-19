@@ -2,6 +2,8 @@
 
 [Trizbort.io](http://www.trizbort.io) is a JavaScript implementation of [Trizbort](http://www.trizbort.com), the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps,and generate code for several adventure design systems.
 
+![Drawing a map in Trizbort.io](http://www.trizbort.io/assets/map.png)
+
 ## Code generation
 
 At the moment, Trizbort.io supports code generation for the following design systems:
