@@ -113,6 +113,7 @@ export class IdObjectEditor extends Control {
   set value(obj: Obj) {
     this.obj = obj;
     this.ctrlName.value = obj.name;
+    this.ctrlDescription.value = obj.description;
     this.setKind(obj.kind);
   }    
 
