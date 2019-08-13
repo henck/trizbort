@@ -1,6 +1,6 @@
 # Trizbort.io
 
-[Trizbort.io](http://www.trizbort.io) is a JavaScript implementation of [Trizbort](http://www.trizbort.com), the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps,and generate code for several adventure design systems.
+[Trizbort.io](http://www.trizbort.io) is a JavaScript implementation of [Trizbort](http://www.trizbort.com), the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps, and generate code for several adventure design systems.
 
 ![Drawing a map in Trizbort.io](http://www.trizbort.io/assets/map.png)
 
@@ -27,3 +27,7 @@ Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/)
 * Run `grunt watch`. This process will rebuild parts of the project whenever you make a change.
 * Start an Express development server.
 * Open `index.html` in your browser.
+
+## Public web application
+
+The public end-user implementation of Trizbort runs at [Trizbort.io](http://www.trizbort.io). It is updated to reflect updates when they are built into this repository.
