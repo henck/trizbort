@@ -6,7 +6,7 @@
 
 ## Code generation
 
-At the moment, Trizbort.io supports code generation for the following design systems:
+<img align="right" src="http://www.trizbort.io/assets/trizbort-code-generation.png">At the moment, Trizbort.io supports code generation for the following design systems:
 
 * [Alan 2](https://www.alanif.se/)
 * [Alan 3](https://www.alanif.se/)
@@ -14,7 +14,7 @@ At the moment, Trizbort.io supports code generation for the following design sys
 * [Quest](http://textadventures.co.uk/quest)
 * [TADS 3](https://www.tads.org/tads3.htm)
 
-Code generation for Hugo and ZIL may be added in the future.
+Code generation is more complete for some systems that for others. Experts are very welcome to contribute to make code generation results more complete. Code generation for Hugo and ZIL may be added in the future.
 
 ## Contributing
 
@@ -30,4 +30,4 @@ Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/)
 
 ## Public web application
 
-The public end-user implementation of Trizbort runs at [Trizbort.io](http://www.trizbort.io). It is updated to reflect updates when they are built into this repository.
+The public end-user implementation of Trizbort runs at [Trizbort.io](http://www.trizbort.io). The implementation is updated regularly to reflect changes as these are built into this repository.
