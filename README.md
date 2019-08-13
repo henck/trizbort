@@ -8,17 +8,17 @@
 
 At the moment, Trizbort.io supports code generation for the following design systems:
 
-* Alan 2
-* Alan 3
-* Inform 7
-* Quest
-* TADS 3
+* [Alan 2](https://www.alanif.se/)
+* [Alan 3](https://www.alanif.se/)
+* [Inform 7](http://inform7.com/)
+* [Quest](http://textadventures.co.uk/quest)
+* [TADS 3](https://www.tads.org/tads3.htm)
 
 Code generation for Hugo and ZIL may be added in the future.
 
 ## Contributing
 
-Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/). There is no server back-end. It is simple to get it to run locally so you can hack on it. To do so:
+Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/). There is no server back-end and there are few dependencies. It is simple to get it to run locally so you can hack on it. To do so:
 
 * Install [Node.js](https://nodejs.org/). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
 * Fork the project to a local directory.
