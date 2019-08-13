@@ -9,18 +9,17 @@
   },
   "author": "Alexander van Oostenrijk / Independent Software (www.independent-software.com)",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "express": "^4.16.3",
-    "grunt": "^1.0.2",
+    "grunt": "^1.0.4",
     "grunt-contrib-stylus": "^1.2.0",
-    "grunt-contrib-uglify": "^3.3.0",
-    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-contrib-watch": "^1.1.0",
     "grunt-handlebars-compiler": "^0.3.1",
-    "grunt-svgstore": "^1.0.0",
-    "grunt-ts": "^6.0.0-beta.19",
-    "handlebars": "^4.0.11",
-    "typescript": "^2.8.1"
+    "grunt-svgstore": "^2.0.0",
+    "grunt-ts": "^6.0.0-beta.22",
+    "handlebars": "^4.1.2",
+    "typescript": "^2.9.2"
   }
 }
