@@ -1,0 +1,45 @@
+// === Game Data ===
+var gameData = {
+  commandCounter : 0,
+  gameOver : false,
+  introText : 'Welcome to the game!',
+  outroText : 'Thanks For playing!',
+  player : {
+    currentLocation : '{{className map.startRoom.name}}',
+    inventory : {}
+  },
+  map : {
+    {{#each map.rooms}} 
+    '{{className this.name}}': {
+      firstVisit: true,
+      displayName: '{{{this.name}}}',
+      description: '{{{this.description}}}',
+      items: {
+        {{#each this.objects}}
+          {{ className this.name }}: {
+            displayName: '{{ this.name }}',
+            description: '{{ this.description }}'
+          },
+        {{/each}}
+      },
+      exits: {
+        {{#each this.connections}}
+          {{ dirToStr this.startDir }}: {
+            displayName: '{{ capitalizeDirToStr this.startDir }}',
+            destination: '{{className this.room.name}}'
+          },
+        {{/each}}
+      },
+    },
+    {{/each}}
+  }
+};
+
+// === Game Actions ===
+var gameActions = {
+}
+
+// === Necessary Exports ===
+module.exports.gameData = gameData;
+module.exports.gameActions = gameActions;
+

@@ -15,6 +15,7 @@ import { QuestGenerator } from '../../codegen/quest/questGenerator.js';
 import { Canvas } from '../../drawing/canvas.js';
 import { Exporter } from '../../exporter.js';
 import { CodeGenerator } from '../../codegen/CodeGenerator.js';
+import { TextadventurejsGenerator } from '../../codegen/textadventurejs/TextadventurejsGenerator.js';
 
 export class MenuPanel extends Panel {
   private loader: any;
@@ -45,6 +46,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export-alan2', () => { this.actionGenerateCode(new Alan2Generator(App.map), 'a2c'); });
     this.createMenuItem('#menu-export-alan3', () => { this.actionGenerateCode(new Alan3Generator(App.map), 'a3c'); });
     this.createMenuItem('#menu-export-quest', () => { this.actionGenerateCode(new QuestGenerator(App.map), 'aslx'); });
+    this.createMenuItem('#menu-export-textadventurejs', () => { this.actionGenerateCode(new TextadventurejsGenerator(App.map), 'txt'); });
 
     this.inputLoad.addEventListener('change', () => { this.load(this.inputLoad.files, this.loadMap); });
     this.inputImport.addEventListener('change', () => { this.load(this.inputImport.files, this.importMap); });
