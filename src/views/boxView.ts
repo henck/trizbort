@@ -18,7 +18,7 @@ export class BoxView extends View {
     this.oldWidth = this.oldHeight = 0;
   }
 
-  getModel() {
+  getModel(): Box {
     return this.box;
   }  
 

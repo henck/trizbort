@@ -6,6 +6,8 @@ import { ConnectorView } from "./views/connectorView";
 import { RoomView } from "./views/roomView";
 import { NoteView } from "./views/noteView";
 import { Map } from "./models/map";
+import { BoxView } from "./views/boxView";
+import { Box } from "./models/box";
 
 //
 // The Exporter exports the a map to an image file.
@@ -27,6 +29,8 @@ export class Exporter {
     this.ctx = this.canvasElem.getContext('2d')
     this.canvas = new Canvas(this.ctx);
 
+    // Assume a canvas of 100x100.
+    // This will avoid problems in case of an empty map.
     this.left = 0;
     this.top = 0;
     this.width = 100;
@@ -133,6 +137,33 @@ export class Exporter {
       this.views.push(ViewFactory.create(model));
     });
 
+    // If there are any box views...
+    if(this.views.length > 0) {
+      // Determine bounding box of all box views:
+      let minX = 99999;
+      let minY = 99999;
+      let maxX = -99999;
+      let maxY = -99999;
+      this.views.forEach(view => {
+        if(view instanceof BoxView) {
+          let box:Box = view.getModel();
+          if(box.x < minX) minX = box.x;
+          if(box.y < minY) minY = box.y;
+          if(box.x + box.width > maxX) maxX = box.x + box.width;
+          if(box.y + box.height > maxY) maxY = box.y + box.height;
+        }
+      });
+
+      // Determine canvas dimensions based on bounding box:
+      this.left = -minX;
+      this.top = -minY;
+      this.width = Math.abs(maxX - minX);
+      this.height = Math.abs(maxY - minY);
+    }
+
+    // Do render passes, checking after each pass if anything is drawn
+    // on the border pixels of the image. If so, enlarge the canvas
+    // in that direction.
     do {
       this.render(false);
       var hasTop = this.hasPixelsTop();
