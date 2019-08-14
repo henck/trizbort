@@ -11,6 +11,9 @@ export class Window {
     this.elem.querySelector('.ok').addEventListener('click', () => {
       this.close();
       if(onOK instanceof Function) onOK();
+
+      onCancel = null;
+      onOK = null;
     });
 
     let cancel: HTMLElement = this.elem.querySelector('.cancel');
@@ -18,6 +21,9 @@ export class Window {
     this.elem.querySelector('.cancel').addEventListener('click', () => {
       this.close();
       if(onCancel instanceof Function) onCancel();
+
+      onCancel = null;
+      onOK = null;
     });
     
     this.open();
