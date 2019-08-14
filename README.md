@@ -13,6 +13,7 @@
 * [Inform 7](http://inform7.com/)
 * [Quest](http://textadventures.co.uk/quest)
 * [TADS 3](https://www.tads.org/tads3.htm)
+* [TextAdventure.js](https://github.com/TheBroox/TextAdventure.js)
 
 Code generation is more complete for some systems that for others. Experts are very welcome to contribute to make code generation results more complete. Code generation for Hugo and ZIL may be added in the future.
 
