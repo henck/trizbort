@@ -1,33 +1,68 @@
+//
+// Window class.
+//
+// Open a window by creating an instance of the Window class:
+//
+//     new Window('Error', 'An error occurred.', true, false);
+//
+// If the onOK argument is true, there will be an OK button. If the 
+// onCancel argument is true, then there will be a cancel button.
+// Any button closes the window when clicked.
+//
+// onOK and onCancel can also be functions. In this case, the function
+// is called when the button is clicked (and the window also closes):
+//
+//     new Window('Delete room?', 'Are you sure...', () => { ... }, false);
+//
+
 export class Window {
   private elem: HTMLElement;
+  private onOK: (() => void) | boolean;
+  private onCancel: (() => void) | boolean;
 
-  constructor(title: string, content: string, onOK: any, onCancel: any) {
+  constructor(title: string, content: string, onOK: (() => void) | boolean, onCancel: (() => void) | boolean) {
     this.elem = document.getElementById('window');
     this.elem.querySelector('.title').innerHTML = title;
     this.elem.querySelector('.content').innerHTML = content;
+    this.onOK = onOK;
+    this.onCancel = onCancel;
 
-    let ok: HTMLElement = this.elem.querySelector('.ok');
-    ok.style.display = onOK === false ? 'none' : 'block';
-    this.elem.querySelector('.ok').addEventListener('click', () => {
-      this.close();
-      if(onOK instanceof Function) onOK();
-    });
-
-    let cancel: HTMLElement = this.elem.querySelector('.cancel');
-    cancel.style.display = onCancel === false ? 'none' : 'block';
-    this.elem.querySelector('.cancel').addEventListener('click', () => {
-      this.close();
-      if(onCancel instanceof Function) onCancel();
-    });
-    
     this.open();
   }
 
-  open() {
+  // When OK is pressed, hide the window, and call OK callback if provided:
+  private handleOK = () => {
+    this.close();
+    if(this.onOK instanceof Function) this.onOK();
+  }
+
+  // When Cancel is pressed, hide the window, and call Cancel callback if provided:
+  private handleCancel = () => {
+    this.close();
+    if(this.onCancel instanceof Function) this.onCancel();
+  }
+
+  private open() {
+    // Show OK button if required, and add event listener for it:
+    let ok: HTMLElement = this.elem.querySelector('.ok');
+    ok.style.display = this.onOK ? 'block' : 'none';
+    this.elem.querySelector('.ok').addEventListener('click', this.handleOK);
+
+    // Show Cancel button if required, and add event listener for it:
+    let cancel: HTMLElement = this.elem.querySelector('.cancel');
+    cancel.style.display = this.onCancel ? 'block' : 'none';
+    this.elem.querySelector('.cancel').addEventListener('click', this.handleCancel);
+
+    // Show window:
     this.elem.style.display = 'flex';
   }
 
-  close() {
+  private close() {
+    // Remove event listeners for OK and Cancel buttons:
+    this.elem.querySelector('.ok').removeEventListener('click', this.handleOK);
+    this.elem.querySelector('.cancel').removeEventListener('click', this.handleCancel);
+
+    // Hide window:
     this.elem.style.display = 'none';
   }  
 }
