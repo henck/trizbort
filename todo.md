@@ -74,7 +74,7 @@
 * Gamefic (Ruby)
 * Quest
 * TADS
-* TextAdventure.js   (https://github.com/TheBroox/TextAdventure.js)
+* TextAdventure.js   (https://github.com/TheBroox/TextAdventure.js) (initial implementation now available)
 
 Code generations may allow selection of options; chosen options have default 
 values and changes are saved in local storage. For instance, TADS may allow exporting
