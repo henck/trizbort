@@ -1,19 +1,15 @@
-import { App } from '../../app.js'
-import { Window } from '../../controls/window.js'
-import { MapXMLLoader } from '../../io/mapXML.js'
-import { Dispatcher } from '../../dispatcher.js'
-import { AppEvent } from '../../enums/enums.js'
-import { MapJSON } from '../../io/mapJSON.js'
-import { Panel } from '../panels.js';
-import { Map } from '../../models/map.js';
-import { TadsGenerator } from '../../codegen/tads/TadsGenerator.js';
-import { Inform7Generator } from '../../codegen/inform7/Inform7Generator.js';
-import { Alan2Generator } from '../../codegen/alan2/alan2Generator.js';
-import { Alan3Generator } from '../../codegen/alan3/alan3Generator.js';
-import { QuestGenerator } from '../../codegen/quest/questGenerator.js';
-import { Exporter } from '../../exporter.js';
-import { CodeGenerator } from '../../codegen/CodeGenerator.js';
-import { TextadventurejsGenerator } from '../../codegen/textadventurejs/TextadventurejsGenerator.js';
+import { App } from '../../app'
+import { Window } from '../../controls/window'
+import { MapXMLLoader } from '../../io/mapXML'
+import { Dispatcher } from '../../dispatcher'
+import { AppEvent } from '../../enums/enums'
+import { MapJSON } from '../../io/mapJSON'
+import { Panel } from '../panels';
+import { Map } from '../../models/map';
+import { Exporter } from '../../exporter';
+
+import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 
+         QuestGenerator, TextadventurejsGenerator } from '../../codegen/CodeGeneration'
 
 export class MenuPanel extends Panel {
   private inputLoad: HTMLInputElement;
