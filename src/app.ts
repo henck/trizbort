@@ -3,9 +3,10 @@ import { View } from './views/view.js'
 import { Dispatcher } from './dispatcher.js'
 import { AppEvent, MouseMode, Values } from './enums/enums.js'
 import { Editor } from './editor.js'
-import { Tabs } from './controls/controls.js'
+import { Tabs, IdToast } from './controls/controls.js'
 import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/popups.js'
 import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels/panels.js'
+
 import { MapJSON } from './io/mapJSON.js'
 import { Selection } from './selection.js'
 
@@ -48,6 +49,8 @@ export class App {
     new BlockPopup();    
     new ConnectorPanel();
     new ConnectorPopup();
+    let toast = new IdToast('#toast');
+    toast.setText("Welcome to Trizbort.io! To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room.");
   }  
 
   static pushUndo() {
