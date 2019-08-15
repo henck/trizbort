@@ -927,10 +927,10 @@ export class Editor implements Subscriber {
     this.views.push(ViewFactory.create(room));
 
     if(this.roomsPlaced == 0) {
-      IdToast.toast("Room details", "You've placed your first room. You can edit its details by clicking it once (room popup) or double-clicking it (room details panel).");
+      IdToast.toast("Room details", "You've placed your first room. You can edit its <b>details</b> by clicking it once (room popup) or double-clicking it (room details panel).");
     }
     if(this.roomsPlaced == 1) {
-      IdToast.toast("Connecting rooms", "Now that you've placed multiple rooms, you can create connections between them. Select a source room and create a connection to a target room by dragging a line from the little connector circles.");
+      IdToast.toast("Connecting rooms", "Now that you've placed multiple rooms, you can create <b>connections</b> between them. Select a source room and create a connection to a target room by dragging a line from the little connector circles.");
     }
     this.roomsPlaced++;
   }
