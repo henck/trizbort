@@ -5,20 +5,17 @@ import { Dispatcher } from '../../dispatcher.js'
 import { AppEvent } from '../../enums/enums.js'
 import { MapJSON } from '../../io/mapJSON.js'
 import { Panel } from '../panels.js';
-import { MapSettings } from '../../models/mapSettings.js';
 import { Map } from '../../models/map.js';
 import { TadsGenerator } from '../../codegen/tads/TadsGenerator.js';
 import { Inform7Generator } from '../../codegen/inform7/Inform7Generator.js';
 import { Alan2Generator } from '../../codegen/alan2/alan2Generator.js';
 import { Alan3Generator } from '../../codegen/alan3/alan3Generator.js';
 import { QuestGenerator } from '../../codegen/quest/questGenerator.js';
-import { Canvas } from '../../drawing/canvas.js';
 import { Exporter } from '../../exporter.js';
 import { CodeGenerator } from '../../codegen/CodeGenerator.js';
 import { TextadventurejsGenerator } from '../../codegen/textadventurejs/TextadventurejsGenerator.js';
 
 export class MenuPanel extends Panel {
-  private loader: any;
   private inputLoad: HTMLInputElement;
   private inputImport: HTMLInputElement;
 
