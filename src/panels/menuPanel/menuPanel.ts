@@ -43,8 +43,18 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export-quest', () => { this.actionGenerateCode(new QuestGenerator(App.map), 'aslx'); });
     this.createMenuItem('#menu-export-textadventurejs', () => { this.actionGenerateCode(new TextadventurejsGenerator(App.map), 'txt'); });
 
-    this.inputLoad.addEventListener('change', () => { this.load(this.inputLoad.files, this.loadMap); });
-    this.inputImport.addEventListener('change', () => { this.load(this.inputImport.files, this.importMap); });
+    this.inputLoad.addEventListener('change', this.handleInputLoad);
+    this.inputImport.addEventListener('change', this.handleInputImport);
+  }
+
+  private handleInputLoad = () => {
+    this.load(this.inputLoad.files, this.loadMap);
+    this.inputLoad.value = null;
+  }
+
+  private handleInputImport = () => {
+    this.load(this.inputImport.files, this.importMap);
+    this.inputImport.value = null;
   }
 
   private createMenuItem(selector: string, f?: any) {
