@@ -1,11 +1,8 @@
-import { Model } from '../../models/model.js'
 import { Subscriber, Dispatcher } from '../../dispatcher.js';
 import { AppEvent } from '../../enums/appEvent.js'
 import { Block } from '../../models/block.js';
-import { App } from '../../app.js';
-import { RoomShape } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls.js';
+import { IdColorPicker, IdRange, IdPopup, IdShape, IdLineStyle } from '../../controls/controls.js';
 
 export class BlockPanel extends Panel implements Subscriber {
   private block: Block;
