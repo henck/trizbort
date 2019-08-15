@@ -28,25 +28,26 @@ export class App {
     App.selection = new Selection();
     
     // Intialize GUI components:
-    let editor = new Editor();
-    App.createPanels();
+    App.createComponents();
 
     Tabs.initialize();
   }
 
-  static createPanels() {
-    let connectorPopup = new ConnectorPopup;
-    let renderPanel = new RenderPanel();
-    let mapPanel = new MapPanel();
-    let menuPanel = new MenuPanel();
-    let notePanel = new NotePanel();
-    let notePopup = new NotePopup();
-    let toolPanel = new ToolPanel();
-    let blockPanel = new BlockPanel();
-    let roomPopup = new RoomPopup();
-    let roomPanel = new RoomPanel();
-    let blockPopup = new BlockPopup();    
-    let connectorPanel = new ConnectorPanel();
+  // Create all GUI components:
+  static createComponents() {
+    new Editor();
+    new RenderPanel();
+    new MapPanel();
+    new MenuPanel();
+    new NotePanel();
+    new NotePopup();
+    new ToolPanel();
+    new BlockPanel();
+    new RoomPopup();
+    new RoomPanel();
+    new BlockPopup();    
+    new ConnectorPanel();
+    new ConnectorPopup();
   }  
 
   static pushUndo() {
