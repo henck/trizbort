@@ -49,8 +49,7 @@ export class App {
     new BlockPopup();    
     new ConnectorPanel();
     new ConnectorPopup();
-    let toast = new IdToast('#toast');
-    toast.setText("Welcome to Trizbort.io! To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room.");
+    IdToast.toast("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room.");
   }  
 
   static pushUndo() {
