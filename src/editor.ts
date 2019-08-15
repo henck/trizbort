@@ -91,7 +91,7 @@ export class Editor implements Subscriber {
   }
 
   keyUp(e: KeyboardEvent) {
-    console.log("Key up: ", e);
+    // console.log("Key up: ", e);
     if(!e.ctrlKey && !e.shiftKey) {
       switch(e.key) {
         case 'a': this.cmdToggleOneWay(); break;
