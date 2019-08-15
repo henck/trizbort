@@ -24,6 +24,7 @@ import { AdventureMap } from './maps/adventureMap.js';
 import { CastleofdoomMap } from './maps/castleofdoomMap.js';
 import { HitchhikersguideMap } from './maps/hhg.js';
 import { HobbitMap } from './maps/hobbitMap.js';
+import { IdToast } from './controls/controls.js';
 
 export class Editor implements Subscriber {
   private htmlCanvas: HTMLCanvasElement;
@@ -37,6 +38,9 @@ export class Editor implements Subscriber {
   private connectorHandle: ConnectorHandle;
   private copy: Array<Model> = new Array<Model>();
   private ctrlZoom: HTMLInputElement;
+
+  // Track help system state:
+  private roomsPlaced: number = 0;
 
   // Scroll/drag:
   private mouseX: number = -100;
@@ -921,6 +925,14 @@ export class Editor implements Subscriber {
     room.x = Grid.snap(this.mouseX);
     room.y = Grid.snap(this.mouseY);
     this.views.push(ViewFactory.create(room));
+
+    if(this.roomsPlaced == 0) {
+      IdToast.toast("Room details", "You've placed your first room. You can edit its details by clicking it once (room popup) or double-clicking it (room details panel).");
+    }
+    if(this.roomsPlaced == 1) {
+      IdToast.toast("Connecting rooms", "Now that you've placed multiple rooms, you can create connections between them. Select a source room and create a connection to a target room by dragging a line from the little connector circles.");
+    }
+    this.roomsPlaced++;
   }
 
   cmdAddNote() {
