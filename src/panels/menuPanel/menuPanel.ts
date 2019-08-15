@@ -10,6 +10,7 @@ import { Exporter } from '../../exporter';
 
 import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 
          QuestGenerator, TextadventurejsGenerator } from '../../codegen/CodeGeneration'
+import { IdToast } from '../../controls/controls';
 
 export class MenuPanel extends Panel {
   private inputLoad: HTMLInputElement;
@@ -33,6 +34,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-image', () => { this.actionExport(); });
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
     this.createMenuItem('#menu-render', () => { this.actionRenderSettings(); });
+    this.createMenuItem('#menu-help', () => { this.actionHelp(); });
     this.createMenuItem('#menu-export');
     this.createMenuItem('#menu-export-tads', () => { this.actionGenerateCode(new TadsGenerator(App.map), 't3'); });
     this.createMenuItem('#menu-export-inform7', () => { this.actionGenerateCode(new Inform7Generator(App.map), 'ni'); });
@@ -137,6 +139,10 @@ export class MenuPanel extends Panel {
 
   actionRenderSettings() {
     Dispatcher.notify(AppEvent.More, App.map.settings);
+  }
+
+  actionHelp() {
+    IdToast.toast("Keyboard help", "(keyboard help here)");
   }
 
   actionGenerateCode(generator: CodeGenerator, extension: string) {
