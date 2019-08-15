@@ -28,15 +28,20 @@ export class IdToast extends Control {
     this.elem.style.display = 'none';
   }
 
-  public setText(title: string, text: string) {
+  public setText(title: string, text: string, autoWidth: boolean) {
     // Make sure element is visible (toast may have been closed previously):
     this.elem.style.display = 'block';    
     this.title.innerHTML = title;
     this.text.innerHTML = text;    
+    if(autoWidth) {
+      this.elem.style.width = 'auto';
+    } else {
+      this.elem.style.width = '250px';
+    }
   }
 
-  public static toast(title: string, text: string) {
+  public static toast(title: string, text: string, autoWidth?: boolean) {
     if(toast == null) toast = new IdToast("#toast");
-    toast.setText(title, text);
+    toast.setText(title, text, !!autoWidth);
   }
 }
