@@ -21,4 +21,20 @@ export class Control {
       throw(`Failed to instantiate control: element or selector ${elem} not found in DOM.`);
     }  
   }
+
+  public show = () => {
+    this.elem.style.display = 'block';
+  }
+
+  public hide = () => {
+    this.elem.style.display = 'none';
+  }
+
+  public setVisible = (visible:boolean) => {
+    if(visible) {
+      this.show();
+    } else {
+      this.hide();
+    }
+  }
 }
