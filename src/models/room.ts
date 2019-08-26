@@ -1,7 +1,7 @@
 import { Model } from './model.js'
 import { Box } from './box.js'
 import { Map } from './map.js'
-import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
+import { Direction, LineStyle, RoomShape, Values, ConnectorType } from '../enums/enums.js'
 import { Xml } from '../io/xmlMap';
 import { MapSettings } from './mapSettings.js';
 import { Connector } from './connector.js';
@@ -140,16 +140,19 @@ export class Room extends Box {
   }
 
   // 
-  // List of StartDirection, EndDirection, Room tuples representing connections
+  // List of StartDirection, StartType, EndDirection, EndType, Room tuples representing connections
   // from this room.
+  //
+  // This is of use for code generators who are interested in all connections starting OR
+  // ending at this room.
   // 
-  get connections(): Array<{ startDir: Direction, endDir: Direction, room: Room }> {
+  get connections(): Array<{ startDir: Direction, startType: ConnectorType, endDir: Direction, endType: ConnectorType, room: Room }> {
     let connectors = this.connectors;
     return connectors.map((conn) => { 
       if(conn.dockStart == this) {
-        return {startDir: conn.startDir, endDir: conn.endDir, room: conn.dockEnd};
+        return {startDir: conn.startDir, startType: conn.startType, endDir: conn.endDir, endType: conn.endType, room: conn.dockEnd};
       } else { 
-        return {startDir: conn.endDir, endDir: conn.startDir, room: conn.dockStart};
+        return {startDir: conn.endDir, startType: conn.endType, endDir: conn.startDir, endType: conn.startType, room: conn.dockStart};
       }
     });
   }

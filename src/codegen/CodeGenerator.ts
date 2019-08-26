@@ -1,5 +1,5 @@
 import { Map } from "../models/map";
-import { Direction } from "../enums/enums";
+import { Direction, ConnectorType } from "../enums/enums";
 
 export class CodeGenerator {
   protected map: Map;
@@ -71,7 +71,15 @@ export class CodeGenerator {
     return new Handlebars.SafeString(this.capitalize(this.camelCase(this.removeSpecialChars(this.removeAccents(str)))));
   }  
 
-  protected dirToStr(dir: Direction): string {
+  protected dirToStr(dir: Direction, type: ConnectorType): string {
+    // Special connections:
+    switch(type) {
+      case ConnectorType.Down: return "down";
+      case ConnectorType.Up:   return "up";
+      case ConnectorType.In:   return "in";
+      case ConnectorType.Out:  return "out";
+    }
+    // Compass connections:
     switch(dir) {
       case Direction.N:   return "north";
       case Direction.NNE: return "northnortheast";

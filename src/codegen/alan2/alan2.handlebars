@@ -5,7 +5,7 @@ LOCATION {{className this.name}} NAME {{{this.name}}}
     "{{{this.description}}}"
   {{/if}}
   {{#each this.connections}}
-  EXIT {{ dirToStr this.startDir }} TO {{className this.room.name}}.
+  EXIT {{ dirToStr this.startDir this.startType }} TO {{className this.room.name}}.
   {{/each}}
 END LOCATION.
 {{#if (isStartRoom this)}}START AT {{{className this.name}}}.

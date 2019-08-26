@@ -7,20 +7,20 @@ versionInfo: GameID
   name = '{{{map.title}}}'
   byline = 'by {{{map.author}}}'
   version = '1.0'
-  desc = '"{{{map.description}}}'
+  desc = '{{{map.description}}}'
 
 gameMain: GameMainDef
   initialPlayerChar = me
 
 + me: Actor
-  location = {{{className map.startRoom.name}}}
+  {{#if map.startRoom}}location = {{{className map.startRoom.name}}}{{/if}}
 ;
 
 {{#each map.rooms}} 
 {{className this.name}}: Room '{{{this.name}}}'
   "{{{this.description}}}"
   {{#each this.connections}}
-  {{ dirToStr this.startDir }}: {{{className this.room.name}}}
+  {{dirToStr this.startDir this.startType}}: {{{className this.room.name}}} 
   {{/each}}
 ;
 

@@ -6,7 +6,7 @@ The {{{className this.name}}} Isa location
     "{{{this.description}}}"
   {{/if}}
   {{#each this.connections}}
-  Exit {{ dirToStr this.startDir }} To {{{className this.room.name}}}.
+  Exit {{ dirToStr this.startDir this.startType }} To {{{className this.room.name}}}.
   {{/each}}
 End The {{{className this.name}}}.
 

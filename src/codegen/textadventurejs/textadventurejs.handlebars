@@ -24,7 +24,7 @@ var gameData = {
       },
       exits: {
         {{#each this.connections}}
-          {{ dirToStr this.startDir }}: {
+          {{ dirToStr this.startDir this.startType }}: {
             displayName: '{{ capitalizeDirToStr this.startDir }}',
             destination: '{{className this.room.name}}'
           },

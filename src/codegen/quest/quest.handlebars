@@ -23,8 +23,8 @@
       <inherit name="editor_player" />
     </object>
     {{/if}} {{#each this.connections}}
-    <exit alias="{{dirToStr this.startDir}}" to="{{{this.room.name}}}">
-      <inherit name="{{dirToStr this.startDir}}direction" />
+    <exit alias="{{dirToStr this.startDir this.startType}}" to="{{{this.room.name}}}">
+      <inherit name="{{dirToStr this.startDir this.startType}}direction" />
     </exit>
     {{/each}} {{#each this.objects}} {{> questObject object=this}} {{/each}}
   </object>
