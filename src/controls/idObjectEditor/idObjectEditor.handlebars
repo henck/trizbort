@@ -1,23 +1,29 @@
-<div style="display: flex; flex-direction: column; border: solid 1px #999; border-radius: 3px; padding: 8px 8px 6px 8px; margin-top: 8px">
-  <div style="display: flex; align-items: flex-start">
-    <div style="flex:1">
-      <id-input class="js-name" data-label="Name"></id-input>
-      <id-input class="js-description" data-label="Description"></id-input>
+<div style="display: flex; flex-direction: column; border: solid 1px #999; border-radius: 3px; margin-top: 8px">
+  <div style="display: flex; flex-direction: row">
+    <div class="handle" style="background: #eee; width: 15px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; border-right: solid 1px #999">
     </div>
-    <a href="#" title="Delete object">
-      <svg class="icon small"><use xlink:href="dist/icons.svg#trash"></use></svg> 
-    </a>
-  </div>
-  <div style="display: flex">
-    <id-popup class="js-actor" title="Actor">
-      <svg class="icon"><use xlink:href="dist/icons.svg#actor"></use></svg>
-    </id-popup>
-    <id-popup class="js-item" title="Item">
-      <svg class="icon"><use xlink:href="dist/icons.svg#item"></use></svg>
-    </id-popup>
-    <id-popup class="js-scenery" title="Scenery">
-      <svg class="icon"><use xlink:href="dist/icons.svg#scenery"></use></svg>
-    </id-popup> 
+    <div style="flex: 1; padding: 8px 8px 6px 8px">
+      <div style="display: flex; align-items: flex-start">
+        <div style="flex:1">
+          <id-input class="js-name" data-label="Name"></id-input>
+          <id-input class="js-description" data-label="Description"></id-input>
+        </div>
+        <a href="#" title="Delete object">
+          <svg class="icon small"><use xlink:href="dist/icons.svg#trash"></use></svg> 
+        </a>
+      </div>
+      <div style="display: flex">
+        <id-popup class="js-actor" title="Actor">
+          <svg class="icon"><use xlink:href="dist/icons.svg#actor"></use></svg>
+        </id-popup>
+        <id-popup class="js-item" title="Item">
+          <svg class="icon"><use xlink:href="dist/icons.svg#item"></use></svg>
+        </id-popup>
+        <id-popup class="js-scenery" title="Scenery">
+          <svg class="icon"><use xlink:href="dist/icons.svg#scenery"></use></svg>
+        </id-popup> 
+      </div>
+    </div>
   </div>
 </div>
 <div class="drop-child"></div>

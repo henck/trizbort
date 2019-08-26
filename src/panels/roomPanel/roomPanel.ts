@@ -14,7 +14,7 @@ export class RoomPanel extends Panel implements Subscriber {
 
   private ctrlName: IdInput;
   private ctrlSubtitle: IdInput;
-  private ctrlDark: IdCheck
+  private ctrlDark: IdCheck;
   private ctrlStartroom: IdCheck;
   private ctrlEndroom: IdCheck;
   private ctrlDescription: IdTextarea;
@@ -146,9 +146,7 @@ export class RoomPanel extends Panel implements Subscriber {
 
   createObjEditor(obj: Obj, indent: number) {
     let div:HTMLElement = document.createElement('div');
-    div.classList.add('draggable');
     div.style.marginLeft = `${indent*40}px`;
-    div.draggable = true;
     this.objList.appendChild(div);
     let editor = new IdObjectEditor(div);
     editor.value = obj;

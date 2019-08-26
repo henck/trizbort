@@ -1,6 +1,6 @@
 import { Control } from "../control";
 import { IdPopup, IdInput } from "../controls";
-import { LineStyle, ObjectKind } from "../../enums/enums";
+import { ObjectKind } from "../../enums/enums";
 import { Obj } from "../../models/obj";
 
 export class IdObjectEditor extends Control {
@@ -13,7 +13,6 @@ export class IdObjectEditor extends Control {
   private btnScenery: IdPopup;
   private static dragParent: HTMLElement;
   private static dragObj: Obj;
-  private static tagName: string;
   private dropDiv: HTMLElement;
   private dropAsChildDiv: HTMLElement;
 
@@ -27,21 +26,25 @@ export class IdObjectEditor extends Control {
     // Expand a handlebars template into the top element.
     this.elem.innerHTML = Handlebars.templates.idObjectEditor({ });
 
-    this.elem.addEventListener('mousedown', (e) => {
-      IdObjectEditor.tagName = (e.target as HTMLElement).tagName.toLowerCase();
+    // The drag handle is used to initiate dragging. When
+    // the mouse is pressed on it, set the 'draggable' attribute
+    // on the object editor.
+    let handle:HTMLDivElement = this.elem.querySelector('.handle');
+    handle.addEventListener('mousedown', (e) => {
+      this.elem.setAttribute('draggable', 'true');
+    });
+    handle.addEventListener('mouseup', (e) => {
+      this.elem.setAttribute('draggable', 'false');
     });
 
+    // Object editor dragstart and dragend:
     this.elem.addEventListener('dragstart', (e) => {
-      if(IdObjectEditor.tagName == "input") {
-        return false;
-      }
       e.dataTransfer.setData('text', 'foo');
       IdObjectEditor.dragObj = this.obj;
       IdObjectEditor.dragParent = this.elem.parentElement;
       this.elem.classList.add('dragged');
       IdObjectEditor.dragParent.classList.add('dragging');
     });
-
     this.elem.addEventListener('dragend', (e) => {
       this.elem.classList.remove('dragged');
       IdObjectEditor.dragParent.classList.remove('dragging');
@@ -63,11 +66,15 @@ export class IdObjectEditor extends Control {
     this.dropDiv.addEventListener('drop', function(e) { return me.handleDrop(e, this); });
     this.dropAsChildDiv.addEventListener('drop', function(e) { return me.handleDropAsChild(e, this); });
 
+    // Text inputs:
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.obj.name = this.ctrlName.value; });
     this.ctrlDescription = new IdInput('.js-description', this.elem).addEventListener('input', () => { this.obj.description = this.ctrlDescription.value; });
+
+    // Delete button:
     this.btnDelete = this.elem.querySelector('a');
     this.btnDelete.addEventListener('click', () => { this.delete(); });
 
+    // Object type buttons:
     this.btnItem = new IdPopup('.js-item', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Item); });
     this.btnScenery = new IdPopup('.js-scenery', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Scenery); });
     this.btnActor = new IdPopup('.js-actor', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Actor); });
