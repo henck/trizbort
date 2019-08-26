@@ -66,6 +66,9 @@ export class Selection {
       view.select();
       this.list.push(view);
     });
-    Dispatcher.notify(AppEvent.Select, views[0].getModel());
+    // Notify subscribers only if at least one view as selected.
+    if(views.length > 0) {
+      Dispatcher.notify(AppEvent.Select, views[0].getModel());
+    }
   }  
 }
