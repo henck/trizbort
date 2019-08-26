@@ -73,6 +73,7 @@ export class Editor implements Subscriber {
     this.htmlCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
     this.htmlCanvas.addEventListener('wheel', (e:MouseWheelEvent) => { this.canvasMouseWheel(e) } );    
     this.htmlCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
+    this.htmlCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
 
     document.getElementById('control-center').addEventListener('click', () => { this.cmdCenterView(); });
     document.getElementById('control-zoomin').addEventListener('click', () => { this.cmdZoomIn(); });
@@ -401,6 +402,11 @@ export class Editor implements Subscriber {
     this.cmdShowPanel();
   }
 
+  // Prevent context menu appearing on right mouse up.
+  canvasContextMenu(e: MouseEvent) {
+    e.preventDefault();
+  }
+
   canvasMouseDown(e: MouseEvent) {
     // - Are we over a resize handle?
     //   - MODE: RESIZE
@@ -416,6 +422,17 @@ export class Editor implements Subscriber {
 
     let { x, y } = this.findMouseCoordinates(e);
 
+    // Mouse wheel OR right mouse button pressed. Start scrolling.
+    if(e.which == 2 || e.which == 3) {
+      App.mouseMode = MouseMode.Scroll;
+      this.scrollOffsetX = e.clientX;
+      this.scrollOffsetY = e.clientY;
+      this.scrollOriginX = App.centerX;
+      this.scrollOriginY = App.centerY;
+      this.htmlCanvas.style.cursor = 'move';
+      return;
+    }    
+
     if(App.mouseMode == MouseMode.AddRoom) {
       this.cmdAddRoom();
       return;
@@ -428,17 +445,6 @@ export class Editor implements Subscriber {
 
     if(App.mouseMode == MouseMode.AddBlock) {
       this.cmdAddBlock();
-      return;
-    }
-
-    // Mouse wheel button pressed. Start scrolling.
-    if(e.which == 2) {
-      App.mouseMode = MouseMode.Scroll;
-      this.scrollOffsetX = e.clientX;
-      this.scrollOffsetY = e.clientY;
-      this.scrollOriginX = App.centerX;
-      this.scrollOriginY = App.centerY;
-      this.htmlCanvas.style.cursor = 'move';
       return;
     }
 
