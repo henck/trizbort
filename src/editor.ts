@@ -3,7 +3,6 @@ import { Dispatcher, Subscriber } from './dispatcher.js'
 import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums/enums.js'
 import { Model } from './models/model.js'
 import { Grid } from "./grid.js"
-import { Map } from "./models/map.js"
 import { Room } from "./models/room.js"
 import { Connector } from "./models/connector.js"
 import { View } from "./views/view.js"
@@ -17,7 +16,6 @@ import { ViewFactory } from './views/viewFactory.js';
 import { Canvas } from './drawing/canvas.js';
 import { Block } from './models/block.js';
 import { BlockView } from './views/blockView.js';
-import { ConnectorType } from './enums/connectorType.js';
 import { ZorkMap } from './maps/zorkMap.js';
 import { MapJSON } from './io/mapJSON.js';
 import { AdventureMap } from './maps/adventureMap.js';
@@ -820,6 +818,8 @@ export class Editor implements Subscriber {
 
   cmdPaste() {
     App.pushUndo();
+
+    // Clear the current selection. The copied elements will be the new selection.
     App.selection.unselectAll();
 
     let viewCount = this.views.length;
@@ -829,6 +829,8 @@ export class Editor implements Subscriber {
       if(!(model instanceof Connector)) {
         // Clone the model and add it to the map:
         let newModel: Model = model.clone();
+        (newModel as Box).x += Grid.snap(this.mouseX);
+        (newModel as Box).y += Grid.snap(this.mouseY);
         App.map.add(newModel);
         // Create a view and add it to the selection:
         let view: View = ViewFactory.create(newModel);
