@@ -27,15 +27,18 @@ export class MenuPanel extends Panel {
     this.inputLoad = document.getElementById('inputLoad') as HTMLInputElement;
     this.inputImport = document.getElementById('inputImport') as HTMLInputElement;
 
+    this.createMenuGroup('#group-file');
     this.createMenuItem('#menu-new', () => { this.actionNewMap(); });
     this.createMenuItem('#menu-load', () => { this.actionLoadMap(); });
     this.createMenuItem('#menu-save', () => { this.actionSaveMap(); });
     this.createMenuItem('#menu-import', () => { this.actionImportMap(); });
     this.createMenuItem('#menu-image', () => { this.actionExport(); });
+
+    this.createMenuGroup('#group-settings');
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
     this.createMenuItem('#menu-render', () => { this.actionRenderSettings(); });
-    this.createMenuItem('#menu-help', () => { this.actionHelp(); });
-    this.createMenuItem('#menu-export');
+
+    this.createMenuGroup('#group-export');
     this.createMenuItem('#menu-export-tads', () => { this.actionGenerateCode(new TadsGenerator(App.map), 't3'); });
     this.createMenuItem('#menu-export-inform7', () => { this.actionGenerateCode(new Inform7Generator(App.map), 'ni'); });
     this.createMenuItem('#menu-export-alan2', () => { this.actionGenerateCode(new Alan2Generator(App.map), 'a2c'); });
@@ -43,6 +46,9 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export-quest', () => { this.actionGenerateCode(new QuestGenerator(App.map), 'aslx'); });
     this.createMenuItem('#menu-export-textadventurejs', () => { this.actionGenerateCode(new TextadventurejsGenerator(App.map), 'js'); });
     this.createMenuItem('#menu-export-zil', () => { this.actionGenerateCode(new ZilGenerator(App.map), 'zil'); });
+
+    this.createMenuGroup('#group-help');
+    this.createMenuItem('#menu-help', () => { this.actionHelp(); });
 
     this.inputLoad.addEventListener('change', this.handleInputLoad);
     this.inputImport.addEventListener('change', this.handleInputImport);
@@ -62,6 +68,20 @@ export class MenuPanel extends Panel {
     let elem: HTMLElement = document.querySelector(selector);
     if(f) elem.addEventListener('click', f);
     elem.addEventListener('click', () => { elem.classList.toggle('open') });
+  }
+
+  private createMenuGroup(selector: string) {
+    let elem: HTMLElement = document.querySelector(selector);
+    elem.addEventListener('click', (e: Event) => {
+      // Hide all group nodes:
+      let nodes = this.elem.querySelectorAll(".menugroup > div");
+      for (let i = 0; i < nodes.length; i++) {
+        (nodes[i] as HTMLElement).style.display = 'none';
+      } 
+      // Show node for clicked group:
+      let node:HTMLElement = elem.parentElement.querySelector(`div`);
+      node.style.display = 'block';
+    });
   }
 
   actionExport() {

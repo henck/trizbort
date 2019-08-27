@@ -1,3 +1,17 @@
+div.menugroup
+  margin-bottom 20px
+  a 
+    display block
+    outline none 
+    background-color #f0f0f0
+    color #333
+    padding 10px 10px 10px 20px
+    text-decoration none 
+    text-transform uppercase
+    transition background-color 0.2s
+    &:hover 
+      background-color #e0e0e0
+
 div.menuitem
   user-select none
   display block
@@ -7,7 +21,9 @@ div.menuitem
     outline none
     padding 10px 10px 10px 10px 
     color #333
+    background-color transparent
     text-decoration none
+    text-transform none
     svg
       fill #888
     &:hover
