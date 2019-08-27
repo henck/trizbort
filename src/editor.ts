@@ -65,7 +65,11 @@ export class Editor implements Subscriber {
 
     this.views = new Array(); 
 
+    // Global event listeners:
     window.addEventListener('resize', () => { this.resize(); } );    
+    window.addEventListener("beforeunload", (e: Event) => { this.unload(e); });
+
+    // Canvas event listeners:
     this.htmlCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
     this.htmlCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
     this.htmlCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
@@ -73,6 +77,7 @@ export class Editor implements Subscriber {
     this.htmlCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
     this.htmlCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
 
+    // Status bar event listeners:
     document.getElementById('control-center').addEventListener('click', () => { this.cmdCenterView(); });
     document.getElementById('control-zoomin').addEventListener('click', () => { this.cmdZoomIn(); });
     document.getElementById('control-zoomout').addEventListener('click', () => { this.cmdZoomOut(); });
@@ -333,6 +338,16 @@ export class Editor implements Subscriber {
   resize() {
     this.htmlCanvas.setAttribute('width', this.htmlCanvas.offsetWidth.toString());
     this.htmlCanvas.setAttribute('height', this.htmlCanvas.offsetHeight.toString());    
+  }
+
+  //
+  // Confirm that the user wants to leave when the page is about to be closed.
+  // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event?redirectlocale=en-US&redirectslug=DOM%2FMozilla_event_reference%2Fbeforeunload
+  // 
+  unload(e: Event) {
+    let confirmationMessage = 'You will lose all unsaved changes. Proceed?';
+    ((e || window.event).returnValue as any) = confirmationMessage; // Gecko + IE
+    return confirmationMessage;                                     // Webkit, Safari, Chrome
   }
 
   //
