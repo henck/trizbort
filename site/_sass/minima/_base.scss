@@ -41,7 +41,7 @@ ul, ol, dl, figure,
 }
 
 h1.title {
-  font-size: 100px;
+  font-size: 65px;
 }
 
 
@@ -135,6 +135,16 @@ a.btn {
  &:hover {
    background: #FFC31F;
  }
+}
+
+a.smallbtn {
+  border-radius: 6px;
+  padding: 3px 12px 4px 12px;
+  color: #333;
+  background: #FFD152;
+  &:hover {
+    background: #FFC31F;
+  }  
 }
 
 

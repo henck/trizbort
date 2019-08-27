@@ -19,9 +19,10 @@ layout: default
     </div>
     <div class="text-col">
       <h1>Create a map in minutes</h1>
-      <p>Trizbort.io is a browser-based tool that lets you easily map adventure games. Drag rooms into your map and
-      link them up using connections in all compass directions. Add a list of objects present in each room. Finally,
-      export your map straight to your adventure game toolkit of choice: TADS, Inform, Quest or Alan.</p>
+      <p><span class="hilite">Trizbort.io</span> is a browser-based tool that lets you easily map 
+      adventure games. Drag rooms into your map and link them up using connections in all compass 
+      directions. Add a list of objects present in each room. Finally, export your map straight 
+      to your adventure game toolkit of choice: TADS, Inform, Quest or Alan.</p>
       <div style="margin-top:50px">
         <a class="btn" href="app/index.html">Create your first map</a>
       </div>
@@ -31,10 +32,11 @@ layout: default
   <div class="text-col-wrapper">
     <div class="text-col">
       <h1>Edit room details quickly</h1>
-      <p>Trizbort.io lets you edit the properties of your rooms using a quick and intuitive editor. Room name and 
-        description, room colors, room borders, elliptical or octagonal rooms - we got it.</p>
-      <p>Add named objects with descriptions to your rooms, and even create containment relationships - which will
-        be included in your code generation later.
+      <p><span class="hilite">Trizbort.io</span> lets you edit the properties of your rooms 
+      using a quick and intuitive editor. Set room name and description, then add room colors, 
+      room borders and elliptical or octagonal room shapes.</p>
+      <p>Add named objects with descriptions to your rooms, and even create containment
+      relationships - which will be included in your code generation later.
       </p>
     </div>
     <div class="text-col">
@@ -66,9 +68,11 @@ OutsideCave: Room 'Outside Cave'
     </div>
     <div class="text-col">
       <h1>Generate code from your map</h1>
-      <p>Trizbort.io can export your map to various adventure game development system. It supports TADS, Inform,
-        Quest and Alan, among others. Code is generated for your rooms, connections and objects, and you can 
-        feed it straight into your compiler.</p>
+      <p><span class="hilite">Trizbort.io</span> can export your map to various adventure 
+      game development systems. It supports TADS, Inform, Quest and Alan, among others. You can
+      also export to YAML if that fits in your development pipeline. 
+      Code is generated for your rooms, connections and objects, and you can 
+      feed it straight into your compiler.</p>
     </div>
   </div>  
 
@@ -89,6 +93,10 @@ OutsideCave: Room 'Outside Cave'
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}
         {%- endif -%}
+        <div>
+          <a style="float:right" class="smallbtn" href="{{ post.url | relative_url }}">Read more</a>
+          <div style="clear:both"></div>
+        </div>
       </li>
       {%- endfor -%}
     </ul>
