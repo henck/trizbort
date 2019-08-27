@@ -1,0 +1,12 @@
+<OBJECT {{zilName this.name}}
+  (LOC {{zilName container.name}})
+  (DESC "{{this.name}}")
+  (FDESC "{{this.description}}")
+  (LDESC "{{this.description}}")
+  (FLAGS {{#if (isItem this.kind)}}TAKEBIT{{/if}})
+>
+
+{{#each this.objects}}
+{{> zilObject object=this container=../this}}
+{{/each}}
+

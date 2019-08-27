@@ -9,7 +9,7 @@ import { Map } from '../../models/map';
 import { Exporter } from '../../exporter';
 
 import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 
-         QuestGenerator, TextadventurejsGenerator } from '../../codegen/CodeGeneration'
+         QuestGenerator, TextadventurejsGenerator, ZilGenerator } from '../../codegen/CodeGeneration'
 import { IdToast } from '../../controls/controls';
 
 export class MenuPanel extends Panel {
@@ -41,7 +41,8 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export-alan2', () => { this.actionGenerateCode(new Alan2Generator(App.map), 'a2c'); });
     this.createMenuItem('#menu-export-alan3', () => { this.actionGenerateCode(new Alan3Generator(App.map), 'a3c'); });
     this.createMenuItem('#menu-export-quest', () => { this.actionGenerateCode(new QuestGenerator(App.map), 'aslx'); });
-    this.createMenuItem('#menu-export-textadventurejs', () => { this.actionGenerateCode(new TextadventurejsGenerator(App.map), 'txt'); });
+    this.createMenuItem('#menu-export-textadventurejs', () => { this.actionGenerateCode(new TextadventurejsGenerator(App.map), 'js'); });
+    this.createMenuItem('#menu-export-zil', () => { this.actionGenerateCode(new ZilGenerator(App.map), 'zil'); });
 
     this.inputLoad.addEventListener('change', this.handleInputLoad);
     this.inputImport.addEventListener('change', this.handleInputImport);
