@@ -46,6 +46,7 @@ export class IdObjectEditor extends Control {
       IdObjectEditor.dragParent.classList.add('dragging');
     });
     this.elem.addEventListener('dragend', (e) => {
+      this.elem.setAttribute('draggable', 'false'); // Editor must not remain draggable
       this.elem.classList.remove('dragged');
       IdObjectEditor.dragParent.classList.remove('dragging');
     });
