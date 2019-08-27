@@ -11,7 +11,7 @@ export class QuestGenerator extends CodeGenerator {
     Handlebars.registerHelper('dirToStr', (dir:Direction, type:ConnectorType) => { return this.dirToStr(dir, type); }); 
     Handlebars.registerPartial('questObject', Handlebars.templates.questObject);
     Handlebars.registerHelper('gridWidth', (width: number) => { return Math.max(1, Math.floor(width / map.settings.room.width)); });
-    Handlebars.registerHelper('gridHeight', (height: number) => { return Math.max(1, Math.floor(height / map.settings.room.height)); });
+    Handlebars.registerHelper('gridLength', (height: number) => { return Math.max(1, Math.floor(height / map.settings.room.height)); });
   }
 
   public generate() : string {
