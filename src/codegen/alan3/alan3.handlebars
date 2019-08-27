@@ -5,6 +5,7 @@ The {{{className this.name}}} Isa location
   Description
     "{{{this.description}}}"
   {{/if}}
+  {{~#if this.dark}}Is not lit.{{/if}}
   {{#each this.connections}}
   Exit {{ dirToStr this.startDir this.startType }} To {{{className this.room.name}}}.
   {{/each}}
