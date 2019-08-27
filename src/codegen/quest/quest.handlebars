@@ -6,17 +6,16 @@
     <gameid>9bb19c30-fec2-492b-b3f3-3a94e624b662</gameid>
     <version>1.0</version>
     <firstpublished>2018</firstpublished>
-    {{#if map.author}}
-    <author>{{{map.author}}}</author>{{/if}}
+    {{~#if map.author}}<author>{{{map.author}}}</author>{{/if}}
     <category>Uncategorized</category>
-    {{#if map.description}}
-    <description>{{{map.description}}}</description>{{/if}}
+    {{~#if map.description}}<description>{{{map.description}}}</description>{{/if}}
   </game>
   {{!-- Loop through rooms. --}} {{#each map.rooms}}
   <object name="{{{this.name}}}">
     <attr name="grid_label">{{{this.name}}}</attr>
     <attr name="grid_width" type="int">{{ gridWidth this.width }}</attr>
     <attr name="grid_length" type="int">{{ gridLength this.height }}</attr>
+    {{~#if this.dark}}<dark />{{/if}}
     <inherit name="editor_room" /> {{!-- Description is only included if it exists. --}} {{#if this.description}}
     <description>{{{this.description}}}</description>{{/if}} {{!-- Is this the startroom? Then put a player object in it. --}} {{#if (isStartRoom
     this)}}
