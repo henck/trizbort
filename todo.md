@@ -4,9 +4,6 @@
 
 - [ ] Allow "hand drawn"
 - [ ] (Locked) doors
-- [x] Object list
-- [x] Export to TADS
-- [x] When double-clicking a room or other view, focus on first text field for quick typing
 - [ ] Add map themes; implies grid color and background and fonts
   - [ ] Let user choose map background color
   - [ ] Fonts
@@ -27,9 +24,9 @@
 
 ## Other features
 - [ ] Publish maps
-- [ ] Export map to PNG etc.
+- [x] Export map to PNG
 - [x] Undo (Editor actions can be undone, panel actions cannot.)
-- [ ] Help popups
+- [x] Help popups
 - [ ] New room/connector style is based on last selected element
 - [x] Canvas thin/thick lines problem
 - [ ] Minimap
@@ -64,26 +61,28 @@
 
 ## Code generation
 
-* ADL
-* Adrift
-* Alan 2
-* Alan 3
-* Heritage ? (requires only rooms in cardinal directions on a grid)
-* Hugo
-* Inform7
-* Gamefic (Ruby)
-* Quest
-* TADS
-* TextAdventure.js   (https://github.com/TheBroox/TextAdventure.js) (initial implementation now available)
+- [ ] ADL
+- [ ] Adrift
+- [x] Alan 2
+- [x] Alan 3
+- [ ] Heritage ? (requires only rooms in cardinal directions on a grid)
+- [ ] Hugo
+- [x] Inform7
+- [ ] Gamefic (Ruby)
+- [x] Quest
+- [x] TADS
+- [x] [TextAdventure.js](https://github.com/TheBroox/TextAdventure.js) (initial implementation now available)
+- [x] YAML
+- [x] ZIL
 
-Code generations may allow selection of options; chosen options have default 
+Code generators may allow selection of options; chosen options have default 
 values and changes are saved in local storage. For instance, TADS may allow exporting
 everything to a single file or every room into its own file, where the result is offered
 as a ZIP.
 
 ### Quest export
-- [ ] export of up/down direction
-- [ ] export of grid_width and grid_length for the room
+- [x] export of up/down direction
+- [x] export of grid_width and grid_length for the room
 - [ ] export of grid_length for the exit 
 - [ ] export of gridborder path
 - [x] export of room label 
