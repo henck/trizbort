@@ -4,3 +4,4 @@ assets
 .tscache
 style.css
 dist
+tscommand-*.tmp.txt
