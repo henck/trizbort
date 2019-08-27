@@ -1,0 +1,12 @@
+{{{className this.name}}}:
+  kind: {{{kindToStr this.kind}}}
+  {{#if this.description}}
+  description: > 
+    {{> DescriptionPartial content=this.description }}
+  {{/if}}
+  {{#if this.content.length}}
+  objects:
+  {{#each this.content}}
+    {{> yamlObject object=this container=../this}}
+  {{/each}}
+  {{/if}}

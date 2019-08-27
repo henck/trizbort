@@ -1,0 +1,29 @@
+game:
+  name: {{{map.title}}}
+  author: {{{map.author}}}
+  {{#if map.description}}
+  description: > 
+    {{> DescriptionPartial content=map.description }}
+  {{/if}}
+rooms: 
+  {{#each map.rooms}}
+  {{className this.name}}:
+    name: {{this.name}}
+    {{#if this.description}}
+    description: >
+      {{> DescriptionPartial content=this.description }}
+    {{/if}}
+    {{#if this.dark}}dark: true{{/if}}
+    {{#if this.connections.length}}
+    exits:
+      {{#each this.connections}}
+      {{dirToStr this.startDir this.startType}}: {{{className this.room.name}}} 
+      {{/each}}
+    {{/if}}
+    {{#if this.objects.length}}
+    objects:
+      {{#each this.objects}}
+      {{> yamlObject object=this container=../this}}
+      {{/each}}
+    {{/if}}
+  {{/each}}
