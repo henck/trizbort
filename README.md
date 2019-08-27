@@ -6,7 +6,7 @@
 
 ## Code generation
 
-<img align="right" src="http://www.trizbort.io/assets/trizbort-code-generation.png">At the moment, Trizbort.io supports code generation for the following design systems:
+<img align="right" src="http://www.trizbort.io/assets/trizbort-code-generation.png">At the moment, Trizbort.io supports code generation for the following design systems and formats:
 
 * [Alan 2](https://www.alanif.se/)
 * [Alan 3](https://www.alanif.se/)
@@ -14,14 +14,16 @@
 * [Quest](http://textadventures.co.uk/quest)
 * [TADS 3](https://www.tads.org/tads3.htm)
 * [TextAdventure.js](https://github.com/TheBroox/TextAdventure.js)
+* [ZIL](https://archive.org/details/Learning_ZIL_Steven_Eric_Meretzky_1995)
+* YAML
 
-Code generation is more complete for some systems that for others. Experts are very welcome to contribute to make code generation results more complete. Code generation for Hugo and ZIL may be added in the future.
+Code generation is more complete for some systems than for others. Experts are very welcome to contribute to make code generation results more complete. Code generation for Ink and Hugo may be added in the future.
 
 ## Contributing
 
 Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/). There is no server back-end and there are few dependencies. It is simple to get it to run locally so you can hack on it. To do so:
 
-* Install [Node.js](https://nodejs.org/). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
+* Install [Node.js](https://nodejs.org/) (even if you have Node.js, a recent version is recommended). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
 * Fork the project to a local directory.
 * Run `npm install` to install all dependencies. This includes TypeScript, [Grunt](https://gruntjs.com/), Handlebars and Express.
 * Build the project by running `grunt build`. 
