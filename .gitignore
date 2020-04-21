@@ -1,7 +1,7 @@
 node_modules
 design
-assets
 .tscache
 style.css
 dist
 tscommand-*.tmp.txt
+_site
