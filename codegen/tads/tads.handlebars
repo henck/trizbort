@@ -1,0 +1,28 @@
+#charset "us-ascii"
+
+#include <adv3.h>
+#include <en_us.h>
+
+versionInfo: GameID
+  name = '{{{map.title}}}'
+  byline = 'by {{{map.author}}}'
+  version = '1.0'
+  desc = '{{{map.description}}}'
+
+gameMain: GameMainDef
+  initialPlayerChar = me
+
++ me: Actor
+  {{#if map.startRoom}}location = {{{className map.startRoom.name}}}{{/if}}
+;
+
+{{#each map.rooms}} 
+{{className this.name}}: {{#if this.dark}}DarkRoom{{else}}Room{{/if}} '{{{this.name}}}'
+  "{{{this.description}}}"
+  {{#each this.connections}}
+  {{dirToStr this.startDir this.startType}}: {{{className this.room.name}}} 
+  {{/each}}
+;
+
+{{#each this.objects}}{{buildObject this}}{{/each}}
+{{/each}} 
