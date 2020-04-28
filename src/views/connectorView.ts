@@ -5,9 +5,11 @@ import { Room } from '../models/room.js'
 import { Connector } from '../models/connector.js'
 import { ConnectorHandle, Direction, LineStyle, RoomShape, Values, ConnectorType } from '../enums/enums.js'
 import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen.js';
+import { Point } from '../util/point.js'
 
 export class ConnectorView extends View {
   connector: Connector;
+  clearRegion: Rect;
 
   constructor(connection: Connector) {
     super();
@@ -16,6 +18,10 @@ export class ConnectorView extends View {
 
   getModel() {
     return this.connector;
+  }
+
+  get movingSelectable(): boolean {
+    return true;
   }
 
   private drawConnectorHandle(canvas: IScreen, x: number, y: number, mouseX: number, mouseY: number) {
@@ -114,78 +120,101 @@ export class ConnectorView extends View {
     centerx = startX + (endX - startX) * 0.5;
     centery = startY + (endY - startY) * 0.5;    
 
-    // Docked -> undocked
+    // Undocked -> Undocked
     if(!this.connector.dockStart && !this.connector.dockEnd) {
-      canvas.moveTo(startX, startY);
-      canvas.lineTo(endX, endY);
+      canvas.line(startX, startY, endX, endY);
+      this.clearRegion = new Rect(startX, startY, endX, endY);
+
+      //canvas.strokeRect(this.clearRegion.x, this.clearRegion.y, this.clearRegion.width, this.clearRegion.height);
     }
 
-    // Docked to docked:
+    // Docked -> Docked:
     else if(this.connector.dockStart && this.connector.dockEnd) {
-      canvas.moveTo(dockStartX, dockStartY);
-      canvas.lineTo(startX, startY);
+      canvas.line(dockStartX, dockStartY, startX, startY);
+
+      this.clearRegion = new Rect(dockStartX, dockStartY, startX, startY);
       if(this.connector.isCurve) {
         let dist = Math.sqrt((endX-startX)*(endX-startX) + (endY-startY)*(endY-startY)) * App.map.settings.connector.curveStrength;
         let cp1x = startX + Direction.toCardinalVector(this.connector.startDir).x * dist;
         let cp1y = startY + Direction.toCardinalVector(this.connector.startDir).y * dist;
         let cp2x = endX + Direction.toCardinalVector(this.connector.endDir).x * dist;
         let cp2y = endY + Direction.toCardinalVector(this.connector.endDir).y * dist;
-        canvas.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, endX, endY);
+        canvas.bezier3(startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
+        let r = this.getRectBezier3(startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
+        this.clearRegion.maximize(r);
+
         var {x:arrow1x, y:arrow1y} = canvas.getBezierXY(0.1, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
         var arrow1a = canvas.getBezierAngle(0.1, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
         var {x:arrow2x, y:arrow2y} = canvas.getBezierXY(0.9, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
         var arrow2a = canvas.getBezierAngle(0.9, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
         var {x:centerx, y:centery} = canvas.getBezierXY(0.5, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
       } else {
-        canvas.lineTo(endX, endY);
+        canvas.line(startX, startY, endX, endY);
+        this.clearRegion.maximize(new Rect(startX, startY, endX, endY));
       }
-      canvas.lineTo(dockEndX, dockEndY);    
+
+      canvas.line(endX, endY, dockEndX, dockEndY);    
+      this.clearRegion.maximize(new Rect(endX, endY, dockEndX, dockEndY));
+
+      //canvas.strokeRect(this.clearRegion.x, this.clearRegion.y, this.clearRegion.width, this.clearRegion.height);
     }
     
-    // Docked to undocked:
+    // Docked -> Undocked:
     else if(this.connector.dockStart && !this.connector.dockEnd) {
-      canvas.moveTo(dockStartX, dockStartY);
-      canvas.lineTo(startX, startY);
+      canvas.line(dockStartX, dockStartY, startX, startY);
+      this.clearRegion = new Rect(dockStartX, dockStartY, startX, startY);
 
       if(this.connector.isCurve) {
         let dist = Math.sqrt((endX-startX)*(endX-startX) + (endY-startY)*(endY-startY)) * App.map.settings.connector.curveStrength;
         let cp1x = startX + Direction.toCardinalVector(this.connector.startDir).x * dist;
         let cp1y = startY + Direction.toCardinalVector(this.connector.startDir).y * dist;      
-        canvas.quadraticCurveTo(cp1x, cp1y, endX, endY);
+        canvas.bezier2(startX, startY, cp1x, cp1y, endX, endY);
+        let r = this.getRectBezier2(startX, startY, cp1x, cp1y, endX, endY);
+        this.clearRegion.maximize(r);
+
         var {x:arrow1x, y:arrow1y} = canvas.getQuadraticXY(0.1, startX, startY, cp1x, cp1y, endX, endY);
         var arrow1a = canvas.getQuadraticAngle(0.1, startX, startY, cp1x, cp1y, endX, endY);
         var {x:arrow2x, y:arrow2y} = canvas.getQuadraticXY(0.9, startX, startY, cp1x, cp1y, endX, endY);
         var arrow2a = canvas.getQuadraticAngle(0.9, startX, startY, cp1x, cp1y, endX, endY);
         var {x:centerx, y:centery} = canvas.getQuadraticXY(0.5, startX, startY, cp1x, cp1y, endX, endY);
       } else {
-        canvas.lineTo(endX, endY);
+        canvas.line(startX, startY, endX, endY);
+        this.clearRegion.maximize(new Rect(startX, startY, endX, endY));
       }
+
+      //canvas.strokeRect(this.clearRegion.x, this.clearRegion.y, this.clearRegion.width, this.clearRegion.height);
     }
 
-    // Undocked to docked:
+    // Undocked -> Docked:
     else {
-      canvas.moveTo(startX, startY);
+      //canvas.moveTo(startX, startY);
 
       if(this.connector.isCurve) {
         let dist = Math.sqrt((endX-startX)*(endX-startX) + (endY-startY)*(endY-startY)) * App.map.settings.connector.curveStrength;
         let cp1x = endX + Direction.toCardinalVector(this.connector.endDir).x * dist;
         let cp1y = endY + Direction.toCardinalVector(this.connector.endDir).y * dist;      
-        canvas.quadraticCurveTo(cp1x, cp1y, endX, endY);
+        canvas.bezier2(startX, startY, cp1x, cp1y, endX, endY);
+        this.clearRegion = this.getRectBezier2(startX, startY, cp1x, cp1y, endX, endY);
+
         var {x:arrow1x, y:arrow1y} = canvas.getQuadraticXY(0.1, startX, startY, cp1x, cp1y, endX, endY);
         var arrow1a = canvas.getQuadraticAngle(0.1, startX, startY, cp1x, cp1y, endX, endY);
         var {x:arrow2x, y:arrow2y} = canvas.getQuadraticXY(0.9, startX, startY, cp1x, cp1y, endX, endY);
         var arrow2a = canvas.getQuadraticAngle(0.9, startX, startY, cp1x, cp1y, endX, endY);        
         var {x:centerx, y:centery} = canvas.getQuadraticXY(0.5, startX, startY, cp1x, cp1y, endX, endY);
       } else {
-        canvas.lineTo(endX, endY);
+        canvas.line(startX, startY, endX, endY);
+        this.clearRegion = new Rect(startX, startY, endX, endY);
       }
 
-      canvas.lineTo(dockEndX, dockEndY);
+      canvas.line(endX, endY, dockEndX, dockEndY);
+      this.clearRegion.maximize(new Rect(endX, endY, dockEndX, dockEndY));
+
+      //canvas.strokeRect(this.clearRegion.x, this.clearRegion.y, this.clearRegion.width, this.clearRegion.height);
     }
 
     // Stroke path with wide, nearly transparent background (for selection purposes):
     canvas
-      .lineWidth(20)
+      .lineWidth(Values.DIMEN_CONNECTOR_WIDE)
       .lineCap(CapStyle.Round)
       .lineJoin(JoinStyle.Round)
       .strokeStyle(Values.COLOR_TRANSPARENT)
@@ -207,7 +236,7 @@ export class ConnectorView extends View {
 
     // Draw name (if any)
     if(this.connector.name) {
-      let textWidth = canvas.textWidth(this.connector.name, '12.8px Roboto');
+      let textWidth = canvas.textWidth(this.connector.name, <string>App.map.settings.connector.fontCfg(App.map.settings.draw.hand, 'string'));
       canvas
         .lineWidth(1)
         .lineDash(LineStyle.Solid)
@@ -217,7 +246,7 @@ export class ConnectorView extends View {
         .fill()
         .stroke()
         .fillStyle('#333')
-        .fillText(this.connector.name, centerx, centery, '12.8px Roboto', TextAlign.Center, TextBaseline.Middle)
+        .fillText(this.connector.name, centerx, centery, <string>App.map.settings.connector.fontCfg(App.map.settings.draw.hand, 'string'), TextAlign.Center, TextBaseline.Middle);
     }
 
     // Draw start and end types
@@ -227,11 +256,11 @@ export class ConnectorView extends View {
       .fillText(this.connector.startLabel ? this.connector.startLabel : ConnectorType.toString(this.connector.startType), 
         arrow1x + Math.cos(arrow1a - Math.PI / 2) * App.map.settings.connector.labelDistance, 
         arrow1y + Math.sin(arrow1a - Math.PI / 2) * App.map.settings.connector.labelDistance,
-        '10.8px Roboto', TextAlign.Center, TextBaseline.Middle)
+        <string>App.map.settings.connector.font2Cfg(App.map.settings.draw.hand, 'string'), TextAlign.Center, TextBaseline.Middle)
       .fillText(this.connector.endLabel ? this.connector.endLabel : ConnectorType.toString(this.connector.endType), 
         arrow2x + Math.cos(arrow2a + Math.PI / 2) * App.map.settings.connector.labelDistance, 
         arrow2y + Math.sin(arrow2a + Math.PI / 2) * App.map.settings.connector.labelDistance,
-        '10.8px Roboto', TextAlign.Center, TextBaseline.Middle);
+        <string>App.map.settings.connector.font2Cfg(App.map.settings.draw.hand, 'string'), TextAlign.Center, TextBaseline.Middle);
 
     canvas.restore();
   }
@@ -341,6 +370,19 @@ export class ConnectorView extends View {
     canvas.restore();
   }  
 
+  clear(canvas: IScreen): Rect {
+
+    let margin = Values.DIMEN_CONNECTOR_WIDE;
+    
+    if(!this.clearRegion) return;
+
+    this.clearRegion.expande(margin);
+
+    canvas.clearRect(this.clearRegion.x, this.clearRegion.y, this.clearRegion.width, this.clearRegion.height);
+
+    return this.clearRegion;
+  }
+
   drawHandles(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {  
     if(!this.selected || selectionSize != 1) return;
     
@@ -358,7 +400,7 @@ export class ConnectorView extends View {
   }
 
   isIn(x: number, y: number, width: number, height: number) {
-    let r = new Rect(x, y, width, height);
+    let r = new Rect(x, y, x + width, y + height);
     var {x, y} = this.getStartHandleLocation();
     if(r.contains(x, y)) return true;
     var {x, y} = this.getEndHandleLocation();
@@ -400,5 +442,87 @@ export class ConnectorView extends View {
       && y <= py + Values.DIMEN_CONNECTOR_HANDLE) return ConnectorHandle.End;
   
     return undefined;
-  }  
+  }
+
+  protected getRectBezier2(px0: number, py0: number, cx: number, cy: number, px1: number, py1: number): Rect {
+
+    function pointOnCurve(t: number, px0: number, py0: number, cx: number, cy: number, px1: number, py1: number): Point {
+      if(t<=0 || 1<=t || isNaN(t)) return;
+
+      var c1 =  new Point(px0+(cx-px0)*t,py0+(cy-py0)*t);
+      var c2 =  new Point(cx+(px1-cx)*t,cy+(py1-cy)*t);
+      return new Point(c1.x+(c2.x-c1.x)*t,c1.y+(c2.y-c1.y)*t);  
+    }
+
+    var tx =  (px0 - cx) / (px0 - 2*cx + px1);
+    var ty =  (py0 - cy) / (py0 - 2*cy + py1);
+
+    var ex = pointOnCurve(tx, px0, py0, cx, cy, px1, py1);
+    var xMin = ex?Math.min(px0, px1, ex.x):Math.min(px0, px1);
+    var xMax = ex?Math.max(px0, px1, ex.x):Math.max(px0, px1);
+
+    var ey = pointOnCurve(ty, px0, py0, cx, cy, px1, py1);
+    var yMin = ey?Math.min(py0, py1, ey.y):Math.min(py0, py1);
+    var yMax = ey?Math.max(py0, py1, ey.y):Math.max(py0, py1);
+
+    return new Rect(xMin, yMin, xMax, yMax);
+  }
+
+  protected getRectBezier3(px0: number, py0: number, cx0: number, cy0: number, cx1: number, cy1: number, px1: number, py1: number): Rect {
+    let tvalues = [], xvalues = [], yvalues = [],
+        a, b, c, t, t1, t2, b2ac, sqrtb2ac;
+    for (let i = 0; i < 2; ++i) {
+        if (i == 0) {
+            b =  6 * px0 - 12 * cx0 + 6 * cx1;
+            a = -3 * px0 +  9 * cx0 - 9 * cx1 + 3 * px1;
+            c =  3 * cx0 -  3 * px0;
+        } else {
+            b =  6 * py0 - 12 * cy0 + 6 * cy1;
+            a = -3 * py0 +  9 * cy0 - 9 * cy1 + 3 * py1;
+            c =  3 * cy0 -  3 * py0;
+        }
+        if (Math.abs(a) < 1e-12) {
+            if (Math.abs(b) < 1e-12) {
+                continue;
+            }
+            t = -c / b;
+            if (0 < t && t < 1) {
+                tvalues.push(t);
+            }
+            continue;
+        }
+        b2ac = b * b - 4 * c * a;
+        if (b2ac < 0) {
+            if (Math.abs(b2ac) < 1e-12) {
+                t = -b / (2 * a);
+                if (0 < t && t < 1) {
+                    tvalues.push(t);
+                }
+            }
+            continue;
+        }
+        sqrtb2ac = Math.sqrt(b2ac);
+        t1 = (-b + sqrtb2ac) / (2 * a);
+        if (0 < t1 && t1 < 1) {
+            tvalues.push(t1);
+        }
+        t2 = (-b - sqrtb2ac) / (2 * a);
+        if (0 < t2 && t2 < 1) {
+            tvalues.push(t2);
+        }
+    }
+
+    var j = tvalues.length, mt;
+    while (j--) {
+        t = tvalues[j];
+        mt = 1 - t;
+        xvalues[j] = (mt * mt * mt * px0) + (3 * mt * mt * t * cx0) + (3 * mt * t * t * cx1) + (t * t * t * px1);
+        yvalues[j] = (mt * mt * mt * py0) + (3 * mt * mt * t * cy0) + (3 * mt * t * t * cy1) + (t * t * t * py1);
+    }
+
+    xvalues.push(px0,px1);
+    yvalues.push(py0,py1);
+
+    return new Rect(Math.min(...xvalues), Math.min(...yvalues), Math.max(...xvalues), Math.max(...yvalues));
+  }
 }
