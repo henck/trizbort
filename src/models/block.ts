@@ -7,10 +7,10 @@ import { MapSettings } from './mapSettings.js';
 export class Block extends Box {
   constructor(settings: MapSettings) {
     super(settings);
-    this.type = 'Block';
+    this._type = 'Block';
 
-    this.width = settings.block.width;
-    this.height = settings.block.height;
+    this._w = settings.block.width;
+    this._h = settings.block.height;
   }
 
   get fillColor() {
@@ -19,6 +19,7 @@ export class Block extends Box {
 
   set fillColor(color: string) {
     this._fillColor = color;
+    this._changed = true;
   }
 
   get borderColor() {
@@ -27,6 +28,7 @@ export class Block extends Box {
 
   set borderColor(color: string) {
     this._borderColor = color;
+    this._changed = true;
   }  
 
   get rounding() {
@@ -35,6 +37,7 @@ export class Block extends Box {
 
   set rounding(r: number) {
     this._rounding = r;
+    this._changed = true;
   }
 
   get shape() {
@@ -43,6 +46,7 @@ export class Block extends Box {
 
   set shape(s: RoomShape) {
     this._shape = s;
+    this._changed = true;
   }
 
   get lineStyle() {
@@ -51,6 +55,7 @@ export class Block extends Box {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
+    this._changed = true;
   }
 
   get lineWidth() {
@@ -59,6 +64,7 @@ export class Block extends Box {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
+    this._changed = true;
   }    
 
   clone(): Model {

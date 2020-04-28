@@ -5,7 +5,14 @@ import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
 import { MapSettings } from './mapSettings.js';
 
 export class Note extends Box {
-  text: string;
+  protected _text: string;
+  public get text(): string {
+    return this._text;
+  }
+  public set text(value: string) {
+    this._text = value;
+    this._changed = true;
+  }
   private _textColor: string;
 
   constructor(settings: MapSettings) {
@@ -13,8 +20,8 @@ export class Note extends Box {
     this.type = 'Note';
     this.text = 'Note';
 
-    this.width = settings.note.width;
-    this.height = settings.note.height;
+    this._w = settings.note.width;
+    this._h = settings.note.height;
   }
 
   get textColor() {
@@ -24,6 +31,7 @@ export class Note extends Box {
 
   set textColor(color: string) {
     this._textColor = color;
+    this._changed = true;
   }
 
   get fillColor() {
@@ -32,6 +40,7 @@ export class Note extends Box {
 
   set fillColor(color: string) {
     this._fillColor = color;
+    this._changed = true;
   }
 
   get borderColor() {
@@ -40,6 +49,7 @@ export class Note extends Box {
 
   set borderColor(color: string) {
     this._borderColor = color;
+    this._changed = true;
   }  
 
   get rounding() {
@@ -48,6 +58,7 @@ export class Note extends Box {
 
   set rounding(r: number) {
     this._rounding = r;
+    this._changed = true;
   }
 
   get shape() {
@@ -56,6 +67,7 @@ export class Note extends Box {
 
   set shape(s: RoomShape) {
     this._shape = s;
+    this._changed = true;
   }
 
   get lineStyle() {
@@ -64,6 +76,7 @@ export class Note extends Box {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
+    this._changed = true;
   }
 
   get lineWidth() {
@@ -72,6 +85,7 @@ export class Note extends Box {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
+    this._changed = true;
   }    
 
   clone(): Model {

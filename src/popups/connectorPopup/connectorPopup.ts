@@ -25,8 +25,8 @@ export class ConnectorPopup extends Popup implements Subscriber {
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });
 
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () =>  { this.connector.name = this.ctrlName.value; });
-    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.connector.color = this.ctrlColor.value; });
-    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.connector.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.connector.color = this.ctrlColor.value; }) as IdQuickColor;
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.connector.lineStyle = this.ctrlLineStyle.value; }) as IdLineStyle;
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.connector.lineWidth = this.ctrlLinewidth.value; });    
   }
 
@@ -51,6 +51,7 @@ export class ConnectorPopup extends Popup implements Subscriber {
       let y = this.connector.dockStart ? this.connector.dockStart.y : this.connector.startY;
       this.showAt(x, y);
       this.ctrlName.value = this.connector.name;
+      this.ctrlLineStyle.value = this.connector.lineStyle;
       this.ctrlLinewidth.value = this.connector.lineWidth;
     } else {
       this.hide();
