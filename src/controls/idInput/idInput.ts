@@ -1,4 +1,6 @@
 import { Control } from "../control";
+import { Dispatcher } from "../../dispatcher";
+import { AppEvent } from "../../enums/enums";
 
 export class IdInput extends Control {
   private input: HTMLInputElement;
@@ -57,8 +59,10 @@ export class IdInput extends Control {
   // Add an event listener to the inner <input>
   // Returns reference to self for easy chaining.
   // 
-  public addEventListener(type: string, f: any): IdInput {
-    this.input.addEventListener(type, f);
+  public addEventListener(type: string, f: any, refresh = true): IdInput {
+    let ff: any = (refresh? (e: any) => { f(e); Dispatcher.notify(AppEvent.Redraw, null)}: f );
+
+    this.input.addEventListener(type, ff);
     return this;
   }
 }

@@ -3,6 +3,10 @@
 // you pass in either an HTML element, or a selector string. 
 // With a selector string, you can also provide a base element
 // that querySelector will run on.
+
+import { Dispatcher } from "../dispatcher";
+import { AppEvent } from "../enums/enums";
+
 // 
 export class Control {
   protected elem: HTMLElement;
@@ -37,4 +41,16 @@ export class Control {
       this.hide();
     }
   }
+
+  //
+  // Add an event listener to the element.
+  // Returns reference to self for easy chaining.
+  // 
+  public addEventListener(type: string, f: any, refresh = true): Control {
+    let ff: any = (refresh? (e: any) => { f(e); Dispatcher.notify(AppEvent.Redraw, null)}: f );
+
+    this.elem.addEventListener(type, ff);
+    return this;
+  }
+
 }

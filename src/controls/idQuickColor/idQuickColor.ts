@@ -35,11 +35,4 @@ export class IdQuickColor extends Control {
     return this.color;
   }
 
-  //
-  // Returns reference to self for easy chaining.
-  // 
-  public addEventListener(type: string, f: any): IdQuickColor {
-    this.elem.addEventListener(type, f);
-    return this;
-  }
 }
