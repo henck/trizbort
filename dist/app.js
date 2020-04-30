@@ -167,9 +167,9 @@ System.register("io/xmlMap", [], function (exports_4, context_4) {
         }
     };
 });
-System.register("models/model", ["dispatcher", "enums/appEvent", "io/xmlMap"], function (exports_5, context_5) {
+System.register("models/model", ["dispatcher", "enums/appEvent", "models/map", "io/xmlMap"], function (exports_5, context_5) {
     "use strict";
-    var dispatcher_js_1, appEvent_js_1, xmlMap_1, Model;
+    var dispatcher_js_1, appEvent_js_1, map_js_1, xmlMap_1, Model;
     var __moduleName = context_5 && context_5.id;
     return {
         setters: [
@@ -178,6 +178,9 @@ System.register("models/model", ["dispatcher", "enums/appEvent", "io/xmlMap"], f
             },
             function (appEvent_js_1_1) {
                 appEvent_js_1 = appEvent_js_1_1;
+            },
+            function (map_js_1_1) {
+                map_js_1 = map_js_1_1;
             },
             function (xmlMap_1_1) {
                 xmlMap_1 = xmlMap_1_1;
@@ -221,9 +224,18 @@ System.register("models/model", ["dispatcher", "enums/appEvent", "io/xmlMap"], f
                     dispatcher_js_1.Dispatcher.notify(appEvent_js_1.AppEvent.Delete, this);
                 };
                 Model.prototype.cloneToTargetField = function (target, key) {
-                    if (typeof this[key] == 'object')
-                        throw "'" + key + "' field is a complex type. cloneToTarget failed with " + this.type;
-                    target[key] = this[key];
+                    switch (key) {
+                        case 'map':
+                            if (!target[key])
+                                target[key] = new map_js_1.Map();
+                            target[key].clone(this.map);
+                            break;
+                        default:
+                            if (typeof this[key] == 'object')
+                                throw "'" + key + "' field is a complex type. cloneToTarget failed with " + this.type;
+                            target[key] = this[key];
+                            break;
+                    }
                 };
                 Model.prototype.cloneToTarget = function (target) {
                     for (var key in this) {
@@ -1327,17 +1339,14 @@ System.register("models/obj", ["enums/enums", "models/model"], function (exports
         }
     };
 });
-System.register("models/room", ["models/box", "models/map", "models/mapSettings", "models/connector"], function (exports_18, context_18) {
+System.register("models/room", ["models/box", "models/mapSettings", "models/connector"], function (exports_18, context_18) {
     "use strict";
-    var box_js_1, map_js_1, mapSettings_js_2, connector_js_1, Room;
+    var box_js_1, mapSettings_js_2, connector_js_1, Room;
     var __moduleName = context_18 && context_18.id;
     return {
         setters: [
             function (box_js_1_1) {
                 box_js_1 = box_js_1_1;
-            },
-            function (map_js_1_1) {
-                map_js_1 = map_js_1_1;
             },
             function (mapSettings_js_2_1) {
                 mapSettings_js_2 = mapSettings_js_2_1;
@@ -1550,11 +1559,6 @@ System.register("models/room", ["models/box", "models/map", "models/mapSettings"
                     switch (key) {
                         case 'objects':
                             target[key] = this.objects.slice(0);
-                            break;
-                        case 'map':
-                            if (!target[key])
-                                target[key] = new map_js_1.Map();
-                            target[key].clone(this.map);
                             break;
                         default:
                             _super.prototype.cloneToTargetField.call(this, target, key);
