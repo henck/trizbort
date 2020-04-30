@@ -52,9 +52,17 @@ export class Model {
   }
 
   protected cloneToTargetField(target: Model, key: string) {
-    if(typeof (<any>this)[key] == 'object') throw "'" + key + "' field is a complex type. cloneToTarget failed with " + this.type;
+    switch (key) {
+      case 'map':
+          if(!((<any>target)[key] as Map)) ((<any>target)[key] as Map) = new Map();
+          ((<any>target)[key] as Map).clone(this.map);
+        break;
+      default:
+        if(typeof (<any>this)[key] == 'object') throw "'" + key + "' field is a complex type. cloneToTarget failed with " + this.type;
         
     (<any>target)[key] = (<any>this)[key];
+        break;
+    }
   }
 
   protected cloneToTarget(target: Model) {

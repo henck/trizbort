@@ -91,4 +91,5 @@ export class Note extends Box {
   clone(): Model {
     return this.cloneToTarget(new Note(new MapSettings()));
   }
+
 }
