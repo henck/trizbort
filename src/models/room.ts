@@ -181,10 +181,6 @@ export class Room extends Box {
       case 'objects':
         (<any>target)[key] = this.objects.slice(0);
         break;
-      case 'map':
-          if(!((<any>target)[key] as Map)) ((<any>target)[key] as Map) = new Map();
-          ((<any>target)[key] as Map).clone(this.map);
-        break;
       default:
         super.cloneToTargetField(target, key);
         break;
