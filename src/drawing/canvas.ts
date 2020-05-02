@@ -1,11 +1,17 @@
 import { IScreen, CapStyle, JoinStyle, TextAlign, TextBaseline } from './IScreen.js'
 import { LineStyle } from '../enums/enums.js'
+import { App } from '../app.js';
+import { DrawContext } from './drawContext.js';
 
 export class Canvas implements IScreen {
-  private ctx: CanvasRenderingContext2D;
+
+  private drawer: DrawContext;
   
-  constructor(ctx: CanvasRenderingContext2D) {
+  constructor(
+    private ctx: CanvasRenderingContext2D
+  ) {
     this.ctx = ctx;
+    this.drawer = new DrawContext(this.ctx);
   }
 
   save(): IScreen {
@@ -136,8 +142,11 @@ export class Canvas implements IScreen {
   }
 
   line(x0: number, y0: number, x1: number, y1: number): IScreen {
-    this.ctx.moveTo(x0, y0);
-    this.ctx.lineTo(x1, y1);
+    if(App.map.settings.draw.hand) this.drawer.hdLine(x0, y0, x1, y1);
+    else {
+      this.ctx.moveTo(x0, y0)
+      this.ctx.lineTo(x1, y1);
+    }
     return this;
   }  
 
@@ -152,41 +161,63 @@ export class Canvas implements IScreen {
   }
 
   ellipse(x: number, y: number, width: number, height: number): IScreen {
-    let kappa = .5522848,
+
+    this.beginPath();
+
+    if(App.map.settings.draw.hand) {
+      this.drawer.hdEllipse(x + width / 2, y + height / 2, width / 2, height / 2);
+    }
+    else {      
+      let kappa = .5522848,
         ox = (width / 2) * kappa,  // control point offset horizontal
         oy = (height / 2) * kappa, // control point offset vertical
         xe = x + width,            // x-end
         ye = y + height,           // y-end
         xm = x + width / 2,        // x-middle
         ym = y + height / 2;       // y-middle
-    this
-      .beginPath()
-      .moveTo(x, ym)
-      .bezierCurveTo(x, ym - oy, xm - ox, y, xm, y)
-      .bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym)
-      .bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye)
-      .bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+        this.moveTo(x, ym)
+        .bezierCurveTo(x, ym - oy, xm - ox, y, xm, y)
+        .bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym)
+        .bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye)
+        .bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+    }    
+
+    this.closePath();
+    
     return this;
   }    
 
   roundedRect(x: number, y: number, width: number, height: number, radius: number): IScreen {
     if (width < 4 * radius) radius = width / 4;
     if (height < 4 * radius) radius = height / 4;
-    this
-      .beginPath()
-      .moveTo(x+radius, y)
+
+    this.beginPath();
+    
+    if(App.map.settings.draw.hand) { 
+      this.drawer.hdRoundedRect(x, y, width, height, radius);
+    }
+    else {
+      this.moveTo(x+radius, y)
       .arcTo(x+width, y, x+width, y+height, radius)
       .arcTo(x+width, y+height, x, y+height, radius)
       .arcTo(x, y+height, x, y, radius)
-      .arcTo(x, y, x+width, y, radius)
-      .closePath();
+      .arcTo(x, y, x+width, y, radius);
+    }
+
+    this.closePath();
+
     return this;
   }  
 
   octagon(x: number, y: number, width: number, height: number): IScreen {
-    this
-      .beginPath()
-      .moveTo(x, y + height * 0.25)
+    
+    this.beginPath();
+    
+    if(App.map.settings.draw.hand) { 
+      this.drawer.hdOctagon(x, y, width, height);
+    }
+    else {
+      this.moveTo(x, y + height * 0.25)
       .lineTo(x + width * 0.25, y)
       .lineTo(x + width * 0.75, y)
       .lineTo(x + width, y + height * 0.25)
@@ -194,12 +225,27 @@ export class Canvas implements IScreen {
       .lineTo(x + width * 0.75, y + height)
       .lineTo(x + width * 0.25, y + height)
       .lineTo(x, y + height * 0.75)
-      .closePath();    
+    }
+
+    this.closePath();
+
     return this;
   }
 
   quadraticCurveTo(cp1x: number, cp1y: number, x: number, y: number): IScreen {
     this.ctx.quadraticCurveTo(cp1x, cp1y, x, y);
+    return this;
+  }
+
+  bezier2(x0: number, y0: number, cx: number, cy: number, x1: number, y1: number): IScreen {
+    if(App.map.settings.draw.hand) { 
+      this.drawer.hdBezier2(x0, y0, cx, cy, x1, y1);
+    }
+    else {
+      this.moveTo(x0, y0);
+      this.quadraticCurveTo(cx, cy, x1, y1);
+    }
+
     return this;
   }
 
@@ -221,6 +267,18 @@ export class Canvas implements IScreen {
     return this;
   }
 
+  bezier3(x0: number, y0: number, cx0: number, cy0: number, cx1: number, cy1: number, x1: number, y1: number): IScreen {
+    if(App.map.settings.draw.hand) { 
+      this.drawer.hdBezier3(x0, y0, cx0, cy0, cx1, cy1, x1, y1);
+    }
+    else {
+      this.moveTo(x0, y0);
+      this.bezierCurveTo(cx0, cy0, cx1, cy1, x1, y1);
+    }
+
+    return this;
+  }
+
   getBezierXY(t: number, sx: number, sy: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, ex: number, ey: number): { x: number, y: number } {
     return {
       x: Math.pow(1-t,3) * sx + 3 * t * Math.pow(1 - t, 2) * cp1x + 3 * t * t * (1 - t) * cp2x + t * t * t * ex,
@@ -235,7 +293,21 @@ export class Canvas implements IScreen {
   }  
 
   rect(x: number, y: number, width: number, height: number): IScreen {
-    this.ctx.rect(x, y, width, height);
+    let x1 = x + width;
+    let y1 = y + height;
+
+    this.beginPath();
+
+    if(App.map.settings.draw.hand){
+      this.drawer.hdLine(x, y, x1, y);        
+      this.drawer.hdLine(x1, y, x1, y1);
+      this.drawer.hdLine(x, y1, x1, y1);
+      this.drawer.hdLine(x, y1, x, y);
+    }
+    else this.ctx.rect(x, y, width, height);
+
+    this.closePath();
+
     return this;
   }
 
@@ -325,7 +397,7 @@ export class Canvas implements IScreen {
 
   // Draw text centered at (x, y), inside an area no wider than <maxWidth>
   drawText(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
-    let fontStr = `${fontSize}px Roboto`;
+    let fontStr = `${fontSize}px ${font}`;
     this.ctx.font = fontStr;
     let lineHeight = Math.ceil(fontSize)+1;
     let lines = this.splitText(width, text);
@@ -339,7 +411,7 @@ export class Canvas implements IScreen {
   }
 
   drawTextBottom(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
-    let fontStr = `${fontSize}px Roboto`;
+    let fontStr = `${fontSize}px ${font}`;
     this.ctx.font = fontStr;
     let lineHeight = Math.ceil(fontSize)+1;
     let lines = this.splitText(width, text);
@@ -357,8 +429,8 @@ export class Canvas implements IScreen {
     return this.ctx.measureText(text).width;
   }
   
-  clip(): IScreen {
-    this.ctx.clip();
+  clip(region?: Path2D): IScreen {
+    this.ctx.clip(region);
     return this;
   }
 

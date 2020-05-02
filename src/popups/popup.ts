@@ -11,14 +11,14 @@ export class Popup {
   }
 
   protected showAt(x: number, y: number) {
-    this.elem.style.left = App.canvas.offsetWidth / 2 + App.centerX + x * App.zoom + "px"; 
-    this.elem.style.top = App.canvas.offsetHeight / 2 + App.centerY + y * App.zoom - 32 + "px";
+    this.elem.style.left = App.mainHTMLCanvas.offsetWidth / 2 + App.centerX + x * App.zoom + "px"; 
+    this.elem.style.top = App.mainHTMLCanvas.offsetHeight / 2 + App.centerY + y * App.zoom - 32 + "px";
     this.elem.style.display = 'flex';
     // Close any open overlays inside popup.
     let overlays = this.elem.querySelectorAll(".popup-overlay");
     for(let i = 0; i < overlays.length; i++) {
       (overlays[i] as HTMLElement).style.display = 'none';
-    }    
+    } 
   }
 
   protected hide() {

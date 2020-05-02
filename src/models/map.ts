@@ -1,8 +1,9 @@
 import { Model } from './model.js'
 import { Room } from './room.js'
-import { Values } from '../enums/enums.js'
 import { MapSettings } from './mapSettings.js';
 import { Connector } from './connector.js';
+import { Block } from './block.js';
+import { Note } from './note.js';
 
 export class Map {
   title: string;
@@ -16,11 +17,15 @@ export class Map {
   constructor() {
     this.settings = new MapSettings();
 
-    this.title = "Untitled map";
+    this.title = "";
     this.author = "";
     this.description = "";
     this.elements = new Array();
     this.startRoom = null;
+  }
+
+  clone(from: Map) {
+    Object.assign(this, from);
   }
 
   clear() {
@@ -72,6 +77,24 @@ export class Map {
     let idx = this.elements.indexOf(model);
     this.elements.splice(idx, 1);
     this.elements.unshift(model);  
+  }
+
+  isBackward(src: Model, dst: Model): boolean {
+    let iSrc: number;
+    let iDst: number;
+
+    if((src instanceof Block) && (dst instanceof Connector)) return true;
+    if((src instanceof Block) && ((dst instanceof Room) || (dst instanceof Note))) return true;
+    if(((src instanceof Room) || (src instanceof Note)) && (dst instanceof Connector)) return true;
+
+    iSrc = this.elements.indexOf(src);
+    iDst = this.elements.indexOf(dst);
+
+    if((iSrc < iDst) && (src instanceof Block) && (dst instanceof Block)) return true;
+    if((iSrc < iDst) && ((src instanceof Room) || (src instanceof Note)) && ((dst instanceof Room) || (dst instanceof Note))) return true;
+    if((iSrc < iDst) && (src instanceof Connector) && (dst instanceof Connector)) return true;
+
+    return false;
   }
 
   // 

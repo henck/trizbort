@@ -1,6 +1,8 @@
 import { IdRadio } from "../idRadio/idRadio";
 import { ConnectorType } from "../../enums/connectorType";
 import { Control } from "../control";
+import { Dispatcher } from "../../dispatcher";
+import { AppEvent } from "../../enums/enums";
 
 export class IdConnectorType extends Control {
   private static id = 0;
@@ -51,12 +53,14 @@ export class IdConnectorType extends Control {
   // Add an event listener to the inner <radio> elements.
   // Returns reference to self for easy chaining.
   // 
-  public addEventListener(type: string, f: any): IdConnectorType {
-    this.radioDefault.addEventListener(type, f);
-    this.radioIn.addEventListener(type, f);
-    this.radioOut.addEventListener(type, f);
-    this.radioUp.addEventListener(type, f);
-    this.radioDown.addEventListener(type, f);
+  public addEventListener(type: string, f: any, refresh = true): IdConnectorType {
+    let ff: any = (refresh? (e: any) => { f(e); Dispatcher.notify(AppEvent.Redraw, null)}: f );
+
+    this.radioDefault.addEventListener(type, ff);
+    this.radioIn.addEventListener(type, ff);
+    this.radioOut.addEventListener(type, ff);
+    this.radioUp.addEventListener(type, ff);
+    this.radioDown.addEventListener(type, ff);
     return this;
   }
 }

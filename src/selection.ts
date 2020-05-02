@@ -54,6 +54,11 @@ export class Selection {
     Dispatcher.notify(AppEvent.Select, null);
   }
 
+  // Select is called on each View in selection.
+  selectAll() {
+    this.list.forEach(view => { view.select(); });
+  }
+
   // Select a view, clearing the selection first.
   select(view: View) {
     this.unselectAll();

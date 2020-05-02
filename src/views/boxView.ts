@@ -3,6 +3,7 @@ import { Rect } from '../util/util.js'
 import { Box } from '../models/box.js'
 import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
 import { IScreen } from '../drawing/IScreen.js';
+import { App } from '../app.js';
 
 export class BoxView extends View {
   box: Box;
@@ -21,9 +22,19 @@ export class BoxView extends View {
   getModel(): Box {
     return this.box;
   }  
+  
+  clear(canvas: IScreen): Rect {
+
+    let margin = Values.DIMEN_ROOM_MARGIN;
+    let rect = new Rect(this.box.x - margin, this.box.y - margin, this.box.x - margin + this.box.width + margin * 2, this.box.y - margin + this.box.height + margin * 2)
+    canvas.clearRect(rect.x, rect.y, rect.width, rect.height);
+
+    return rect;
+  }
 
   makeShape(canvas: IScreen, addMargin: boolean) {
     let margin = addMargin ? Values.DIMEN_ROOM_MARGIN : 0;
+
     switch(this.box.shape) {
       case RoomShape.Ellipse:
         canvas.ellipse(-margin, -margin, this.box.width + margin * 2, this.box.height + margin * 2);
@@ -120,7 +131,7 @@ export class BoxView extends View {
   // Used to determine if a Room is inside a selection area. For simplicity,
   // a rectangular approximation of the Room is used.
   isIn(x: number, y: number, width: number, height: number) {
-    let r = new Rect(x, y, width, height);
+    let r = new Rect(x, y, x + width, y + height);
     if(r.contains(this.box.x, this.box.y)) return true;
     if(r.contains(this.box.x + this.box.width, this.box.y)) return true;
     if(r.contains(this.box.x, this.box.y + this.box.height)) return true;

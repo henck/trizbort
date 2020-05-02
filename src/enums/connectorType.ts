@@ -11,8 +11,8 @@ export namespace ConnectorType {
     switch(type) {
       case ConnectorType.In: return 'in';
       case ConnectorType.Out: return 'out';
-      case ConnectorType.Up: return 'u';
-      case ConnectorType.Down: return 'd';
+      case ConnectorType.Up: return 'up';
+      case ConnectorType.Down: return 'dn';
       default:
         return '';
     }

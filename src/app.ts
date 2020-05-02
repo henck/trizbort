@@ -1,7 +1,7 @@
+import { Values } from './enums/Values'
 import { Map } from './models/map.js'
-import { View } from './views/view.js'
 import { Dispatcher } from './dispatcher.js'
-import { AppEvent, MouseMode, Values } from './enums/enums.js'
+import { AppEvent, MouseMode } from './enums/enums.js'
 import { Editor } from './editor.js'
 import { Tabs, IdToast } from './controls/controls.js'
 import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/popups.js'
@@ -9,6 +9,7 @@ import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel
 
 import { MapJSON } from './io/mapJSON.js'
 import { Selection } from './selection.js'
+import { Header } from './controls/header.js'
 
 export class App {
   // - App holds the current map.
@@ -16,16 +17,20 @@ export class App {
   //   so that GUI components may access and change them globally.
   // - App also manages the selection of views.
   static map: Map = new Map();
-  static canvas: any;
+  static mainHTMLCanvas: any;
+  static bgHTMLCanvas: any;
   static zoom: number = 1;
   static centerX: number = 0;
   static centerY: number = 0;
   static mouseMode: MouseMode = MouseMode.None;
   static undoStack: Array<string> = new Array<string>();
   static selection: Selection; 
+  static header = new Header();
+  static viewID = Values.VIEWS_FIRSTID;
 
   static initialize() {
-    App.canvas = document.getElementById('canvas');
+    App.mainHTMLCanvas = document.getElementById('main-canvas');
+    App.bgHTMLCanvas = document.getElementById('bg-canvas');
     App.selection = new Selection();
     
     // Intialize GUI components:
@@ -49,6 +54,7 @@ export class App {
     new BlockPopup();    
     new ConnectorPanel();
     new ConnectorPopup();
+
     IdToast.toast("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room.");
   }  
 
@@ -64,6 +70,14 @@ export class App {
     let json = this.undoStack.pop();
     this.map = MapJSON.load(json);
     Dispatcher.notify(AppEvent.Refresh, null);
+  }
+
+  static author(val: string): string {
+    return (val? 'A map by ' + val : '');
+  }
+
+  static getNewViewId(): number {
+    return ++this.viewID;
   }
 }
 

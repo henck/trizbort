@@ -32,11 +32,11 @@ export class ConnectorPanel extends Panel implements Subscriber {
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.connector.name = this.ctrlName.value; });
     this.ctrlCurve = new IdCheck('.js-curve', this.elem).addEventListener('input', () => { this.connector.isCurve = this.ctrlCurve.checked; });
     this.ctrlOneWay = new IdCheck('.js-oneway', this.elem).addEventListener('input', () => { this.connector.oneWay = this.ctrlOneWay.checked; });
-    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.connector.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.connector.lineStyle = this.ctrlLineStyle.value; }) as IdLineStyle;
     this.ctrlLineWidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.connector.lineWidth = this.ctrlLineWidth.value; });
-    this.ctrlColor = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.connector.color = this.ctrlColor.color; });
+    this.ctrlColor = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.connector.color = this.ctrlColor.color; }) as IdColorPicker;
     this.btnReverse = this.elem.querySelector('.js-reverse');
-    this.btnReverse.addEventListener('click', () => { App.pushUndo(); this.connector.reverse(); });
+    this.btnReverse.addEventListener('click', () => { App.pushUndo(); this.connector.reverse(); Dispatcher.notify(AppEvent.Refresh, null)});
 
     this.ctrlStartType = new IdConnectorType('.js-starttype', this.elem).addEventListener('input', () => { this.connector.startType = this.ctrlStartType.value; });
     this.ctrlEndType = new IdConnectorType('.js-endtype', this.elem).addEventListener('input', () => { this.connector.endType = this.ctrlEndType.value; });
@@ -59,6 +59,7 @@ export class ConnectorPanel extends Panel implements Subscriber {
         this.ctrlName.value = connector.name; 
         this.ctrlCurve.checked = connector.isCurve;
         this.ctrlOneWay.checked = connector.oneWay;
+        this.ctrlLineStyle.value = connector.lineStyle;
         this.ctrlLineWidth.value = connector.lineWidth;
         this.ctrlColor.color = connector.color;
         this.btnReverse.style.display = connector.isDoubleDocked() ? 'block' : 'none';

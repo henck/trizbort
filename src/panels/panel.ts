@@ -1,3 +1,7 @@
+import { App } from "../app";
+import { Dispatcher } from "../dispatcher";
+import { AppEvent } from "../enums/enums";
+
 //
 // Panel is a base class for closable panels.
 // 
@@ -20,7 +24,7 @@ export class Panel {
     if(closeButton) closeButton.addEventListener('click', () => { this.close(); });  
 
     // Close self when mouse is down on editor canvas:
-    document.getElementById('canvas').addEventListener('mousedown', () => {
+    App.mainHTMLCanvas.addEventListener('mousedown', () => {
       this.close();
     });    
   }

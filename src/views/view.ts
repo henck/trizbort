@@ -1,7 +1,11 @@
 import { Model } from '../models/model.js'
 import { IScreen } from '../drawing/IScreen.js';
+import { App } from '../app.js';
+import { Canvas } from '../drawing/canvas.js';
+import { Rect } from '../util/rect.js';
 
 export class View {
+  id: string;
   selected: boolean;
 
   constructor() {
@@ -15,11 +19,19 @@ export class View {
   draw(canvas: IScreen, hover: boolean) {
   }
 
+  clear(canvas: IScreen): Rect {
+    return;
+  }
+
   drawSimple(canvas: IScreen, hover: boolean) {
   }  
 
   drawHandles(canvas: IScreen, mouseX: number, mouseY: number, selectionSize: number, hover: boolean) {
-  }  
+  }
+
+  get movingSelectable(): boolean {
+    return false;
+  }
 
   isSelected() {
     return this.selected;

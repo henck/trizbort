@@ -8,6 +8,7 @@ import { NoteView } from "./views/noteView";
 import { Map } from "./models/map";
 import { BoxView } from "./views/boxView";
 import { Box } from "./models/box";
+import { App } from "./app";
 
 //
 // The Exporter exports the a map to an image file.
@@ -17,7 +18,7 @@ export class Exporter {
   private canvasElem: HTMLCanvasElement;
   private canvas: Canvas;
   private ctx: CanvasRenderingContext2D;
-  private views: Array<View>;
+  private views: View[];
   private left: number;
   private top: number;
   private width: number;
@@ -59,21 +60,21 @@ export class Exporter {
     this.canvas.translate(this.left, this.top);      
 
     // Draw all blocks:
-    this.views.forEach(view => {
+    this.views.forEach((view: View) => {
       if(view instanceof BlockView) {
         view.draw(this.canvas, false);
       }
     });
 
     // Draw all connectors:
-    this.views.forEach(view => {
+    this.views.forEach((view: View) => {
       if(view instanceof ConnectorView) {
         view.draw(this.canvas, false);
       }
     });
 
     // Draw all rooms and notes:
-    this.views.forEach(view => {
+    this.views.forEach((view: View) => {
       if(view instanceof RoomView || view instanceof NoteView) {
         view.draw(this.canvas, false);
       }
@@ -132,7 +133,7 @@ export class Exporter {
   // 
   public export() {
     // Create views for all models.
-    this.views = new Array<View>();
+    this.views = [];
     this.map.elements.forEach((model) => {
       this.views.push(ViewFactory.create(model));
     });
@@ -144,7 +145,7 @@ export class Exporter {
       let minY = 99999;
       let maxX = -99999;
       let maxY = -99999;
-      this.views.forEach(view => {
+      this.views.forEach((view: View) => {
         if(view instanceof BoxView) {
           let box:Box = view.getModel();
           if(box.x < minX) minX = box.x;

@@ -18,8 +18,8 @@ export class MapPanel extends Panel implements Subscriber {
     super('mappanel', Handlebars.templates.mapPanel, { });
     Dispatcher.subscribe(this);
 
-    this.ctrlTitle = new IdInput('.js-title', this.elem).addEventListener('input', () => { App.map.title = this.ctrlTitle.value; });
-    this.ctrlAuthor = new IdInput('.js-author', this.elem).addEventListener('input', () => { App.map.author = this.ctrlAuthor.value; });
+    this.ctrlTitle = new IdInput('.js-title', this.elem).addEventListener('input', () => { App.map.title = this.ctrlTitle.value; App.header.title = this.ctrlTitle.value});
+    this.ctrlAuthor = new IdInput('.js-author', this.elem).addEventListener('input', () => { App.map.author = this.ctrlAuthor.value; App.header.content = App.author(this.ctrlAuthor.value); });
     this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { App.map.description = this.ctrlDescription.value; });
   }
 

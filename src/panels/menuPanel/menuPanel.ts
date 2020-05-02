@@ -133,7 +133,8 @@ export class MenuPanel extends Panel {
     try {
       map = MapJSON.load(text);
     }
-    catch {
+    catch (error) {
+      console.error(error);
       new Window(
         'Map loading error', 
         'Unfortunately, an error occurred and map loading could not proceed. Perhaps the map file is in the wrong format?',
@@ -235,6 +236,10 @@ export class MenuPanel extends Panel {
                 </tr>        
                 <tr>
                   <td><kbd>Ins</kbd></td>
+                  <td>Center map</td>
+                </tr>
+                <tr>
+                  <td><kbd>Shift</kbd><kbd>Enter</kbd></td>
                   <td>Center map</td>
                 </tr>
               </tbody>
