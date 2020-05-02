@@ -1,17 +1,40 @@
 import { AppEvent, MouseMode } from '../../enums/enums.js'
 import { App } from '../../app.js'
 import { IdPopup } from '../../controls/controls.js';
+import { OptionsGroup } from '../../controls/optionsGroup.js';
+import { Subscriber, Dispatcher } from '../../dispatcher.js';
 
-export class ToolPanel  {
-  private elem: HTMLElement;
+export class ToolPanel extends OptionsGroup implements Subscriber {
+  protected elem: HTMLElement;
 
   constructor() {
-    this.elem = document.getElementById('toolpanel');
-    this.elem.innerHTML = Handlebars.templates.toolPanel({  });
+    let elem = document.getElementById('toolpanel');
 
-    new IdPopup('#toolpanel .tool-none').addEventListener('click', () => { App.selection.unselectAll(); App.mouseMode = MouseMode.None; });
-    new IdPopup('#toolpanel .tool-room').addEventListener('click', () => { App.selection.unselectAll(); App.mouseMode = MouseMode.AddRoom; });
-    new IdPopup('#toolpanel .tool-note').addEventListener('click', () => { App.selection.unselectAll(); App.mouseMode = MouseMode.AddNote; });
-    new IdPopup('#toolpanel .tool-block').addEventListener('click', () => { App.selection.unselectAll(); App.mouseMode = MouseMode.AddBlock; });
+    super(elem, [
+      {value: MouseMode.None, htmlEl: '#toolpanel .tool-none'},
+      {value: MouseMode.AddRoom, htmlEl: '#toolpanel .tool-room'},
+      {value: MouseMode.AddNote, htmlEl: '#toolpanel .tool-note'},
+      {value: MouseMode.AddBlock, htmlEl: '#toolpanel .tool-block'},
+    ]);
+
+    Dispatcher.subscribe(this);
+
+    this.value = MouseMode.None;
+  }
+
+  get template(): string {
+    return Handlebars.templates.toolPanel({  });
+  }
+
+  set value(val: MouseMode) {
+    this.setValue(val);
+    App.mouseMode = val;
+  }
+
+  notify(event: AppEvent, obj: any) {
+
+    if(event == AppEvent.Added) {
+      this.value = MouseMode.None;
+    }
   }
 }

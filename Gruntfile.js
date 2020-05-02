@@ -3,6 +3,18 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    copy: {
+      libraries: {
+          files: [
+              {
+                  expand: true,
+                  cwd: 'fonts/',
+                  src: ['**/*'],
+                  dest: 'dist/fonts/'
+              }
+          ]
+      }
+    },
     stylus: {
       compile: {
         options: {
@@ -66,12 +78,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-handlebars-compiler');
   grunt.loadNpmTasks('grunt-ts');
   grunt.loadNpmTasks('grunt-svgstore');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task(s).
   grunt.registerTask('css', ['stylus']);
+  grunt.registerTask('default', ['copy:libraries']);
   grunt.registerTask('typescript', 'ts');
-  grunt.registerTask('build', ['stylus', 'ts', 'handlebars', 'uglify']);
+  grunt.registerTask('build', ['copy', 'svgstore', 'stylus', 'ts', 'handlebars', 'uglify']);
   grunt.registerTask('default', ['watch']);
-  
 
 };

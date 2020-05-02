@@ -1,4 +1,6 @@
 import { Control } from "../control";
+import { Dispatcher } from "../../dispatcher";
+import { AppEvent } from "../../enums/enums";
 
 export class IdRadio extends Control {
   private input: HTMLInputElement;
@@ -42,8 +44,10 @@ export class IdRadio extends Control {
   // Add an event listener to the inner <input>
   // Returns reference to self for easy chaining.
   // 
-  public addEventListener(type: string, f: any): IdRadio {
-    this.input.addEventListener(type, f);
+  public addEventListener(type: string, f: any, refresh = true): IdRadio {
+    let ff: any = (refresh? (e: any) => { f(e); Dispatcher.notify(AppEvent.Redraw, null)}: f );
+
+    this.input.addEventListener(type, ff);
     return this;
   }
 }

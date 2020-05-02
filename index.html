@@ -1,17 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Trizbort.io</title>
+  <link rel="stylesheet" href="fonts/fonts.css" type="text/css" media="screen">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <p style="font-family: 'danielbd';">Trizbort.io</p>
+  <header id="app-header">
      <svg id="menu" class="icon" style="cursor: pointer; fill:#fff"><use xlink:href="dist/icons.svg#bars"></use></svg>
-     <h1>Trizbort.io</h1>
+     <h1 id="title"></h1>
+     <p class="subtitle" style="margin-left: 10px;" id="content"></p>
   </header>
       
   <canvas id="hittest" style="display: none; width: 1px; height: 1px"></canvas>
@@ -36,7 +39,9 @@
       <div id="control-zoomout" title="Zoom out"><svg class="icon small"><use xlink:href="dist/icons.svg#zoom-out"></use></svg></div>
       <input id="control-zoom" type="text" value="100%">
     </div>
-    <canvas id="canvas" tabindex='1'></canvas>
+    <!-- <canvas id="canvas" tabindex='1' ></canvas> -->
+    <canvas id="bg-canvas" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas id="main-canvas" style="position: absolute; left: 0; top: 0; z-index: 1;" tabindex='1'></canvas>
   </div>
 
   <div id="toolpanel" class="panel panel-left show" style="width:75px"></div>

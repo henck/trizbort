@@ -1,7 +1,8 @@
 import { Control } from "../control";
 import { IdPopup, IdInput } from "../controls";
-import { ObjectKind } from "../../enums/enums";
+import { ObjectKind, AppEvent } from "../../enums/enums";
 import { Obj } from "../../models/obj";
+import { Dispatcher } from "../../dispatcher";
 
 export class IdObjectEditor extends Control {
   private ctrlName: IdInput;
@@ -76,9 +77,9 @@ export class IdObjectEditor extends Control {
     this.btnDelete.addEventListener('click', () => { this.delete(); });
 
     // Object type buttons:
-    this.btnItem = new IdPopup('.js-item', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Item); });
-    this.btnScenery = new IdPopup('.js-scenery', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Scenery); });
-    this.btnActor = new IdPopup('.js-actor', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Actor); });
+    this.btnItem = new IdPopup('.js-item', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Item); }) as IdPopup;
+    this.btnScenery = new IdPopup('.js-scenery', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Scenery); }) as IdPopup;
+    this.btnActor = new IdPopup('.js-actor', this.elem).addEventListener('click', () => { this.setKind(ObjectKind.Actor); }) as IdPopup;
   }
 
   private handleDragOver(e: DragEvent) {
@@ -132,13 +133,5 @@ export class IdObjectEditor extends Control {
   private delete() {
     let evt = new CustomEvent('delete');
     this.elem.dispatchEvent(evt);    
-  }
-
-  //
-  // Returns reference to self for easy chaining.
-  // 
-  public addEventListener(type: string, f: any): IdObjectEditor {
-    this.elem.addEventListener(type, f);
-    return this;
   }
 }

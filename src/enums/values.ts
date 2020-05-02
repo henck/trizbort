@@ -1,6 +1,6 @@
 export class Values {
   static readonly ZOOM_FRACTION = 1.2;
-  static readonly ZOOM_ADDITIVE = 0.5;
+  static readonly ZOOM_ADDITIVE = 0.1;
 
   static readonly COLOR_TRANSPARENT = 'rgba(0,0,0,0.004)';
   static readonly COLOR_LINE = '#000000';
@@ -24,4 +24,7 @@ export class Values {
   static readonly DIMEN_STARTROOM_MARGIN = 3;
   static readonly DIMEN_RESIZE_HANDLE = 6;
   static readonly DIMEN_CONNECTOR_HANDLE = 5;
+  static readonly DIMEN_CONNECTOR_WIDE = 20;
+
+  static readonly VIEWS_FIRSTID = 100;
 }

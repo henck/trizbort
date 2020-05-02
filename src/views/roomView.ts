@@ -1,10 +1,10 @@
-import { View } from './view.js'
+import { App } from '../app.js'
 import { BoxView } from './boxView.js'
-import { Rect } from '../util/util.js'
 import { Room } from '../models/room.js'
-import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
+import { LineStyle, Values } from '../enums/enums.js'
 import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen.js';
 import { Obj } from '../models/obj.js';
+import { fontSettings } from '../models/mapSettings.js';
 
 export class RoomView extends BoxView {
   room: Room;
@@ -18,12 +18,16 @@ export class RoomView extends BoxView {
     return this.room;
   }
 
+  get movingSelectable(): boolean {
+    return true;
+  }
+
   draw(canvas: IScreen, hover: boolean) {
 
     // Translate to room's coordinates, so we can offset everything from (0,0).
     canvas
       .save()
-      .translate(this.room.x, this.room.y);
+      .translate(this.room.x, this.room.y)
 
     this.makeShape(canvas, true);
     
@@ -74,6 +78,8 @@ export class RoomView extends BoxView {
         .fill();
     }
 
+    canvas.restore(); // remove clip
+
     // Room border
     if(this.room.lineStyle != LineStyle.None) { 
       this.makeShape(canvas, false);
@@ -85,16 +91,18 @@ export class RoomView extends BoxView {
     }
     
     // Room name
+    let f = <fontSettings>App.map.settings.room.fontCfg(App.map.settings.draw.hand, 'obj');
+    let f2 = <fontSettings>App.map.settings.room.font2Cfg(App.map.settings.draw.hand, 'obj');
     canvas
       .fillStyle(this.room.nameColor)
-      .drawText(0, 0, this.room.width, this.room.height, 14.4, 'Roboto', this.room.name);
+      .drawText(0, 0, this.room.width, this.room.height, f.size, f.family, this.room.name);
     
     // Room subtitle
-    canvas
-      .fillStyle(this.room.subtitle)
-      .drawTextBottom(0, 0, this.room.width, this.room.height - 5, 11.8, 'Roboto', this.room.subtitle);
-
-    canvas.restore(); // remove clip
+    if(this.room.subtitle) {
+      canvas
+        .fillStyle(this.room.subtitle)
+        .drawTextBottom(0, 0, this.room.width, this.room.height - 5, f2.size, f2.family, this.room.subtitle);
+    }
 
     // Objects in room
     let x = this.room.width * 0.8;
@@ -105,12 +113,14 @@ export class RoomView extends BoxView {
     canvas.restore();
   }
 
-  drawObjects(canvas: IScreen, x: number, y: number, objList: Array<Obj>) {
+  drawObjects(canvas: IScreen, x: number, y: number, objList: Array<Obj>): number {
     objList.forEach((obj) => { 
-      canvas.fillText(obj.name, x, y, '11.8 Roboto', TextAlign.Left, TextBaseline.Middle);
+      canvas.fillText(obj.name, x, y, <string>App.map.settings.room.font2Cfg(App.map.settings.draw.hand, 'string'), TextAlign.Left, TextBaseline.Middle);
       y += 14;
-      this.drawObjects(canvas, x + 10, y, obj.content);
+      y = this.drawObjects(canvas, x + 10, y, obj.content);
     });
+
+    return y;
   }
 
   drawSimple(canvas: IScreen, hover: boolean) {
