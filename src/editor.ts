@@ -23,7 +23,6 @@ import { CastleofdoomMap } from './maps/castleofdoomMap.js';
 import { HitchhikersguideMap } from './maps/hhg.js';
 import { HobbitMap } from './maps/hobbitMap.js';
 import { IdToast } from './controls/controls.js';
-import { ToolPanel } from './panels/panels.js'
 import { Rect } from './util/rect.js'
 
 export class Editor implements Subscriber {

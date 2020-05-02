@@ -30,7 +30,7 @@ export class Header {
   }
 
   set title(val: string) {
-    this._title.innerHTML = val || 'Trizbort.io';
+    this._title.innerHTML = 'Trizbort.io' + (val? ': ' + val : '');
   }
 
   get title(): string {

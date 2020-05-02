@@ -1,11 +1,8 @@
-import { Model } from '../../models/model.js'
 import { Subscriber, Dispatcher } from '../../dispatcher.js';
 import { AppEvent } from '../../enums/appEvent.js'
-import { Room } from '../../models/room.js';
 import { App } from '../../app.js';
-import { RoomShape, LineStyle, Values } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
+import { IdInput, IdTextarea } from '../../controls/controls.js';
 import { Map } from '../../models/map.js';
 
 export class MapPanel extends Panel implements Subscriber {
