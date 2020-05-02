@@ -3,5 +3,6 @@ design
 .tscache
 style.css
 dist
+fonts
 tscommand-*.tmp.txt
 _site
