@@ -84,7 +84,7 @@ module.exports = function(grunt) {
   grunt.registerTask('css', ['stylus']);
   grunt.registerTask('default', ['copy:libraries']);
   grunt.registerTask('typescript', 'ts');
-  grunt.registerTask('build', ['copy', 'stylus', 'ts', 'handlebars', 'uglify']);
+  grunt.registerTask('build', ['copy', 'svgstore', 'stylus', 'ts', 'handlebars', 'uglify']);
   grunt.registerTask('default', ['watch']);
 
 };
