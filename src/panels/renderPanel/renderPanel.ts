@@ -9,7 +9,7 @@ import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape,
 import { Map } from '../../models/map.js';
 import { MapSettings } from '../../models/mapSettings.js';
 import { Window } from '../../controls/window.js'
-import { ObsidianTheme } from '../../themes/themes.js';
+import { ObsidianTheme, diagramTheme } from '../../themes/themes.js';
 import { HandDrawnTheme } from '../../themes/handDrawnTheme.js';
 
 export class RenderPanel extends Panel implements Subscriber {
@@ -214,6 +214,9 @@ export class RenderPanel extends Panel implements Subscriber {
           break;
         case 'hand-drawn':
             App.map.settings = new MapSettings().cloneFrom(new HandDrawnTheme());
+            break;
+        case 'diagram':
+            App.map.settings = new MapSettings().cloneFrom(new diagramTheme());
             break;
         default:
           App.map.settings = new MapSettings();

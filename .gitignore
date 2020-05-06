@@ -1,7 +1,7 @@
-.vsvode
+.tscache
+.vscode
 node_modules
 design
-.tscache
 style.css
 dist
 tscommand-*.tmp.txt
