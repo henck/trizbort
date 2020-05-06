@@ -254,12 +254,6 @@ export class ConnectorView extends View {
       this.drawArrow(canvas, arrow2x, arrow2y, arrow2a);
     }
 
-    // Draw door:
-    if(this.connector.hasDoor) {
-      canvas.fillStyle(this.selected ? Values.COLOR_SELECTED : (hover ? Values.COLOR_HOVER : this.connector.color));
-      this.drawDoor(canvas, centerx, centery, centera);
-    }
-
     // Draw name (if any)
     if(this.connector.name) {
       let textWidth = canvas.textWidth(this.connector.name, <string>App.map.settings.connector.fontCfg(App.map.settings.draw.hand, 'string'));

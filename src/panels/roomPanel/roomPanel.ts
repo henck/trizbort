@@ -15,7 +15,6 @@ export class RoomPanel extends Panel implements Subscriber {
   private ctrlName: IdInput;
   private ctrlSubtitle: IdInput;
   private ctrlDark: IdCheck;
-  private ctrlOutside: IdCheck;
   private ctrlStartroom: IdCheck;
   private ctrlEndroom: IdCheck;
   private ctrlDescription: IdTextarea;
@@ -37,7 +36,6 @@ export class RoomPanel extends Panel implements Subscriber {
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.room.name = this.ctrlName.value; });
     this.ctrlSubtitle = new IdInput('.js-subtitle', this.elem).addEventListener('input', () => { this.room.subtitle = this.ctrlSubtitle.value; });
     this.ctrlDark = new IdCheck('.js-dark', this.elem).addEventListener('input', () => { this.room.dark = this.ctrlDark.checked; })
-    this.ctrlOutside = new IdCheck('.js-outside', this.elem).addEventListener('input', () => { this.room.outside = this.ctrlOutside.checked; })
     this.ctrlStartroom = new IdCheck('.js-startroom', this.elem).addEventListener('input', () => { this.room.setStartRoom(this.ctrlStartroom.checked); })
     this.ctrlEndroom = new IdCheck('.js-endroom', this.elem).addEventListener('input', () => { this.room.endroom = this.ctrlEndroom.checked; })
     this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { this.room.description = this.ctrlDescription.value; });
@@ -176,7 +174,6 @@ export class RoomPanel extends Panel implements Subscriber {
         this.ctrlName.value = room.name; 
         this.ctrlSubtitle.value = room.subtitle;
         this.ctrlDark.checked = room.dark;
-        this.ctrlOutside.checked = room.outside;
         this.ctrlStartroom.checked = room.isStartRoom();
         this.ctrlEndroom.checked = room.endroom;
         this.ctrlShape.value = this.room.shape;
