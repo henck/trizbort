@@ -10,6 +10,7 @@ import { Map } from '../../models/map.js';
 import { MapSettings } from '../../models/mapSettings.js';
 import { Window } from '../../controls/window.js'
 import { ObsidianTheme } from '../../themes/themes.js';
+import { HandDrawnTheme } from '../../themes/handDrawnTheme.js';
 
 export class RenderPanel extends Panel implements Subscriber {
 
@@ -67,12 +68,12 @@ export class RenderPanel extends Panel implements Subscriber {
     super('renderpanel', Handlebars.templates.renderPanel, { });
     Dispatcher.subscribe(this);
 
-    this.ctrlGridVisible = new IdCheck('.js-grid-visible', this.elem).addEventListener('input', () => { App.map.settings.grid.visible = this.ctrlGridVisible.checked; })
-    this.ctrlGridOrigin = new IdCheck('.js-grid-origin', this.elem).addEventListener('input', () => { App.map.settings.grid.origin = this.ctrlGridOrigin.checked; })
-    this.ctrlGridSnap = new IdCheck('.js-grid-snap', this.elem).addEventListener('input', () => { App.map.settings.grid.snap = this.ctrlGridSnap.checked; })
+    this.ctrlGridVisible = new IdCheck('.js-grid-visible', this.elem).addEventListener('input', () => { App.map.settings.grid.visible = this.ctrlGridVisible.checked})
+    this.ctrlGridOrigin = new IdCheck('.js-grid-origin', this.elem).addEventListener('input', () => { App.map.settings.grid.origin = this.ctrlGridOrigin.checked})
+    this.ctrlGridSnap = new IdCheck('.js-grid-snap', this.elem).addEventListener('input', () => { App.map.settings.grid.snap = this.ctrlGridSnap.checked})
     this.ctrlGridSize = new IdRange('.js-grid-size', this.elem).addEventListener('input', () => { App.map.settings.grid.size = this.ctrlGridSize.value; });
 
-    this.mapColorPicker = new IdColorPicker('.js-map-color', this.elem).addEventListener('change', () => { this.setMapColor(this.mapColorPicker.color); });
+    this.mapColorPicker = new IdColorPicker('.js-map-color', this.elem).addEventListener('change', () => { this.setMapColor(this.mapColorPicker.color); }) as IdColorPicker;
     // Find map color buttons:
     var buttons = this.elem.querySelectorAll('.map-colortype');
     this.mapColorButtons = new Array<IdPopup>();
@@ -85,17 +86,18 @@ export class RenderPanel extends Panel implements Subscriber {
 
     this.elem.querySelector('.js-theme-default').addEventListener('click', () => { this.applyTheme('default'); });
     this.elem.querySelector('.js-theme-obsidian').addEventListener('click', () => { this.applyTheme('obsidian'); });
+    this.elem.querySelector('.js-theme-hand-drawn').addEventListener('click', () => { this.applyTheme('hand-drawn'); });
 
-    this.ctrlRoomWidth = new IdRange('.js-room-width', this.elem).addEventListener('input', () => { App.map.settings.room.width = this.ctrlRoomWidth.value; });
-    this.ctrlRoomHeight = new IdRange('.js-room-height', this.elem).addEventListener('input', () => { App.map.settings.room.height = this.ctrlRoomHeight.value; });
-    this.ctrlRoomLinewidth = new IdRange('.js-room-linewidth', this.elem).addEventListener('input', () => { App.map.settings.room.lineWidth = this.ctrlRoomLinewidth.value; });
-    this.ctrlRoomRounding = new IdRange('.js-room-rounding', this.elem).addEventListener('input', () => { App.map.settings.room.rounding = this.ctrlRoomRounding.value; });
-    this.ctrlRoomDarknessSize = new IdRange('.js-room-darkness-size', this.elem).addEventListener('input', () => { App.map.settings.room.darknessSize = this.ctrlRoomDarknessSize.value; });
+    this.ctrlRoomWidth = new IdRange('.js-room-width', this.elem).addEventListener('input', () => { App.map.settings.room.width = this.ctrlRoomWidth.value });
+    this.ctrlRoomHeight = new IdRange('.js-room-height', this.elem).addEventListener('input', () => { App.map.settings.room.height = this.ctrlRoomHeight.value });
+    this.ctrlRoomLinewidth = new IdRange('.js-room-linewidth', this.elem).addEventListener('input', () => { App.map.settings.room.lineWidth = this.ctrlRoomLinewidth.value });
+    this.ctrlRoomRounding = new IdRange('.js-room-rounding', this.elem).addEventListener('input', () => { App.map.settings.room.rounding = this.ctrlRoomRounding.value });
+    this.ctrlRoomDarknessSize = new IdRange('.js-room-darkness-size', this.elem).addEventListener('input', () => { App.map.settings.room.darknessSize = this.ctrlRoomDarknessSize.value });
 
-    this.ctrlRoomShape = new IdShape('.js-room-shape', this.elem).addEventListener('change', () => { App.map.settings.room.shape = this.ctrlRoomShape.value; });
-    this.ctrlRoomLine = new IdLineStyle('.js-room-line', this.elem).addEventListener('change', () => { App.map.settings.room.lineStyle = this.ctrlRoomLine.value; });
+    this.ctrlRoomShape = new IdShape('.js-room-shape', this.elem).addEventListener('change', () => { App.map.settings.room.shape = this.ctrlRoomShape.value }) as IdShape;
+    this.ctrlRoomLine = new IdLineStyle('.js-room-line', this.elem).addEventListener('change', () => { App.map.settings.room.lineStyle = this.ctrlRoomLine.value }) as IdLineStyle;
 
-    this.roomColorPicker = new IdColorPicker('.js-room-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.roomColorPicker.color); });
+    this.roomColorPicker = new IdColorPicker('.js-room-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.roomColorPicker.color); }) as IdColorPicker;
     // Find room color buttons:
     var buttons = this.elem.querySelectorAll('.room-colortype');
     this.roomColorButtons = new Array<IdPopup>();
@@ -106,25 +108,25 @@ export class RenderPanel extends Panel implements Subscriber {
       buttons[i].addEventListener('click', () => { this.onRoomColorButton(popup); });
     }
 
-    this.ctrlConnectorLinewidth = new IdRange('.js-connector-linewidth', this.elem).addEventListener('input', () => { App.map.settings.connector.lineWidth = this.ctrlConnectorLinewidth.value; });
-    this.ctrlConnectorStalk = new IdRange('.js-connector-stalk', this.elem).addEventListener('input', () => { App.map.settings.connector.stalk = this.ctrlConnectorStalk.value; });
-    this.ctrlConnectorLabelDistance = new IdRange('.js-connector-label-distance', this.elem).addEventListener('input', () => { App.map.settings.connector.labelDistance = this.ctrlConnectorLabelDistance.value; });
-    this.ctrlConnectorArrowSize = new IdRange('.js-connector-arrow-size', this.elem).addEventListener('input', () => { App.map.settings.connector.arrowSize = this.ctrlConnectorArrowSize.value; });
-    this.ctrlConnectorCurve = new IdCheck('.js-connector-curve', this.elem).addEventListener('input', () => { App.map.settings.connector.isCurve = this.ctrlConnectorCurve.checked; })
-    this.ctrlConnectorCurveStrength = new IdRange('.js-connector-curve-strength', this.elem).addEventListener('input', () => { App.map.settings.connector.curveStrength = this.ctrlConnectorCurveStrength.value / 10; });
-    this.ctrlConnectorLine = new IdLineStyle('.js-connector-line', this.elem).addEventListener('change', () => { App.map.settings.connector.lineStyle = this.ctrlConnectorLine.value; });
-    this.connectorColorPicker = new IdColorPicker('.js-connector-color', this.elem).addEventListener('change', () => { App.map.settings.connector.color = this.connectorColorPicker.color; });
+    this.ctrlConnectorLinewidth = new IdRange('.js-connector-linewidth', this.elem).addEventListener('input', () => { App.map.settings.connector.lineWidth = this.ctrlConnectorLinewidth.value });
+    this.ctrlConnectorStalk = new IdRange('.js-connector-stalk', this.elem).addEventListener('input', () => { App.map.settings.connector.stalk = this.ctrlConnectorStalk.value });
+    this.ctrlConnectorLabelDistance = new IdRange('.js-connector-label-distance', this.elem).addEventListener('input', () => { App.map.settings.connector.labelDistance = this.ctrlConnectorLabelDistance.value });
+    this.ctrlConnectorArrowSize = new IdRange('.js-connector-arrow-size', this.elem).addEventListener('input', () => { App.map.settings.connector.arrowSize = this.ctrlConnectorArrowSize.value });
+    this.ctrlConnectorCurve = new IdCheck('.js-connector-curve', this.elem).addEventListener('input', () => { App.map.settings.connector.isCurve = this.ctrlConnectorCurve.checked })
+    this.ctrlConnectorCurveStrength = new IdRange('.js-connector-curve-strength', this.elem).addEventListener('input', () => { App.map.settings.connector.curveStrength = this.ctrlConnectorCurveStrength.value / 10 });
+    this.ctrlConnectorLine = new IdLineStyle('.js-connector-line', this.elem).addEventListener('change', () => { App.map.settings.connector.lineStyle = this.ctrlConnectorLine.value }) as IdLineStyle;
+    this.connectorColorPicker = new IdColorPicker('.js-connector-color', this.elem).addEventListener('change', () => { App.map.settings.connector.color = this.connectorColorPicker.color }) as IdColorPicker;
 
-    this.ctrlNoteWidth = new IdRange('.js-note-width', this.elem).addEventListener('input', () => { App.map.settings.note.width = this.ctrlNoteWidth.value; });
-    this.ctrlNoteHeight = new IdRange('.js-note-height', this.elem).addEventListener('input', () => { App.map.settings.note.height = this.ctrlNoteHeight.value; });
-    this.ctrlNoteLinewidth = new IdRange('.js-note-linewidth', this.elem).addEventListener('input', () => { App.map.settings.note.lineWidth = this.ctrlNoteLinewidth.value; });
-    this.ctrlNoteRounding = new IdRange('.js-note-rounding', this.elem).addEventListener('input', () => { App.map.settings.note.rounding = this.ctrlNoteRounding.value; });
+    this.ctrlNoteWidth = new IdRange('.js-note-width', this.elem).addEventListener('input', () => { App.map.settings.note.width = this.ctrlNoteWidth.value });
+    this.ctrlNoteHeight = new IdRange('.js-note-height', this.elem).addEventListener('input', () => { App.map.settings.note.height = this.ctrlNoteHeight.value });
+    this.ctrlNoteLinewidth = new IdRange('.js-note-linewidth', this.elem).addEventListener('input', () => { App.map.settings.note.lineWidth = this.ctrlNoteLinewidth.value });
+    this.ctrlNoteRounding = new IdRange('.js-note-rounding', this.elem).addEventListener('input', () => { App.map.settings.note.rounding = this.ctrlNoteRounding.value });
 
-    this.ctrlNoteShape = new IdShape('.js-note-shape', this.elem).addEventListener('change', () => { App.map.settings.note.shape = this.ctrlNoteShape.value; });
+    this.ctrlNoteShape = new IdShape('.js-note-shape', this.elem).addEventListener('change', () => { App.map.settings.note.shape = this.ctrlNoteShape.value }) as IdShape;
 
-    this.ctrlNoteLine = new IdLineStyle('.js-note-line', this.elem).addEventListener('change', () => { App.map.settings.note.lineStyle = this.ctrlNoteLine.value; });
+    this.ctrlNoteLine = new IdLineStyle('.js-note-line', this.elem).addEventListener('change', () => { App.map.settings.note.lineStyle = this.ctrlNoteLine.value }) as IdLineStyle;
 
-    this.noteColorPicker = new IdColorPicker('.js-note-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.noteColorPicker.color); });
+    this.noteColorPicker = new IdColorPicker('.js-note-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.noteColorPicker.color); }) as IdColorPicker;
     // Find note color buttons:
     var buttons = this.elem.querySelectorAll(`.note-colortype`);
     this.noteColorButtons = new Array<IdPopup>();
@@ -135,16 +137,16 @@ export class RenderPanel extends Panel implements Subscriber {
       buttons[i].addEventListener('click', () => { this.onNoteColorButton(popup); });
     }    
 
-    this.ctrlBlockWidth = new IdRange('.js-block-width', this.elem).addEventListener('input', () => { App.map.settings.block.width = this.ctrlBlockWidth.value; });
-    this.ctrlBlockHeight = new IdRange('.js-block-height', this.elem).addEventListener('input', () => { App.map.settings.block.height = this.ctrlBlockHeight.value; });
-    this.ctrlBlockLinewidth = new IdRange('.js-block-linewidth', this.elem).addEventListener('input', () => { App.map.settings.block.lineWidth = this.ctrlBlockLinewidth.value; });
-    this.ctrlBlockRounding = new IdRange('.js-block-rounding', this.elem).addEventListener('input', () => { App.map.settings.block.rounding = this.ctrlBlockRounding.value; });
+    this.ctrlBlockWidth = new IdRange('.js-block-width', this.elem).addEventListener('input', () => { App.map.settings.block.width = this.ctrlBlockWidth.value });
+    this.ctrlBlockHeight = new IdRange('.js-block-height', this.elem).addEventListener('input', () => { App.map.settings.block.height = this.ctrlBlockHeight.value });
+    this.ctrlBlockLinewidth = new IdRange('.js-block-linewidth', this.elem).addEventListener('input', () => { App.map.settings.block.lineWidth = this.ctrlBlockLinewidth.value });
+    this.ctrlBlockRounding = new IdRange('.js-block-rounding', this.elem).addEventListener('input', () => { App.map.settings.block.rounding = this.ctrlBlockRounding.value });
 
-    this.ctrlBlockShape = new IdShape('.js-block-shape', this.elem).addEventListener('change', () => { App.map.settings.block.shape = this.ctrlBlockShape.value; });
+    this.ctrlBlockShape = new IdShape('.js-block-shape', this.elem).addEventListener('change', () => { App.map.settings.block.shape = this.ctrlBlockShape.value }) as IdShape;
 
-    this.ctrlBlockLine = new IdLineStyle('.js-block-line', this.elem).addEventListener('change', () => { App.map.settings.block.lineStyle = this.ctrlBlockLine.value; });
+    this.ctrlBlockLine = new IdLineStyle('.js-block-line', this.elem).addEventListener('change', () => { App.map.settings.block.lineStyle = this.ctrlBlockLine.value }) as IdLineStyle;
 
-    this.blockColorPicker = new IdColorPicker('.js-block-color', this.elem).addEventListener('change', () => { this.setBlockColor(this.blockColorPicker.color); });
+    this.blockColorPicker = new IdColorPicker('.js-block-color', this.elem).addEventListener('change', () => { this.setBlockColor(this.blockColorPicker.color); }) as IdColorPicker;
     // Find block color buttons:
     var buttons = this.elem.querySelectorAll('.block-colortype');
     this.blockColorButtons = new Array<IdPopup>();
@@ -209,10 +211,14 @@ export class RenderPanel extends Panel implements Subscriber {
         case 'obsidian':
           App.map.settings = new MapSettings().cloneFrom(new ObsidianTheme());
           break;
+        case 'hand-drawn':
+            App.map.settings = new MapSettings().cloneFrom(new HandDrawnTheme());
+            break;
         default:
           App.map.settings = new MapSettings();
           break;
       }
+      Dispatcher.notify(AppEvent.Refresh, null);
     }, () => {
       // Cancel
     });    
@@ -236,12 +242,14 @@ export class RenderPanel extends Panel implements Subscriber {
 
   setMapPickerColor() {
     if(this.mapColorType == 'background') this.mapColorPicker.color = App.map.settings.grid.background;
-    if(this.mapColorType == 'grid') this.mapColorPicker.color = App.map.settings.grid.color
+    if(this.mapColorType == 'grid') this.mapColorPicker.color = App.map.settings.grid.color;
+    Dispatcher.notify(AppEvent.Refresh, null); 
   }  
 
   setMapColor(color:string) {
     if(this.mapColorType == 'background') App.map.settings.grid.background = color;
     if(this.mapColorType == 'grid') App.map.settings.grid.color = color;
+    Dispatcher.notify(AppEvent.Refresh, null);
   }   
 
   onRoomColorButton(button: IdPopup) {
@@ -268,6 +276,7 @@ export class RenderPanel extends Panel implements Subscriber {
     if(this.roomColorType == 'dark') this.roomColorPicker.color = App.map.settings.room.darkColor;
     if(this.roomColorType == 'start') this.roomColorPicker.color = App.map.settings.room.startRoomColor;
     if(this.roomColorType == 'end') this.roomColorPicker.color = App.map.settings.room.endRoomColor;
+    Dispatcher.notify(AppEvent.Refresh, null); 
   }
 
   setRoomColor(color:string) {
@@ -278,6 +287,7 @@ export class RenderPanel extends Panel implements Subscriber {
     if(this.roomColorType == 'dark') App.map.settings.room.darkColor = color;
     if(this.roomColorType == 'start') App.map.settings.room.startRoomColor = color;
     if(this.roomColorType == 'end') App.map.settings.room.endRoomColor = color;
+    Dispatcher.notify(AppEvent.Refresh, null);
   } 
   
   onNoteColorButton(button: IdPopup) {
@@ -300,12 +310,14 @@ export class RenderPanel extends Panel implements Subscriber {
     if(this.noteColorType == 'fill') this.noteColorPicker.color = App.map.settings.note.fillColor;
     if(this.noteColorType == 'border') this.noteColorPicker.color = App.map.settings.note.borderColor;
     if(this.noteColorType == 'text') this.noteColorPicker.color = App.map.settings.note.textColor;
+    Dispatcher.notify(AppEvent.Refresh, null); 
   }
 
   setNoteColor(color:string) {
     if(this.noteColorType == 'fill') App.map.settings.note.fillColor = color;
     if(this.noteColorType == 'border') App.map.settings.note.borderColor = color;
     if(this.noteColorType == 'text') App.map.settings.note.textColor = color;
+    Dispatcher.notify(AppEvent.Refresh, null);
   }    
 
   onBlockColorButton(button: IdPopup) {
@@ -332,5 +344,6 @@ export class RenderPanel extends Panel implements Subscriber {
   setBlockColor(color:string) {
     if(this.blockColorType == 'fill') App.map.settings.block.fillColor = color;
     if(this.blockColorType == 'border') App.map.settings.block.borderColor = color;
+    Dispatcher.notify(AppEvent.Refresh, null);
   }    
 }

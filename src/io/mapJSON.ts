@@ -22,17 +22,17 @@ export class MapJSON {
     let json = JSON.stringify(map, function(key, value) {
       // In the replacer, the value of "this" is the object being serialized.
       if(key == 'map') return undefined; // avoid circular references to map.
-      if(key == 'dockStart') { // replace room references with IDs
-        if(this.dockStart == null) return 0;
-        return this.dockStart.id; 
+      if(key == '_dockStart' || key == 'dockStart') { // replace room references with IDs
+        if(this._dockStart == null) return 0;
+        return this._dockStart.id; 
       }
-      if(key == 'dockEnd') { // replace room references with IDs
-        if(this.dockEnd == null) return 0;
-        return this.dockEnd.id; 
+      if(key == '_dockEnd' || key == 'dockEnd') { // replace room references with IDs
+        if(this._dockEnd == null) return 0;
+        return this._dockEnd.id; 
       }
-      if(key == 'startRoom') { // replace room references with IDs
-        if(this.startRoom == null) return 0;
-        return this.startRoom.id;
+      if(key == '_startRoom' || key == 'startRoom') { // replace room references with IDs
+        if(this._startRoom == null) return 0;
+        return this._startRoom.id;
       }
       return value;
     });
@@ -72,12 +72,13 @@ export class MapJSON {
     map.elements = new Array<Model>();
     elements.forEach((element) => {
       let model: Model = null;
-      if(element.type == 'Room') model = <Model> this.clone(new Room(map.settings), element);
-      else if(element.type == 'Note') model = <Model> this.clone(new Note(map.settings), element);
-      else if(element.type == 'Block') model = <Model> this.clone(new Block(map.settings), element);
-      else if(element.type == 'Connector') model = <Model> this.clone(new Connector(map.settings), element);
+      let type = (element.type || element["_type"]); // _type is protected but present in the json
+      if(type == 'Room') model = <Model> this.clone(new Room(map.settings), element);
+      else if(type == 'Note') model = <Model> this.clone(new Note(map.settings), element);
+      else if(type == 'Block') model = <Model> this.clone(new Block(map.settings), element);
+      else if(type == 'Connector') model = <Model> this.clone(new Connector(map.settings), element);
       else {
-        throw(new TypeError(`Element type ${element.type} is unknown.`));
+        throw(new TypeError(`Element type ${type} is unknown.`));
       }
       map.add(model);
     });

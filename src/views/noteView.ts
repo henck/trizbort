@@ -4,6 +4,8 @@ import { Rect } from '../util/util.js'
 import { Note } from '../models/note.js'
 import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
 import { IScreen } from '../drawing/IScreen.js';
+import { App } from '../app.js';
+import { fontSettings } from '../models/mapSettings.js';
 
 export class NoteView extends BoxView {
   note: Note;
@@ -65,9 +67,10 @@ export class NoteView extends BoxView {
         .stroke();
     }
 
+    let f = <fontSettings>App.map.settings.room.fontCfg(App.map.settings.draw.hand, 'obj');
     canvas
       .fillStyle(this.note.textColor)
-      .drawText(0, 0, this.note.width, this.note.height, 14.4, 'Roboto', this.note.text);
+      .drawText(0, 0, this.note.width, this.note.height, f.size, f.family, this.note.text);
 
     canvas.restore();    
   }

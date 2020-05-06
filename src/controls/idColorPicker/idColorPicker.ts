@@ -1,6 +1,7 @@
 import { IdPopup } from "../controls";
-import { Values } from "../../enums/enums";
+import { Values, AppEvent } from "../../enums/enums";
 import { Control } from "../control";
+import { Dispatcher } from "../../dispatcher";
 
 export class IdColorPicker extends Control {
   private canvasHSL: HTMLCanvasElement;
@@ -104,15 +105,6 @@ export class IdColorPicker extends Control {
 
   get color(): string {
     return this.currentColorElem.style.backgroundColor;
-  }
-
-  //
-  // Add an event listener to the element.
-  // Returns reference to self for easy chaining.
-  // 
-  public addEventListener(type: string, f: any): IdColorPicker {
-    this.elem.addEventListener(type, f);
-    return this;
   }
 
   private addToRecent(color: string) {

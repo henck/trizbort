@@ -8,32 +8,74 @@ import { Connector } from './connector.js';
 import { Obj } from './obj.js';
 
 export class Room extends Box {
-  type: string;
-  
-  name: string;
-  subtitle: string;
-  description: string;
-  dark: boolean;
-  outside: boolean;
-  endroom: boolean;
-  _nameColor: string;
-  _subtitleColor: string;
+
+  protected _name: string;
+  protected _subtitle: string;
+  protected _description: string;
+  protected _dark: boolean;
+  protected _endroom: boolean;
+  protected _nameColor: string;
+  protected _subtitleColor: string;
 
   objects: Array<Obj>;
 
   constructor(settings: MapSettings) {
     super(settings);
-    this.type = "Room";
-    this.name = 'Room';
-    this.subtitle = '';
-    this.description = '';
-    this.dark = false;
-    this.outside = false;
-    this.endroom = false;
-    this.width = settings.room.width;
-    this.height = settings.room.height;
+    this._type = "Room";
+    this._name = 'Room';
+    this._subtitle = '';
+    this._description = '';
+    this._dark = false;
+    this._endroom = false;
+    this._w = settings.room.width;
+    this._h = settings.room.height;
     this.objects = new Array<Obj>();
   }
+
+  get name(): string {
+    return this._name;
+  };
+
+  get subtitle(): string {
+    return this._subtitle;
+  };
+
+  get description(): string {
+    return this._description;
+  };
+
+  get dark(): boolean {
+    return this._dark;
+  };
+
+  get endroom(): boolean {
+    return this._endroom;
+  };
+
+  set name(val:string) {
+    this._name = val;
+    this._changed = true;
+  };
+
+  set subtitle(val:string) {
+    this._subtitle = val;
+    this._changed = true;
+  };
+
+  set description(val:string) {
+    this._description = val;
+    this._changed = true;
+  };
+
+  set dark(val: boolean) {
+    this._dark = val;
+    this._changed = true;
+  };
+
+  set endroom(val: boolean) {
+    this._endroom = val;
+    this._changed = true;
+  };
 
   get nameColor() {
     if(!this._nameColor) return this.map.settings.room.nameColor;
@@ -42,6 +84,7 @@ export class Room extends Box {
 
   set nameColor(color: string) {
     this._nameColor = color;
+    this._changed = true;
   }
 
   get subtitleColor() {
@@ -51,6 +94,7 @@ export class Room extends Box {
 
   set subtitleColor(color: string) {
     this._subtitleColor = color;
+    this._changed = true;
   }  
 
   get fillColor() {
@@ -59,6 +103,7 @@ export class Room extends Box {
 
   set fillColor(color: string) {
     this._fillColor = color;
+    this._changed = true;
   }
 
   get borderColor() {
@@ -67,6 +112,7 @@ export class Room extends Box {
 
   set borderColor(color: string) {
     this._borderColor = color;
+    this._changed = true;
   }  
 
   get rounding() {
@@ -75,6 +121,7 @@ export class Room extends Box {
 
   set rounding(r: number) {
     this._rounding = r;
+    this._changed = true;
   }
 
   get shape() {
@@ -83,6 +130,7 @@ export class Room extends Box {
 
   set shape(s: RoomShape) {
     this._shape = s;
+    this._changed = true;
   }
 
   get lineStyle() {
@@ -91,6 +139,7 @@ export class Room extends Box {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
+    this._changed = true;
   }
 
   get lineWidth() {
@@ -99,6 +148,7 @@ export class Room extends Box {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
+    this._changed = true;
   }    
 
   isStartRoom(): boolean {
@@ -111,6 +161,7 @@ export class Room extends Box {
     } else {
       if(this.isStartRoom) this.map.setStartRoom(null);
     }
+    this._changed = true;
   }
 
   // Returns true if this room has a connector in the specified direction.
@@ -123,6 +174,17 @@ export class Room extends Box {
       }
     });
     return found;
+  }
+
+  protected cloneToTargetField(target: Model, key: string) {
+    switch (key) {
+      case 'objects':
+        (<any>target)[key] = this.objects.slice(0);
+        break;
+      default:
+        super.cloneToTargetField(target, key);
+        break;
+    }
   }
 
   clone(): Model {

@@ -1,4 +1,6 @@
 import { Control } from "../control";
+import { Dispatcher } from "../../dispatcher";
+import { AppEvent } from "../../enums/enums";
 
 export class IdTextarea extends Control {
   private textarea: HTMLTextAreaElement;
@@ -57,8 +59,10 @@ export class IdTextarea extends Control {
   // Add an event listener to the inner <textarea>
   // Returns reference to self for easy chaining.
   // 
-  public addEventListener(type: string, f: any): IdTextarea {
-    this.textarea.addEventListener(type, f);
+  public addEventListener(type: string, f: any, refresh = false): IdTextarea {
+    let ff: any = (refresh? (e: any) => { f(e); Dispatcher.notify(AppEvent.Redraw, null)}: f );
+
+    this.textarea.addEventListener(type, ff);
     return this;
   }
 }

@@ -73,9 +73,11 @@ export interface IScreen {
 
   // Curves
   quadraticCurveTo(cp1x: number, cp1y: number, x: number, y: number): IScreen;
+  bezier2(x0: number, y0: number, cx: number, cy: number, x1: number, y1: number): IScreen;
   getQuadraticXY(t: number, sx: number, sy: number, cp1x: number, cp1y: number, ex: number, ey: number): { x: number, y: number };
   getQuadraticAngle(t: number, sx: number, sy: number, cp1x: number, cp1y: number, ex: number, ey: number): number;
   bezierCurveTo(cp1x: number, cp1y: number, cp2x: number, cp2y: number, x: number, y: number): IScreen;
+  bezier3(x0: number, y0: number, cx0: number, cy0: number, cx1: number, cy1: number, x1: number, y1: number): IScreen;
   getBezierXY(t: number, sx: number, sy: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, ex: number, ey: number): { x: number, y: number }
   getBezierAngle(t: number, sx: number, sy: number, cp1x: number, cp1y: number, cp2x: number, cp2y: number, ex: number, ey: number): number;
 

@@ -27,9 +27,8 @@ export class NotePopup extends Popup implements Subscriber {
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });    
 
     this.ctrlText = new IdInput('.js-text', this.elem).addEventListener('input', () =>  { this.note.text = this.ctrlText.value; });
-
-    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.note.fillColor = this.ctrlColor.value; });
-    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.note.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.note.fillColor = this.ctrlColor.value; }) as IdQuickColor;
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.note.lineStyle = this.ctrlLineStyle.value; }) as IdLineStyle;
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.note.lineWidth = this.ctrlLinewidth.value; });
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
@@ -72,6 +71,7 @@ export class NotePopup extends Popup implements Subscriber {
       this.note = (App.selection.first().getModel() as Note);
       this.showAt(this.note.x, this.note.y);
       this.ctrlText.value = this.note.text;
+      this.ctrlLineStyle.value = this.note.lineStyle;
       this.ctrlLinewidth.value = this.note.lineWidth;
     } else {
       this.hide();

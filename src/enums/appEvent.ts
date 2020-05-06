@@ -4,5 +4,7 @@ export enum AppEvent {
   Delete,
   Load,
   Refresh,
-  More
+  Redraw,
+  More,
+  Added,
 }

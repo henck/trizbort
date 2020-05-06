@@ -103,12 +103,4 @@ export class IdPopup extends Control {
     return this.dataType;
   }
 
-  //
-  // Add an event listener to the element.
-  // Returns reference to self for easy chaining.
-  // 
-  public addEventListener(type: string, f: any): IdPopup {
-    this.elem.addEventListener(type, f);
-    return this;
-  }
 }

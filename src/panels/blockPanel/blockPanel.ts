@@ -19,10 +19,10 @@ export class BlockPanel extends Panel implements Subscriber {
     super('blockpanel', Handlebars.templates.blockPanel, {});
     Dispatcher.subscribe(this);
 
-    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); });
-    this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.block.shape = this.ctrlShape.value; });
+    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); }) as IdColorPicker;
+    this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.block.shape = this.ctrlShape.value; }) as IdShape;
     this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.block.rounding = this.ctrlRounding.value; });
-    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.block.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.block.lineStyle = this.ctrlLineStyle.value; }) as IdLineStyle;
     this.ctrlLineWidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.block.lineWidth = this.ctrlLineWidth.value; });
 
     // Find color buttons:
@@ -38,9 +38,9 @@ export class BlockPanel extends Panel implements Subscriber {
 
   notify(event: AppEvent, obj: any) {
 
-    if(event == AppEvent.Select) {
+    /* if(event == AppEvent.Select) {
       this.close();
-    }
+    } */
 
     if(event == AppEvent.More) {
       if(obj instanceof Block) {
@@ -49,8 +49,10 @@ export class BlockPanel extends Panel implements Subscriber {
         this.open();
     
         // Show block data.
-        this.ctrlRounding.value = block.rounding;
-        this.ctrlLineWidth.value = block.lineWidth;
+        this.ctrlRounding.value = this.block.rounding;
+        this.ctrlShape.value = this.block.shape;
+        this.ctrlLineStyle.value = this.block.lineStyle;
+        this.ctrlLineWidth.value = this.block.lineWidth;
         // Set color from currently selected color button:
         this.setColor();
       }
@@ -79,11 +81,13 @@ export class BlockPanel extends Panel implements Subscriber {
   setColor() {
     if(this.colorType == 'fill') this.colorPicker.color = this.block.fillColor;
     if(this.colorType == 'border') this.colorPicker.color = this.block.borderColor;
+    Dispatcher.notify(AppEvent.Refresh, null);
   }
 
   setNoteColor(color:string) {
     if(this.colorType == 'fill') this.block.fillColor = color;
     if(this.colorType == 'border') this.block.borderColor = color;
+    Dispatcher.notify(AppEvent.Refresh, null);
   }
 
 }

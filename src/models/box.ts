@@ -1,16 +1,13 @@
 import { Model } from './model.js'
-import { Map } from './map.js'
-import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
-import { Xml } from '../io/xmlMap';
+import { Direction, LineStyle, RoomShape } from '../enums/enums.js'
 import { MapSettings } from './mapSettings.js';
-import { Room } from './room.js';
 
 
 export class Box extends Model {
-  public x: number;
-  public y: number;
-  public width: number;
-  public height: number;
+  protected _x: number;
+  protected _y: number;
+  protected _w: number;
+  protected _h: number;
   protected _lineStyle: LineStyle;
   protected _lineWidth: number;  
   protected _shape: RoomShape;
@@ -20,8 +17,44 @@ export class Box extends Model {
 
   constructor(settings: MapSettings) {
     super();
-    this.x = 0;
-    this.y = 0;
+    this._x = 0;
+    this._y = 0;
+  }
+
+  get x(): number {
+    return this._x;
+  }
+
+  get y(): number {
+    return this._y;
+  }
+
+  get width(): number {
+    return this._w;
+  }
+
+  get height(): number {
+    return this._h;
+  }
+
+  set x(val: number) {
+    this._x = val;
+    this._changed = true;
+  }
+
+  set y(val: number) {
+    this._y = val;
+    this._changed = true;
+  }
+
+  set width(val: number) {
+    this._w = val;
+    this._changed = true;
+  }
+
+  set height(val: number) {
+    this._h = val;
+    this._changed = true;
   }
 
   get fillColor() {
@@ -30,6 +63,7 @@ export class Box extends Model {
 
   set fillColor(color: string) {
     this._fillColor = color;
+    this._changed = true;
   }
 
   get borderColor() {
@@ -38,6 +72,7 @@ export class Box extends Model {
 
   set borderColor(color: string) {
     this._borderColor = color;
+    this._changed = true;
   }  
 
   get rounding() {
@@ -46,6 +81,7 @@ export class Box extends Model {
 
   set rounding(r: number) {
     this._rounding = r;
+    this._changed = true;
   }
 
   get shape() {
@@ -54,6 +90,7 @@ export class Box extends Model {
 
   set shape(s: RoomShape) {
     this._shape = s;
+    this._changed = true;
   }
 
   get lineStyle() {
@@ -62,6 +99,7 @@ export class Box extends Model {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
+    this._changed = true;
   }
 
   get lineWidth() {
@@ -70,8 +108,9 @@ export class Box extends Model {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
-  }      
-
+    this._changed = true;
+  }
+  
   //
   // Convert a direction to a canvas position on the room's edge.
   // 
@@ -80,13 +119,13 @@ export class Box extends Model {
     let y = 0;
     if(this.shape == RoomShape.Rectangle || forceRectangle) {
       var { x: vx, y: vy } = Direction.toVector(dir);
-      x = Math.floor(vx * (this.width / 2) + this.width / 2) + this.x;
-      y = Math.floor(vy * (this.height /2) + this.height / 2) + this.y;
+      x = Math.floor(vx * (this._w / 2) + this._w / 2) + this._x;
+      y = Math.floor(vy * (this._h /2) + this._h / 2) + this._y;
       // Find room rounding radius. It must never be greater than 1/4 of the room's side.
       // The following code does nothing if rounding = 0.
       let r = this.rounding;
-      if(r > this.width * 0.25) r = this.width * 0.25;
-      if(r > this.height * 0.25) r = this.height * 0.25;
+      if(r > this._w * 0.25) r = this._w * 0.25;
+      if(r > this._h * 0.25) r = this._h * 0.25;
       // Calculate the shift along the x or y axis.
       let rdist = r - Math.sqrt(r*r / 2);
       // Diagonal directions must lie exactly in the middle of the rounded corner;

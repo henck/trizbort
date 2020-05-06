@@ -13,16 +13,37 @@ import { Xml } from '../io/xmlMap';
 export class Model {
   @Xml('id', 0, (s:string) => { return parseInt(s); })
   id: number;
-  
-  type: string;
   map: Map;
+  protected _changed: boolean;
+  protected _type: string;
+
+  get type(): string {
+    return this._type;
+  }
+  set type(value: string) {
+    this._type = value;
+    this._changed = true;
+  }
 
   constructor() {
     this.id = 0;
+    this._changed = true;
   }
 
   getType() {
     return this.type;
+  }
+
+  get isChanged(): boolean {
+    return this._changed;
+  }
+
+  forceChanged() {
+    this._changed = true;
+  }
+
+  unChanged() {
+    this._changed = false;
   }
 
   public delete() {
@@ -30,10 +51,24 @@ export class Model {
     Dispatcher.notify(AppEvent.Delete, this);
   }
 
+  protected cloneToTargetField(target: Model, key: string) {
+    switch (key) {
+      case 'map':
+          if(!((<any>target)[key] as Map)) ((<any>target)[key] as Map) = new Map();
+          ((<any>target)[key] as Map).clone(this.map);
+        break;
+      default:
+        if(typeof (<any>this)[key] == 'object') throw "'" + key + "' field is a complex type. cloneToTarget failed with " + this.type;
+        
+    (<any>target)[key] = (<any>this)[key];
+        break;
+    }
+  }
+
   protected cloneToTarget(target: Model) {
     for(let key in this) {
       if(this.hasOwnProperty(key)) {
-        (<any>target)[key] = (<any>this)[key];
+        this.cloneToTargetField(target, key);
       }
     }
     return target;
@@ -58,4 +93,8 @@ export class Model {
   sendToBack() {
     this.map.sendToBack(this);
   }  
+
+  isBackwardOf(dst: Model): boolean {
+    return this.map.isBackward(this, dst);
+  }
 }

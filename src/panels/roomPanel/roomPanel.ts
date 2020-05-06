@@ -41,11 +41,11 @@ export class RoomPanel extends Panel implements Subscriber {
     this.ctrlStartroom = new IdCheck('.js-startroom', this.elem).addEventListener('input', () => { this.room.setStartRoom(this.ctrlStartroom.checked); })
     this.ctrlEndroom = new IdCheck('.js-endroom', this.elem).addEventListener('input', () => { this.room.endroom = this.ctrlEndroom.checked; })
     this.ctrlDescription = new IdTextarea('.js-description', this.elem).addEventListener('input', () => { this.room.description = this.ctrlDescription.value; });
-    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.room.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.room.lineStyle = this.ctrlLineStyle.value; }) as IdLineStyle;
     this.ctrlLineWidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.room.lineWidth = this.ctrlLineWidth.value; });
-    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.colorPicker.color); });
+    this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setRoomColor(this.colorPicker.color); }) as IdColorPicker;
 
-    this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.room.shape = this.ctrlShape.value; });
+    this.ctrlShape = new IdShape('.js-shape', this.elem).addEventListener('change', () => { this.room.shape = this.ctrlShape.value; }) as IdShape;
     this.ctrlRounding = new IdRange('.js-rounding', this.elem).addEventListener('input', () => { this.room.rounding = this.ctrlRounding.value; });
 
     // Find color buttons:
@@ -105,6 +105,7 @@ export class RoomPanel extends Panel implements Subscriber {
     let lst = this.findObjList(obj);
     let idx = lst.indexOf(obj);
     lst.splice(idx, 1);
+    
   }
 
   addObjectAfter(obj: Obj, afterObj: Obj) {
@@ -137,6 +138,8 @@ export class RoomPanel extends Panel implements Subscriber {
     else {
       this.addEditors(this.room.objects, 0);
     }
+
+    Dispatcher.notify(AppEvent.Refresh, null);
   }
 
   addEditors(objs: Array<Obj>, indent: number) {
@@ -159,9 +162,9 @@ export class RoomPanel extends Panel implements Subscriber {
 
   notify(event: AppEvent, obj: any) {
 
-    if(event == AppEvent.Select) {
+    /* if(event == AppEvent.Select) {
       this.close();
-    }
+    } */
 
     if(event == AppEvent.More) {
       if(obj instanceof Room) {
@@ -176,8 +179,10 @@ export class RoomPanel extends Panel implements Subscriber {
         this.ctrlOutside.checked = room.outside;
         this.ctrlStartroom.checked = room.isStartRoom();
         this.ctrlEndroom.checked = room.endroom;
+        this.ctrlShape.value = this.room.shape;
         this.ctrlRounding.value = room.rounding;
         this.ctrlDescription.value = room.description;
+        this.ctrlLineStyle.value = room.lineStyle;
         this.ctrlLineWidth.value = room.lineWidth;
         // Set color from currently selected color button:
         this.setColor();   
@@ -222,6 +227,7 @@ export class RoomPanel extends Panel implements Subscriber {
     if(this.colorType == 'border') this.room.borderColor = color;
     if(this.colorType == 'name') this.room.nameColor = color;
     if(this.colorType == 'subtitle') this.room.subtitleColor = color;
+    Dispatcher.notify(AppEvent.Refresh, null);
   }
 
 }

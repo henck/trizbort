@@ -24,8 +24,8 @@ export class BlockPopup extends Popup implements Subscriber {
     new IdPopup('.js-delete', this.elem).addEventListener('click', () => { this.delete(); });
     new IdPopup('.js-more', this.elem).addEventListener('click', () => { this.showMore(); });    
 
-    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.block.fillColor = this.ctrlColor.value; });
-    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.block.lineStyle = this.ctrlLineStyle.value; });
+    this.ctrlColor = new IdQuickColor('.js-color', this.elem).addEventListener('change', () => { this.block.fillColor = this.ctrlColor.value; }) as IdQuickColor;
+    this.ctrlLineStyle = new IdLineStyle('.js-linestyle', this.elem).addEventListener('change', () => { this.block.lineStyle = this.ctrlLineStyle.value; }) as IdLineStyle;
     this.ctrlLinewidth = new IdRange('.js-linewidth', this.elem).addEventListener('input', () => { this.block.lineWidth = this.ctrlLinewidth.value; });
 
     this.elem.querySelector('.js-front').addEventListener('click', () => { 
@@ -67,6 +67,7 @@ export class BlockPopup extends Popup implements Subscriber {
     if(App.selection.isSingle() && App.selection.first() instanceof BlockView && App.mouseMode == MouseMode.None) {
       this.block = (App.selection.first().getModel() as Block);
       this.showAt(this.block.x, this.block.y);
+      this.ctrlLineStyle.value = this.block.lineStyle;
       this.ctrlLinewidth.value = this.block.lineWidth;
     } else {
       this.hide();

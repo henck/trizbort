@@ -23,10 +23,11 @@ import { CastleofdoomMap } from './maps/castleofdoomMap.js';
 import { HitchhikersguideMap } from './maps/hhg.js';
 import { HobbitMap } from './maps/hobbitMap.js';
 import { IdToast } from './controls/controls.js';
+import { Rect } from './util/rect.js'
 
 export class Editor implements Subscriber {
-  private htmlCanvas: HTMLCanvasElement;
-  private canvas: Canvas;
+  private mainCanvas: Canvas;
+  private bgCanvas: Canvas;
   private grid: Grid = new Grid();
   private views: View[];
   private hover: View = null;
@@ -52,30 +53,35 @@ export class Editor implements Subscriber {
   private dragOriginX: number = 0
   private dragOriginY: number = 0;
 
+  private refreshAll     = true;
+  private resfreshAlways = false;
+
   constructor() {
     Dispatcher.subscribe(this);
 
     // Access the main canvas:
-    this.htmlCanvas = <HTMLCanvasElement> document.getElementById('canvas');
-    this.canvas = new Canvas(this.htmlCanvas.getContext('2d'));
+    this.mainCanvas = new Canvas(App.mainHTMLCanvas.getContext('2d'));
+
+    // Access the background canvas:
+    this.bgCanvas = new Canvas(App.bgHTMLCanvas.getContext('2d'));
 
     // Access the 1x1 hittest canvas:
     this.hitTestHtmlCanvas = <HTMLCanvasElement> document.getElementById('hittest');
     this.hitTestCanvas = new Canvas(this.hitTestHtmlCanvas.getContext('2d'));
 
-    this.views = new Array(); 
+    this.views = new Array();
 
     // Global event listeners:
     window.addEventListener('resize', () => { this.resize(); } );    
     window.addEventListener("beforeunload", (e: Event) => { this.unload(e); });
 
     // Canvas event listeners:
-    this.htmlCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
-    this.htmlCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
-    this.htmlCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
-    this.htmlCanvas.addEventListener('wheel', (e:MouseWheelEvent) => { this.canvasMouseWheel(e) } );    
-    this.htmlCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
-    this.htmlCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
+    App.mainHTMLCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
+    App.mainHTMLCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
+    App.mainHTMLCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
+    App.mainHTMLCanvas.addEventListener('wheel', (e:MouseWheelEvent) => { this.canvasMouseWheel(e) } );    
+    App.mainHTMLCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
+    App.mainHTMLCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
 
     // Status bar event listeners:
     document.getElementById('control-center').addEventListener('click', () => { this.cmdCenterView(); });
@@ -84,18 +90,23 @@ export class Editor implements Subscriber {
     this.ctrlZoom = <HTMLInputElement> document.getElementById('control-zoom');
     this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
     this.updateZoomPercentage();
-    document.getElementById('canvas').addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
+    App.mainHTMLCanvas.addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
 
     this.resize();
 
     // Create a test map:
     this.makeTestMap();    
 
+    this.refresh(true);
+  }
+
+  refresh(all = false) {
+    this.refreshAll = all;
     window.requestAnimationFrame(this.render);
   }
 
   keyUp(e: KeyboardEvent) {
-    // console.log("Key up: ", e);
+    //console.log("Key up: ", e);
     if(!e.ctrlKey && !e.shiftKey) {
       switch(e.key) {
         case 'a': this.cmdToggleOneWay(); break;
@@ -104,7 +115,7 @@ export class Editor implements Subscriber {
         case 'r': this.cmdAddRoom(); break;
         case 'n': this.cmdAddNote(); break;
         case 'b': this.cmdAddBlock(); break;
-        case 'Escape': App.selection.unselectAll(); break;
+        case 'Escape': this.cmdUnselectAll(); break;
         case 'Delete': this.cmdDelete(); break;
         case 'Insert': this.cmdCenterView(); break;
         case '+': this.cmdZoomIn(); break;
@@ -147,7 +158,8 @@ export class Editor implements Subscriber {
         case 'PageUp':     this.cmdNewRoomInDir(Direction.NE); break;
         case 'PageDown':   this.cmdNewRoomInDir(Direction.SE); break;
         case 'End':        this.cmdNewRoomInDir(Direction.SW); break;
-        case 'Home':       this.cmdNewRoomInDir(Direction.NW); break;        
+        case 'Home':       this.cmdNewRoomInDir(Direction.NW); break;      
+        case 'Enter':      this.cmdCenterView(); break;  
       }
     }
 
@@ -163,6 +175,7 @@ export class Editor implements Subscriber {
           break;
         }
       }
+      this.refresh(true);
     }
     if(event == AppEvent.Refresh) {
       App.selection.unselectAll();
@@ -170,6 +183,10 @@ export class Editor implements Subscriber {
       App.map.elements.forEach((model) => {
         this.views.push(ViewFactory.create(model));
       });
+      this.refresh(true);
+    }
+    if(event == AppEvent.Redraw) {
+      this.refresh(true);
     }
     if(event == AppEvent.Load) {
       App.selection.unselectAll();
@@ -177,8 +194,11 @@ export class Editor implements Subscriber {
       App.map.elements.forEach((model) => {
         this.views.push(ViewFactory.create(model));
       });
+      this.refresh(true);
       this.cmdCenterView();
       this.cmdZoomNormal();
+      App.header.title = App.map.title;
+      App.header.content = App.author(App.map.author);
     }    
   }  
 
@@ -254,68 +274,155 @@ export class Editor implements Subscriber {
   }
 
   clear() {
-    this.canvas
-      .fillStyle(App.map.settings.grid.background)
-      .fillRect(0, 0, this.htmlCanvas.offsetWidth, this.htmlCanvas.offsetHeight);
+    if((this.refreshAll) || (this.resfreshAlways)) {
+      this.bgCanvas
+        .fillStyle(App.map.settings.grid.background)
+        .fillRect(0, 0, App.bgHTMLCanvas.offsetWidth, App.bgHTMLCanvas.offsetHeight);
+      this.grid.draw(App.bgHTMLCanvas, this.bgCanvas);
+      this.mainCanvas.clearRect(0, 0, App.mainHTMLCanvas.width, App.mainHTMLCanvas.height);
+      //this.views.forEach((v: View) => v.clear(this.mainCanvas));
+    }
+  }
+
+  get selX(): number {
+    return Math.min(this.mouseX, this.selectPosX);
+  }
+
+  get selY(): number {
+    return Math.min(this.mouseY, this.selectPosY);
+  }
+
+  get selW(): number {
+    return Math.abs(this.mouseX - this.selectPosX);
+  }
+
+  get selH(): number {
+    return Math.abs(this.mouseY - this.selectPosY);
   }
 
   drawSelectionArea() {
-    let x = Math.min(this.mouseX, this.selectPosX);
-    let y = Math.min(this.mouseY, this.selectPosY);
-    let w = Math.abs(this.mouseX - this.selectPosX);
-    let h = Math.abs(this.mouseY - this.selectPosY);
 
-    this.canvas
+    this.mainCanvas
       .strokeStyle(Values.COLOR_SELECTION_LINE)
       .fillStyle(Values.COLOR_SELECTION_AREA)
-      .fillRect(x, y, w, h)
-      .strokeRect(x, y, w, h);
+      .fillRect(this.selX, this.selY, this.selW, this.selH)
+      .strokeRect(this.selX, this.selY, this.selW, this.selH);
   }
 
-  render = () => {
-    this.canvas.save();
+  private renderView(view: View) {
+    if((!this.resfreshAlways) && (view.getModel().isChanged || this.refreshAll)) {
+      let rect: Rect;
+      
+      //clearing the view and restoring the back area
+      if(!this.refreshAll) {
+        rect = view.clear(this.mainCanvas);
+        if(rect) {
+          this.mainCanvas.save();
+          let reg = new Path2D();
+          reg.rect(rect.x, rect.y, rect.width, rect.height);
+          this.mainCanvas.clip(reg);
+          //console.log('Clearing view', view);
 
-    // Clear the scene and draw the grid:
-    this.clear();
-    this.grid.draw(this.htmlCanvas, this.canvas);
-    
-    // Translate/scale the entire canvas to conform to world coordinates:
-    this.canvas.translate(Math.floor(this.htmlCanvas.offsetWidth / 2) + App.centerX, Math.floor(this.htmlCanvas.offsetHeight / 2) + App.centerY);
-    this.canvas.scale(App.zoom, App.zoom);
-
-    // Draw all blocks:
-    this.views.forEach(view => {
-      if(view instanceof BlockView) {
-        view.draw(this.canvas, this.hover == view && App.mouseMode != MouseMode.Select);
+          this.views.forEach((v: View) => {
+            if((v != view) && (v instanceof BlockView)){ 
+              let isBack = v.getModel().isBackwardOf(view.getModel());
+              let isIn = view.isIn(v.getModel().x, v.getModel().y, v.getModel().width, v.getModel().height);
+              //console.log('Block: is back', isBack, '& view is in', isIn);
+              if(isBack && (isIn || v.isIn(rect.x, rect.y, rect.width, rect.height))) v.draw(this.mainCanvas, false);
+            }
+          });
+          this.views.forEach((v: View) => {
+            if((v != view) && ((v instanceof RoomView)||(v instanceof NoteView))) {
+              let isBack = v.getModel().isBackwardOf(view.getModel());
+              let isIn = view.isIn(v.getModel().x, v.getModel().y, v.getModel().width, v.getModel().height);
+              //console.log('Room || Note: is back', isBack, '& view is in', isIn);
+              if(isBack && (isIn || v.isIn(rect.x, rect.y, rect.width, rect.height))) v.draw(this.mainCanvas, false);
+            }
+          });
+          /* this.views.forEach((v: View) => {
+            if((v != view) && (v instanceof ConnectorView) && view.isIn(v.getModel().x, v.getModel().y, v.getModel().width, v.getModel().height)) v.draw(this.mainCanvas, false);
+          }); */
+        }
       }
-    });
+      view.draw(this.mainCanvas, this.hover == view && App.mouseMode != MouseMode.Select);
+      view.getModel().unChanged();
 
-    // Draw all connectors:
-    this.views.forEach(view => {
-      if(view instanceof ConnectorView) {
-        view.draw(this.canvas, this.hover == view && App.mouseMode != MouseMode.Select);
+      // rendering all views 'isIn' in current view if not refreshAll
+      if(!this.refreshAll) {
+        let r = rect || ((view instanceof BoxView)? new Rect(view.getModel().x, view.getModel().y, view.getModel().x + view.getModel().width, view.getModel().y + view.getModel().height) : undefined);
+
+        if(r) {
+          this.views.forEach((v: View) => {
+            if((v != view) && (v instanceof BlockView) && v.isIn(r.x, r.y, r.width, r.height) && view.getModel().isBackwardOf(v.getModel())) v.draw(this.mainCanvas, false);
+          });
+          this.views.forEach((v: View) => {
+            if((v != view) && ((v instanceof RoomView)||(v instanceof NoteView)) && v.isIn(r.x, r.y, r.width, r.height) && view.getModel().isBackwardOf(v.getModel())) v.draw(this.mainCanvas, false);
+          });
+          this.views.forEach((v: View) => {
+            if((v != view) && (v instanceof ConnectorView) && v.isIn(r.x, r.y, r.width, r.height)) v.draw(this.mainCanvas, false);
+          });
+        }
+
+        this.mainCanvas.restore();
+        //this.renderViews(view);
+      }
+    } 
+    else if(this.resfreshAlways)
+      view.draw(this.mainCanvas, this.hover == view && App.mouseMode != MouseMode.Select);
+  }
+
+  private renderViews(excludedView: View = undefined) {
+    // Draw all blocks:
+    this.views.forEach((view: View) => {
+      if(view instanceof BlockView && (view != excludedView)) {
+        this.renderView(view);
       }
     });
 
     // Draw all rooms and notes:
-    this.views.forEach(view => {
-      if(view instanceof RoomView || view instanceof NoteView) {
-        view.draw(this.canvas, this.hover == view && App.mouseMode != MouseMode.Select);
+    this.views.forEach((view: View) => {
+      if((view instanceof RoomView || view instanceof NoteView) && (view != excludedView)) {
+        this.renderView(view);
       }
     });
 
+    // Draw all connectors:
+    this.views.forEach((view: View) => {
+      if(view instanceof ConnectorView && (view != excludedView)) {
+        this.renderView(view);
+      }
+    });
+  }
+
+  render = () => {
+    this.mainCanvas.save();
+    this.bgCanvas.save();
+
+    // Clear the scene and draw the grid:
+    this.clear();
+    
+    // Translate/scale the entire canvas to conform to world coordinates:
+    this.bgCanvas.translate(Math.floor(App.bgHTMLCanvas.offsetWidth / 2) + App.centerX, Math.floor(App.bgHTMLCanvas.offsetHeight / 2) + App.centerY);
+    this.bgCanvas.scale(App.zoom, App.zoom);
+    this.mainCanvas.translate(Math.floor(App.mainHTMLCanvas.offsetWidth / 2) + App.centerX, Math.floor(App.mainHTMLCanvas.offsetHeight / 2) + App.centerY);
+    this.mainCanvas.scale(App.zoom, App.zoom);
+
+    // Draw all views:
+    this.renderViews();
+
     // Draw all handles:
-    this.views.forEach(view => {
-      view.drawHandles(this.canvas, this.mouseX, this.mouseY, App.mouseMode == MouseMode.Connect ? 0 : App.selection.size(), this.hover == view && App.mouseMode != MouseMode.Select);
+    this.views.forEach((view: View) => {
+      view.drawHandles(this.mainCanvas, this.mouseX, this.mouseY, App.mouseMode == MouseMode.Connect ? 0 : App.selection.size(), this.hover == view && App.mouseMode != MouseMode.Select);
     });
 
     if(App.mouseMode == MouseMode.Select) {
       this.drawSelectionArea();
     }
 
-    this.canvas.restore();    
+    this.mainCanvas.restore();
+    this.bgCanvas.restore();
 
-    window.requestAnimationFrame(this.render);
+    //window.requestAnimationFrame(this.render);
   }
 
   hitTest(x: number, y: number, view: View): boolean {
@@ -336,8 +443,11 @@ export class Editor implements Subscriber {
   }
 
   resize() {
-    this.htmlCanvas.setAttribute('width', this.htmlCanvas.offsetWidth.toString());
-    this.htmlCanvas.setAttribute('height', this.htmlCanvas.offsetHeight.toString());    
+    App.mainHTMLCanvas.setAttribute('width', App.mainHTMLCanvas.offsetWidth.toString());
+    App.mainHTMLCanvas.setAttribute('height', App.mainHTMLCanvas.offsetHeight.toString());    
+    App.bgHTMLCanvas.setAttribute('width', App.bgHTMLCanvas.offsetWidth.toString());
+    App.bgHTMLCanvas.setAttribute('height', App.bgHTMLCanvas.offsetHeight.toString());    
+    Dispatcher.notify(AppEvent.Refresh, null);
   }
 
   //
@@ -374,10 +484,10 @@ export class Editor implements Subscriber {
   // account scrolling and zooming.
   // 
   findMouseCoordinates(e: MouseEvent) {
-    let { x, y } = this.findObjCoordinates(this.htmlCanvas);
+    let { x, y } = this.findObjCoordinates(App.mainHTMLCanvas);
     return { 
-      x: Math.floor((e.clientX - x - this.htmlCanvas.offsetWidth / 2 - App.centerX) / App.zoom), 
-      y: Math.floor((e.clientY - y - this.htmlCanvas.offsetHeight / 2 - App.centerY) / App.zoom)
+      x: Math.floor((e.clientX - x - App.mainHTMLCanvas.offsetWidth / 2 - App.centerX) / App.zoom), 
+      y: Math.floor((e.clientY - y - App.mainHTMLCanvas.offsetHeight / 2 - App.centerY) / App.zoom)
     };
   }
 
@@ -442,22 +552,25 @@ export class Editor implements Subscriber {
       this.scrollOffsetY = e.clientY;
       this.scrollOriginX = App.centerX;
       this.scrollOriginY = App.centerY;
-      this.htmlCanvas.style.cursor = 'move';
+      App.mainHTMLCanvas.style.cursor = 'move';
       return;
     }    
 
     if(App.mouseMode == MouseMode.AddRoom) {
       this.cmdAddRoom();
+      Dispatcher.notify(AppEvent.Added, null);
       return;
     }
 
     if(App.mouseMode == MouseMode.AddNote) {
       this.cmdAddNote();
+      Dispatcher.notify(AppEvent.Added, null);
       return;
     }
 
     if(App.mouseMode == MouseMode.AddBlock) {
       this.cmdAddBlock();
+      Dispatcher.notify(AppEvent.Added, null);
       return;
     }
 
@@ -471,6 +584,7 @@ export class Editor implements Subscriber {
       App.mouseMode = MouseMode.Select;
       this.selectPosX = x;
       this.selectPosY = y;
+      this.refresh(true);
     }
 
     // One connector selected and over a connector handle?
@@ -478,7 +592,8 @@ export class Editor implements Subscriber {
       App.pushUndo();
       App.mouseMode = MouseMode.Connect;
       this.connectorHandle = (App.selection.first() as ConnectorView).isConnectorHandle(x, y);
-      this.htmlCanvas.style.cursor = 'crosshair';
+      App.mainHTMLCanvas.style.cursor = 'crosshair';
+      this.refresh();
     }
 
     // One Room/Note selected and over a resize handle?
@@ -487,7 +602,8 @@ export class Editor implements Subscriber {
       App.mouseMode = MouseMode.Resize;
       this.roomHandle = view.isResizeHandle(x,y);
       view.save();
-      this.htmlCanvas.style.cursor = Direction.toCursor(this.roomHandle);
+      App.mainHTMLCanvas.style.cursor = Direction.toCursor(this.roomHandle);
+      this.refresh();
     }
 
     // Nothing selected and over a Room connector handle?
@@ -506,7 +622,8 @@ export class Editor implements Subscriber {
       this.views.push(v);
       App.selection.add([v]);
       this.connectorHandle = ConnectorHandle.End; // End is being dragged.
-      this.htmlCanvas.style.cursor = 'crosshair';
+      App.mainHTMLCanvas.style.cursor = 'crosshair';
+      this.refresh();
     }
 
     // View clicked? Then add to selection if CTRL is pressed, or
@@ -519,8 +636,9 @@ export class Editor implements Subscriber {
       } else if(!view.isSelected()) {
         App.selection.select(view);
       }
+      this.refresh(true);  
       // Turn on drag mode:
-      this.htmlCanvas.style.cursor = 'pointer';
+      App.mainHTMLCanvas.style.cursor = 'pointer';
       App.pushUndo();
       App.mouseMode = MouseMode.Drag;
       this.dragOriginX = x;
@@ -529,7 +647,7 @@ export class Editor implements Subscriber {
         if(view instanceof BoxView) {
           view.save();
         }
-      });      
+      });    
     }
   }
 
@@ -573,9 +691,19 @@ export class Editor implements Subscriber {
     let view = undefined;
     if(App.mouseMode != MouseMode.Scroll) {
       view = this.findViewByCoordinates(x, y);
-      if(view != this.hover) {
+      App.mainHTMLCanvas.style.cursor = (view? 'pointer': 'default');
+      if(view && view != this.hover) {
+        if(this.hover && this.hover.movingSelectable) this.hover.getModel().forceChanged();
+        if(view.movingSelectable) view.getModel().forceChanged();
         this.hover = view;
+        this.refresh();
       }
+      else if (!view && this.hover) {
+        if(this.hover.movingSelectable) this.hover.getModel().forceChanged();
+        this.hover = null;
+        this.refresh();
+      }
+      else if (view && view == this.hover) this.refresh();
     }
 
     // We do different things for different mouse modes.
@@ -583,6 +711,7 @@ export class Editor implements Subscriber {
       case MouseMode.Scroll:
         App.centerX = this.scrollOriginX + (e.clientX - this.scrollOffsetX);
         App.centerY = this.scrollOriginY + (e.clientY - this.scrollOffsetY);
+        this.refresh(true);
         break; 
 
       // We are dragging a (set of) boxes.
@@ -593,12 +722,20 @@ export class Editor implements Subscriber {
             (view.getModel() as Box).y = Grid.snap(view.oldY - this.dragOriginY + y);
           }
         });
+        this.refresh(true);
+        break;
+
+      case MouseMode.Select:
+        this.refresh(true);
         break;
 
       // We are resizing a single box.
       case MouseMode.Resize:
         let selectedView = App.selection.first();
-        if(selectedView instanceof BoxView) selectedView.resize(this.roomHandle, Grid.snap(x), Grid.snap(y));
+        if(selectedView instanceof BoxView) {
+          selectedView.resize(this.roomHandle, Grid.snap(x), Grid.snap(y));
+          this.refresh(true);
+        }
         break;
 
       // We are manipulating a connector endpoint.
@@ -631,6 +768,7 @@ export class Editor implements Subscriber {
             connectorView.connector.endY = Grid.snap(y);
           }
         }
+        this.refresh(true);
         break;
     }
   }
@@ -660,14 +798,15 @@ export class Editor implements Subscriber {
       case MouseMode.Select:
         App.selection.unselectAll();
         for(let i = 0; i < this.views.length; i++) {
-          if(this.views[i].isIn(this.mouseX, this.mouseY, this.selectPosX, this.selectPosY)) {
+          if(this.views[i].isIn(this.selX, this.selY, this.selW, this.selH)) {
             App.selection.add([this.views[i]]);
           }
         }
+        this.refresh(true);
         break;
     }
 
-    this.htmlCanvas.style.cursor = 'default';
+    App.mainHTMLCanvas.style.cursor = 'default';
     App.mouseMode = MouseMode.None;
   }
 
@@ -688,7 +827,8 @@ export class Editor implements Subscriber {
 
   cmdSelectAll() {
     App.selection.unselectAll();
-    App.selection.add(this.views);    
+    App.selection.add(this.views);  
+    this.refresh(true);  
   }
 
   cmdShowPanel() {
@@ -703,6 +843,7 @@ export class Editor implements Subscriber {
       if(connector.isDoubleDocked()) {
         App.pushUndo();
         connector.reverse();
+        this.refresh(true);  
       }
     }    
   }
@@ -712,6 +853,7 @@ export class Editor implements Subscriber {
       let room = (App.selection.first() as RoomView).getModel();
       App.pushUndo();
       room.dark = !room.dark;
+      this.refresh(true);  
     }    
   }
 
@@ -721,6 +863,14 @@ export class Editor implements Subscriber {
       let toDelete: Array<View> = new Array<View>();
       App.selection.get().forEach((view) => { toDelete.push(view); });
       toDelete.forEach((view) => { view.getModel().delete(); });
+      this.refresh(true);  
+    }
+  }
+
+  cmdUnselectAll() {
+    if(!App.selection.isEmpty()) {
+      App.selection.unselectAll();    
+      this.refresh(true);  
     }
   }
 
@@ -729,6 +879,7 @@ export class Editor implements Subscriber {
       let connector = (App.selection.first() as ConnectorView).getModel();
       App.pushUndo();
       connector.oneWay = !connector.oneWay;
+      this.refresh(true);  
     }
   }
 
@@ -753,8 +904,7 @@ export class Editor implements Subscriber {
     newRoom.y = room.y + room.height / 2 + dy*room.height + App.map.settings.grid.size * 2 * dy - newRoom.height/2;
 
     // Add new room view to editor.
-    let view = ViewFactory.create(newRoom);
-    this.views.push(view);
+    this.views.push(ViewFactory.create(newRoom));
 
     // Create connector.
     let newConnector = new Connector(App.map.settings);
@@ -765,8 +915,8 @@ export class Editor implements Subscriber {
     newConnector.endDir = Direction.opposite(dir);
 
     // Add new connector view to editor.
-    view = ViewFactory.create(newConnector);
-    this.views.push(view);
+    this.views.push(ViewFactory.create(newConnector));
+    this.refresh();
   }
 
   // 
@@ -774,6 +924,7 @@ export class Editor implements Subscriber {
   moveCenter(dx: number, dy: number) {
     App.centerX += dx * App.map.settings.grid.size;
     App.centerY += dy * App.map.settings.grid.size;
+    this.refresh(true);
   }
 
   cmdCopySelection() {
@@ -879,6 +1030,7 @@ export class Editor implements Subscriber {
         App.selection.add([view]);
       }
     });
+    this.refresh(true);
   }  
 
   // Zoom = 1 is the standard zoom level.
@@ -905,6 +1057,7 @@ export class Editor implements Subscriber {
     }
     // Place new zoom percentage in control.
     this.updateZoomPercentage();
+    this.refresh(true);
   }
 
   cmdZoomIn() {
@@ -917,6 +1070,7 @@ export class Editor implements Subscriber {
     if(App.zoom >= 10) App.zoom = 10;
     if(App.zoom <= 0.1) App.zoom = 0.1;
     this.updateZoomPercentage();
+    this.refresh(true);
   }
 
   cmdZoomOut() {
@@ -929,16 +1083,19 @@ export class Editor implements Subscriber {
     if(App.zoom >= 10) App.zoom = 10;
     if(App.zoom <= 0.1) App.zoom = 0.1;
     this.updateZoomPercentage();
+    this.refresh(true);
   }
 
   cmdZoomNormal() {
     App.zoom = 1;
     this.updateZoomPercentage();
+    this.refresh(true);
   }
 
   cmdCenterView() {
     App.centerX = 0;
     App.centerY = 0;
+    this.refresh(true);
   }  
   
   cmdAddRoom() {
@@ -956,6 +1113,7 @@ export class Editor implements Subscriber {
       IdToast.toast("Connecting rooms", "Now that you've placed multiple rooms, you can create <b>connections</b> between them. Select a source room and create a connection to a target room by dragging a line from the little connector circles.");
     }
     this.roomsPlaced++;
+    this.refresh();
   }
 
   cmdAddNote() {
@@ -965,6 +1123,7 @@ export class Editor implements Subscriber {
     note.x = Grid.snap(this.mouseX);
     note.y = Grid.snap(this.mouseY);
     this.views.push(ViewFactory.create(note));
+    this.refresh();
   }
 
   cmdAddBlock() {
@@ -974,5 +1133,6 @@ export class Editor implements Subscriber {
     block.x = Grid.snap(this.mouseX);
     block.y = Grid.snap(this.mouseY);
     this.views.push(ViewFactory.create(block));
-  }  
+    this.refresh();
+  } 
 }
