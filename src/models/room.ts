@@ -14,6 +14,7 @@ export class Room extends Box {
   subtitle: string;
   description: string;
   dark: boolean;
+  outside: boolean;
   endroom: boolean;
   _nameColor: string;
   _subtitleColor: string;
@@ -27,6 +28,7 @@ export class Room extends Box {
     this.subtitle = '';
     this.description = '';
     this.dark = false;
+    this.outside = false;
     this.endroom = false;
     this.width = settings.room.width;
     this.height = settings.room.height;

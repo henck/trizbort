@@ -1,8 +1,6 @@
 import { Model } from './model.js'
-import { Map } from './map.js'
 import { Room } from './room.js'
 import { Direction, LineStyle } from '../enums/enums.js'
-import { Xml } from '../io/xmlMap.js'
 import { MapSettings } from './mapSettings.js';
 import { ConnectorType } from '../enums/connectorType.js';
 
@@ -21,8 +19,16 @@ export class Connector extends Model {
   oneWay: boolean;
   startType: ConnectorType;
   endType: ConnectorType;
+  startName: string;
+  endName: string;
   startLabel: string;
   endLabel: string;
+  hasDoor: boolean;
+  doorDesc: string;
+  doorAtStart: boolean;
+  lockable: boolean;
+  locked: boolean;
+  key: string;
   
   private _color: string;
   private _lineStyle: LineStyle;
@@ -40,8 +46,16 @@ export class Connector extends Model {
     this.startX = this.startY = 0;
     this.endX = this.endY = 0;
     this.oneWay = false;
+    this.hasDoor = false;
+    this.doorDesc = '';
+    this.doorAtStart = true;
+    this.lockable = false;
+    this.locked = false;
+    this.key = '';
     this.startType = ConnectorType.Default;
     this.endType = ConnectorType.Default;
+    this.startName = '';
+    this.endName = '';
     this.startLabel = '';
     this.endLabel = '';
   }

@@ -58,6 +58,22 @@ export class ConnectorView extends View {
     canvas.restore();    
   }
 
+  private drawDoor(canvas: IScreen, x: number, y: number, angle: number) {
+    let arrowSize = App.map.settings.connector.arrowSize;
+    canvas.save();
+    canvas.translate(x, y);
+    canvas.rotate(angle);
+    canvas.translate(-x, -y);
+    canvas.beginPath();
+    canvas.moveTo(x, y - arrowSize);
+    canvas.lineTo(x + 4, y - arrowSize);
+    canvas.lineTo(x + 4, y + arrowSize);
+    canvas.lineTo(x, y + arrowSize);
+    canvas.closePath();
+    canvas.fill();
+    canvas.restore();        
+  }
+
   draw(canvas: IScreen, hover: boolean) {
     var dockStartX: number = this.connector.startX;
     var dockStartY: number = this.connector.startY;
@@ -76,6 +92,7 @@ export class ConnectorView extends View {
     var arrow2a: number;
     var centerx: number;
     var centery: number;
+    var centera: number;
 
     canvas
       .save()
@@ -110,7 +127,7 @@ export class ConnectorView extends View {
     arrow1y = startY + (endY - startY) * 0.1;
     arrow2x = startX + (endX - startX) * 0.9;
     arrow2y = startY + (endY - startY) * 0.9;
-    arrow1a = arrow2a = Math.atan2(endY - startY, endX - startX);
+    arrow1a = arrow2a = centera = Math.atan2(endY - startY, endX - startX);
     centerx = startX + (endX - startX) * 0.5;
     centery = startY + (endY - startY) * 0.5;    
 
@@ -136,6 +153,7 @@ export class ConnectorView extends View {
         var {x:arrow2x, y:arrow2y} = canvas.getBezierXY(0.9, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
         var arrow2a = canvas.getBezierAngle(0.9, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
         var {x:centerx, y:centery} = canvas.getBezierXY(0.5, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
+        var centera = canvas.getBezierAngle(0.5, startX, startY, cp1x, cp1y, cp2x, cp2y, endX, endY);
       } else {
         canvas.lineTo(endX, endY);
       }
@@ -157,6 +175,7 @@ export class ConnectorView extends View {
         var {x:arrow2x, y:arrow2y} = canvas.getQuadraticXY(0.9, startX, startY, cp1x, cp1y, endX, endY);
         var arrow2a = canvas.getQuadraticAngle(0.9, startX, startY, cp1x, cp1y, endX, endY);
         var {x:centerx, y:centery} = canvas.getQuadraticXY(0.5, startX, startY, cp1x, cp1y, endX, endY);
+        var centera = canvas.getQuadraticAngle(0.5, startX, startY, cp1x, cp1y, endX, endY);
       } else {
         canvas.lineTo(endX, endY);
       }
@@ -176,6 +195,7 @@ export class ConnectorView extends View {
         var {x:arrow2x, y:arrow2y} = canvas.getQuadraticXY(0.9, startX, startY, cp1x, cp1y, endX, endY);
         var arrow2a = canvas.getQuadraticAngle(0.9, startX, startY, cp1x, cp1y, endX, endY);        
         var {x:centerx, y:centery} = canvas.getQuadraticXY(0.5, startX, startY, cp1x, cp1y, endX, endY);
+        var centera = canvas.getQuadraticAngle(0.5, startX, startY, cp1x, cp1y, endX, endY);        
       } else {
         canvas.lineTo(endX, endY);
       }
@@ -203,6 +223,12 @@ export class ConnectorView extends View {
       canvas.fillStyle(this.selected ? Values.COLOR_SELECTED : (hover ? Values.COLOR_HOVER : this.connector.color));
       this.drawArrow(canvas, arrow1x, arrow1y, arrow1a);
       this.drawArrow(canvas, arrow2x, arrow2y, arrow2a);
+    }
+
+    // Draw door:
+    if(this.connector.hasDoor) {
+      canvas.fillStyle(this.selected ? Values.COLOR_SELECTED : (hover ? Values.COLOR_HOVER : this.connector.color));
+      this.drawDoor(canvas, centerx, centery, centera);
     }
 
     // Draw name (if any)

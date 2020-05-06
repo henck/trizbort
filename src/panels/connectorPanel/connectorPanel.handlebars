@@ -11,17 +11,29 @@
   <id-input class="js-name" data-label="Connector name"></id-input>
   <id-check class="js-curve" data-label="Curve"></id-check>
   <id-check class="js-oneway" data-label="One way"></id-check>
+  
+  <id-check class="js-hasdoor" data-label="Has door"></id-check>
+  <div style="padding-left:12px">
+    <id-input class="js-doordesc" data-label="Description"></id-input>
+    <id-check class="js-dooratstart" data-label="At start room"></id-check>
+    <id-check class="js-lockable" data-label="Lockable"></id-check>
+    <id-check class="js-locked" data-label="Locked"></id-check>
+    <id-input class="js-key" data-label="Key"></id-input>
+  </div>
+
   <button class="btn-primary js-reverse">Reverse</button>
 
   <div style="display: flex; margin-top: 20px">
     <div style="flex: 1; display: flex; flex-direction: column; padding-right: 10px">
       <label>Start type</label>
       <id-connector-type class="js-starttype"></id-connector-type>
+      <id-input style="margin-top:20px" class="js-startname" data-label="Start name"></id-input>
       <id-input style="margin-top:20px" class="js-startlabel" data-label="Start label"></id-input>
     </div>
     <div style="flex: 1; display: flex; flex-direction: column; padding-left: 10px">
       <label>End type</label>
       <id-connector-type class="js-endtype"></id-connector-type>
+      <id-input style="margin-top:20px" class="js-endname" data-label="End name"></id-input>
       <id-input style="margin-top:20px" class="js-endlabel" data-label="End label"></id-input>
     </div>
   </div>
