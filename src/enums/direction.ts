@@ -20,7 +20,7 @@ export enum Direction {
 export namespace Direction {
   /**
    * Return opposite of Direction.
-   * @param direction Direction to evaluate
+   * @param direction `Direction` to evaluate
    * @returns Opposite of direction
    */
   export function opposite(direction: Direction): Direction {
@@ -46,8 +46,8 @@ export namespace Direction {
   /**
    * Is this Direction a cardinal direction? 
    * NNE, ENE etc. are not cardinal directions.
-   * @param direction Direction to evaluate
-   * @returns True if cardinal direction, false if not
+   * @param direction `Direction` to evaluate
+   * @returns `true` if cardinal direction, `false` if not
    */
   export function isCardinal(direction: Direction): boolean {
     switch(direction) {
@@ -67,7 +67,7 @@ export namespace Direction {
    * Convert direction into a vector.
    * Non-cardinal compass directions are converted to cardinal vectors.
    * That is, NNE become N, ENE becomes E etc.
-   * @param direction Direction to convert
+   * @param direction `Direction` to convert
    * @returns Vector, with x,y values between -1 and 1.
    */ 
   export function toCardinalVector(direction: Direction): {x: number, y: number} {
@@ -92,7 +92,7 @@ export namespace Direction {
   }
   /**
    * Convert Direction into a vector. 
-   * @param direction Direction to convert
+   * @param direction `Direction` to convert
    * @returns Vector object, with x,y values between -1 and 1.
    */
   export function toVector(direction: Direction): {x: number, y: number} {
@@ -118,7 +118,7 @@ export namespace Direction {
   /**
    * Convert Direction into an angle expressed in radians (E = 0).
    * This is used for determining points on ellipses.
-   * @param direction Directon to convert
+   * @param direction `Directon` to convert
    * @returns Radians value
    */ 
   export function toRadians(direction: Direction): number {
@@ -143,7 +143,7 @@ export namespace Direction {
   }
   /**
    * Convert a Direction to a HTML cursor.
-   * @param direction Direction
+   * @param direction `Direction` to convert
    */
   export function toCursor(direction: Direction) {
     switch(direction) {
@@ -160,7 +160,7 @@ export namespace Direction {
   /**
    * Convert a string to a Direction
    * @param s String to convert, e.g. 'n' or 'nne'. Case insensitive.
-   * @returns Direction, or undefined if conversion failed.
+   * @returns `Direction`, or `undefined` if conversion failed.
    */
   export function fromString(s: string): Direction {
     s = s.toLowerCase();

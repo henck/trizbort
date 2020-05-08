@@ -13,7 +13,7 @@ export enum ConnectorType {
 export namespace ConnectorType {
   /**
    * Convert a ConnectorType to a string.
-   * @param type ConnectorType to convert
+   * @param type `ConnectorType` to convert
    */
   export function toString(type: ConnectorType): string {
     switch(type) {
