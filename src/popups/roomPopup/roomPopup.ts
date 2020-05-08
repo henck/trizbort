@@ -1,11 +1,11 @@
-import { App } from '../../app.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js'
-import { AppEvent, LineStyle, MouseMode, Values } from '../../enums/enums.js'
-import { Model } from '../../models/model.js'
-import { Room } from '../../models/room.js'
-import { RoomView } from '../../views/roomView.js'
-import { Popup } from '../popups.js'
-import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls/controls.js';
+import { App } from '../../app'
+import { Subscriber, Dispatcher } from '../../dispatcher'
+import { AppEvent, MouseMode, Values } from '../../enums'
+import { Model } from '../../models/model'
+import { Room } from '../../models/room'
+import { RoomView } from '../../views/roomView'
+import { Popup } from '../popups'
+import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls/controls';
 
 export class RoomPopup extends Popup implements Subscriber {
   private room: Room;

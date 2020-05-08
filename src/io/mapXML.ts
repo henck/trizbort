@@ -1,10 +1,7 @@
-import { Map } from '../models/map.js'
-import { Room } from '../models/room.js'
-import { Connector } from '../models/connector.js'
-import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
-import { XmlMap } from './xmlMap.js'
-import { MapSettings } from '../models/mapSettings.js';
-
+import { Map } from '../models/map'
+import { Room } from '../models/room'
+import { Connector } from '../models/connector'
+import { Direction, LineStyle, RoomShape } from '../enums'
 
 export class MapXMLLoader {
 

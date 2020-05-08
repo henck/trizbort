@@ -1,9 +1,7 @@
-import { View } from './view.js'
-import { BoxView } from './boxView.js';
-import { Rect } from '../util/util.js'
+import { BoxView } from './boxView';
 import { Block } from '../models/block.js'
-import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
-import { IScreen } from '../drawing/IScreen.js';
+import { LineStyle, Values } from '../enums'
+import { IScreen } from '../drawing/IScreen';
 
 export class BlockView extends BoxView {
   block: Block;

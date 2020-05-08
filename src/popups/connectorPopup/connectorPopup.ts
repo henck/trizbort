@@ -1,11 +1,11 @@
-import { App } from '../../app.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js'
-import { AppEvent, LineStyle, MouseMode, Values } from '../../enums/enums.js'
-import { Model } from '../../models/model.js'
-import { Connector } from '../../models/connector.js'
-import { ConnectorView } from '../../views/connectorView.js'
-import { Popup } from '../popups.js'
-import { IdInput, IdRange, IdPopup,IdLineStyle, IdQuickColor } from '../../controls/controls.js'
+import { App } from '../../app'
+import { Subscriber, Dispatcher } from '../../dispatcher'
+import { AppEvent, MouseMode, Values } from '../../enums'
+import { Model } from '../../models/model'
+import { Connector } from '../../models/connector'
+import { ConnectorView } from '../../views/connectorView'
+import { Popup } from '../popups'
+import { IdInput, IdRange, IdPopup,IdLineStyle, IdQuickColor } from '../../controls/controls'
 
 export class ConnectorPopup extends Popup implements Subscriber {
   private connector: Connector;

@@ -1,29 +1,24 @@
-import { App } from './app.js'
-import { Dispatcher, Subscriber } from './dispatcher.js'
-import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums/enums.js'
-import { Model } from './models/model.js'
-import { Grid } from "./grid.js"
-import { Room } from "./models/room.js"
-import { Connector } from "./models/connector.js"
-import { View } from "./views/view.js"
-import { RoomView }  from "./views/roomView.js"
-import { ConnectorView }  from "./views/connectorView.js"
-import { Note } from './models/note.js';
-import { NoteView } from './views/noteView.js';
-import { BoxView } from './views/boxView.js';
-import { Box } from './models/box.js';
-import { ViewFactory } from './views/viewFactory.js';
-import { Canvas } from './drawing/canvas.js';
-import { Block } from './models/block.js';
-import { BlockView } from './views/blockView.js';
-import { ZorkMap } from './maps/zorkMap.js';
-import { MapJSON } from './io/mapJSON.js';
-import { AdventureMap } from './maps/adventureMap.js';
-import { CastleofdoomMap } from './maps/castleofdoomMap.js';
-import { HitchhikersguideMap } from './maps/hhg.js';
-import { HobbitMap } from './maps/hobbitMap.js';
-import { IdToast } from './controls/controls.js';
-import { Rect } from './util/rect.js'
+import { App } from './app'
+import { Dispatcher, Subscriber } from './dispatcher'
+import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums'
+import { Model } from './models/model'
+import { Grid } from "./grid"
+import { Room } from "./models/room"
+import { Connector } from "./models/connector"
+import { View } from "./views/view"
+import { RoomView }  from "./views/roomView"
+import { ConnectorView }  from "./views/connectorView"
+import { Note } from './models/note'
+import { NoteView } from './views/noteView'
+import { BoxView } from './views/boxView'
+import { Box } from './models/box'
+import { ViewFactory } from './views/viewFactory'
+import { Canvas } from './drawing/canvas'
+import { Block } from './models/block'
+import { BlockView } from './views/blockView'
+import { MapJSON } from './io/mapJSON'
+import { IdToast } from './controls/controls'
+import { Rect } from './util/rect'
 
 export class Editor implements Subscriber {
   private mainCanvas: Canvas;
@@ -90,12 +85,28 @@ export class Editor implements Subscriber {
     this.ctrlZoom = <HTMLInputElement> document.getElementById('control-zoom');
     this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
     this.updateZoomPercentage();
+    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
+      // Firefox treats backspace as a back button
+      if (e.key === 'Backspace') e.preventDefault();
+    });
     App.mainHTMLCanvas.addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
+    document.body.addEventListener('copy', (e: KeyboardEvent) => {
+      this.cmdCopySelection();
+    });
+    document.body.addEventListener('paste', (e: ClipboardEvent) => {
+      this.cmdPaste();
+    });
+    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.metaKey) switch(e.key) {
+        case 'a': this.cmdSelectAll(); break;
+        case 'z': App.undo(); break;
+      }
+    });
 
     this.resize();
 
-    // Create a test map:
-    this.makeTestMap();    
+    // Load demo map, if one was passed as a URL parameter:
+    this.loadDemoMap();    
 
     this.refresh(true);
   }
@@ -117,6 +128,7 @@ export class Editor implements Subscriber {
         case 'b': this.cmdAddBlock(); break;
         case 'Escape': this.cmdUnselectAll(); break;
         case 'Delete': this.cmdDelete(); break;
+        case 'Backspace': this.cmdDelete(); break;
         case 'Insert': this.cmdCenterView(); break;
         case '+': this.cmdZoomIn(); break;
         case '-': this.cmdZoomOut(); break;
@@ -212,65 +224,34 @@ export class Editor implements Subscriber {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  makeTestMap() {
-    /* let startRoom = new Room(App.map.settings);
-    App.map.add(startRoom);
-    startRoom.name = 'hello world this is a very long text';
-    startRoom.x = 0;
-    startRoom.y = 0;
-    this.views.push(ViewFactory.create(startRoom));
+  //
+  // Fetch a remote file from a path, then call a callback
+  // with the files string contents.
+  //
+  fetchFile(path: string, callback: (data:string) => void ) {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let data: string = httpRequest.responseText;
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send(); 
+  }  
 
-    let connection = new Connector(App.map.settings);
-    App.map.add(connection);
-    connection.name = 'abc';
-    connection.dockStart = startRoom;
-    connection.startDir = Direction.E;
-    connection.isCurve = true;
-    connection.oneWay = true;
-    connection.startType = ConnectorType.In;
-    connection.endType = ConnectorType.Out;
-    this.views.push(ViewFactory.create(connection));
-    
-    let endRoom = new Room(App.map.settings);
-    App.map.add(endRoom);
-    endRoom.name = 'world';
-    endRoom.x = 320;
-    endRoom.y = 320;
-    this.views.push(ViewFactory.create(endRoom));
-
-    connection.dockEnd = endRoom;
-    connection.endDir = Direction.W; */
-
-    // The test map to load can be specified as a URL argument,
-    // i.e. trizbort.io/?map=zork
+  loadDemoMap() {
+    // The demo map to load can be specified as a URL argument,
+    // i.e. trizbort.io/?map=http://maps.com/zork.json
     // If nothing is specified, then no wap will be loaded.
-
-    // Find map to load.
-    let map = null;
-    switch(this.getParameterByName('map')) {
-      case "adventure":
-        map = AdventureMap;
-        break;
-      case "castleofdoom":
-        map = CastleofdoomMap;
-        break;
-      case "hhg":
-        map = HitchhikersguideMap;
-        break;
-      case "hobbit":
-        map = HobbitMap;
-        break;
-      case "zork":
-        map = ZorkMap;
-        break;
-    }
-
-    // If a map was specified, load it.
-    if(map != null) {
-      App.map = MapJSON.load(map.json);
+    let mapURL = this.getParameterByName('map');
+    if(mapURL) this.fetchFile(mapURL, (data) => {
+      App.map = MapJSON.load(data);
       // Broadcast that we've loaded a new map:
-      Dispatcher.notify(AppEvent.Load, null);    
-    }
+      Dispatcher.notify(AppEvent.Load, null);        
+    });
   }
 
   clear() {
@@ -808,15 +789,13 @@ export class Editor implements Subscriber {
 
     App.mainHTMLCanvas.style.cursor = 'default';
     App.mouseMode = MouseMode.None;
+    Dispatcher.notify(AppEvent.Select, null);
   }
 
   canvasMouseWheel(e:MouseWheelEvent) {
-    if(e.deltaY < 0) {
-      this.cmdZoomIn();
-    }
-    if(e.deltaY > 0) {
-      this.cmdZoomOut();
-    }
+    App.centerX += e.deltaX;
+    App.centerY += e.deltaY;
+    this.refresh(true);
   }   
 
   //-----------------------------------------
@@ -863,6 +842,7 @@ export class Editor implements Subscriber {
       let toDelete: Array<View> = new Array<View>();
       App.selection.get().forEach((view) => { toDelete.push(view); });
       toDelete.forEach((view) => { view.getModel().delete(); });
+      Dispatcher.notify(AppEvent.Select, null);
       this.refresh(true);  
     }
   }
@@ -891,8 +871,17 @@ export class Editor implements Subscriber {
     // Get room model.
     let room: Room = (App.selection.first() as RoomView).getModel();
 
-    // Abort if there is already a connection in the desired direction.
-    if (room.hasConnection(dir)) return;
+    // Select existing room if there is already a connection in the desired direction.
+    let existingRoom = room.findConnectingRoom(dir);
+    if (existingRoom) {
+      let view = this.views.find(view => view.getModel() === existingRoom);
+      if (view) {
+        App.selection.unselectAll();
+        App.selection.add([view]);
+        view.select();
+      }
+      return;
+    }
 
     App.pushUndo();
 

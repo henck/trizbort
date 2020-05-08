@@ -16,7 +16,14 @@ export class Values {
   static readonly COLOR_STARTROOM = 'green';
   static readonly COLOR_ENDROOM = 'red';
 
-  static readonly COLORS_STANDARD: string[] = [ '#FFFFFF', '#D5E5D6', '#D0E0F2', '#F6D5D5', '#F8DFD0', '#E0DDF6', '#DFDFDF', '#CCCCCC', '#333333', '#000000' ];
+  /**
+   * Standard colors that appear in color selection dialogs.
+   */
+  static readonly COLORS_STANDARD: string[] = [ 
+    '#FFFFFF', '#D5E5D6', '#D0E0F2', 
+    '#F6D5D5', '#F8DFD0', '#E0DDF6', 
+    '#DFDFDF', '#CCCCCC', '#333333', 
+    '#000000' ];
 
   static readonly DIMEN_ROOM_MIN_WIDTH = 64; // stay in values
   static readonly DIMEN_ROOM_MIN_HEIGHT = 32; // stay in values

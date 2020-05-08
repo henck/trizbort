@@ -1,11 +1,11 @@
-import { App } from '../app.js'
-import { View } from './view.js'
-import { Rect } from '../util/util.js'
-import { Room } from '../models/room.js'
-import { Connector } from '../models/connector.js'
-import { ConnectorHandle, Direction, LineStyle, RoomShape, Values, ConnectorType } from '../enums/enums.js'
-import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen.js';
-import { Point } from '../util/point.js'
+import { App } from '../app'
+import { View } from './view'
+import { Rect } from '../util/util'
+import { Room } from '../models/room'
+import { Connector } from '../models/connector'
+import { ConnectorHandle, Direction, LineStyle, Values, ConnectorType } from '../enums'
+import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen';
+import { Point } from '../util/point'
 
 export class ConnectorView extends View {
   connector: Connector;

@@ -1,6 +1,5 @@
-import { App } from './app.js'
-import { Values } from './enums/values.js' 
-import { Canvas } from './drawing/canvas.js';
+import { App } from './app'
+import { Canvas } from './drawing/canvas'
 
 export class Grid {
   constructor() {

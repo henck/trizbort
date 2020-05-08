@@ -1,6 +1,6 @@
 import { Control } from "../control";
 import { Dispatcher } from "../../dispatcher";
-import { AppEvent } from "../../enums/enums";
+import { AppEvent } from "../../enums";
 
 export class IdTextarea extends Control {
   private textarea: HTMLTextAreaElement;

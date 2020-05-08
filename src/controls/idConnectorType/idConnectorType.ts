@@ -2,7 +2,7 @@ import { IdRadio } from "../idRadio/idRadio";
 import { ConnectorType } from "../../enums/connectorType";
 import { Control } from "../control";
 import { Dispatcher } from "../../dispatcher";
-import { AppEvent } from "../../enums/enums";
+import { AppEvent } from "../../enums";
 
 export class IdConnectorType extends Control {
   private static id = 0;

@@ -1,5 +1,5 @@
 import { Map } from "../../models/map";
-import { Direction, ObjectKind, ConnectorType } from "../../enums/enums";
+import { Direction, ObjectKind, ConnectorType } from "../../enums";
 import { CodeGenerator } from "../CodeGenerator";
 import { Obj } from "../../models/obj";
 

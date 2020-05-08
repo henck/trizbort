@@ -1,7 +1,7 @@
-import { IScreen, CapStyle, JoinStyle, TextAlign, TextBaseline } from './IScreen.js'
-import { LineStyle } from '../enums/enums.js'
-import { App } from '../app.js';
-import { DrawContext } from './drawContext.js';
+import { App } from '../app'
+import { IScreen, CapStyle, JoinStyle, TextAlign, TextBaseline } from './IScreen'
+import { LineStyle } from '../enums'
+import { DrawContext } from './drawContext'
 
 export class Canvas implements IScreen {
 

@@ -1,6 +1,4 @@
-import { Control } from "../control";
-import { IdPopup, IdRange } from "../controls";
-import { RoomShape } from "../../enums/enums";
+import { RoomShape } from "../../enums";
 import { OptionsGroup } from "../optionsGroup";
 
 export class IdShape extends OptionsGroup {

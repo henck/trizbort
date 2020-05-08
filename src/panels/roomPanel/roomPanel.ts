@@ -1,13 +1,10 @@
-import { Model } from '../../models/model.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
-import { AppEvent } from '../../enums/appEvent.js'
-import { Room } from '../../models/room.js';
-import { App } from '../../app.js';
-import { RoomShape } from '../../enums/enums.js';
-import { Panel } from '../panels.js';
-import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls/controls.js';
-import { Obj } from '../../models/obj.js';
-import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor.js';
+import { Subscriber, Dispatcher } from '../../dispatcher';
+import { AppEvent } from '../../enums/'
+import { Room } from '../../models/room';
+import { Panel } from '../panels';
+import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls/controls';
+import { Obj } from '../../models/obj';
+import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor';
 
 export class RoomPanel extends Panel implements Subscriber {
   private room: Room;

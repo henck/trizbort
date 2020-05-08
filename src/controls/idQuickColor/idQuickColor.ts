@@ -1,6 +1,6 @@
 import { Control } from "../control";
 import { IdPopup } from "../controls";
-import { LineStyle, Values } from "../../enums/enums";
+import { Values } from "../../enums";
 
 export class IdQuickColor extends Control {
   private input: HTMLInputElement;

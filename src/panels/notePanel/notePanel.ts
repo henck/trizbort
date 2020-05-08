@@ -1,11 +1,8 @@
-import { Model } from '../../models/model.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
-import { AppEvent } from '../../enums/appEvent.js'
-import { Note } from '../../models/note.js';
-import { App } from '../../app.js';
-import { RoomShape } from '../../enums/enums.js';
-import { Panel }  from '../panels.js'
-import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls.js';
+import { Subscriber, Dispatcher } from '../../dispatcher';
+import { AppEvent } from '../../enums/'
+import { Note } from '../../models/note';
+import { Panel }  from '../panels'
+import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls';
 
 export class NotePanel extends Panel implements Subscriber {
   private note: Note;

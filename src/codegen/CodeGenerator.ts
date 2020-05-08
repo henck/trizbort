@@ -1,5 +1,5 @@
 import { Map } from "../models/map";
-import { Direction, ConnectorType } from "../enums/enums";
+import { Direction, ConnectorType } from "../enums";
 
 export class CodeGenerator {
   protected map: Map;

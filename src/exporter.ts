@@ -8,7 +8,6 @@ import { NoteView } from "./views/noteView";
 import { Map } from "./models/map";
 import { BoxView } from "./views/boxView";
 import { Box } from "./models/box";
-import { App } from "./app";
 
 //
 // The Exporter exports the a map to an image file.

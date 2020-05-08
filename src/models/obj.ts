@@ -1,4 +1,4 @@
-import { ObjectKind } from "../enums/enums";
+import { ObjectKind } from "../enums";
 import { Model } from "./model";
 
 export class Obj extends Model {

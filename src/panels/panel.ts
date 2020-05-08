@@ -1,6 +1,4 @@
 import { App } from "../app";
-import { Dispatcher } from "../dispatcher";
-import { AppEvent } from "../enums/enums";
 
 //
 // Panel is a base class for closable panels.

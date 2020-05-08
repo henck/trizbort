@@ -1,6 +1,5 @@
 import { Control } from "./control";
 import { IdPopup } from "./controls";
-import { LineStyle } from "../enums/enums";
 
 export class OptionsGroup extends Control {
   protected _value: any;

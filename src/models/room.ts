@@ -1,11 +1,9 @@
-import { Model } from './model.js'
-import { Box } from './box.js'
-import { Map } from './map.js'
-import { Direction, LineStyle, RoomShape, Values, ConnectorType } from '../enums/enums.js'
-import { Xml } from '../io/xmlMap';
-import { MapSettings } from './mapSettings.js';
-import { Connector } from './connector.js';
-import { Obj } from './obj.js';
+import { Model } from './model'
+import { Box } from './box'
+import { Direction, LineStyle, RoomShape, ConnectorType } from '../enums'
+import { MapSettings } from './mapSettings';
+import { Connector } from './connector';
+import { Obj } from './obj';
 
 export class Room extends Box {
 
@@ -164,13 +162,13 @@ export class Room extends Box {
     this._changed = true;
   }
 
-  // Returns true if this room has a connector in the specified direction.
-  hasConnection(dir: Direction) {
-    let found = false;
+  // Returns the room in the specified direction, or null
+  findConnectingRoom(dir: Direction): Room {
+    let found = null;
     this.map.elements.forEach((model) => { 
       if(model instanceof Connector) {
-        if(model.dockStart == this && model.startDir == dir) found = true;
-        if(model.dockEnd == this && model.endDir == dir) found = true;
+        if(model.dockStart == this && model.startDir == dir) found = model.dockEnd;
+        if(model.dockEnd == this && model.endDir == dir) found = model.dockStart;
       }
     });
     return found;

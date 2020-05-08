@@ -1,24 +1,29 @@
 export enum Direction {
-  N = 0,
-  NNE = 1,
-  NE = 2,
-  ENE = 3,
-  E = 4,
-  ESE = 5,
-  SE = 6,
-  SSE = 7,
-  S = 8,
-  SSW = 9,
-  SW = 10,
-  WSW = 11,
-  W = 12,
-  WNW = 13,
-  NW = 14,
-  NNW = 15
+  N    = 0,
+  NNE  = 1,
+  NE   = 2,
+  ENE  = 3,
+  E    = 4,
+  ESE  = 5,
+  SE   = 6,
+  SSE  = 7,
+  S    = 8,
+  SSW  = 9,
+  SW   = 10,
+  WSW  = 11,
+  W    = 12,
+  WNW  = 13,
+  NW   = 14,
+  NNW  = 15
 }
 
 export namespace Direction {
-  export function opposite(direction: Direction) {
+  /**
+   * Return opposite of Direction.
+   * @param direction `Direction` to evaluate
+   * @returns Opposite of direction
+   */
+  export function opposite(direction: Direction): Direction {
     switch(direction) {
       case Direction.N:   return Direction.S;
       case Direction.NNE: return Direction.SSW;
@@ -38,11 +43,13 @@ export namespace Direction {
       case Direction.NNW: return Direction.SSE; 
     }
   }
-  //
-  // Is this Direction a cardinal direction? 
-  // NNE, ENE etc. are not cardinal directions.
-  // 
-  export function isCardinal(direction: Direction) {
+  /**
+   * Is this Direction a cardinal direction? 
+   * NNE, ENE etc. are not cardinal directions.
+   * @param direction `Direction` to evaluate
+   * @returns `true` if cardinal direction, `false` if not
+   */
+  export function isCardinal(direction: Direction): boolean {
     switch(direction) {
       case Direction.N:
       case Direction.NE:
@@ -56,12 +63,14 @@ export namespace Direction {
     }
     return false;
   }
-  //
-  // Convert direction into a vector.
-  // Non-cardinal compass directions are converted to cardinal vectors.
-  // That is, NNE become N, ENE becomes E etc.
-  // 
-  export function toCardinalVector(direction: Direction) {
+  /**
+   * Convert direction into a vector.
+   * Non-cardinal compass directions are converted to cardinal vectors.
+   * That is, NNE become N, ENE becomes E etc.
+   * @param direction `Direction` to convert
+   * @returns Vector, with x,y values between -1 and 1.
+   */ 
+  export function toCardinalVector(direction: Direction): {x: number, y: number} {
     switch(direction) {
       case Direction.N:   return { x: 0, y: -1 };
       case Direction.NNE: return { x: 0, y: -1 };
@@ -81,10 +90,12 @@ export namespace Direction {
       case Direction.NNW: return { x: 0, y: -1 };
     }
   }
-  // 
-  // Convert Direction into a vector. 
-  //
-  export function toVector(direction: Direction) {
+  /**
+   * Convert Direction into a vector. 
+   * @param direction `Direction` to convert
+   * @returns Vector object, with x,y values between -1 and 1.
+   */
+  export function toVector(direction: Direction): {x: number, y: number} {
     switch(direction) {
       case Direction.N:   return { x: 0, y: -1 };
       case Direction.NNE: return { x: 0.5, y: -1 };
@@ -104,11 +115,13 @@ export namespace Direction {
       case Direction.NNW: return { x: -0.5, y: -1 };
     }
   }  
-  // 
-  // Convert Direction into an angle expressed in radians (E = 0).
-  // This is used for determining points on ellipses.
-  // 
-  export function toRadians(direction: Direction) {
+  /**
+   * Convert Direction into an angle expressed in radians (E = 0).
+   * This is used for determining points on ellipses.
+   * @param direction `Directon` to convert
+   * @returns Radians value
+   */ 
+  export function toRadians(direction: Direction): number {
     switch(direction) {
       case Direction.N:   return Math.PI * 12/8;
       case Direction.NNE: return Math.PI * 13/8;
@@ -128,6 +141,10 @@ export namespace Direction {
       case Direction.NNW: return Math.PI * 11/8;
     }
   }
+  /**
+   * Convert a Direction to a HTML cursor.
+   * @param direction `Direction` to convert
+   */
   export function toCursor(direction: Direction) {
     switch(direction) {
       case Direction.N:   return 'n-resize';
@@ -140,7 +157,12 @@ export namespace Direction {
       case Direction.NW:  return 'nw-resize';
     }
   }  
-  export function fromString(s: string) {
+  /**
+   * Convert a string to a Direction
+   * @param s String to convert, e.g. 'n' or 'nne'. Case insensitive.
+   * @returns `Direction`, or `undefined` if conversion failed.
+   */
+  export function fromString(s: string): Direction {
     s = s.toLowerCase();
     if(s == 'n') return Direction.N;
     if(s == 'nne') return Direction.NNE;

@@ -1,10 +1,10 @@
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
-import { AppEvent } from '../../enums/appEvent.js'
-import { Connector } from '../../models/connector.js';
-import { App } from '../../app.js'; 
-import { Panel }  from '../panels.js'
-import { IdCheck, IdInput, IdColorPicker, IdLineStyle, IdRange } from '../../controls/controls.js';
-import { IdConnectorType } from '../../controls/idConnectorType/idConnectorType.js';
+import { Subscriber, Dispatcher } from '../../dispatcher';
+import { AppEvent } from '../../enums/'
+import { Connector } from '../../models/connector';
+import { App } from '../../app'; 
+import { Panel }  from '../panels'
+import { IdCheck, IdInput, IdColorPicker, IdLineStyle, IdRange } from '../../controls/controls';
+import { IdConnectorType } from '../../controls/idConnectorType/idConnectorType';
 
 export class ConnectorPanel extends Panel implements Subscriber {
   private connector: Connector;

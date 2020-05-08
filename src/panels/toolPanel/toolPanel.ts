@@ -1,8 +1,7 @@
-import { AppEvent, MouseMode } from '../../enums/enums.js'
-import { App } from '../../app.js'
-import { IdPopup } from '../../controls/controls.js';
-import { OptionsGroup } from '../../controls/optionsGroup.js';
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
+import { AppEvent, MouseMode } from '../../enums'
+import { App } from '../../app'
+import { OptionsGroup } from '../../controls/optionsGroup';
+import { Subscriber, Dispatcher } from '../../dispatcher';
 
 export class ToolPanel extends OptionsGroup implements Subscriber {
   protected elem: HTMLElement;
@@ -23,7 +22,7 @@ export class ToolPanel extends OptionsGroup implements Subscriber {
   }
 
   get template(): string {
-    return Handlebars.templates.toolPanel({  });
+    return Handlebars.templates.toolPanel({});
   }
 
   set value(val: MouseMode) {
@@ -32,7 +31,6 @@ export class ToolPanel extends OptionsGroup implements Subscriber {
   }
 
   notify(event: AppEvent, obj: any) {
-
     if(event == AppEvent.Added) {
       this.value = MouseMode.None;
     }

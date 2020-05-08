@@ -6,6 +6,8 @@ app.get('/dist/:name', function (req, res) {
     res.sendFile(req.params.name, { root: __dirname + "/dist/" });
 });
 
+app.use('/src', express.static('src'));
+
 app.get('/fonts/:name', function (req, res) {
     res.sendFile(req.params.name, { root: __dirname + "/fonts/" });
 });
