@@ -1,4 +1,4 @@
-import { AppEvent } from './enums/appEvent'
+import { AppEvent } from './enums/enums'
 
 export interface Subscriber {
   notify(event: AppEvent, obj: any) : void;
