@@ -90,6 +90,18 @@ export class Editor implements Subscriber {
       if (e.key === 'Backspace') e.preventDefault();
     });
     App.mainHTMLCanvas.addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
+    document.body.addEventListener('copy', (e: KeyboardEvent) => {
+      this.cmdCopySelection();
+    });
+    document.body.addEventListener('paste', (e: ClipboardEvent) => {
+      this.cmdPaste();
+    });
+    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.metaKey) switch(e.key) {
+        case 'a': this.cmdSelectAll(); break;
+        case 'z': App.undo(); break;
+      }
+    });
 
     this.resize();
 
