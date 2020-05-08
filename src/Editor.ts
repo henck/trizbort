@@ -179,10 +179,19 @@ export class Editor implements Subscriber {
       this.refresh(true);
     }
     if(event == AppEvent.Refresh) {
+      // Get currently selected model IDs, in order to preserve selection
+      // after refresh.
+      let selectedIDs = App.selection.get().map((v) => v.getModel().id);
+      // Clear selection (cannot keep because View instances will change)
       App.selection.unselectAll();
+      // Delete all views
       this.views.length = 0;
+      // For each model, create a new view and select it if model
+      // was previously selected.
       App.map.elements.forEach((model) => {
-        this.views.push(ViewFactory.create(model));
+        let view = ViewFactory.create(model);
+        if(selectedIDs.includes(model.id)) App.selection.add([view]);
+        this.views.push(view);
       });
       this.refresh(true);
     }
