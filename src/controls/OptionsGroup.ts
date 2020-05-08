@@ -1,6 +1,10 @@
 import { Control, IdPopup } from "./";
 
-export class OptionsGroup extends Control {
+/**
+ * Base class for controls that offer two or more selectable elements,
+ * only one of which can be selected at any time.
+ */
+export abstract class OptionsGroup extends Control {
   protected _value: any;
   protected _values: any = {};
 
