@@ -1,7 +1,6 @@
 import { IdPopup } from "../controls";
-import { Values, AppEvent } from "../../enums/enums";
+import { Values } from "../../enums/enums";
 import { Control } from "../control";
-import { Dispatcher } from "../../dispatcher";
 
 export class IdColorPicker extends Control {
   private canvasHSL: HTMLCanvasElement;

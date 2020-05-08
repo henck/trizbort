@@ -1,6 +1,5 @@
-export * from './popup.js'
-
-export * from './blockPopup/blockPopup.js'
-export * from './connectorPopup/connectorPopup.js'
-export * from './notePopup/notePopup.js'
-export * from './roomPopup/roomPopup.js'
+export * from './popup'
+export * from './blockPopup/blockPopup'
+export * from './connectorPopup/connectorPopup'
+export * from './notePopup/notePopup'
+export * from './roomPopup/roomPopup'

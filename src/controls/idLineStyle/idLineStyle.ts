@@ -1,5 +1,3 @@
-import { Control } from "../control";
-import { IdPopup } from "../controls";
 import { LineStyle } from "../../enums/enums";
 import { OptionsGroup } from "../optionsGroup";
 

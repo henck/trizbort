@@ -1,10 +1,10 @@
-import { App } from '../app.js'
-import { BoxView } from './boxView.js'
-import { Room } from '../models/room.js'
-import { LineStyle, Values } from '../enums/enums.js'
-import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen.js';
-import { Obj } from '../models/obj.js';
-import { fontSettings } from '../models/mapSettings.js';
+import { App } from '../app'
+import { BoxView } from './boxView'
+import { Room } from '../models/room'
+import { LineStyle, Values } from '../enums/enums'
+import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen';
+import { Obj } from '../models/obj';
+import { fontSettings } from '../models/mapSettings';
 
 export class RoomView extends BoxView {
   room: Room;

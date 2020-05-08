@@ -1,11 +1,11 @@
-import { App } from '../../app.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js'
-import { AppEvent, LineStyle, MouseMode, Values } from '../../enums/enums.js'
-import { Model } from '../../models/model.js'
-import { Note } from '../../models/note.js'
-import { NoteView } from '../../views/noteView.js'
-import { Popup } from '../popups.js'
-import { IdPopup, IdInput, IdTextarea, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls.js'
+import { App } from '../../app'
+import { Subscriber, Dispatcher } from '../../dispatcher'
+import { AppEvent, MouseMode, Values } from '../../enums/enums'
+import { Model } from '../../models/model'
+import { Note } from '../../models/note'
+import { NoteView } from '../../views/noteView'
+import { Popup } from '../popups'
+import { IdPopup, IdInput, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
 
 export class NotePopup extends Popup implements Subscriber {
   private note: Note;

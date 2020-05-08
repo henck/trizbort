@@ -1,16 +1,12 @@
-import { Model } from '../../models/model.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
-import { AppEvent } from '../../enums/appEvent.js'
-import { Room } from '../../models/room.js';
-import { App } from '../../app.js';
-import { RoomShape, LineStyle, Values } from '../../enums/enums.js';
-import { Panel }  from '../panels.js'
-import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
-import { Map } from '../../models/map.js';
-import { MapSettings } from '../../models/mapSettings.js';
-import { Window } from '../../controls/window.js'
-import { ObsidianTheme } from '../../themes/themes.js';
-import { HandDrawnTheme } from '../../themes/handDrawnTheme.js';
+import { Subscriber, Dispatcher } from '../../dispatcher';
+import { AppEvent } from '../../enums/appEvent'
+import { App } from '../../app';
+import { Panel }  from '../panels'
+import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls';
+import { MapSettings } from '../../models/mapSettings';
+import { Window } from '../../controls/window'
+import { ObsidianTheme } from '../../themes/themes';
+import { HandDrawnTheme } from '../../themes/handDrawnTheme';
 
 export class RenderPanel extends Panel implements Subscriber {
 

@@ -1,9 +1,9 @@
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
-import { AppEvent } from '../../enums/appEvent.js'
-import { App } from '../../app.js';
-import { Panel }  from '../panels.js'
-import { IdInput, IdTextarea } from '../../controls/controls.js';
-import { Map } from '../../models/map.js';
+import { Subscriber, Dispatcher } from '../../dispatcher';
+import { AppEvent } from '../../enums/appEvent'
+import { App } from '../../app';
+import { Panel }  from '../panels'
+import { IdInput, IdTextarea } from '../../controls/controls';
+import { Map } from '../../models/map';
 
 export class MapPanel extends Panel implements Subscriber {
 

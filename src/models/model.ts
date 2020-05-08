@@ -1,6 +1,6 @@
-import { Dispatcher } from '../dispatcher.js'
-import { AppEvent } from '../enums/appEvent.js'
-import { Map } from './map.js'
+import { Dispatcher } from '../dispatcher'
+import { AppEvent } from '../enums/appEvent'
+import { Map } from './map'
 import { Xml } from '../io/xmlMap';
 
 //

@@ -1,11 +1,9 @@
-import { View } from './view.js'
-import { BoxView } from './boxView.js';
-import { Rect } from '../util/util.js'
-import { Note } from '../models/note.js'
-import { Direction, LineStyle, RoomShape, Values } from '../enums/enums.js'
-import { IScreen } from '../drawing/IScreen.js';
-import { App } from '../app.js';
-import { fontSettings } from '../models/mapSettings.js';
+import { App } from '../app';
+import { BoxView } from './boxView';
+import { Note } from '../models/note'
+import { LineStyle, Values } from '../enums/enums'
+import { IScreen } from '../drawing/IScreen';
+import { fontSettings } from '../models/mapSettings';
 
 export class NoteView extends BoxView {
   note: Note;

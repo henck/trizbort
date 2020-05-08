@@ -1,8 +1,7 @@
-import { AppEvent, MouseMode } from '../../enums/enums.js'
-import { App } from '../../app.js'
-import { IdPopup } from '../../controls/controls.js';
-import { OptionsGroup } from '../../controls/optionsGroup.js';
-import { Subscriber, Dispatcher } from '../../dispatcher.js';
+import { AppEvent, MouseMode } from '../../enums/enums'
+import { App } from '../../app'
+import { OptionsGroup } from '../../controls/optionsGroup';
+import { Subscriber, Dispatcher } from '../../dispatcher';
 
 export class ToolPanel extends OptionsGroup implements Subscriber {
   protected elem: HTMLElement;

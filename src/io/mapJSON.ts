@@ -1,11 +1,10 @@
-import { Map } from '../models/map.js'
-import { Model } from '../models/model.js'
-import { Room } from '../models/room.js'
-import { Note } from '../models/note.js'
-import { Connector } from '../models/connector.js'
-import { Direction, LineStyle } from '../enums/enums.js'
-import { Block } from '../models/block.js';
-import { MapSettings } from '../models/mapSettings.js';
+import { Map } from '../models/map'
+import { Model } from '../models/model'
+import { Room } from '../models/room'
+import { Note } from '../models/note'
+import { Connector } from '../models/connector'
+import { Block } from '../models/block';
+import { MapSettings } from '../models/mapSettings';
 
 
 export class MapJSON {

@@ -1,5 +1,4 @@
-import { Model } from './models/model.js'
-import { AppEvent } from './enums/appEvent.js'
+import { AppEvent } from './enums/appEvent'
 
 export interface Subscriber {
   notify(event: AppEvent, obj: any) : void;

@@ -1,8 +1,6 @@
-import { Model } from '../models/model.js'
-import { IScreen } from '../drawing/IScreen.js';
-import { App } from '../app.js';
-import { Canvas } from '../drawing/canvas.js';
-import { Rect } from '../util/rect.js';
+import { Model } from '../models/model'
+import { IScreen } from '../drawing/IScreen';
+import { Rect } from '../util/rect';
 
 export class View {
   id: string;

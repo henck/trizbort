@@ -1,24 +1,24 @@
-import { App } from './app.js'
-import { Dispatcher, Subscriber } from './dispatcher.js'
-import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums/enums.js'
-import { Model } from './models/model.js'
-import { Grid } from "./grid.js"
-import { Room } from "./models/room.js"
-import { Connector } from "./models/connector.js"
-import { View } from "./views/view.js"
-import { RoomView }  from "./views/roomView.js"
-import { ConnectorView }  from "./views/connectorView.js"
-import { Note } from './models/note.js';
-import { NoteView } from './views/noteView.js';
-import { BoxView } from './views/boxView.js';
-import { Box } from './models/box.js';
-import { ViewFactory } from './views/viewFactory.js';
-import { Canvas } from './drawing/canvas.js';
-import { Block } from './models/block.js';
-import { BlockView } from './views/blockView.js';
-import { MapJSON } from './io/mapJSON.js';
-import { IdToast } from './controls/controls.js';
-import { Rect } from './util/rect.js'
+import { App } from './app'
+import { Dispatcher, Subscriber } from './dispatcher'
+import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums/enums'
+import { Model } from './models/model'
+import { Grid } from "./grid"
+import { Room } from "./models/room"
+import { Connector } from "./models/connector"
+import { View } from "./views/view"
+import { RoomView }  from "./views/roomView"
+import { ConnectorView }  from "./views/connectorView"
+import { Note } from './models/note'
+import { NoteView } from './views/noteView'
+import { BoxView } from './views/boxView'
+import { Box } from './models/box'
+import { ViewFactory } from './views/viewFactory'
+import { Canvas } from './drawing/canvas'
+import { Block } from './models/block'
+import { BlockView } from './views/blockView'
+import { MapJSON } from './io/mapJSON'
+import { IdToast } from './controls/controls'
+import { Rect } from './util/rect'
 
 export class Editor implements Subscriber {
   private mainCanvas: Canvas;

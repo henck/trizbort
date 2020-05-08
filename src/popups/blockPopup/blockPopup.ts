@@ -1,11 +1,11 @@
-import { App } from '../../app.js'
-import { Subscriber, Dispatcher } from '../../dispatcher.js'
-import { AppEvent, LineStyle, MouseMode, Values } from '../../enums/enums.js'
-import { Model } from '../../models/model.js'
-import { Block } from '../../models/block.js'
-import { BlockView } from '../../views/blockView.js'
-import { Popup } from '../popups.js'
-import { IdPopup, IdInput, IdTextarea, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls.js'
+import { App } from '../../app'
+import { Subscriber, Dispatcher } from '../../dispatcher'
+import { AppEvent, MouseMode, Values } from '../../enums/enums'
+import { Model } from '../../models/model'
+import { Block } from '../../models/block'
+import { BlockView } from '../../views/blockView'
+import { Popup } from '../popups'
+import { IdPopup, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
 
 export class BlockPopup extends Popup implements Subscriber {
   private block: Block;

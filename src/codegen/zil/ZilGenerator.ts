@@ -1,7 +1,6 @@
 import { Map } from "../../models/map";
 import { Direction, ObjectKind, ConnectorType } from "../../enums/enums";
 import { CodeGenerator } from "../CodeGenerator";
-import { Obj } from "../../models/obj";
 
 export class ZilGenerator extends CodeGenerator {
   

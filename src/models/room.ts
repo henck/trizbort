@@ -1,11 +1,9 @@
-import { Model } from './model.js'
-import { Box } from './box.js'
-import { Map } from './map.js'
-import { Direction, LineStyle, RoomShape, Values, ConnectorType } from '../enums/enums.js'
-import { Xml } from '../io/xmlMap';
-import { MapSettings } from './mapSettings.js';
-import { Connector } from './connector.js';
-import { Obj } from './obj.js';
+import { Model } from './model'
+import { Box } from './box'
+import { Direction, LineStyle, RoomShape, ConnectorType } from '../enums/enums'
+import { MapSettings } from './mapSettings';
+import { Connector } from './connector';
+import { Obj } from './obj';
 
 export class Room extends Box {
 
