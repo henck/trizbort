@@ -57,7 +57,7 @@ export class Editor implements Subscriber {
 
     // Global event listeners:
     window.addEventListener('resize', () => { this.resize(); } );    
-    window.addEventListener("beforeunload", (e: Event) => { this.unload(e); });
+    window.addEventListener('unload', () => { this.unload(); } );
 
     // Canvas event listeners:
     App.mainHTMLCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
@@ -93,6 +93,9 @@ export class Editor implements Subscriber {
     });
 
     this.resize();
+
+    // Load saved map, if there is one in local storage:
+    this.loadSavedMap();
 
     // Load demo map, if one was passed as a URL parameter:
     this.loadDemoMap();    
@@ -238,6 +241,18 @@ export class Editor implements Subscriber {
     httpRequest.open('GET', path);
     httpRequest.send(); 
   }  
+
+  loadSavedMap() {
+    // Load local storage map, if any:
+    let savedJSON = localStorage.getItem('map');
+    if(savedJSON) {
+      try {
+        App.map = MapJSON.load(savedJSON);
+        Dispatcher.notify(AppEvent.Load, null);
+      } catch (error) {
+      }
+    }
+  }
 
   loadDemoMap() {
     // The demo map to load can be specified as a URL argument,
@@ -432,10 +447,21 @@ export class Editor implements Subscriber {
   // Confirm that the user wants to leave when the page is about to be closed.
   // See: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event?redirectlocale=en-US&redirectslug=DOM%2FMozilla_event_reference%2Fbeforeunload
   // 
-  unload(e: Event) {
+  // Note: We don't do this any more, since on unload the current map will be
+  // saved in local storage.
+  /* 
+  beforeunload(e: Event) {
     let confirmationMessage = 'You will lose all unsaved changes. Proceed?';
     ((e || window.event).returnValue as any) = confirmationMessage; // Gecko + IE
     return confirmationMessage;                                     // Webkit, Safari, Chrome
+  } */
+
+  //
+  // On unload, save map in local storage.
+  //
+  unload() {
+    let json:string = MapJSON.save(App.map);
+    localStorage.setItem('map', json);
   }
 
   //
