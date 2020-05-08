@@ -16,12 +16,7 @@ import { ViewFactory } from './views/viewFactory.js';
 import { Canvas } from './drawing/canvas.js';
 import { Block } from './models/block.js';
 import { BlockView } from './views/blockView.js';
-import { ZorkMap } from './maps/zorkMap.js';
 import { MapJSON } from './io/mapJSON.js';
-import { AdventureMap } from './maps/adventureMap.js';
-import { CastleofdoomMap } from './maps/castleofdoomMap.js';
-import { HitchhikersguideMap } from './maps/hhg.js';
-import { HobbitMap } from './maps/hobbitMap.js';
 import { IdToast } from './controls/controls.js';
 import { Rect } from './util/rect.js'
 
@@ -217,37 +212,34 @@ export class Editor implements Subscriber {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
+  //
+  // Fetch a remote file from a path, then call a callback
+  // with the files string contents.
+  //
+  fetchFile(path: string, callback: (data:string) => void ) {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let data: string = httpRequest.responseText;
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send(); 
+  }  
+
   loadDemoMap() {
     // The demo map to load can be specified as a URL argument,
-    // i.e. trizbort.io/?map=zork
+    // i.e. trizbort.io/?map=http://maps.com/zork.json
     // If nothing is specified, then no wap will be loaded.
-
-    // Find map to load.
-    let map = null;
-    switch(this.getParameterByName('map')) {
-      case "adventure":
-        map = AdventureMap;
-        break;
-      case "castleofdoom":
-        map = CastleofdoomMap;
-        break;
-      case "hhg":
-        map = HitchhikersguideMap;
-        break;
-      case "hobbit":
-        map = HobbitMap;
-        break;
-      case "zork":
-        map = ZorkMap;
-        break;
-    }
-
-    // If a map was specified, load it.
-    if(map != null) {
-      App.map = MapJSON.load(map.json);
+    let mapURL = this.getParameterByName('map');
+    if(mapURL) this.fetchFile(mapURL, (data) => {
+      App.map = MapJSON.load(data);
       // Broadcast that we've loaded a new map:
-      Dispatcher.notify(AppEvent.Load, null);    
-    }
+      Dispatcher.notify(AppEvent.Load, null);        
+    });
   }
 
   clear() {
