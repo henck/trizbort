@@ -91,6 +91,12 @@ export class Editor implements Subscriber {
     this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
     this.updateZoomPercentage();
     App.mainHTMLCanvas.addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
+    document.body.addEventListener('copy', (e: KeyboardEvent) => {
+      this.cmdCopySelection();
+    });
+    document.body.addEventListener('paste', (e: ClipboardEvent) => {
+      this.cmdPaste();
+    });
 
     this.resize();
 
