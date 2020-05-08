@@ -184,7 +184,7 @@ export class MenuPanel extends Panel {
             <table>
               <tbody>
                 <tr>
-                  <td><kbd>Ctrl</kbd><kbd>A</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>A</kbd></td>
                   <td>Select all</td>
                 </tr>
                 <tr>
@@ -192,19 +192,19 @@ export class MenuPanel extends Panel {
                   <td>Unselect all</td>
                 </tr>        
                 <tr>
-                  <td><kbd>Ctrl</kbd><kbd>C</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>C</kbd></td>
                   <td>Copy selection</td>
                 </tr>        
                 <tr>
-                  <td><kbd>Ctrl</kbd><kbd>V</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>V</kbd></td>
                   <td>Paste selection</td>
                 </tr>        
                 <tr>
-                  <td><kbd>Del</kbd></td>
+                  <td><kbd>Del/Backspace</kbd></td>
                   <td>Delete current selection</td>
                 </tr>
                 <tr>
-                  <td><kbd>Ctrl</kbd><kbd>Z</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>Z</kbd></td>
                   <td>Undo</td>
                 </tr>
                 <tr>
