@@ -869,6 +869,7 @@ export class Editor implements Subscriber {
       let toDelete: Array<View> = new Array<View>();
       App.selection.get().forEach((view) => { toDelete.push(view); });
       toDelete.forEach((view) => { view.getModel().delete(); });
+      Dispatcher.notify(AppEvent.Select, null);
       this.refresh(true);  
     }
   }
