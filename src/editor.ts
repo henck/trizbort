@@ -817,12 +817,9 @@ export class Editor implements Subscriber {
   }
 
   canvasMouseWheel(e:MouseWheelEvent) {
-    if(e.deltaY < 0) {
-      this.cmdZoomIn();
-    }
-    if(e.deltaY > 0) {
-      this.cmdZoomOut();
-    }
+    App.centerX += e.deltaX;
+    App.centerY += e.deltaY;
+    this.refresh(true);
   }   
 
   //-----------------------------------------
