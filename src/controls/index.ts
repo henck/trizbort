@@ -1,4 +1,5 @@
 export * from './Control'
+
 export * from './idInput/idInput'
 export * from './idTextarea/idTextarea'
 export * from './idCheck/idCheck'
@@ -12,7 +13,8 @@ export * from './idQuickColor/idQuickColor'
 export * from './idShape/idShape'
 export * from './idToast/idToast'
 
-export * from './tabs'
-export * from './window'
-export * from './header'
-export * from './optionsGroup'
+export * from './Header'
+export * from './OptionsGroup'
+export * from './Tabs'
+export * from './Window'
+
