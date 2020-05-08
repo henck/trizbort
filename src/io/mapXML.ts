@@ -1,6 +1,4 @@
-import { Map } from '../models/map'
-import { Room } from '../models/room'
-import { Connector } from '../models/connector'
+import { Map, Room, Connector } from '../models'
 import { Direction, LineStyle, RoomShape } from '../enums'
 
 export class MapXMLLoader {

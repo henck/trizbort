@@ -1,11 +1,4 @@
-import { Map } from '../models/map'
-import { Model } from '../models/model'
-import { Room } from '../models/room'
-import { Note } from '../models/note'
-import { Connector } from '../models/connector'
-import { Block } from '../models/block';
-import { MapSettings } from '../models/mapSettings';
-
+import { Model, Map, Room, Note, Connector, Block, MapSettings } from '../models'
 
 export class MapJSON {
 

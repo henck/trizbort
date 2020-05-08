@@ -1,8 +1,4 @@
-import { Model } from "../models/model";
-import { Room } from "../models/room";
-import { Note } from "../models/note";
-import { Block } from "../models/block";
-import { Connector } from "../models/connector";
+import { Model, Room, Note, Block, Connector } from "../models";
 
 import { View } from "./View";
 import { RoomView } from "./RoomView";

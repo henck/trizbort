@@ -1,9 +1,9 @@
-import { Model } from './model'
-import { Box } from './box'
 import { Direction, LineStyle, RoomShape, ConnectorType } from '../enums'
-import { MapSettings } from './mapSettings';
-import { Connector } from './connector';
-import { Obj } from './obj';
+import { Model } from './Model'
+import { Box } from './Box'
+import { MapSettings } from './MapSettings';
+import { Connector } from './Connector';
+import { Obj } from './Obj';
 
 export class Room extends Box {
 

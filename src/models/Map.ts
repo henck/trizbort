@@ -1,9 +1,4 @@
-import { Model } from './model'
-import { Room } from './room'
-import { MapSettings } from './mapSettings';
-import { Connector } from './connector';
-import { Block } from './block';
-import { Note } from './note';
+import { Model, Room, MapSettings, Connector, Block, Note } from './'
 
 export class Map {
   title: string;

@@ -1,7 +1,8 @@
-import { Model } from './model'
-import { Box } from './box'
+import { Model } from './Model'
+import { Box } from './Box'
+import { MapSettings } from './MapSettings';
+
 import { LineStyle, RoomShape } from '../enums'
-import { MapSettings } from './mapSettings';
 
 export class Block extends Box {
   constructor(settings: MapSettings) {

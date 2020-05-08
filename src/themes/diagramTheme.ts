@@ -1,4 +1,4 @@
-import { RoomShape, LineStyle } from "../enums/enums";
+import { RoomShape, LineStyle } from "../enums";
 import { MapSettings, fontSettings } from "../models/mapSettings";
 
 export class DiagramTheme extends MapSettings {

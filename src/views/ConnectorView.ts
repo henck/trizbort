@@ -1,8 +1,7 @@
 import { App } from '../app'
 import { View } from './View'
 import { Rect } from '../util/util'
-import { Room } from '../models/room'
-import { Connector } from '../models/connector'
+import { Room, Connector } from '../models'
 import { ConnectorHandle, Direction, LineStyle, Values, ConnectorType } from '../enums'
 import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen';
 import { Point } from '../util/point'

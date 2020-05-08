@@ -1,6 +1,6 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
-import { Block } from '../../models/block';
+import { Block } from '../../models';
 import { Panel }  from '../panels'
 import { IdColorPicker, IdRange, IdPopup, IdShape, IdLineStyle } from '../../controls/controls';
 

@@ -1,8 +1,7 @@
-import { Model } from './model'
-import { Room } from './room'
-import { Direction, LineStyle } from '../enums'
-import { MapSettings } from './mapSettings';
-import { ConnectorType } from '../enums/connectorType';
+import { Direction, LineStyle, ConnectorType } from '../enums'
+import { Model } from './Model'
+import { Room } from './Room'
+import { MapSettings } from './MapSettings';
 
 export class Connector extends Model {
   private _name: string

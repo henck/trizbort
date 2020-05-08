@@ -1,15 +1,10 @@
 import { App } from './app'
 import { Dispatcher, Subscriber } from './dispatcher'
 import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums'
-import { Model } from './models/model'
 import { Grid } from "./grid"
-import { Room } from "./models/room"
-import { Connector } from "./models/connector"
-import { Note } from './models/note'
-import { Box } from './models/box'
 import { Canvas } from './drawing/canvas'
-import { Block } from './models/block'
-import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomView } from './views/'
+import { Block, Box, Note, Connector, Room, Model } from './models'
+import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomView } from './views'
 import { MapJSON } from './io/mapJSON'
 import { IdToast } from './controls/controls'
 import { Rect } from './util/rect'

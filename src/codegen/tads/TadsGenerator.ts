@@ -1,7 +1,6 @@
-import { Map } from "../../models/map";
+import { Map, Obj } from "../../models";
 import { Direction, ObjectKind, ConnectorType } from "../../enums";
 import { CodeGenerator } from "../CodeGenerator";
-import { Obj } from "../../models/obj";
 
 export class TadsGenerator extends CodeGenerator {
   

@@ -1,6 +1,6 @@
-import { Model } from './model'
+import { Model } from './Model'
 import { Direction, LineStyle, RoomShape } from '../enums'
-import { MapSettings } from './mapSettings';
+import { MapSettings } from './MapSettings';
 
 
 export class Box extends Model {

@@ -1,7 +1,7 @@
 import { Control } from "../control";
 import { IdPopup, IdInput } from "../controls";
 import { ObjectKind } from "../../enums";
-import { Obj } from "../../models/obj";
+import { Obj } from "../../models";
 
 export class IdObjectEditor extends Control {
   private ctrlName: IdInput;

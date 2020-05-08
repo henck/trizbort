@@ -3,7 +3,7 @@ import { AppEvent } from '../../enums/'
 import { App } from '../../app';
 import { Panel }  from '../panels'
 import { IdInput, IdTextarea } from '../../controls/controls';
-import { Map } from '../../models/map';
+import { Map } from '../../models';
 
 export class MapPanel extends Panel implements Subscriber {
 

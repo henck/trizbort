@@ -5,7 +5,7 @@ import { Dispatcher } from '../../dispatcher'
 import { AppEvent } from '../../enums'
 import { MapJSON } from '../../io/mapJSON'
 import { Panel } from '../panels';
-import { Map } from '../../models/map';
+import { Map } from '../../models';
 import { Exporter } from '../../exporter';
 
 import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 

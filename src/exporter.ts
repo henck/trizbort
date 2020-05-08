@@ -1,7 +1,6 @@
 import { Canvas } from "./drawing/canvas";
-import { Map } from "./models/map";
-import { Box } from "./models/box";
-import { View, ViewFactory, BlockView, BoxView, ConnectorView, NoteView, RoomView } from "./views/";
+import { Map, Box } from "./models";
+import { View, ViewFactory, BlockView, BoxView, ConnectorView, NoteView, RoomView } from "./views";
 
 //
 // The Exporter exports the a map to an image file.

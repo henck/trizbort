@@ -3,7 +3,7 @@ import { AppEvent } from '../../enums/'
 import { App } from '../../app';
 import { Panel }  from '../panels'
 import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls';
-import { MapSettings } from '../../models/mapSettings';
+import { MapSettings } from '../../models';
 import { Window } from '../../controls/window'
 import { ObsidianTheme, DiagramTheme } from '../../themes/themes';
 import { HandDrawnTheme } from '../../themes/handDrawnTheme';

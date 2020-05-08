@@ -1,7 +1,7 @@
-import { Model } from './model'
-import { Box } from './box'
 import { LineStyle, RoomShape } from '../enums'
-import { MapSettings } from './mapSettings';
+import { Model } from './Model'
+import { Box } from './Box'
+import { MapSettings } from './MapSettings';
 
 export class Note extends Box {
   protected _text: string;

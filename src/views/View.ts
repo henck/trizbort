@@ -1,4 +1,4 @@
-import { Model } from '../models/model'
+import { Model } from '../models'
 import { IScreen } from '../drawing/IScreen';
 import { Rect } from '../util/rect';
 

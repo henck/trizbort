@@ -1,4 +1,4 @@
-import { Map } from './models/map'
+import { Map } from './models'
 import { Dispatcher } from './dispatcher'
 import { Values, AppEvent, MouseMode } from './enums/'
 import { Editor } from './editor.js'

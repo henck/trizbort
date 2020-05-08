@@ -1,8 +1,7 @@
 import { App } from '../../app'
 import { Subscriber, Dispatcher } from '../../dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
-import { Model } from '../../models/model'
-import { Room } from '../../models/room'
+import { Model, Room } from '../../models'
 import { RoomView } from '../../views'
 import { Popup } from '../popups'
 import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls/controls';
