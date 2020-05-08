@@ -1,6 +1,6 @@
 import { AppEvent, MouseMode } from '../../enums'
 import { App } from '../../app'
-import { OptionsGroup } from '../../controls/optionsGroup';
+import { OptionsGroup } from '../../controls';
 import { Subscriber, Dispatcher } from '../../dispatcher';
 
 export class ToolPanel extends OptionsGroup implements Subscriber {

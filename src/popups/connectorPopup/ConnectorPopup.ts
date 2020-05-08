@@ -4,7 +4,7 @@ import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Connector } from '../../models'
 import { ConnectorView } from '../../views'
 import { Popup } from '../'
-import { IdInput, IdRange, IdPopup,IdLineStyle, IdQuickColor } from '../../controls/controls'
+import { IdInput, IdRange, IdPopup,IdLineStyle, IdQuickColor } from '../../controls'
 
 export class ConnectorPopup extends Popup implements Subscriber {
   private connector: Connector;

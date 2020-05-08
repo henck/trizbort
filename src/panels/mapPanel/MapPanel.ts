@@ -2,7 +2,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { App } from '../../app';
 import { Panel }  from '../'
-import { IdInput, IdTextarea } from '../../controls/controls';
+import { IdInput, IdTextarea } from '../../controls';
 import { Map } from '../../models';
 
 export class MapPanel extends Panel implements Subscriber {

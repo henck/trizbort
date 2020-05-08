@@ -4,7 +4,7 @@ import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Room } from '../../models'
 import { RoomView } from '../../views'
 import { Popup } from '../'
-import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls/controls';
+import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls';
 
 export class RoomPopup extends Popup implements Subscriber {
   private room: Room;

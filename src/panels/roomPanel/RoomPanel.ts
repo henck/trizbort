@@ -2,7 +2,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { Room, Obj } from '../../models';
 import { Panel }  from '../'
-import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls/controls';
+import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls';
 import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor';
 
 export class RoomPanel extends Panel implements Subscriber {

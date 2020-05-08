@@ -3,8 +3,7 @@ import { AppEvent } from '../../enums/'
 import { Connector } from '../../models';
 import { App } from '../../app'; 
 import { Panel }  from '../'
-import { IdCheck, IdInput, IdColorPicker, IdLineStyle, IdRange } from '../../controls/controls';
-import { IdConnectorType } from '../../controls/idConnectorType/idConnectorType';
+import { IdCheck, IdInput, IdColorPicker, IdLineStyle, IdRange, IdConnectorType } from '../../controls';
 
 export class ConnectorPanel extends Panel implements Subscriber {
   private connector: Connector;

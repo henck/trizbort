@@ -1,5 +1,4 @@
 import { App } from '../../app'
-import { Window } from '../../controls/window'
 import { MapXMLLoader } from '../../io/mapXML'
 import { Dispatcher } from '../../dispatcher'
 import { AppEvent } from '../../enums'
@@ -7,10 +6,11 @@ import { MapJSON } from '../../io/mapJSON'
 import { Panel }  from '../'
 import { Map } from '../../models';
 import { Exporter } from '../../exporter';
+import { IdToast, Window } from '../../controls';
 
 import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 
          QuestGenerator, TextadventurejsGenerator, YamlGenerator, ZilGenerator } from '../../codegen/CodeGeneration'
-import { IdToast } from '../../controls/controls';
+
 
 export class MenuPanel extends Panel {
   private inputLoad: HTMLInputElement;

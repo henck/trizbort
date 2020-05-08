@@ -4,7 +4,7 @@ import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Block } from '../../models'
 import { BlockView } from '../../views'
 import { Popup } from '../'
-import { IdPopup, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
+import { IdPopup, IdRange, IdLineStyle, IdQuickColor } from '../../controls'
 
 export class BlockPopup extends Popup implements Subscriber {
   private block: Block;

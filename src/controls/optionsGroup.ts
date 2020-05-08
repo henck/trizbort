@@ -1,14 +1,9 @@
-import { Control } from "./control";
-import { IdPopup } from "./controls";
+import { Control, IdPopup } from "./";
 
 export class OptionsGroup extends Control {
   protected _value: any;
   protected _values: any = {};
 
-  // 
-  // Create a new instance of IdLineStyle by providing a query selector that
-  // yields an id-linestyle element.
-  //
   constructor(elem: HTMLElement|string, elements: {value: number | string, htmlEl: string}[], base?: HTMLElement) {
     super(elem, base);
 

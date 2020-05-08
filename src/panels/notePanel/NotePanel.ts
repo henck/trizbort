@@ -2,7 +2,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums'
 import { Note } from '../../models';
 import { Panel }  from '../'
-import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls';
+import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls';
 
 export class NotePanel extends Panel implements Subscriber {
   private note: Note;

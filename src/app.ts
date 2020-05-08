@@ -2,13 +2,12 @@ import { Map } from './models'
 import { Dispatcher } from './dispatcher'
 import { Values, AppEvent, MouseMode } from './enums/'
 import { Editor } from './editor.js'
-import { Tabs, IdToast } from './controls/controls'
+import { Tabs, IdToast, Header } from './controls'
 import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/'
 import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels'
 
-import { MapJSON } from './io/mapJSON.js'
-import { Selection } from './selection.js'
-import { Header } from './controls/header.js'
+import { MapJSON } from './io/mapJSON'
+import { Selection } from './selection'
 
 export class App {
   // - App holds the current map.

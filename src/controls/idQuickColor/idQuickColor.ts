@@ -1,5 +1,4 @@
-import { Control } from "../control";
-import { IdPopup } from "../controls";
+import { Control, IdPopup } from "../";
 import { Values } from "../../enums";
 
 export class IdQuickColor extends Control {

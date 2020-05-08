@@ -1,10 +1,9 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
+import { MapSettings } from '../../models';
 import { AppEvent } from '../../enums/'
 import { App } from '../../app';
 import { Panel }  from '../'
-import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls';
-import { MapSettings } from '../../models';
-import { Window } from '../../controls/window'
+import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle, Window } from '../../controls';
 import { ObsidianTheme, DiagramTheme } from '../../themes/themes';
 import { HandDrawnTheme } from '../../themes/handDrawnTheme';
 

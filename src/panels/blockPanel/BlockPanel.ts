@@ -2,7 +2,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { Block } from '../../models';
 import { Panel }  from '../'
-import { IdColorPicker, IdRange, IdPopup, IdShape, IdLineStyle } from '../../controls/controls';
+import { IdColorPicker, IdRange, IdPopup, IdShape, IdLineStyle } from '../../controls';
 
 export class BlockPanel extends Panel implements Subscriber {
   private block: Block;

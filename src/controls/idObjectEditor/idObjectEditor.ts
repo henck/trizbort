@@ -1,5 +1,4 @@
-import { Control } from "../control";
-import { IdPopup, IdInput } from "../controls";
+import { Control, IdPopup, IdInput } from "../";
 import { ObjectKind } from "../../enums";
 import { Obj } from "../../models";
 

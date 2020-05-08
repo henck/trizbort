@@ -4,7 +4,7 @@ import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Note } from '../../models'
 import { NoteView } from '../../views'
 import { Popup } from '../'
-import { IdPopup, IdInput, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
+import { IdPopup, IdInput, IdRange, IdLineStyle, IdQuickColor } from '../../controls'
 
 export class NotePopup extends Popup implements Subscriber {
   private note: Note;

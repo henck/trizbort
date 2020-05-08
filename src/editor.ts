@@ -6,7 +6,7 @@ import { Canvas } from './drawing/canvas'
 import { Block, Box, Note, Connector, Room, Model } from './models'
 import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomView } from './views'
 import { MapJSON } from './io/mapJSON'
-import { IdToast } from './controls/controls'
+import { IdToast } from './controls'
 import { Rect } from './util/rect'
 
 export class Editor implements Subscriber {
