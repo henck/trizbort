@@ -4,13 +4,11 @@ import { App } from "../app";
 // Panel is a base class for closable panels.
 // 
 export class Panel {
-  private id: string;
   protected elem: HTMLElement;
 
   // Panels are instantiated by providing their DOM id
   // and a reference to a Handlebars template
   constructor(id: string, template: any, args: Object) {
-    this.id = id;
     this.elem = document.getElementById(id);
 
     Handlebars.registerPartial('closePanel', Handlebars.templates.closePanel);
