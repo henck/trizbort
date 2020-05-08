@@ -5,7 +5,7 @@ import { Panel }  from '../panels'
 import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls';
 import { MapSettings } from '../../models/mapSettings';
 import { Window } from '../../controls/window'
-import { ObsidianTheme } from '../../themes/themes';
+import { ObsidianTheme, DiagramTheme } from '../../themes/themes';
 import { HandDrawnTheme } from '../../themes/handDrawnTheme';
 
 export class RenderPanel extends Panel implements Subscriber {
@@ -81,6 +81,7 @@ export class RenderPanel extends Panel implements Subscriber {
     }    
 
     this.elem.querySelector('.js-theme-default').addEventListener('click', () => { this.applyTheme('default'); });
+    this.elem.querySelector('.js-theme-diagram').addEventListener('click', () => { this.applyTheme('diagram'); });
     this.elem.querySelector('.js-theme-obsidian').addEventListener('click', () => { this.applyTheme('obsidian'); });
     this.elem.querySelector('.js-theme-hand-drawn').addEventListener('click', () => { this.applyTheme('hand-drawn'); });
 
@@ -209,6 +210,9 @@ export class RenderPanel extends Panel implements Subscriber {
           break;
         case 'hand-drawn':
             App.map.settings = new MapSettings().cloneFrom(new HandDrawnTheme());
+            break;
+        case 'diagram':
+            App.map.settings = new MapSettings().cloneFrom(new DiagramTheme());
             break;
         default:
           App.map.settings = new MapSettings();
