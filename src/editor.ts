@@ -90,6 +90,10 @@ export class Editor implements Subscriber {
     this.ctrlZoom = <HTMLInputElement> document.getElementById('control-zoom');
     this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
     this.updateZoomPercentage();
+    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
+      // Firefox treats backspace as a back button
+      if (e.key === 'Backspace') e.preventDefault();
+    });
     App.mainHTMLCanvas.addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
 
     this.resize();
@@ -117,6 +121,7 @@ export class Editor implements Subscriber {
         case 'b': this.cmdAddBlock(); break;
         case 'Escape': this.cmdUnselectAll(); break;
         case 'Delete': this.cmdDelete(); break;
+        case 'Backspace': this.cmdDelete(); break;
         case 'Insert': this.cmdCenterView(); break;
         case '+': this.cmdZoomIn(); break;
         case '-': this.cmdZoomOut(); break;
