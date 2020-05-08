@@ -164,13 +164,13 @@ export class Room extends Box {
     this._changed = true;
   }
 
-  // Returns true if this room has a connector in the specified direction.
-  hasConnection(dir: Direction) {
-    let found = false;
+  // Returns the room in the specified direction, or null
+  findConnectingRoom(dir: Direction): Room {
+    let found = null;
     this.map.elements.forEach((model) => { 
       if(model instanceof Connector) {
-        if(model.dockStart == this && model.startDir == dir) found = true;
-        if(model.dockEnd == this && model.endDir == dir) found = true;
+        if(model.dockStart == this && model.startDir == dir) found = model.dockEnd;
+        if(model.dockEnd == this && model.endDir == dir) found = model.dockStart;
       }
     });
     return found;
