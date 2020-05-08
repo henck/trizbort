@@ -2,7 +2,7 @@ import { App } from '../../app'
 import { Window } from '../../controls/window'
 import { MapXMLLoader } from '../../io/mapXML'
 import { Dispatcher } from '../../dispatcher'
-import { AppEvent } from '../../enums/enums'
+import { AppEvent } from '../../enums'
 import { MapJSON } from '../../io/mapJSON'
 import { Panel } from '../panels';
 import { Map } from '../../models/map';

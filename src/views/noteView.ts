@@ -1,7 +1,7 @@
 import { App } from '../app';
 import { BoxView } from './boxView';
 import { Note } from '../models/note'
-import { LineStyle, Values } from '../enums/enums'
+import { LineStyle, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen';
 import { fontSettings } from '../models/mapSettings';
 

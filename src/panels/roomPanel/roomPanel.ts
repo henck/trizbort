@@ -1,5 +1,5 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
-import { AppEvent } from '../../enums/enums'
+import { AppEvent } from '../../enums/'
 import { Room } from '../../models/room';
 import { Panel } from '../panels';
 import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls/controls';

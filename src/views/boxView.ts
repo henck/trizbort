@@ -1,7 +1,7 @@
 import { View } from './view'
 import { Rect } from '../util/util'
 import { Box } from '../models/box'
-import { Direction, RoomShape, Values } from '../enums/enums'
+import { Direction, RoomShape, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen'
 
 export class BoxView extends View {

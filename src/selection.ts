@@ -1,6 +1,6 @@
 import { View } from './views/view'
 import { Dispatcher } from './dispatcher'
-import { AppEvent } from './enums/enums'
+import { AppEvent } from './enums'
 
 //
 // Selection wraps the selection of Views in the app.

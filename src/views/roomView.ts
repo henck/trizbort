@@ -1,7 +1,7 @@
 import { App } from '../app'
 import { BoxView } from './boxView'
 import { Room } from '../models/room'
-import { LineStyle, Values } from '../enums/enums'
+import { LineStyle, Values } from '../enums'
 import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen';
 import { Obj } from '../models/obj';
 import { fontSettings } from '../models/mapSettings';

@@ -1,4 +1,4 @@
-import { LineStyle } from "../enums/enums";
+import { LineStyle } from "../enums";
 
 export enum CapStyle {
   Butt,

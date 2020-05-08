@@ -1,4 +1,4 @@
-import { RoomShape, LineStyle } from "../enums/enums";
+import { RoomShape, LineStyle } from "../enums";
 import { MapSettings } from "../models/mapSettings";
 
 export class ObsidianTheme extends MapSettings {

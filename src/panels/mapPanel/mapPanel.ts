@@ -1,5 +1,5 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
-import { AppEvent } from '../../enums/enums'
+import { AppEvent } from '../../enums/'
 import { App } from '../../app';
 import { Panel }  from '../panels'
 import { IdInput, IdTextarea } from '../../controls/controls';

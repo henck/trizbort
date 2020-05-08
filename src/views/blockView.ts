@@ -1,6 +1,6 @@
 import { BoxView } from './boxView';
 import { Block } from '../models/block.js'
-import { LineStyle, Values } from '../enums/enums'
+import { LineStyle, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen';
 
 export class BlockView extends BoxView {

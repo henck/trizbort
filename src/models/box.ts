@@ -1,5 +1,5 @@
 import { Model } from './model'
-import { Direction, LineStyle, RoomShape } from '../enums/enums'
+import { Direction, LineStyle, RoomShape } from '../enums'
 import { MapSettings } from './mapSettings';
 
 

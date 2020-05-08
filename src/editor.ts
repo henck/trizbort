@@ -1,6 +1,6 @@
 import { App } from './app'
 import { Dispatcher, Subscriber } from './dispatcher'
-import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums/enums'
+import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums'
 import { Model } from './models/model'
 import { Grid } from "./grid"
 import { Room } from "./models/room"

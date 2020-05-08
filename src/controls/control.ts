@@ -5,7 +5,7 @@
 // that querySelector will run on.
 
 import { Dispatcher } from "../dispatcher";
-import { AppEvent } from "../enums/enums";
+import { AppEvent } from "../enums";
 
 // 
 export class Control {

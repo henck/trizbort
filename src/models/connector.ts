@@ -1,6 +1,6 @@
 import { Model } from './model'
 import { Room } from './room'
-import { Direction, LineStyle } from '../enums/enums'
+import { Direction, LineStyle } from '../enums'
 import { MapSettings } from './mapSettings';
 import { ConnectorType } from '../enums/connectorType';
 

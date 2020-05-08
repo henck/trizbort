@@ -1,4 +1,4 @@
-import { RoomShape, LineStyle } from "../enums/enums";
+import { RoomShape, LineStyle } from "../enums";
 
 export class fontSettings {
   size: number;

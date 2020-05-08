@@ -1,5 +1,5 @@
 import { IdPopup } from "../controls";
-import { Values } from "../../enums/enums";
+import { Values } from "../../enums";
 import { Control } from "../control";
 
 export class IdColorPicker extends Control {

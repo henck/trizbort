@@ -1,4 +1,4 @@
-import { AppEvent, MouseMode } from '../../enums/enums'
+import { AppEvent, MouseMode } from '../../enums'
 import { App } from '../../app'
 import { OptionsGroup } from '../../controls/optionsGroup';
 import { Subscriber, Dispatcher } from '../../dispatcher';

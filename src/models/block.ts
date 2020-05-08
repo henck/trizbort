@@ -1,6 +1,6 @@
 import { Model } from './model'
 import { Box } from './box'
-import { LineStyle, RoomShape } from '../enums/enums'
+import { LineStyle, RoomShape } from '../enums'
 import { MapSettings } from './mapSettings';
 
 export class Block extends Box {

@@ -1,4 +1,4 @@
-import { LineStyle } from "../../enums/enums";
+import { LineStyle } from "../../enums";
 import { OptionsGroup } from "../optionsGroup";
 
 export class IdLineStyle extends OptionsGroup {
