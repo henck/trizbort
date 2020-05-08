@@ -1,7 +1,7 @@
 import { Map } from './models'
 import { Dispatcher } from './dispatcher'
 import { Values, AppEvent, MouseMode } from './enums/'
-import { Editor } from './editor.js'
+import { Editor } from './editor'
 import { Tabs, IdToast, Header } from './controls'
 import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/'
 import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels'

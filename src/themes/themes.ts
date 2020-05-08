@@ -1,3 +1,3 @@
-export * from './obsidianTheme.js'
-export * from './diagramTheme.js'
-export * from './handDrawnTheme.js'
+export * from './obsidianTheme'
+export * from './diagramTheme'
+export * from './handDrawnTheme'

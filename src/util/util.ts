@@ -1,1 +1,1 @@
-export * from './rect.js'
+export * from './rect'
