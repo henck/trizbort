@@ -2,10 +2,10 @@ export class Tabs {
   private elem: HTMLElement;
   private tabs: Array<Tab>;
 
-  //
-  // Create a Tabs instance for each element with
-  // class .tabs in the Document.
-  //
+  /**
+   * Create a Tabs instance for each element with
+   * class .tabs in the Document.
+   */
   static initialize() {
     // Find all the Tabs elements in the document.
     let tabsList = document.querySelectorAll('.tabs');
@@ -26,10 +26,10 @@ export class Tabs {
     }
   }
 
-  //
-  // Called by Tab when a Tab is selected.
-  // Selects new tab, unselects other tabs.
-  //
+  /**
+   * Called by Tab when a Tab is selected.
+   * Selects new tab, unselects other tabs.
+   */
   select(tab: Tab) {
     for(let i = 0; i < this.tabs.length; i++) {
       if(this.tabs[i] == tab) {
