@@ -19,6 +19,15 @@ export class Panel {
     let closeButton = document.querySelector(`#${id} .panel-close`);
     if(closeButton) closeButton.addEventListener('click', () => { this.close(); });  
 
+    this.elem.addEventListener('keyup', (e: KeyboardEvent) => {
+      // Close panel when Esc is pressed.
+      if (e.key === 'Escape') {
+        this.close();
+        e.stopImmediatePropagation();
+        App.mainHTMLCanvas.focus();
+      }
+    });
+
     // Close self when mouse is down on editor canvas:
     App.mainHTMLCanvas.addEventListener('mousedown', () => {
       this.close();
