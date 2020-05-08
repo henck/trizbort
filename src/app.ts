@@ -3,7 +3,7 @@ import { Dispatcher } from './dispatcher'
 import { Values, AppEvent, MouseMode } from './enums/'
 import { Editor } from './editor.js'
 import { Tabs, IdToast } from './controls/controls'
-import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/popups'
+import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/'
 import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels'
 
 import { MapJSON } from './io/mapJSON.js'

@@ -3,7 +3,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Connector } from '../../models'
 import { ConnectorView } from '../../views'
-import { Popup } from '../popups'
+import { Popup } from '../'
 import { IdInput, IdRange, IdPopup,IdLineStyle, IdQuickColor } from '../../controls/controls'
 
 export class ConnectorPopup extends Popup implements Subscriber {
@@ -14,7 +14,7 @@ export class ConnectorPopup extends Popup implements Subscriber {
   private ctrlColor: IdQuickColor;
   
   constructor() {
-    super('connectorpopup', Handlebars.templates.connectorPopup, { colors: Values.COLORS_STANDARD });
+    super('connectorpopup', Handlebars.templates.ConnectorPopup, { colors: Values.COLORS_STANDARD });
     Dispatcher.subscribe(this);
 
     new IdPopup('.js-fill', this.elem);

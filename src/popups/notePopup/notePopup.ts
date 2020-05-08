@@ -3,7 +3,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Note } from '../../models'
 import { NoteView } from '../../views'
-import { Popup } from '../popups'
+import { Popup } from '../'
 import { IdPopup, IdInput, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
 
 export class NotePopup extends Popup implements Subscriber {
@@ -14,7 +14,7 @@ export class NotePopup extends Popup implements Subscriber {
   private ctrlColor: IdQuickColor;
 
   constructor() {
-    super('notepopup', Handlebars.templates.notePopup, { colors: Values.COLORS_STANDARD });
+    super('notepopup', Handlebars.templates.NotePopup, { colors: Values.COLORS_STANDARD });
 
     Dispatcher.subscribe(this);
 

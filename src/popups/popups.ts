@@ -1,5 +1,0 @@
-export * from './popup'
-export * from './blockPopup/blockPopup'
-export * from './connectorPopup/connectorPopup'
-export * from './notePopup/notePopup'
-export * from './roomPopup/roomPopup'

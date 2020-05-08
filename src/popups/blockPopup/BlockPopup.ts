@@ -3,7 +3,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Block } from '../../models'
 import { BlockView } from '../../views'
-import { Popup } from '../popups'
+import { Popup } from '../'
 import { IdPopup, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
 
 export class BlockPopup extends Popup implements Subscriber {
@@ -13,7 +13,7 @@ export class BlockPopup extends Popup implements Subscriber {
   private ctrlColor: IdQuickColor;
 
   constructor() {
-    super('blockpopup', Handlebars.templates.blockPopup, { colors: Values.COLORS_STANDARD });
+    super('blockpopup', Handlebars.templates.BlockPopup, { colors: Values.COLORS_STANDARD });
 
     Dispatcher.subscribe(this);
 
