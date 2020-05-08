@@ -1,9 +1,9 @@
-import { App } from '../app'
+import { App } from '../App'
 import { BoxView } from './BoxView'
 import { Room, Obj } from '../models'
 import { LineStyle, Values } from '../enums'
-import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen';
-import { fontSettings } from '../models/mapSettings';
+import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen'
+import { fontSettings } from '../models/mapSettings'
 
 export class RoomView extends BoxView {
   room: Room;

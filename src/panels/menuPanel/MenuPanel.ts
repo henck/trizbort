@@ -1,11 +1,11 @@
-import { App } from '../../app'
+import { App } from '../../App'
 import { MapXMLLoader } from '../../io/mapXML'
-import { Dispatcher } from '../../dispatcher'
+import { Dispatcher } from '../../Dispatcher'
 import { AppEvent } from '../../enums'
 import { MapJSON } from '../../io/mapJSON'
 import { Panel }  from '../'
 import { Map } from '../../models';
-import { Exporter } from '../../exporter';
+import { Exporter } from '../../Exporter';
 import { IdToast, Window } from '../../controls';
 
 import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 

@@ -1,5 +1,5 @@
 import { View } from './views'
-import { Dispatcher } from './dispatcher'
+import { Dispatcher } from './Dispatcher'
 import { AppEvent } from './enums'
 
 //

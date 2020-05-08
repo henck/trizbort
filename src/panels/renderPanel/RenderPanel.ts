@@ -1,7 +1,7 @@
-import { Subscriber, Dispatcher } from '../../dispatcher';
+import { Subscriber, Dispatcher } from '../../Dispatcher';
 import { MapSettings } from '../../models';
 import { AppEvent } from '../../enums/'
-import { App } from '../../app';
+import { App } from '../../App'
 import { Panel }  from '../'
 import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle, Window } from '../../controls';
 import { ObsidianTheme, DiagramTheme } from '../../themes/themes';

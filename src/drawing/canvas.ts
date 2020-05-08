@@ -1,4 +1,4 @@
-import { App } from '../app'
+import { App } from '../App'
 import { IScreen, CapStyle, JoinStyle, TextAlign, TextBaseline } from './IScreen'
 import { LineStyle } from '../enums'
 import { DrawContext } from './drawContext'

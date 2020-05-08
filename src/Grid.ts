@@ -1,4 +1,4 @@
-import { App } from './app'
+import { App } from './App'
 import { Canvas } from './drawing/canvas'
 
 export class Grid {

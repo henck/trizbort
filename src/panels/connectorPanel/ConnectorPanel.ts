@@ -1,7 +1,7 @@
-import { Subscriber, Dispatcher } from '../../dispatcher';
+import { Subscriber, Dispatcher } from '../../Dispatcher';
 import { AppEvent } from '../../enums/'
 import { Connector } from '../../models';
-import { App } from '../../app'; 
+import { App } from '../../App'; 
 import { Panel }  from '../'
 import { IdCheck, IdInput, IdColorPicker, IdLineStyle, IdRange, IdConnectorType } from '../../controls';
 

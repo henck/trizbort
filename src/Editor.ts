@@ -1,7 +1,7 @@
-import { App } from './app'
-import { Dispatcher, Subscriber } from './dispatcher'
+import { App } from './App'
+import { Dispatcher, Subscriber } from './Dispatcher'
 import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums'
-import { Grid } from "./grid"
+import { Grid } from "./Grid"
 import { Canvas } from './drawing/canvas'
 import { Block, Box, Note, Connector, Room, Model } from './models'
 import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomView } from './views'

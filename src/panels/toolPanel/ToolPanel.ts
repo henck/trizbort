@@ -1,7 +1,7 @@
+import { Subscriber, Dispatcher } from '../../Dispatcher';
 import { AppEvent, MouseMode } from '../../enums'
-import { App } from '../../app'
+import { App } from '../../App'
 import { OptionsGroup } from '../../controls';
-import { Subscriber, Dispatcher } from '../../dispatcher';
 
 export class ToolPanel extends OptionsGroup implements Subscriber {
   protected elem: HTMLElement;

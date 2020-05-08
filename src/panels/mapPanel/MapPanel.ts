@@ -1,6 +1,6 @@
-import { Subscriber, Dispatcher } from '../../dispatcher';
+import { Subscriber, Dispatcher } from '../../Dispatcher';
 import { AppEvent } from '../../enums/'
-import { App } from '../../app';
+import { App } from '../../App'
 import { Panel }  from '../'
 import { IdInput, IdTextarea } from '../../controls';
 import { Map } from '../../models';

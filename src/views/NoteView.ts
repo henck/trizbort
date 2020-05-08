@@ -1,9 +1,9 @@
-import { App } from '../app';
-import { BoxView } from './BoxView';
+import { App } from '../App'
+import { BoxView } from './BoxView'
 import { Note } from '../models'
 import { LineStyle, Values } from '../enums'
-import { IScreen } from '../drawing/IScreen';
-import { fontSettings } from '../models/mapSettings';
+import { IScreen } from '../drawing/IScreen'
+import { fontSettings } from '../models/mapSettings'
 
 export class NoteView extends BoxView {
   note: Note;

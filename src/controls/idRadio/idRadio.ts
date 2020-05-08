@@ -1,5 +1,5 @@
 import { Control } from "../control";
-import { Dispatcher } from "../../dispatcher";
+import { Dispatcher } from "../../Dispatcher";
 import { AppEvent } from "../../enums";
 
 export class IdRadio extends Control {

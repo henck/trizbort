@@ -1,7 +1,7 @@
 import { IdRadio } from "../idRadio/idRadio";
 import { ConnectorType } from "../../enums/connectorType";
 import { Control } from "../control";
-import { Dispatcher } from "../../dispatcher";
+import { Dispatcher } from "../../Dispatcher";
 import { AppEvent } from "../../enums";
 
 export class IdConnectorType extends Control {

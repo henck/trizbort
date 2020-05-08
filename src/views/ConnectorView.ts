@@ -1,9 +1,9 @@
-import { App } from '../app'
+import { App } from '../App'
 import { View } from './View'
 import { Rect } from '../util'
 import { Room, Connector } from '../models'
 import { ConnectorHandle, Direction, LineStyle, Values, ConnectorType } from '../enums'
-import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen';
+import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen'
 import { Point } from '../util/point'
 
 export class ConnectorView extends View {

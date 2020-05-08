@@ -1,5 +1,5 @@
-import { App } from '../../app'
-import { Subscriber, Dispatcher } from '../../dispatcher'
+import { App } from '../../App'
+import { Subscriber, Dispatcher } from '../../Dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model, Note } from '../../models'
 import { NoteView } from '../../views'
