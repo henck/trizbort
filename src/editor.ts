@@ -871,8 +871,17 @@ export class Editor implements Subscriber {
     // Get room model.
     let room: Room = (App.selection.first() as RoomView).getModel();
 
-    // Abort if there is already a connection in the desired direction.
-    if (room.hasConnection(dir)) return;
+    // Select existing room if there is already a connection in the desired direction.
+    let existingRoom = room.findConnectingRoom(dir);
+    if (existingRoom) {
+      let view = this.views.find(view => view.getModel() === existingRoom);
+      if (view) {
+        App.selection.unselectAll();
+        App.selection.add([view]);
+        view.select();
+      }
+      return;
+    }
 
     App.pushUndo();
 
