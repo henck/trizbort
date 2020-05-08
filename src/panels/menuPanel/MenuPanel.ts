@@ -4,7 +4,7 @@ import { MapXMLLoader } from '../../io/mapXML'
 import { Dispatcher } from '../../dispatcher'
 import { AppEvent } from '../../enums'
 import { MapJSON } from '../../io/mapJSON'
-import { Panel } from '../panels';
+import { Panel }  from '../'
 import { Map } from '../../models';
 import { Exporter } from '../../exporter';
 
@@ -17,7 +17,7 @@ export class MenuPanel extends Panel {
   private inputImport: HTMLInputElement;
 
   constructor() {
-    super('menupanel', Handlebars.templates.menuPanel, {});
+    super('menupanel', Handlebars.templates.MenuPanel, {});
 
     let btnMenu = document.querySelector('#menu');
     btnMenu.addEventListener('click', () => {

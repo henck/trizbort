@@ -22,7 +22,7 @@ export class ToolPanel extends OptionsGroup implements Subscriber {
   }
 
   get template(): string {
-    return Handlebars.templates.toolPanel({});
+    return Handlebars.templates.ToolPanel({});
   }
 
   set value(val: MouseMode) {

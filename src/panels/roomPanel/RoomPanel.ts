@@ -1,7 +1,7 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { Room, Obj } from '../../models';
-import { Panel } from '../panels';
+import { Panel }  from '../'
 import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls/controls';
 import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor';
 
@@ -26,7 +26,7 @@ export class RoomPanel extends Panel implements Subscriber {
   private objectsCreated: number = 0;
 
   constructor() {
-    super('roompanel', Handlebars.templates.roomPanel, {});
+    super('roompanel', Handlebars.templates.RoomPanel, {});
     Dispatcher.subscribe(this);
 
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.room.name = this.ctrlName.value; });

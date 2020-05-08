@@ -2,7 +2,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { Connector } from '../../models';
 import { App } from '../../app'; 
-import { Panel }  from '../panels'
+import { Panel }  from '../'
 import { IdCheck, IdInput, IdColorPicker, IdLineStyle, IdRange } from '../../controls/controls';
 import { IdConnectorType } from '../../controls/idConnectorType/idConnectorType';
 
@@ -25,7 +25,7 @@ export class ConnectorPanel extends Panel implements Subscriber {
   private ctrlEndLabel: IdInput;
 
   constructor() {
-    super('connectorpanel', Handlebars.templates.connectorPanel, {});
+    super('connectorpanel', Handlebars.templates.ConnectorPanel, {});
     Dispatcher.subscribe(this);
     
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.connector.name = this.ctrlName.value; });

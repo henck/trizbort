@@ -1,7 +1,7 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { App } from '../../app';
-import { Panel }  from '../panels'
+import { Panel }  from '../'
 import { IdInput, IdTextarea } from '../../controls/controls';
 import { Map } from '../../models';
 
@@ -12,7 +12,7 @@ export class MapPanel extends Panel implements Subscriber {
   private ctrlDescription: IdTextarea;
 
   constructor() {
-    super('mappanel', Handlebars.templates.mapPanel, { });
+    super('mappanel', Handlebars.templates.MapPanel, { });
     Dispatcher.subscribe(this);
 
     this.ctrlTitle = new IdInput('.js-title', this.elem).addEventListener('input', () => { App.map.title = this.ctrlTitle.value; App.header.title = this.ctrlTitle.value});

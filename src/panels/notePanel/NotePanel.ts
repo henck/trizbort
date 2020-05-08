@@ -1,7 +1,7 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums'
 import { Note } from '../../models';
-import { Panel }  from '../panels'
+import { Panel }  from '../'
 import { IdColorPicker, IdRange, IdTextarea, IdPopup, IdShape, IdLineStyle } from '../../controls/controls';
 
 export class NotePanel extends Panel implements Subscriber {
@@ -17,7 +17,7 @@ export class NotePanel extends Panel implements Subscriber {
   private colorButtons: Array<IdPopup>;
 
   constructor() {
-    super('notepanel', Handlebars.templates.notePanel, {});
+    super('notepanel', Handlebars.templates.NotePanel, {});
     Dispatcher.subscribe(this);
 
     this.ctrlText = new IdTextarea('.js-text', this.elem).addEventListener('input', () => { this.note.text = this.ctrlText.value; });    

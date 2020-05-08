@@ -1,7 +1,7 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { App } from '../../app';
-import { Panel }  from '../panels'
+import { Panel }  from '../'
 import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls';
 import { MapSettings } from '../../models';
 import { Window } from '../../controls/window'
@@ -61,7 +61,7 @@ export class RenderPanel extends Panel implements Subscriber {
   private ctrlBlockLine: IdLineStyle;
   
   constructor() {
-    super('renderpanel', Handlebars.templates.renderPanel, { });
+    super('renderpanel', Handlebars.templates.RenderPanel, { });
     Dispatcher.subscribe(this);
 
     this.ctrlGridVisible = new IdCheck('.js-grid-visible', this.elem).addEventListener('input', () => { App.map.settings.grid.visible = this.ctrlGridVisible.checked})

@@ -1,7 +1,7 @@
 import { Subscriber, Dispatcher } from '../../dispatcher';
 import { AppEvent } from '../../enums/'
 import { Block } from '../../models';
-import { Panel }  from '../panels'
+import { Panel }  from '../'
 import { IdColorPicker, IdRange, IdPopup, IdShape, IdLineStyle } from '../../controls/controls';
 
 export class BlockPanel extends Panel implements Subscriber {
@@ -16,7 +16,7 @@ export class BlockPanel extends Panel implements Subscriber {
   private colorButtons: Array<IdPopup>;
 
   constructor() {
-    super('blockpanel', Handlebars.templates.blockPanel, {});
+    super('blockpanel', Handlebars.templates.BlockPanel, {});
     Dispatcher.subscribe(this);
 
     this.colorPicker = new IdColorPicker('.js-color', this.elem).addEventListener('change', () => { this.setNoteColor(this.colorPicker.color); }) as IdColorPicker;
