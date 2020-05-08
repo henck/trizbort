@@ -1,6 +1,6 @@
 import { App } from '../app'
 import { View } from './View'
-import { Rect } from '../util/util'
+import { Rect } from '../util'
 import { Room, Connector } from '../models'
 import { ConnectorHandle, Direction, LineStyle, Values, ConnectorType } from '../enums'
 import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen';
@@ -395,7 +395,7 @@ export class ConnectorView extends View {
     
     if(!this.clearRegion) return;
 
-    this.clearRegion.expande(margin);
+    this.clearRegion.expand(margin);
 
     canvas.clearRect(this.clearRegion.x, this.clearRegion.y, this.clearRegion.width, this.clearRegion.height);
 

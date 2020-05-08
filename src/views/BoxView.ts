@@ -1,5 +1,5 @@
 import { View } from './View'
-import { Rect } from '../util/util'
+import { Rect } from '../util'
 import { Box } from '../models'
 import { Direction, RoomShape, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen'
