@@ -3,7 +3,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model } from '../../models/model'
 import { Room } from '../../models/room'
-import { RoomView } from '../../views/roomView'
+import { RoomView } from '../../views'
 import { Popup } from '../popups'
 import { IdPopup, IdRange, IdInput, IdLineStyle, IdQuickColor } from '../../controls/controls';
 

@@ -1,4 +1,4 @@
-import { View } from './view'
+import { View } from './View'
 import { Rect } from '../util/util'
 import { Box } from '../models/box'
 import { Direction, RoomShape, Values } from '../enums'

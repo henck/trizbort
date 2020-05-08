@@ -5,17 +5,11 @@ import { Model } from './models/model'
 import { Grid } from "./grid"
 import { Room } from "./models/room"
 import { Connector } from "./models/connector"
-import { View } from "./views/view"
-import { RoomView }  from "./views/roomView"
-import { ConnectorView }  from "./views/connectorView"
 import { Note } from './models/note'
-import { NoteView } from './views/noteView'
-import { BoxView } from './views/boxView'
 import { Box } from './models/box'
-import { ViewFactory } from './views/viewFactory'
 import { Canvas } from './drawing/canvas'
 import { Block } from './models/block'
-import { BlockView } from './views/blockView'
+import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomView } from './views/'
 import { MapJSON } from './io/mapJSON'
 import { IdToast } from './controls/controls'
 import { Rect } from './util/rect'

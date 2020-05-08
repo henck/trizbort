@@ -1,5 +1,5 @@
 import { App } from '../app'
-import { BoxView } from './boxView'
+import { BoxView } from './BoxView'
 import { Room } from '../models/room'
 import { LineStyle, Values } from '../enums'
 import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen';

@@ -1,4 +1,4 @@
-import { View } from './views/view'
+import { View } from './views'
 import { Dispatcher } from './dispatcher'
 import { AppEvent } from './enums'
 

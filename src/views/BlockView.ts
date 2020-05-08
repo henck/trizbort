@@ -1,4 +1,4 @@
-import { BoxView } from './boxView';
+import { BoxView } from './BoxView';
 import { Block } from '../models/block.js'
 import { LineStyle, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen';

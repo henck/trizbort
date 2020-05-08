@@ -1,5 +1,5 @@
 import { App } from '../app'
-import { View } from './view'
+import { View } from './View'
 import { Rect } from '../util/util'
 import { Room } from '../models/room'
 import { Connector } from '../models/connector'

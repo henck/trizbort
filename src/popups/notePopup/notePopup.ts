@@ -3,7 +3,7 @@ import { Subscriber, Dispatcher } from '../../dispatcher'
 import { AppEvent, MouseMode, Values } from '../../enums'
 import { Model } from '../../models/model'
 import { Note } from '../../models/note'
-import { NoteView } from '../../views/noteView'
+import { NoteView } from '../../views'
 import { Popup } from '../popups'
 import { IdPopup, IdInput, IdRange, IdLineStyle, IdQuickColor } from '../../controls/controls'
 

@@ -1,5 +1,5 @@
 import { App } from '../app';
-import { BoxView } from './boxView';
+import { BoxView } from './BoxView';
 import { Note } from '../models/note'
 import { LineStyle, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen';
