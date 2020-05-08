@@ -98,8 +98,8 @@ export class Editor implements Subscriber {
 
     this.resize();
 
-    // Create a test map:
-    this.makeTestMap();    
+    // Load demo map, if one was passed as a URL parameter:
+    this.loadDemoMap();    
 
     this.refresh(true);
   }
@@ -217,36 +217,8 @@ export class Editor implements Subscriber {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  makeTestMap() {
-    /* let startRoom = new Room(App.map.settings);
-    App.map.add(startRoom);
-    startRoom.name = 'hello world this is a very long text';
-    startRoom.x = 0;
-    startRoom.y = 0;
-    this.views.push(ViewFactory.create(startRoom));
-
-    let connection = new Connector(App.map.settings);
-    App.map.add(connection);
-    connection.name = 'abc';
-    connection.dockStart = startRoom;
-    connection.startDir = Direction.E;
-    connection.isCurve = true;
-    connection.oneWay = true;
-    connection.startType = ConnectorType.In;
-    connection.endType = ConnectorType.Out;
-    this.views.push(ViewFactory.create(connection));
-    
-    let endRoom = new Room(App.map.settings);
-    App.map.add(endRoom);
-    endRoom.name = 'world';
-    endRoom.x = 320;
-    endRoom.y = 320;
-    this.views.push(ViewFactory.create(endRoom));
-
-    connection.dockEnd = endRoom;
-    connection.endDir = Direction.W; */
-
-    // The test map to load can be specified as a URL argument,
+  loadDemoMap() {
+    // The demo map to load can be specified as a URL argument,
     // i.e. trizbort.io/?map=zork
     // If nothing is specified, then no wap will be loaded.
 
