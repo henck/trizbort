@@ -22,7 +22,7 @@ export class ToolPanel extends OptionsGroup implements Subscriber {
   }
 
   get template(): string {
-    return Handlebars.templates.toolPanel({  });
+    return Handlebars.templates.toolPanel({});
   }
 
   set value(val: MouseMode) {
@@ -31,7 +31,6 @@ export class ToolPanel extends OptionsGroup implements Subscriber {
   }
 
   notify(event: AppEvent, obj: any) {
-
     if(event == AppEvent.Added) {
       this.value = MouseMode.None;
     }
