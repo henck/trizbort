@@ -1,15 +1,11 @@
-import { Model } from '../../models/model.js'
 import { Subscriber, Dispatcher } from '../../dispatcher.js';
 import { AppEvent } from '../../enums/appEvent.js'
-import { Room } from '../../models/room.js';
 import { App } from '../../app.js';
-import { RoomShape, LineStyle, Values } from '../../enums/enums.js';
 import { Panel }  from '../panels.js'
-import { IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
-import { Map } from '../../models/map.js';
+import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle } from '../../controls/controls.js';
 import { MapSettings } from '../../models/mapSettings.js';
 import { Window } from '../../controls/window.js'
-import { ObsidianTheme, diagramTheme } from '../../themes/themes.js';
+import { ObsidianTheme, DiagramTheme } from '../../themes/themes.js';
 import { HandDrawnTheme } from '../../themes/handDrawnTheme.js';
 
 export class RenderPanel extends Panel implements Subscriber {
@@ -216,7 +212,7 @@ export class RenderPanel extends Panel implements Subscriber {
             App.map.settings = new MapSettings().cloneFrom(new HandDrawnTheme());
             break;
         case 'diagram':
-            App.map.settings = new MapSettings().cloneFrom(new diagramTheme());
+            App.map.settings = new MapSettings().cloneFrom(new DiagramTheme());
             break;
         default:
           App.map.settings = new MapSettings();

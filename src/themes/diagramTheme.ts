@@ -1,7 +1,7 @@
 import { RoomShape, LineStyle } from "../enums/enums";
 import { MapSettings, fontSettings } from "../models/mapSettings";
 
-export class diagramTheme extends MapSettings {
+export class DiagramTheme extends MapSettings {
   constructor() {
     super();
 
