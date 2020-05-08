@@ -97,6 +97,12 @@ export class Editor implements Subscriber {
     document.body.addEventListener('paste', (e: ClipboardEvent) => {
       this.cmdPaste();
     });
+    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.metaKey) switch(e.key) {
+        case 'a': this.cmdSelectAll(); break;
+        case 'z': App.undo(); break;
+      }
+    });
 
     this.resize();
 
