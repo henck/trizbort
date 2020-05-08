@@ -808,6 +808,7 @@ export class Editor implements Subscriber {
 
     App.mainHTMLCanvas.style.cursor = 'default';
     App.mouseMode = MouseMode.None;
+    Dispatcher.notify(AppEvent.Select, null);
   }
 
   canvasMouseWheel(e:MouseWheelEvent) {
