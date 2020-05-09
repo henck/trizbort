@@ -154,15 +154,15 @@ export class Editor implements Subscriber {
       switch(e.key) {
         // Arrow keys create new room in direction, if there isn't a room connection
         // in that direction already.
-        case 'ArrowRight': this.cmdNewRoomInDir(Direction.E); break;
-        case 'ArrowLeft':  this.cmdNewRoomInDir(Direction.W); break;
-        case 'ArrowUp':    this.cmdNewRoomInDir(Direction.N); break;
-        case 'ArrowDown':  this.cmdNewRoomInDir(Direction.S); break;
-        case 'PageUp':     this.cmdNewRoomInDir(Direction.NE); break;
-        case 'PageDown':   this.cmdNewRoomInDir(Direction.SE); break;
-        case 'End':        this.cmdNewRoomInDir(Direction.SW); break;
-        case 'Home':       this.cmdNewRoomInDir(Direction.NW); break;      
-        case 'Enter':      this.cmdCenterView(); break;  
+        case 'ArrowRight': case '^': case '6': this.cmdNewRoomInDir(Direction.E); break;
+        case 'ArrowLeft': case '$': case '4':  this.cmdNewRoomInDir(Direction.W); break;
+        case 'ArrowUp': case '*': case '8':    this.cmdNewRoomInDir(Direction.N); break;
+        case 'ArrowDown': case '@': case '2':  this.cmdNewRoomInDir(Direction.S); break;
+        case 'PageUp': case '(': case '9':     this.cmdNewRoomInDir(Direction.NE); break;
+        case 'PageDown': case '#': case '3':   this.cmdNewRoomInDir(Direction.SE); break;
+        case 'End': case '!': case '1':        this.cmdNewRoomInDir(Direction.SW); break;
+        case 'Home': case '&': case '7':       this.cmdNewRoomInDir(Direction.NW); break;
+        case 'Enter':      this.cmdCenterView(); break;
       }
     }
 
