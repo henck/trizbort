@@ -14,10 +14,19 @@ module.exports = function(grunt) {
               },
               {
                 expand: true,
-                src: ['serviceworker.js', 'manifest.webmanifest', 'icon.png'],
+                src: ['manifest.webmanifest', 'icon.png'],
                 dest: 'dist/'
               }
           ]
+      },
+      serviceworker: {
+        expand: true,
+        cwd: 'serviceworker',
+        src: 'serviceworker.js',
+        dest: '.',
+        options: {
+          process: content => content.replace(/^const version = '0';/, `const version = '${Date.now()}';`)
+        }
       }
     },
     stylus: {
