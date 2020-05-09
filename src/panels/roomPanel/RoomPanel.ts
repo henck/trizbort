@@ -4,6 +4,7 @@ import { Room, Obj } from '../../models';
 import { Panel }  from '../'
 import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls';
 import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor';
+import { App } from "../../App";
 
 export class RoomPanel extends Panel implements Subscriber {
   private room: Room;
@@ -30,6 +31,12 @@ export class RoomPanel extends Panel implements Subscriber {
     Dispatcher.subscribe(this);
 
     this.ctrlName = new IdInput('.js-name', this.elem).addEventListener('input', () => { this.room.name = this.ctrlName.value; });
+    this.ctrlName.addEventListener('keyup', (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        this.close();
+        App.mainHTMLCanvas.focus();
+      }
+    });
     this.ctrlSubtitle = new IdInput('.js-subtitle', this.elem).addEventListener('input', () => { this.room.subtitle = this.ctrlSubtitle.value; });
     this.ctrlDark = new IdCheck('.js-dark', this.elem).addEventListener('input', () => { this.room.dark = this.ctrlDark.checked; })
     this.ctrlStartroom = new IdCheck('.js-startroom', this.elem).addEventListener('input', () => { this.room.setStartRoom(this.ctrlStartroom.checked); })
