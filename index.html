@@ -7,6 +7,7 @@
   <title>Trizbort.io</title>
   <link rel="stylesheet" href="dist/fonts/fonts.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.webmanifest">
 </head>
 <body>
   <p style="font-family: 'danielbd';">Trizbort.io</p>
@@ -67,6 +68,50 @@
   <script>
     System.import('App').then(function(m) {
       m.App.initialize();
+    });
+  </script>
+  <script type="module">
+    navigator.serviceWorker.register('serviceworker.js').then(reg => {
+
+      // refresh when new SW activates (work around "Update on reload")
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+
+      // wait for reg.waiting or for reg.installing to covert to reg.waiting
+      function listenForWaitingServiceWorker(reg, callback) {
+        function awaitStateChange(sw) {
+          sw.addEventListener('statechange', () => {
+            if (sw.state === 'installed') callback(reg);
+          });
+        }
+        if (!reg) return;
+        if (reg.waiting) return callback(reg);
+        if (reg.installing) awaitStateChange(reg.installing);
+        reg.addEventListener('updatefound', () => awaitStateChange(reg.installing));
+      }
+
+      function promptUserToRefresh() {
+        let toast = document.getElementById("toast");
+        if (!toast) {
+          setTimeout(promptUserToRefresh, 5000);
+          return;
+        }
+        toast.style.display = 'block';
+        toast.querySelector('h3').innerHTML = "New version available";
+        let text = toast.querySelector('p')
+        text.innerHTML = "Please click here to refresh the page. <button>Refresh Now</button>";
+        text.querySelector("button").addEventListener('click', e => {
+          // skipWaiting will activate the waiting SW, which will refresh the page
+          reg.waiting.postMessage('skipWaiting');
+        })
+      }
+
+      listenForWaitingServiceWorker(reg, promptUserToRefresh);
+
     });
   </script>
 </body>

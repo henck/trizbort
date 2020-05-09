@@ -11,6 +11,11 @@ module.exports = function(grunt) {
                   cwd: 'fonts/',
                   src: ['**/*'],
                   dest: 'dist/fonts/'
+              },
+              {
+                expand: true,
+                src: ['serviceworker.js', 'manifest.webmanifest', 'icon.png'],
+                dest: 'dist/'
               }
           ]
       }
