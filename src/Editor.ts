@@ -928,6 +928,8 @@ export class Editor implements Subscriber {
 
     // Add new connector view to editor.
     this.views.push(ViewFactory.create(newConnector));
+    let id = 1;
+    App.map.elements.forEach((elem) => elem.id = id++);
     this.refresh();
   }
 
