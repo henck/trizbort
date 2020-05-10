@@ -6,11 +6,18 @@ import { DrawContext } from './drawContext'
 export class Canvas implements IScreen {
 
   private drawer: DrawContext;
+  private ctx: CanvasRenderingContext2D;
   
   constructor(
-    private ctx: CanvasRenderingContext2D
+    private canvas: HTMLCanvasElement
   ) {
-    this.ctx = ctx;
+    this.ctx = canvas.getContext('2d');
+    if (App.devicePixelRatio !== 1) {
+      canvas.style.transform = `scale(calc(1/${App.devicePixelRatio}))`;
+      canvas.style.transformOrigin = "left top";
+      canvas.style.width = (100*App.devicePixelRatio) + '%';
+      canvas.style.height = (100*App.devicePixelRatio) + '%';
+    }
     this.drawer = new DrawContext(this.ctx);
   }
 
@@ -36,7 +43,7 @@ export class Canvas implements IScreen {
 
   scale(x: number, y?: number): IScreen {
     if(y === undefined) y = x;
-    this.ctx.scale(x, y);
+    this.ctx.scale(x * App.devicePixelRatio, y * App.devicePixelRatio);
     return this;
   }
 

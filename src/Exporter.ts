@@ -9,7 +9,6 @@ export class Exporter {
   private map: Map;
   private canvasElem: HTMLCanvasElement;
   private canvas: Canvas;
-  private ctx: CanvasRenderingContext2D;
   private views: View[];
   private left: number;
   private top: number;
@@ -19,8 +18,7 @@ export class Exporter {
   public constructor(map: Map) {
     this.map = map;
     this.canvasElem = <HTMLCanvasElement> document.getElementById('export');
-    this.ctx = this.canvasElem.getContext('2d')
-    this.canvas = new Canvas(this.ctx);
+    this.canvas = new Canvas(this.canvasElem);
 
     // Assume a canvas of 100x100.
     // This will avoid problems in case of an empty map.
@@ -39,6 +37,7 @@ export class Exporter {
     this.canvasElem.height = this.height;
 
     this.canvas.save();
+    this.canvas.scale(1);
 
     if(withBackground) {
       this.canvas
@@ -79,7 +78,7 @@ export class Exporter {
   // If there is no whitespace at the top, return true.
   // 
   private hasPixelsTop() {
-    var myImageData = this.ctx.getImageData(0, 0, this.width, 1);
+    var myImageData = this.canvas.getImageData(0, 0, this.width, 1);
     for(let i = 0; i < this.width; i++) {
       if(myImageData.data[i * 4 + 3] > 0) return true;
     }
@@ -90,7 +89,7 @@ export class Exporter {
   // If there is no whitespace at the bottom, return true.
   //   
   private hasPixelsBottom() {
-    var myImageData = this.ctx.getImageData(0, this.height - 1, this.width, 1);
+    var myImageData = this.canvas.getImageData(0, this.height - 1, this.width, 1);
     for(let i = 0; i < this.width; i++) {
       if(myImageData.data[i * 4 + 3] > 0) return true;
     }
@@ -101,7 +100,7 @@ export class Exporter {
   // If there is no whitespace on the left, return true.
   //   
   private hasPixelsLeft() {
-    var myImageData = this.ctx.getImageData(0, 0, 1, this.height);
+    var myImageData = this.canvas.getImageData(0, 0, 1, this.height);
     for(let i = 0; i < this.height; i++) {
       if(myImageData.data[i * 4 + 3] > 0) return true;
     }
@@ -112,7 +111,7 @@ export class Exporter {
   // If there is no whitespace on the right, return true.
   //   
   private hasPixelsRight() {
-    var myImageData = this.ctx.getImageData(this.width - 1, 0, 1, this.height);
+    var myImageData = this.canvas.getImageData(this.width - 1, 0, 1, this.height);
     for(let i = 0; i < this.height; i++) {
       if(myImageData.data[i * 4 + 3] > 0) return true;
     }

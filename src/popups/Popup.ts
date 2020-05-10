@@ -11,8 +11,9 @@ export class Popup {
   }
 
   protected showAt(x: number, y: number) {
-    this.elem.style.left = App.mainHTMLCanvas.offsetWidth / 2 + App.centerX + x * App.zoom + "px"; 
-    this.elem.style.top = App.mainHTMLCanvas.offsetHeight / 2 + App.centerY + y * App.zoom - 32 + "px";
+    const dpr = App.devicePixelRatio;
+    this.elem.style.left = App.mainHTMLCanvas.offsetWidth / 2 / dpr + App.centerX / dpr + x * App.zoom + "px";
+    this.elem.style.top = App.mainHTMLCanvas.offsetHeight / 2 / dpr + App.centerY / dpr + y * App.zoom - 32 + "px";
     this.elem.style.display = 'flex';
     // Close any open overlays inside popup.
     let overlays = this.elem.querySelectorAll(".popup-overlay");
