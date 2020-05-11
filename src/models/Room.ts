@@ -148,7 +148,7 @@ export class Room extends Box {
 
   /**
    * Sets the color to draw the room's subtitle with.
-   * @param color HTML color
+   * @param color HTML color, or null to revert to default from map settings
    */
   set subtitleColor(color: string) {
     this._subtitleColor = color;
@@ -167,7 +167,7 @@ export class Room extends Box {
 
   /**
    * Sets the color to fill the room background with.
-   * @param color HTML color
+   * @param color HTML color, or null to revert to default from map settings
    */
   set fillColor(color: string) {
     this._fillColor = color;
@@ -186,7 +186,7 @@ export class Room extends Box {
 
   /**
    * Sets the color to draw the room's border with.
-   * @param color HTML color
+   * @param color HTML color, or null to revert to default from map settings
    */
   set borderColor(color: string) {
     this._borderColor = color;
@@ -205,7 +205,7 @@ export class Room extends Box {
 
   /**
    * Sets the rounding to apply to the room's border.
-   * @param r Border rounding in px
+   * @param r Border rounding in px, or null to revert to default from map settings
    */
   set rounding(r: number) {
     this._rounding = r;
@@ -223,7 +223,7 @@ export class Room extends Box {
 
   /**
    * Sets the room's shape.
-   * @param s: RoomShape
+   * @param s RoomShape, or null to revert to default from map settings
    */
   set shape(s: RoomShape) {
     this._shape = s;
@@ -241,7 +241,7 @@ export class Room extends Box {
 
   /**
    * Sets the room's line style.
-   * @param style LineStyle
+   * @param style LineStyle, or null to revert to default from map settings
    */
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
@@ -259,7 +259,7 @@ export class Room extends Box {
 
   /**
    * Set the room's line width.
-   * @param width Line width in px
+   * @param width Line width in px, or null to revert to default from map settings
    */
   set lineWidth(width: number) {
     this._lineWidth = width;
