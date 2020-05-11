@@ -3,6 +3,7 @@
 node_modules
 design
 style.css
+serviceworker.js
 dist
 tscommand-*.tmp.txt
 _site

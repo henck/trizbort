@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "node dev-server.js"
+    "start:dev": "node dev-server.js",
+    "build": "grunt build"
   },
   "author": "Alexander van Oostenrijk / Independent Software (www.independent-software.com)",
   "license": "MIT",

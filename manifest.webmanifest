@@ -1,0 +1,14 @@
+{
+  "name": "Trizbort",
+  "short_name": "Trizbort",
+  "start_url": ".",
+  "display": "standalone",
+  "scope": ".",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

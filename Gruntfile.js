@@ -11,8 +11,22 @@ module.exports = function(grunt) {
                   cwd: 'fonts/',
                   src: ['**/*'],
                   dest: 'dist/fonts/'
+              },
+              {
+                expand: true,
+                src: ['manifest.webmanifest', 'icon.png'],
+                dest: 'dist/'
               }
           ]
+      },
+      serviceworker: {
+        expand: true,
+        cwd: 'serviceworker',
+        src: 'serviceworker.js',
+        dest: '.',
+        options: {
+          process: content => content.replace(/^const version = '0';/, `const version = '${Date.now()}';`)
+        }
       }
     },
     stylus: {
