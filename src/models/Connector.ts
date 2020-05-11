@@ -4,131 +4,20 @@ import { Room } from './Room'
 import { MapSettings } from './MapSettings';
 
 export class Connector extends Model {
-  private _name: string
-  public get name(): string {
-    return this._name
-  }
-  public set name(value: string) {
-    this._name = value;
-    this.setDirty();
-  }
-
-  private _startX: number
-  public get startX(): number {
-    return this._startX
-  }
-  public set startX(value: number) {
-    this._startX = value;
-    this.setDirty();
-  }
-
-  private _startY: number
-  public get startY(): number {
-    return this._startY
-  }
-  public set startY(value: number) {
-    this._startY = value;
-    this.setDirty();
-  }
-
-  private _endX: number
-  public get endX(): number {
-    return this._endX
-  }
-  public set endX(value: number) {
-    this._endX = value;
-    this.setDirty();
-  }
-
-  private _endY: number
-  public get endY(): number {
-    return this._endY
-  }
-  public set endY(value: number) {
-    this._endY = value;
-    this.setDirty();
-  }
-
-  private _dockStart: Room 
-  public get dockStart(): Room {
-    return this._dockStart
-  }
-  public set dockStart(value: Room) {
-    this._dockStart = value;
-    this.setDirty();
-  }
-
-  private _dockEnd: Room
-  public get dockEnd(): Room {
-    return this._dockEnd
-  }
-  public set dockEnd(value: Room) {
-    this._dockEnd = value;
-    this.setDirty();
-  }
-
-  private _startDir: Direction
-  public get startDir(): Direction {
-    return this._startDir
-  }
-  public set startDir(value: Direction) {
-    this._startDir = value;
-    this.setDirty();
-  }
-
-  private _endDir: Direction
-  public get endDir(): Direction {
-    return this._endDir
-  }
-  public set endDir(value: Direction) {
-    this._endDir = value;
-    this.setDirty();
-  }
-
-  private _oneWay: boolean
-  public get oneWay(): boolean {
-    return this._oneWay
-  }
-  public set oneWay(value: boolean) {
-    this._oneWay = value;
-    this.setDirty();
-  }
-
-  private _startType: ConnectorType
-  public get startType(): ConnectorType {
-    return this._startType
-  }
-  public set startType(value: ConnectorType) {
-    this._startType = value;
-    this.setDirty();
-  }
-
-  private _endType: ConnectorType
-  public get endType(): ConnectorType {
-    return this._endType
-  }
-  public set endType(value: ConnectorType) {
-    this._endType = value;
-    this.setDirty();
-  }
-
-  private _startLabel: string
-  public get startLabel(): string {
-    return this._startLabel
-  }
-  public set startLabel(value: string) {
-    this._startLabel = value
-  }
-
-  private _endLabel: string
-  public get endLabel(): string {
-    return this._endLabel
-  }
-  public set endLabel(value: string) {
-    this._endLabel = value
-    this.setDirty();
-  }
-  
+  private _name: string;
+  private _startX: number;
+  private _startY: number;
+  private _endX: number;
+  private _endY: number;
+  private _dockStart: Room;
+  private _dockEnd: Room;  
+  private _startDir: Direction;
+  private _endDir: Direction;  
+  private _oneWay: boolean;
+  private _startType: ConnectorType;  
+  private _endType: ConnectorType;  
+  private _startLabel: string;
+  private _endLabel: string;  
   private _color: string;
   private _lineStyle: LineStyle;
   private _lineWidth: number;
@@ -150,9 +39,146 @@ export class Connector extends Model {
     this._startLabel = '';
     this._endLabel = '';
   }
+  
+  /** 
+   * Returns connector name, e.g. "trapdoor"
+   */
+  public get name(): string {
+    return this._name;
+  }
 
-  get color() {
-    return this._color != null ? this._color : this.map.settings.connector.color;
+  /**
+   * Sets connector name, e.g. "trapdoor"
+   */
+  public set name(value: string) {
+    this._name = value;
+    this.setDirty();
+  }
+  
+  public get startX(): number {
+    return this._startX
+  }
+
+  public set startX(value: number) {
+    this._startX = value;
+    this.setDirty();
+  }
+
+  public get startY(): number {
+    return this._startY;
+  }
+
+  public set startY(value: number) {
+    this._startY = value;
+    this.setDirty();
+  }
+  
+  public get endX(): number {
+    return this._endX;
+  }
+
+  public set endX(value: number) {
+    this._endX = value;
+    this.setDirty();
+  }
+  
+  public get endY(): number {
+    return this._endY;
+  }
+
+  public set endY(value: number) {
+    this._endY = value;
+    this.setDirty();
+  }
+
+  public get dockStart(): Room {
+    return this._dockStart;
+  }
+  
+  public set dockStart(value: Room) {
+    this._dockStart = value;
+    this.setDirty();
+  }
+
+  public get dockEnd(): Room {
+    return this._dockEnd;
+  }
+
+  public set dockEnd(value: Room) {
+    this._dockEnd = value;
+    this.setDirty();
+  }
+  
+  public get startDir(): Direction {
+    return this._startDir;
+  }
+
+  public set startDir(value: Direction) {
+    this._startDir = value;
+    this.setDirty();
+  }
+
+  public get endDir(): Direction {
+    return this._endDir;
+  }
+
+  public set endDir(value: Direction) {
+    this._endDir = value;
+    this.setDirty();
+  }
+
+  /**
+   * Is this a one-way connector?
+   */
+  public get oneWay(): boolean {
+    return this._oneWay;
+  }
+
+  /**
+   * Set connector as one-way (true) or two-way (false).
+   */
+  public set oneWay(value: boolean) {
+    this._oneWay = value;
+    this.setDirty();
+  }
+
+  public get startType(): ConnectorType {
+    return this._startType;
+  }
+
+  public set startType(value: ConnectorType) {
+    this._startType = value;
+    this.setDirty();
+  }
+
+  public get endType(): ConnectorType {
+    return this._endType;
+  }
+
+  public set endType(value: ConnectorType) {
+    this._endType = value;
+    this.setDirty();
+  }
+
+  public get startLabel(): string {
+    return this._startLabel;
+  }
+
+  public set startLabel(value: string) {
+    this._startLabel = value;
+  }
+
+  public get endLabel(): string {
+    return this._endLabel;
+  }
+
+  public set endLabel(value: string) {
+    this._endLabel = value;
+    this.setDirty();
+  }
+  
+  get color(): string {
+    return this._color ?? this.map.settings.connector.color;
   }
 
   set color(c: string) {
@@ -160,8 +186,8 @@ export class Connector extends Model {
     this.setDirty();
   }
 
-  get lineStyle() {
-    return this._lineStyle != null ? this._lineStyle : this.map.settings.connector.lineStyle;
+  get lineStyle(): LineStyle {
+    return this._lineStyle ?? this.map.settings.connector.lineStyle;
   }
 
   set lineStyle(style: LineStyle) {
@@ -169,8 +195,8 @@ export class Connector extends Model {
     this.setDirty();
   }
 
-  get lineWidth() {
-    return this._lineWidth != null ? this._lineWidth : this.map.settings.connector.lineWidth;
+  get lineWidth(): number {
+    return this._lineWidth ?? this.map.settings.connector.lineWidth;
   }
 
   set lineWidth(width: number) {
@@ -178,8 +204,8 @@ export class Connector extends Model {
     this.setDirty();
   }
 
-  get isCurve() {
-    return this._isCurve != null ? this._isCurve : this.map.settings.connector.isCurve;
+  get isCurve(): boolean {
+    return this._isCurve ?? this.map.settings.connector.isCurve;
   }
 
   set isCurve(curve: boolean) {
