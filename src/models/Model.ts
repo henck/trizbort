@@ -35,7 +35,7 @@ export class Model {
     return this.type;
   }
 
-  get isChanged(): boolean {
+  get isDirty(): boolean {
     return this._changed;
   }
 

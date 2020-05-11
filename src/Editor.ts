@@ -303,7 +303,7 @@ export class Editor implements Subscriber {
   }
 
   private renderView(view: View) {
-    if((!this.resfreshAlways) && (view.getModel().isChanged || this.refreshAll)) {
+    if((!this.resfreshAlways) && (view.getModel().isDirty || this.refreshAll)) {
       let rect: Rect;
       
       //clearing the view and restoring the back area
