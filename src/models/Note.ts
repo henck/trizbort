@@ -14,6 +14,21 @@ export class Note extends Box {
     this._w = settings.note.width;
     this._h = settings.note.height;
   }  
+
+  /**
+   * Load a Note from a POJO from a JSON source.
+   * @param settings Map settings
+   * @param src POJO
+   */
+  static load(settings: MapSettings, src: object): Note {
+    // Create a new Note
+    let note = new Note(settings);
+    // Copy fields from POJO into Note.
+    for(let key in src) {
+      (note as any)[key] = (src as any)[key];
+    }
+    return note;
+  }  
   
   /**
    * Return Note's text.

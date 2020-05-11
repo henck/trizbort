@@ -13,6 +13,21 @@ export class Block extends Box {
   }
 
   /**
+   * Load a Block from a POJO from a JSON source.
+   * @param settings Map settings
+   * @param src POJO
+   */  
+  static load(settings: MapSettings, src: object): Block {
+    // Create a new Block
+    let block = new Block(settings);
+    // Copy fields from POJO into Block
+    for(let key in src) {
+      (block as any)[key] = (src as any)[key];
+    }
+    return block;
+  }    
+
+  /**
    * Return Block's background fill color. If not set, return
    * default block fill color from map settings.
    * @returns HTML color

@@ -39,6 +39,21 @@ export class Connector extends Model {
     this._startLabel = '';
     this._endLabel = '';
   }
+
+  /**
+   * Load a Connector from a POJO from a JSON source.
+   * @param settings Map settings
+   * @param src POJO
+   */    
+  static load(settings: MapSettings, src: object): Connector {
+    // Create new connector
+    let conn = new Connector(settings);
+    // Copy fields from POJO into Connector
+    for(let key in src) {
+      (conn as any)[key] = (src as any)[key];
+    }
+    return conn;
+  }    
   
   /** 
    * Returns connector name, e.g. "trapdoor"

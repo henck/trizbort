@@ -34,6 +34,26 @@ export class Room extends Box {
     this.objects = [];
   }
 
+  /**
+   * Load a Room from a POJO from a JSON source.
+   * @param settings Map settings
+   * @param src POJO
+   */    
+  static load(settings: MapSettings, src: object): Room {
+    // Create a new Room
+    let room = new Room(settings);
+    // Copy fields from POJO into Room
+    for(let key in src) {
+      // Object field is special. Pass content to Obj's POJO loader.
+      if(key == 'objects') { 
+        room.objects = (src as any).objects.map((x:object) => Obj.load(x));
+      } else {
+        (room as any)[key] = (src as any)[key];
+      }
+    }
+    return room;
+  }
+
   ///
   /// Acessor methods
   ///
