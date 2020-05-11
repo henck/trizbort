@@ -213,7 +213,11 @@ export class Connector extends Model {
     this.setDirty();
   }
 
-  reverse() {
+  /**
+   * Reverse the direction of this connector. The start room becomes
+   * the end room, and vice versa.
+   */
+  reverse(): void {
     if(!this.isDoubleDocked()) return;
     [this.dockEnd, this.dockStart]  = [this.dockStart, this.dockEnd];
     [this.endDir, this.startDir] = [this.startDir, this.endDir];
