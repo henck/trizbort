@@ -19,7 +19,7 @@ export class Block extends Box {
 
   set fillColor(color: string) {
     this._fillColor = color;
-    this.dirty();
+    this.setDirty();
   }
 
   get borderColor() {
@@ -28,7 +28,7 @@ export class Block extends Box {
 
   set borderColor(color: string) {
     this._borderColor = color;
-    this.dirty();
+    this.setDirty();
   }  
 
   get rounding() {
@@ -37,7 +37,7 @@ export class Block extends Box {
 
   set rounding(r: number) {
     this._rounding = r;
-    this.dirty();
+    this.setDirty();
   }
 
   get shape() {
@@ -46,7 +46,7 @@ export class Block extends Box {
 
   set shape(s: RoomShape) {
     this._shape = s;
-    this.dirty();
+    this.setDirty();
   }
 
   get lineStyle() {
@@ -55,7 +55,7 @@ export class Block extends Box {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
-    this.dirty();
+    this.setDirty();
   }
 
   get lineWidth() {
@@ -64,7 +64,7 @@ export class Block extends Box {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
-    this.dirty();
+    this.setDirty();
   }    
 
   clone(): Model {

@@ -40,9 +40,9 @@ export class Model {
   }
 
   /**
-   * Mark this Model as changed, so that the editor knows that to update.
+   * Mark this Model as changed, so that the editor knows what to update.
    */
-  protected dirty() {
+  protected setDirty() {
     this._changed = true;
   }
 

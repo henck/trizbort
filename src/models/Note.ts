@@ -10,7 +10,7 @@ export class Note extends Box {
   }
   public set text(value: string) {
     this._text = value;
-    this.dirty();
+    this.setDirty();
   }
   private _textColor: string;
 
@@ -30,7 +30,7 @@ export class Note extends Box {
 
   set textColor(color: string) {
     this._textColor = color;
-    this.dirty();
+    this.setDirty();
   }
 
   get fillColor() {
@@ -39,7 +39,7 @@ export class Note extends Box {
 
   set fillColor(color: string) {
     this._fillColor = color;
-    this.dirty();
+    this.setDirty();
   }
 
   get borderColor() {
@@ -48,7 +48,7 @@ export class Note extends Box {
 
   set borderColor(color: string) {
     this._borderColor = color;
-    this.dirty();
+    this.setDirty();
   }  
 
   get rounding() {
@@ -57,7 +57,7 @@ export class Note extends Box {
 
   set rounding(r: number) {
     this._rounding = r;
-    this.dirty();
+    this.setDirty();
   }
 
   get shape() {
@@ -66,7 +66,7 @@ export class Note extends Box {
 
   set shape(s: RoomShape) {
     this._shape = s;
-    this.dirty();
+    this.setDirty();
   }
 
   get lineStyle() {
@@ -75,7 +75,7 @@ export class Note extends Box {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
-    this.dirty();
+    this.setDirty();
   }
 
   get lineWidth() {
@@ -84,7 +84,7 @@ export class Note extends Box {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
-    this.dirty();
+    this.setDirty();
   }    
 
   clone(): Model {
