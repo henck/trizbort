@@ -39,22 +39,22 @@ export class Box extends Model {
 
   set x(val: number) {
     this._x = val;
-    this._changed = true;
+    this.dirty();
   }
 
   set y(val: number) {
     this._y = val;
-    this._changed = true;
+    this.dirty();
   }
 
   set width(val: number) {
     this._w = val;
-    this._changed = true;
+    this.dirty();
   }
 
   set height(val: number) {
     this._h = val;
-    this._changed = true;
+    this.dirty();
   }
 
   get fillColor() {
@@ -63,7 +63,7 @@ export class Box extends Model {
 
   set fillColor(color: string) {
     this._fillColor = color;
-    this._changed = true;
+    this.dirty();
   }
 
   get borderColor() {
@@ -72,7 +72,7 @@ export class Box extends Model {
 
   set borderColor(color: string) {
     this._borderColor = color;
-    this._changed = true;
+    this.dirty();
   }  
 
   get rounding() {
@@ -81,7 +81,7 @@ export class Box extends Model {
 
   set rounding(r: number) {
     this._rounding = r;
-    this._changed = true;
+    this.dirty();
   }
 
   get shape() {
@@ -90,7 +90,7 @@ export class Box extends Model {
 
   set shape(s: RoomShape) {
     this._shape = s;
-    this._changed = true;
+    this.dirty();
   }
 
   get lineStyle() {
@@ -99,7 +99,7 @@ export class Box extends Model {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
-    this._changed = true;
+    this.dirty();
   }
 
   get lineWidth() {
@@ -108,7 +108,7 @@ export class Box extends Model {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
-    this._changed = true;
+    this.dirty();
   }
   
   //

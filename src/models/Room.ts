@@ -50,7 +50,7 @@ export class Room extends Box {
    */
   set name(val:string) {
     this._name = val;
-    this._changed = true;
+    this.dirty();
   };
 
   /**
@@ -65,7 +65,7 @@ export class Room extends Box {
    */
   set subtitle(val:string) {
     this._subtitle = val;
-    this._changed = true;
+    this.dirty();
   };
 
   /**
@@ -80,7 +80,7 @@ export class Room extends Box {
    */
   set description(val:string) {
     this._description = val;
-    this._changed = true;
+    this.dirty();
   };
 
   /**
@@ -97,7 +97,7 @@ export class Room extends Box {
    */
   set dark(val: boolean) {
     this._dark = val;
-    this._changed = true;
+    this.dirty();
   };
 
   /**
@@ -114,7 +114,7 @@ export class Room extends Box {
    */ 
   set endroom(val: boolean) {
     this._endroom = val;
-    this._changed = true;
+    this.dirty();
   };
 
   /**
@@ -133,7 +133,7 @@ export class Room extends Box {
    */
   set nameColor(color: string) {
     this._nameColor = color;
-    this._changed = true;
+    this.dirty();
   }
 
   /**
@@ -152,7 +152,7 @@ export class Room extends Box {
    */
   set subtitleColor(color: string) {
     this._subtitleColor = color;
-    this._changed = true;
+    this.dirty();
   }  
 
   /**
@@ -171,7 +171,7 @@ export class Room extends Box {
    */
   set fillColor(color: string) {
     this._fillColor = color;
-    this._changed = true;
+    this.dirty();
   }
 
   /**
@@ -190,7 +190,7 @@ export class Room extends Box {
    */
   set borderColor(color: string) {
     this._borderColor = color;
-    this._changed = true;
+    this.dirty();
   }  
 
   /**
@@ -209,7 +209,7 @@ export class Room extends Box {
    */
   set rounding(r: number) {
     this._rounding = r;
-    this._changed = true;
+    this.dirty();
   }
 
   /**
@@ -227,7 +227,7 @@ export class Room extends Box {
    */
   set shape(s: RoomShape) {
     this._shape = s;
-    this._changed = true;
+    this.dirty();
   }
 
   /**
@@ -245,7 +245,7 @@ export class Room extends Box {
    */
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
-    this._changed = true;
+    this.dirty();
   }
 
   /**
@@ -263,7 +263,7 @@ export class Room extends Box {
    */
   set lineWidth(width: number) {
     this._lineWidth = width;
-    this._changed = true;
+    this.dirty();
   }    
 
   ///
@@ -288,7 +288,7 @@ export class Room extends Box {
     } else {
       if(this.isStartRoom) this.map.setStartRoom(null);
     }
-    this._changed = true;
+    this.dirty();
   }
 
   /**

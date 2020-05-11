@@ -10,7 +10,7 @@ export class Connector extends Model {
   }
   public set name(value: string) {
     this._name = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _startX: number
@@ -19,7 +19,7 @@ export class Connector extends Model {
   }
   public set startX(value: number) {
     this._startX = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _startY: number
@@ -28,7 +28,7 @@ export class Connector extends Model {
   }
   public set startY(value: number) {
     this._startY = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _endX: number
@@ -37,7 +37,7 @@ export class Connector extends Model {
   }
   public set endX(value: number) {
     this._endX = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _endY: number
@@ -46,7 +46,7 @@ export class Connector extends Model {
   }
   public set endY(value: number) {
     this._endY = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _dockStart: Room 
@@ -55,7 +55,7 @@ export class Connector extends Model {
   }
   public set dockStart(value: Room) {
     this._dockStart = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _dockEnd: Room
@@ -64,7 +64,7 @@ export class Connector extends Model {
   }
   public set dockEnd(value: Room) {
     this._dockEnd = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _startDir: Direction
@@ -73,7 +73,7 @@ export class Connector extends Model {
   }
   public set startDir(value: Direction) {
     this._startDir = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _endDir: Direction
@@ -82,7 +82,7 @@ export class Connector extends Model {
   }
   public set endDir(value: Direction) {
     this._endDir = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _oneWay: boolean
@@ -91,7 +91,7 @@ export class Connector extends Model {
   }
   public set oneWay(value: boolean) {
     this._oneWay = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _startType: ConnectorType
@@ -100,7 +100,7 @@ export class Connector extends Model {
   }
   public set startType(value: ConnectorType) {
     this._startType = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _endType: ConnectorType
@@ -109,7 +109,7 @@ export class Connector extends Model {
   }
   public set endType(value: ConnectorType) {
     this._endType = value;
-    this._changed = true;
+    this.dirty();
   }
 
   private _startLabel: string
@@ -126,7 +126,7 @@ export class Connector extends Model {
   }
   public set endLabel(value: string) {
     this._endLabel = value
-    this._changed = true;
+    this.dirty();
   }
   
   private _color: string;
@@ -157,7 +157,7 @@ export class Connector extends Model {
 
   set color(c: string) {
     this._color = c;
-    this._changed = true;
+    this.dirty();
   }
 
   get lineStyle() {
@@ -166,7 +166,7 @@ export class Connector extends Model {
 
   set lineStyle(style: LineStyle) {
     this._lineStyle = style;
-    this._changed = true;
+    this.dirty();
   }
 
   get lineWidth() {
@@ -175,7 +175,7 @@ export class Connector extends Model {
 
   set lineWidth(width: number) {
     this._lineWidth = width;
-    this._changed = true;
+    this.dirty();
   }
 
   get isCurve() {
@@ -184,7 +184,7 @@ export class Connector extends Model {
 
   set isCurve(curve: boolean) {
     this._isCurve = curve;
-    this._changed = true;
+    this.dirty();
   }
 
   reverse() {

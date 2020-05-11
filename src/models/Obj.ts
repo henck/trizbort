@@ -28,7 +28,7 @@ export class Obj extends Model {
    */
   public set name(value: string) {
     this._name = value;
-    this._changed = true;
+    this.dirty();
   }
   
   /**
@@ -43,7 +43,7 @@ export class Obj extends Model {
    */
   public set description(value: string) {
     this._description = value;
-    this._changed = true;
+    this.dirty();
   }
   
   /** 
@@ -58,7 +58,7 @@ export class Obj extends Model {
    */
   public set content(value: Obj[]) {
     this._content = value;
-    this._changed = true;
+    this.dirty();
   }
   
   /**
@@ -74,6 +74,6 @@ export class Obj extends Model {
    */
   public set kind(value: ObjectKind) {
     this._kind = value;
-    this._changed = true;
+    this.dirty();
   }  
 }

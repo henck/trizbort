@@ -17,16 +17,17 @@ export class Model {
   protected _changed: boolean;
   protected _type: string;
 
-  get type(): string {
-    return this._type;
-  }
-  set type(value: string) {
-    this._type = value;
+  constructor() {
+    this.id = 0;
     this._changed = true;
   }
 
-  constructor() {
-    this.id = 0;
+  get type(): string {
+    return this._type;
+  }
+
+  set type(value: string) {
+    this._type = value;
     this._changed = true;
   }
 
@@ -36,6 +37,13 @@ export class Model {
 
   get isChanged(): boolean {
     return this._changed;
+  }
+
+  /**
+   * Mark this Model as changed, so that the editor knows that to update.
+   */
+  protected dirty() {
+    this._changed = true;
   }
 
   forceChanged() {
