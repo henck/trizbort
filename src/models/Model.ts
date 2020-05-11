@@ -15,7 +15,7 @@ export class Model {
   id: number;
   map: Map;
   protected _dirty: boolean;  // Does this Model need updating?
-  protected _type: string;
+  protected _type: string;    // Model type, e.g. "Room" or "Note". This is used for readig/writing JSON.
 
   constructor() {
     this.id = 0;
