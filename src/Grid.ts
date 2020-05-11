@@ -32,18 +32,19 @@ export class Grid {
     let settings = App.map.settings.grid;
     if(!settings.visible) return;
 
+    const dpr = App.devicePixelRatio;
     canvas
       .save()
       .strokeStyle(settings.color)
-      .lineWidth(settings.lineWidth);
+      .lineWidth(settings.lineWidth * dpr);
     var x = htmlCanvas.offsetWidth / 2 + App.centerX;
-    while(x > 0) { this.drawGridLineV(htmlCanvas, canvas, x); x -= settings.size * App.zoom; }
-    var x = htmlCanvas.offsetWidth / 2 + App.centerX + settings.size * App.zoom;
-    while(x < htmlCanvas.offsetWidth) { this.drawGridLineV(htmlCanvas, canvas, x); x += settings.size * App.zoom; }
+    while(x > 0) { this.drawGridLineV(htmlCanvas, canvas, x); x -= settings.size * App.zoom * dpr; }
+    var x = htmlCanvas.offsetWidth / 2 + App.centerX + settings.size * App.zoom * dpr;
+    while(x < htmlCanvas.offsetWidth) { this.drawGridLineV(htmlCanvas, canvas, x); x += settings.size * App.zoom * dpr; }
     var y = htmlCanvas.offsetHeight / 2 + App.centerY;
-    while(y > 0) { this.drawGridLineH(htmlCanvas,canvas, y); y -=  settings.size * App.zoom; }
-    var y = htmlCanvas.offsetHeight / 2 + App.centerY + settings.size * App.zoom;
-    while(y < htmlCanvas.offsetHeight) { this.drawGridLineH(htmlCanvas, canvas, y); y += settings.size * App.zoom; }
+    while(y > 0) { this.drawGridLineH(htmlCanvas,canvas, y); y -=  settings.size * App.zoom * dpr; }
+    var y = htmlCanvas.offsetHeight / 2 + App.centerY + settings.size * App.zoom * dpr;
+    while(y < htmlCanvas.offsetHeight) { this.drawGridLineH(htmlCanvas, canvas, y); y += settings.size * App.zoom * dpr; }
 
     // Draw origin if necessary
     if(settings.origin) {
@@ -51,11 +52,11 @@ export class Grid {
       y = Math.floor(htmlCanvas.offsetHeight / 2) + App.centerY;
       canvas
         .beginPath()
-        .lineWidth(settings.originWidth)
-        .moveTo(x, y - settings.size * App.zoom)
-        .lineTo(x, y + settings.size * App.zoom)
-        .moveTo(x - settings.size * App.zoom, y)
-        .lineTo(x + settings.size * App.zoom, y)
+        .lineWidth(settings.originWidth * dpr)
+        .moveTo(x, y - settings.size * App.zoom * dpr)
+        .lineTo(x, y + settings.size * App.zoom * dpr)
+        .moveTo(x - settings.size * App.zoom * dpr, y)
+        .lineTo(x + settings.size * App.zoom * dpr, y)
         .stroke();
     }
 

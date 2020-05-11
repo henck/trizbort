@@ -44,14 +44,14 @@ export class Editor implements Subscriber {
     Dispatcher.subscribe(this);
 
     // Access the main canvas:
-    this.mainCanvas = new Canvas(App.mainHTMLCanvas.getContext('2d'));
+    this.mainCanvas = new Canvas(App.mainHTMLCanvas);
 
     // Access the background canvas:
-    this.bgCanvas = new Canvas(App.bgHTMLCanvas.getContext('2d'));
+    this.bgCanvas = new Canvas(App.bgHTMLCanvas);
 
     // Access the 1x1 hittest canvas:
     this.hitTestHtmlCanvas = <HTMLCanvasElement> document.getElementById('hittest');
-    this.hitTestCanvas = new Canvas(this.hitTestHtmlCanvas.getContext('2d'));
+    this.hitTestCanvas = new Canvas(this.hitTestHtmlCanvas);
 
     this.views = new Array();
 
@@ -489,10 +489,12 @@ export class Editor implements Subscriber {
   // 
   findMouseCoordinates(e: MouseEvent) {
     let { x, y } = this.findObjCoordinates(App.mainHTMLCanvas);
-    return { 
-      x: Math.floor((e.clientX - x - App.mainHTMLCanvas.offsetWidth / 2 - App.centerX) / App.zoom), 
-      y: Math.floor((e.clientY - y - App.mainHTMLCanvas.offsetHeight / 2 - App.centerY) / App.zoom)
+    const dpr = App.devicePixelRatio;
+    const result = {
+      x: Math.floor((e.clientX - x - App.mainHTMLCanvas.offsetWidth / 2 / dpr - App.centerX / dpr) / App.zoom),
+      y: Math.floor((e.clientY - y - App.mainHTMLCanvas.offsetHeight / 2 / dpr - App.centerY / dpr) / App.zoom)
     };
+    return result;
   }
 
   findViewByCoordinates(x: number, y: number) {
@@ -713,8 +715,8 @@ export class Editor implements Subscriber {
     // We do different things for different mouse modes.
     switch(App.mouseMode) {
       case MouseMode.Scroll:
-        App.centerX = this.scrollOriginX + (e.clientX - this.scrollOffsetX);
-        App.centerY = this.scrollOriginY + (e.clientY - this.scrollOffsetY);
+        App.centerX = this.scrollOriginX + (e.clientX - this.scrollOffsetX) * App.devicePixelRatio;
+        App.centerY = this.scrollOriginY + (e.clientY - this.scrollOffsetY) * App.devicePixelRatio;
         this.refresh(true);
         break; 
 
@@ -936,8 +938,8 @@ export class Editor implements Subscriber {
   // 
   // Move the canvas center by (dx, dy)
   moveCenter(dx: number, dy: number) {
-    App.centerX += dx * App.map.settings.grid.size;
-    App.centerY += dy * App.map.settings.grid.size;
+    App.centerX += (dx * App.map.settings.grid.size * App.devicePixelRatio);
+    App.centerY += (dy * App.map.settings.grid.size * App.devicePixelRatio);
     this.refresh(true);
   }
 

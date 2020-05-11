@@ -19,6 +19,7 @@ export class App {
   static zoom: number = 1;
   static centerX: number = 0;
   static centerY: number = 0;
+  static devicePixelRatio: number = window.devicePixelRatio;
   static mouseMode: MouseMode = MouseMode.None;
   static undoStack: Array<string> = new Array<string>();
   static selection: Selection; 
