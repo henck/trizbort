@@ -14,12 +14,12 @@ export class Model {
   @Xml('id', 0, (s:string) => { return parseInt(s); })
   id: number;
   map: Map;
-  protected _changed: boolean;
+  protected _dirty: boolean;
   protected _type: string;
 
   constructor() {
     this.id = 0;
-    this._changed = true;
+    this._dirty = true;
   }
 
   get type(): string {
@@ -28,30 +28,32 @@ export class Model {
 
   set type(value: string) {
     this._type = value;
-    this._changed = true;
+    this._dirty = true;
   }
 
   getType() {
     return this.type;
   }
 
+  /**
+   * Is this Model dirty, that is, must the editor update it?
+   */
   get isDirty(): boolean {
-    return this._changed;
+    return this._dirty;
   }
 
   /**
-   * Mark this Model as changed, so that the editor knows what to update.
+   * Mark this Model as dirty, so that the editor knows what to update.
    */
-  protected setDirty() {
-    this._changed = true;
+  public setDirty() {
+    this._dirty = true;
   }
 
-  forceChanged() {
-    this._changed = true;
-  }
-
-  unChanged() {
-    this._changed = false;
+  /**
+   * Mark this Model as clean, so the editor doesn't need to update it.
+   */
+  public setClean() {
+    this._dirty = false;
   }
 
   public delete() {

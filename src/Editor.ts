@@ -338,7 +338,7 @@ export class Editor implements Subscriber {
         }
       }
       view.draw(this.mainCanvas, this.hover == view && App.mouseMode != MouseMode.Select);
-      view.getModel().unChanged();
+      view.getModel().setClean();
 
       // rendering all views 'isIn' in current view if not refreshAll
       if(!this.refreshAll) {
@@ -699,13 +699,13 @@ export class Editor implements Subscriber {
       view = this.findViewByCoordinates(x, y);
       App.mainHTMLCanvas.style.cursor = (view? 'pointer': 'default');
       if(view && view != this.hover) {
-        if(this.hover && this.hover.movingSelectable) this.hover.getModel().forceChanged();
-        if(view.movingSelectable) view.getModel().forceChanged();
+        if(this.hover && this.hover.movingSelectable) this.hover.getModel().setDirty();
+        if(view.movingSelectable) view.getModel().setDirty();
         this.hover = view;
         this.refresh();
       }
       else if (!view && this.hover) {
-        if(this.hover.movingSelectable) this.hover.getModel().forceChanged();
+        if(this.hover.movingSelectable) this.hover.getModel().setDirty();
         this.hover = null;
         this.refresh();
       }
