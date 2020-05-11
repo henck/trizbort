@@ -8,13 +8,12 @@ export class Block extends Box {
   constructor(settings: MapSettings) {
     super(settings);
     this._type = 'Block';
-
     this._w = settings.block.width;
     this._h = settings.block.height;
   }
 
-  get fillColor() {
-    return this._fillColor ? this._fillColor : this.map.settings.block.fillColor;
+  get fillColor(): string {
+    return this._fillColor ?? this.map.settings.block.fillColor;
   }
 
   set fillColor(color: string) {
@@ -22,8 +21,8 @@ export class Block extends Box {
     this.setDirty();
   }
 
-  get borderColor() {
-    return this._borderColor ? this._borderColor : this.map.settings.block.borderColor;
+  get borderColor(): string {
+    return this._borderColor ?? this.map.settings.block.borderColor;
   }
 
   set borderColor(color: string) {
@@ -31,8 +30,8 @@ export class Block extends Box {
     this.setDirty();
   }  
 
-  get rounding() {
-    return this._rounding != null ? this._rounding : this.map.settings.block.rounding;
+  get rounding(): number {
+    return this._rounding ?? this.map.settings.block.rounding;
   }
 
   set rounding(r: number) {
@@ -40,8 +39,8 @@ export class Block extends Box {
     this.setDirty();
   }
 
-  get shape() {
-    return this._shape != null ? this._shape : this.map.settings.block.shape;
+  get shape(): RoomShape {
+    return this._shape ?? this.map.settings.block.shape;
   }
 
   set shape(s: RoomShape) {
@@ -49,8 +48,8 @@ export class Block extends Box {
     this.setDirty();
   }
 
-  get lineStyle() {
-    return this._lineStyle != null ? this._lineStyle : this.map.settings.block.lineStyle;
+  get lineStyle(): LineStyle {
+    return this._lineStyle ?? this.map.settings.block.lineStyle;
   }
 
   set lineStyle(style: LineStyle) {
@@ -58,8 +57,8 @@ export class Block extends Box {
     this.setDirty();
   }
 
-  get lineWidth() {
-    return this._lineWidth != null ? this._lineWidth : this.map.settings.block.lineWidth;
+  get lineWidth(): number {
+    return this._lineWidth ?? this.map.settings.block.lineWidth;
   }
 
   set lineWidth(width: number) {
