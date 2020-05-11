@@ -8,7 +8,7 @@ export class Note extends Box {
   private _textColor: string;
 
   constructor(settings: MapSettings) {
-    super(settings);
+    super();
     this.type = 'Note';
     this.text = 'Note';
     this._w = settings.note.width;

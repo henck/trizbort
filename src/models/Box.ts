@@ -15,7 +15,7 @@ export class Box extends Model {
   protected _fillColor: string;
   protected _borderColor: string;
 
-  constructor(settings: MapSettings) {
+  constructor() {
     super();
     this._x = 0;
     this._y = 0;

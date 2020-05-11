@@ -22,7 +22,7 @@ export class Room extends Box {
    * @param settings Map settings to use for this room
    */
   constructor(settings: MapSettings) {
-    super(settings);
+    super();
     this._type = "Room";
     this._name = 'Room';
     this._subtitle = '';

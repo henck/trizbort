@@ -6,7 +6,7 @@ import { LineStyle, RoomShape } from '../enums'
 
 export class Block extends Box {
   constructor(settings: MapSettings) {
-    super(settings);
+    super();
     this._type = 'Block';
     this._w = settings.block.width;
     this._h = settings.block.height;
