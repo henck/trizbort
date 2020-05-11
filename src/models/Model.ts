@@ -3,13 +3,13 @@ import { AppEvent } from '../enums/'
 import { Map } from './map'
 import { Xml } from '../io/xmlMap';
 
-//
-// Everything that lives on the map is a Model.
-// A model has a unique ID.
-// 
-// When a Model is deleted, it broadcasts a Delete event
-// so that subscribers can reflect the deletion.
-//
+/**
+ * Everything that lives on the map is a Model.
+ * A model has a unique ID.
+ * 
+ * When a Model is deleted, it broadcasts a Delete event
+ * so that subscribers can reflect the deletion.
+ */
 export class Model {
   @Xml('id', 0, (s:string) => { return parseInt(s); })
   id: number;
