@@ -13,6 +13,12 @@ export abstract class Box extends Model {
   protected _fillColor: string;
   protected _borderColor: string;
 
+  constructor() {
+    super();
+    this._x = 0;
+    this._y = 0;
+  }
+
   /**
    * Return Box's X-coordinate
    * @returns X-coordinate
@@ -81,19 +87,73 @@ export abstract class Box extends Model {
     this.setDirty();
   }
 
+  get fillColor(): string {
+    return this._fillColor;
+  }
+
+  set fillColor(color: string) {
+    this._fillColor = color;
+    this.setDirty();
+  }
+
+  get borderColor(): string {
+    return this._borderColor;
+  }
+
+  set borderColor(color: string) {
+    this._borderColor = color;
+    this.setDirty();
+  }  
+
+  get rounding(): number {
+    return this._rounding;
+  }
+
+  set rounding(r: number) {
+    this._rounding = r;
+    this.setDirty();
+  }
+
+  get shape(): RoomShape {
+    return this._shape;
+  }
+
+  set shape(s: RoomShape) {
+    this._shape = s;
+    this.setDirty();
+  }
+
+  get lineStyle(): LineStyle {
+    return this._lineStyle;
+  }
+
+  set lineStyle(style: LineStyle) {
+    this._lineStyle = style;
+    this.setDirty();
+  }
+
+  get lineWidth(): number {
+    return this._lineWidth;
+  }
+
+  set lineWidth(width: number) {
+    this._lineWidth = width;
+    this.setDirty();
+  }
+  
   //
   // Convert a direction to a canvas position on the room's edge.
   // 
   directionToPos(dir: Direction, forceRectangle: boolean) {
     let x = 0;
     let y = 0;
-    if(this._shape == RoomShape.Rectangle || forceRectangle) {
+    if(this.shape == RoomShape.Rectangle || forceRectangle) {
       var { x: vx, y: vy } = Direction.toVector(dir);
       x = Math.floor(vx * (this._w / 2) + this._w / 2) + this._x;
       y = Math.floor(vy * (this._h /2) + this._h / 2) + this._y;
       // Find room rounding radius. It must never be greater than 1/4 of the room's side.
       // The following code does nothing if rounding = 0.
-      let r = this._rounding;
+      let r = this.rounding;
       if(r > this._w * 0.25) r = this._w * 0.25;
       if(r > this._h * 0.25) r = this._h * 0.25;
       // Calculate the shift along the x or y axis.
@@ -116,11 +176,11 @@ export abstract class Box extends Model {
         y = y - rdist;
       }      
     }
-    else if(this._shape == RoomShape.Ellipse) {
+    else if(this.shape == RoomShape.Ellipse) {
       x = Math.floor(Math.cos(Direction.toRadians(dir)) * (this.width / 2) + this.width / 2) + this.x;
       y = Math.floor(Math.sin(Direction.toRadians(dir)) * (this.height / 2) + this.height / 2) + this.y;
     }
-    else if(this._shape == RoomShape.Octagon) {
+    else if(this.shape == RoomShape.Octagon) {
       var { x: vx, y: vy } = Direction.toVector(dir);
       // If a diagonal direction (NE, SE, SW, NW):
       if(Math.abs(vx) == 1 && Math.abs(vy) == 1) {
