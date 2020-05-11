@@ -1,7 +1,5 @@
 import { Model } from './Model'
 import { Direction, LineStyle, RoomShape } from '../enums'
-import { MapSettings } from './MapSettings';
-
 
 export class Box extends Model {
   protected _x: number;
@@ -57,7 +55,7 @@ export class Box extends Model {
     this.setDirty();
   }
 
-  get fillColor() {
+  get fillColor(): string {
     return this._fillColor;
   }
 
@@ -66,7 +64,7 @@ export class Box extends Model {
     this.setDirty();
   }
 
-  get borderColor() {
+  get borderColor(): string {
     return this._borderColor;
   }
 
@@ -75,7 +73,7 @@ export class Box extends Model {
     this.setDirty();
   }  
 
-  get rounding() {
+  get rounding(): number {
     return this._rounding;
   }
 
@@ -84,7 +82,7 @@ export class Box extends Model {
     this.setDirty();
   }
 
-  get shape() {
+  get shape(): RoomShape {
     return this._shape;
   }
 
@@ -93,7 +91,7 @@ export class Box extends Model {
     this.setDirty();
   }
 
-  get lineStyle() {
+  get lineStyle(): LineStyle {
     return this._lineStyle;
   }
 
@@ -102,7 +100,7 @@ export class Box extends Model {
     this.setDirty();
   }
 
-  get lineWidth() {
+  get lineWidth(): number {
     return this._lineWidth;
   }
 

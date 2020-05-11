@@ -5,7 +5,7 @@ import { MapSettings } from './MapSettings';
 
 export class Note extends Box {
   protected _text: string;
-  private _textColor: string;
+  protected _textColor: string;
 
   constructor(settings: MapSettings) {
     super();
