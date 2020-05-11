@@ -14,12 +14,12 @@ export class Model {
   @Xml('id', 0, (s:string) => { return parseInt(s); })
   id: number;
   map: Map;
-  protected _dirty: boolean;
+  protected _dirty: boolean;  // Does this Model need updating?
   protected _type: string;
 
   constructor() {
     this.id = 0;
-    this._dirty = true;
+    this.setDirty();
   }
 
   get type(): string {
@@ -29,10 +29,6 @@ export class Model {
   set type(value: string) {
     this._type = value;
     this._dirty = true;
-  }
-
-  getType() {
-    return this.type;
   }
 
   /**
@@ -56,6 +52,11 @@ export class Model {
     this._dirty = false;
   }
 
+  /**
+   * Delete this Model from the map. This broadcasts a Delete event, so
+   * that interested subscribers (the editor, for example), can update
+   * themselves.
+   */
   public delete() {
     this.map.remove(this);
     Dispatcher.notify(AppEvent.Delete, this);
