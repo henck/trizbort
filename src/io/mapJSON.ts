@@ -10,10 +10,12 @@ export class MapJSON {
     // Convert the map to JSON. During the conversion, with replace
     // the dockStart and dockEnd properties of Connector with ID numbers
     // using a replacer function.
-    // Also, the map property of the map elements is not saved.
+    // Also, the map property of the map elements is not saved, nor is the
+    // _dirty field.
     let json = JSON.stringify(map, function(key, value) {
       // In the replacer, the value of "this" is the object being serialized.
-      if(key == 'map') return undefined; // avoid circular references to map.
+      if(key == 'map') return undefined;    // avoid circular references to map.
+      if(key == '_dirty') return undefined; // do not save _dirty field.
       if(key == '_dockStart' || key == 'dockStart') { // replace room references with IDs
         if(this._dockStart == null) return 0;
         return this._dockStart.id; 
@@ -61,16 +63,17 @@ export class MapJSON {
     // to create a new list with Room and Connector instances based on the 
     // "type" field of each list element.
     let elements = map.elements;
-    map.elements = new Array<Model>();
+    map.elements = [];
     elements.forEach((element) => {
       let model: Model = null;
       let type = (element.type || element["_type"]); // _type is protected but present in the json
-      if(type == 'Room') model = <Model> this.clone(new Room(map.settings), element);
-      else if(type == 'Note') model = <Model> this.clone(new Note(map.settings), element);
-      else if(type == 'Block') model = <Model> this.clone(new Block(map.settings), element);
-      else if(type == 'Connector') model = <Model> this.clone(new Connector(map.settings), element);
-      else {
-        throw(new TypeError(`Element type ${type} is unknown.`));
+      switch(type) {
+        case 'Room': model = Room.load(map.settings, element); break;
+        case 'Note': model = Note.load(map.settings, element); break;
+        case 'Block': model = Block.load(map.settings, element); break;
+        case 'Connector': model = Connector.load(map.settings, element); break;
+        default:
+          throw(new TypeError(`Element type ${type} is unknown.`));
       }
       map.add(model);
     });

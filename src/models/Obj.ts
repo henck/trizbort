@@ -9,11 +9,32 @@ export class Obj extends Model {
 
   constructor() {
     super();
-    this._name = "Object";
+    this._name = "Object";         // Default Obj name
     this._type = "Object";
     this._description = "";
-    this._kind = ObjectKind.Item;
-    this._content = [];
+    this._kind = ObjectKind.Item;  // Default Obj type
+    this._content = [];            // No subobjects
+  }
+
+  /**
+   * Load an Obj from a POJO from a JSON source.
+   * @param settings Map settings
+   * @param src POJO
+   */    
+  static load(src: object): Obj {
+    // Create new Obj:
+    let obj = new Obj();
+    // Copy fields from POJO into Obj:
+    for(let key in src) {
+      // Content field is special. Pass it to Obj's POJO loader recursively,
+      // to create subobjects.
+      if(key == '_content') { 
+        obj._content = (src as any)._content.map((x:object) => Obj.load(x));
+      } else {
+        (obj as any)[key] = (src as any)[key];
+      }
+    }
+    return obj;
   }
 
   /**
