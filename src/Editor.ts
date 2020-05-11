@@ -812,6 +812,18 @@ export class Editor implements Subscriber {
         break;
     }
 
+    // Check for a connector that has a length of < 5px. 
+    // Cancel very short connectors by calling undo.
+    if(App.mouseMode == MouseMode.Connect) {
+      // Find world coordinates of mouse:
+      let { x, y } = this.findMouseCoordinates(e);
+      let connectorView = App.selection.first() as ConnectorView;
+      // If connector hasn't moved at all, we cancel it.
+      if((Math.abs(connectorView.connector.endX - x) < 5) && (Math.abs(connectorView.connector.endY - y) < 5)) {
+        App.undo();
+      }
+    }
+
     App.mainHTMLCanvas.style.cursor = 'default';
     App.mouseMode = MouseMode.None;
     Dispatcher.notify(AppEvent.Select, null);
