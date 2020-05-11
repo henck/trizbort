@@ -13,7 +13,7 @@ import { Xml } from '../io/xmlMap';
 export class Model {
   @Xml('id', 0, (s:string) => { return parseInt(s); })
   id: number;
-  map: Map;
+  public map: Map;            // Map that Model is part of
   protected _dirty: boolean;  // Does this Model need updating?
   protected _type: string;    // Model type, e.g. "Room" or "Note". This is used for readig/writing JSON.
 
