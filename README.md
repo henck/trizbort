@@ -1,12 +1,12 @@
 # Trizbort.io
 
-[Trizbort.io](http://www.trizbort.io) is a JavaScript implementation of [Trizbort](http://www.trizbort.com), the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps, and generate code for several adventure design systems.
+[Trizbort.io](https://www.trizbort.io) is a JavaScript implementation of [Trizbort](http://www.trizbort.com), the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps, and generate code for several adventure design systems.
 
-![Drawing a map in Trizbort.io](http://www.trizbort.io/assets/map.png)
+![Drawing a map in Trizbort.io](https://www.trizbort.io/assets/map.png)
 
 ## Code generation
 
-<img align="right" src="http://www.trizbort.io/assets/trizbort-code-generation.png">At the moment, Trizbort.io supports code generation for the following design systems and formats:
+<img align="right" src="https://www.trizbort.io/assets/trizbort-code-generation.png">At the moment, Trizbort.io supports code generation for the following design systems and formats:
 
 * [Alan 2](https://www.alanif.se/)
 * [Alan 3](https://www.alanif.se/)
@@ -33,4 +33,4 @@ Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/)
 
 ## Public web application
 
-The public end-user implementation of Trizbort runs at [Trizbort.io](http://www.trizbort.io). The implementation is updated regularly to reflect changes as these are built into this repository.
+The public end-user implementation of Trizbort runs at [Trizbort.io](https://www.trizbort.io). The implementation is updated regularly to reflect changes as these are built into this repository.
