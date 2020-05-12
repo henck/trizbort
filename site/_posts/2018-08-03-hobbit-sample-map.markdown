@@ -10,6 +10,6 @@ The Hobbit (1982) was an adventure game that influenced the genre in many ways. 
 
 The map to one of the most famous games in text adventure gaming history, The Hobbit, is now available as a Trizbort.io sample map.
 
-[Open this map directly in Trizbort](/app/index.html?map=hobbit){:class="btn"}
+[Open this map directly in Trizbort](/app/index.html?map=https://www.trizbort.io/app/maps/hhg.json){:class="btn"}
 
 ![The Hobbit Text Adventure Map]({{ "/assets/hobbit-map.png" | absolute_url }})
