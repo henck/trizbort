@@ -3,9 +3,11 @@ import { BoxView } from './BoxView'
 import { Room, Obj } from '../models'
 import { LineStyle, Values } from '../enums'
 import { IScreen, TextBaseline, TextAlign } from '../drawing/IScreen'
-import { fontSettings } from '../models/mapSettings'
 
 export class RoomView extends BoxView {
+  static SUBTITLE_SIZE_FACTOR = 0.8;
+  static OBJECT_FONT_FACTOR = 0.8;
+
   room: Room;
 
   constructor(room: Room) {
@@ -90,17 +92,19 @@ export class RoomView extends BoxView {
     }
     
     // Room name
-    let f = <fontSettings>App.map.settings.room.fontCfg(App.map.settings.draw.hand, 'obj');
-    let f2 = <fontSettings>App.map.settings.room.font2Cfg(App.map.settings.draw.hand, 'obj');
     canvas
       .fillStyle(this.room.nameColor)
-      .drawText(0, 0, this.room.width, this.room.height, f.size, f.family, this.room.name);
+      .drawText(0, 0, this.room.width, this.room.height, 
+        App.map.settings.basic.fontSize, 
+        App.map.settings.basic.fontFamily, this.room.name);
     
     // Room subtitle
     if(this.room.subtitle) {
       canvas
         .fillStyle(this.room.subtitle)
-        .drawTextBottom(0, 0, this.room.width, this.room.height - 5, f2.size, f2.family, this.room.subtitle);
+        .drawTextBottom(0, 0, this.room.width, this.room.height - 5, 
+          App.map.settings.basic.fontSize * RoomView.SUBTITLE_SIZE_FACTOR, 
+          App.map.settings.basic.fontFamily, this.room.subtitle);
     }
 
     // Objects in room
@@ -114,7 +118,10 @@ export class RoomView extends BoxView {
 
   drawObjects(canvas: IScreen, x: number, y: number, objList: Array<Obj>): number {
     objList.forEach((obj) => { 
-      canvas.fillText(obj.name, x, y, <string>App.map.settings.room.font2Cfg(App.map.settings.draw.hand, 'string'), TextAlign.Left, TextBaseline.Middle);
+      canvas.fillText(obj.name, x, y, 
+        App.map.settings.basic.fontSize * RoomView.OBJECT_FONT_FACTOR,
+        App.map.settings.basic.fontFamily,
+        TextAlign.Left, TextBaseline.Middle);
       y += 14;
       y = this.drawObjects(canvas, x + 10, y, obj.content);
     });

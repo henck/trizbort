@@ -1,8 +1,9 @@
 import { RoomShape, LineStyle } from "../enums";
 
-export class fontSettings {
-  size: number;
-  family: string;
+class MapSettingsBasic {
+  fontFamily = 'Roboto';
+  fontSize = 13;
+  handdrawn = false;
 }
 
 class MapSettingsGrid {
@@ -32,8 +33,15 @@ class MapSettingsRoom {
   darkColor = 'rgba(33, 35, 97, 0.8)';
   startRoomColor = 'green';
   endRoomColor = 'red';
-  fontCfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 13.0, family: 'danielbd'}:{size: 14.4, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
-  font2Cfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 11.0, family: 'danielbd'}:{size: 11.8, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
+  /* fontSize = 14.4;
+  fontFamily = 'Roboto';
+  
+  fontCfg     = (hand: boolean, mode: 'obj' |'string') => { 
+      let res: fontSettings = (hand? {size: 13.0, family: 'danielbd'}:{size: 14.4, family: 'Roboto'}); 
+      return (mode == 'obj'? res : `${res.size}px ${res.family}`)  
+    };
+  font2Cfg    = (hand: boolean, mode: 'obj' |'string') => { 
+      let res: fontSettings = (hand? {size: 11.0, family: 'danielbd'}:{size: 11.8, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  }; */
 }
 
 class MapSettingsConnector {
@@ -45,8 +53,8 @@ class MapSettingsConnector {
   arrowSize = 5;
   curveStrength = 0.4;
   labelDistance = 12;
-  fontCfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 11.8, family: 'danielbd'}:{size: 12.8, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
-  font2Cfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 9.8, family: 'danielbd'}:{size: 10.8, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
+  /* fontCfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 11.8, family: 'danielbd'}:{size: 12.8, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
+  font2Cfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 9.8, family: 'danielbd'}:{size: 10.8, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  }; */
 }
 
 class MapSettingsNote {
@@ -62,7 +70,7 @@ class MapSettingsNote {
   fillColor = '#ffffff'
   borderColor = '#000000';
   textColor = '#333333';
-  fontCfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 13.0, family: 'danielbd'}:{size: 14.4, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
+  // fontCfg    = (hand: boolean, mode: 'obj' |'string') => { let res: fontSettings = (hand? {size: 13.0, family: 'danielbd'}:{size: 14.4, family: 'Roboto'}); return (mode == 'obj'? res : `${res.size}px ${res.family}`)  };
 }
 
 class MapSettingsBlock {
@@ -79,17 +87,13 @@ class MapSettingsBlock {
   borderColor = '#000000';
 }
 
-class MapSettingsDraw {
-  hand = false;
-}
-
 export class MapSettings {
+  public basic: MapSettingsBasic = new MapSettingsBasic();
   public grid: MapSettingsGrid = new MapSettingsGrid();
   public room: MapSettingsRoom = new MapSettingsRoom();
   public connector: MapSettingsConnector = new MapSettingsConnector();
   public note: MapSettingsNote = new MapSettingsNote();
   public block: MapSettingsBlock = new MapSettingsBlock();
-  public draw: MapSettingsDraw = new MapSettingsDraw();
 
   private cloneToTarget(src: object, target: object) {
     for(let key in src) {
@@ -105,12 +109,12 @@ export class MapSettings {
   // 
   public cloneFrom(src: object) {
     let settings: MapSettings = src as MapSettings;
+    this.cloneToTarget(settings.basic, this.basic);
     this.cloneToTarget(settings.grid, this.grid);
     this.cloneToTarget(settings.room, this.room);
     this.cloneToTarget(settings.connector, this.connector);
     this.cloneToTarget(settings.note, this.note);
     this.cloneToTarget(settings.block, this.block);
-    this.cloneToTarget(settings.draw, this.draw);
     return this;
   }  
 }

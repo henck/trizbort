@@ -3,7 +3,6 @@ import { BoxView } from './BoxView'
 import { Note } from '../models'
 import { LineStyle, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen'
-import { fontSettings } from '../models/mapSettings'
 
 export class NoteView extends BoxView {
   note: Note;
@@ -65,10 +64,12 @@ export class NoteView extends BoxView {
         .stroke();
     }
 
-    let f = <fontSettings>App.map.settings.room.fontCfg(App.map.settings.draw.hand, 'obj');
     canvas
       .fillStyle(this.note.textColor)
-      .drawText(0, 0, this.note.width, this.note.height, f.size, f.family, this.note.text);
+      .drawText(0, 0, this.note.width, this.note.height, 
+        App.map.settings.basic.fontSize,
+        App.map.settings.basic.fontFamily,
+        this.note.text);
 
     canvas.restore();    
   }

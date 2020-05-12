@@ -5,6 +5,10 @@ export class HandDrawnTheme extends MapSettings {
   constructor() {
     super();
 
+    this.basic.fontFamily = 'danielbd';
+    this.basic.fontSize = 13;
+    this.basic.handdrawn = true;
+
     this.grid.background = '#ffffff';
     this.grid.color = '#f0f0f0';
 
@@ -31,7 +35,5 @@ export class HandDrawnTheme extends MapSettings {
     this.block.rounding = 0;
     this.block.lineStyle = LineStyle.Dash;
     this.block.lineWidth = 1;
-
-    this.draw.hand = true;
   }
 }

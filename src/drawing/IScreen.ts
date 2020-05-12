@@ -85,11 +85,11 @@ export interface IScreen {
   rect(x: number, y: number, width: number, height: number): IScreen;
 
   // Text
-  fillText(text: string, x: number, y: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen;
-  strokeText(text: string, x: number, y: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen;
+  fillText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen;
+  strokeText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen;
   drawText(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen;
   drawTextBottom(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen;
-  textWidth(text: string, font: string): number;
+  textWidth(text: string, fontSize: number, font: string): number;
 
   // Images
   // drawImage(image: HTMLImageElement, x: number, y: number, width?: number, height?: number): IScreen;

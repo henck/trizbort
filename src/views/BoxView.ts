@@ -3,6 +3,7 @@ import { Rect } from '../util'
 import { Box } from '../models'
 import { Direction, RoomShape, Values } from '../enums'
 import { IScreen } from '../drawing/IScreen'
+import { App } from '../App'
 
 export class BoxView extends View {
   box: Box;

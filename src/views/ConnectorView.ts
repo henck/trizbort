@@ -7,6 +7,7 @@ import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawin
 import { Point } from '../util/point'
 
 export class ConnectorView extends View {
+  static LABEL_FONT_FACTOR = 0.7;
   connector: Connector;
   clearRegion: Rect;
 
@@ -255,7 +256,7 @@ export class ConnectorView extends View {
 
     // Draw name (if any)
     if(this.connector.name) {
-      let textWidth = canvas.textWidth(this.connector.name, <string>App.map.settings.connector.fontCfg(App.map.settings.draw.hand, 'string'));
+      let textWidth = canvas.textWidth(this.connector.name, App.map.settings.basic.fontSize, App.map.settings.basic.fontFamily);
       canvas
         .lineWidth(1)
         .lineDash(LineStyle.Solid)
@@ -265,7 +266,10 @@ export class ConnectorView extends View {
         .fill()
         .stroke()
         .fillStyle('#333')
-        .fillText(this.connector.name, centerx, centery, <string>App.map.settings.connector.fontCfg(App.map.settings.draw.hand, 'string'), TextAlign.Center, TextBaseline.Middle);
+        .fillText(this.connector.name, centerx, centery, 
+          App.map.settings.basic.fontSize,
+          App.map.settings.basic.fontFamily, 
+          TextAlign.Center, TextBaseline.Middle);
     }
 
     // Draw start and end types
@@ -275,11 +279,15 @@ export class ConnectorView extends View {
       .fillText(this.connector.startLabel ? this.connector.startLabel : ConnectorType.toString(this.connector.startType), 
         arrow1x + Math.cos(arrow1a - Math.PI / 2) * App.map.settings.connector.labelDistance, 
         arrow1y + Math.sin(arrow1a - Math.PI / 2) * App.map.settings.connector.labelDistance,
-        <string>App.map.settings.connector.font2Cfg(App.map.settings.draw.hand, 'string'), TextAlign.Center, TextBaseline.Middle)
+        App.map.settings.basic.fontSize * ConnectorView.LABEL_FONT_FACTOR,
+        App.map.settings.basic.fontFamily, 
+        TextAlign.Center, TextBaseline.Middle)
       .fillText(this.connector.endLabel ? this.connector.endLabel : ConnectorType.toString(this.connector.endType), 
         arrow2x + Math.cos(arrow2a + Math.PI / 2) * App.map.settings.connector.labelDistance, 
         arrow2y + Math.sin(arrow2a + Math.PI / 2) * App.map.settings.connector.labelDistance,
-        <string>App.map.settings.connector.font2Cfg(App.map.settings.draw.hand, 'string'), TextAlign.Center, TextBaseline.Middle);
+        App.map.settings.basic.fontSize * ConnectorView.LABEL_FONT_FACTOR,
+        App.map.settings.basic.fontFamily, 
+        TextAlign.Center, TextBaseline.Middle);
 
     canvas.restore();
   }

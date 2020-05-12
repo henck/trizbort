@@ -149,7 +149,7 @@ export class Canvas implements IScreen {
   }
 
   line(x0: number, y0: number, x1: number, y1: number): IScreen {
-    if(App.map.settings.draw.hand) this.drawer.hdLine(x0, y0, x1, y1);
+    if(App.map.settings.basic.handdrawn) this.drawer.hdLine(x0, y0, x1, y1);
     else {
       this.ctx.moveTo(x0, y0)
       this.ctx.lineTo(x1, y1);
@@ -171,7 +171,7 @@ export class Canvas implements IScreen {
 
     this.beginPath();
 
-    if(App.map.settings.draw.hand) {
+    if(App.map.settings.basic.handdrawn) {
       this.drawer.hdEllipse(x + width / 2, y + height / 2, width / 2, height / 2);
     }
     else {      
@@ -200,7 +200,7 @@ export class Canvas implements IScreen {
 
     this.beginPath();
     
-    if(App.map.settings.draw.hand) { 
+    if(App.map.settings.basic.handdrawn) { 
       this.drawer.hdRoundedRect(x, y, width, height, radius);
     }
     else {
@@ -220,7 +220,7 @@ export class Canvas implements IScreen {
     
     this.beginPath();
     
-    if(App.map.settings.draw.hand) { 
+    if(App.map.settings.basic.handdrawn) { 
       this.drawer.hdOctagon(x, y, width, height);
     }
     else {
@@ -245,7 +245,7 @@ export class Canvas implements IScreen {
   }
 
   bezier2(x0: number, y0: number, cx: number, cy: number, x1: number, y1: number): IScreen {
-    if(App.map.settings.draw.hand) { 
+    if(App.map.settings.basic.handdrawn) { 
       this.drawer.hdBezier2(x0, y0, cx, cy, x1, y1);
     }
     else {
@@ -275,7 +275,7 @@ export class Canvas implements IScreen {
   }
 
   bezier3(x0: number, y0: number, cx0: number, cy0: number, cx1: number, cy1: number, x1: number, y1: number): IScreen {
-    if(App.map.settings.draw.hand) { 
+    if(App.map.settings.basic.handdrawn) { 
       this.drawer.hdBezier3(x0, y0, cx0, cy0, cx1, cy1, x1, y1);
     }
     else {
@@ -305,7 +305,7 @@ export class Canvas implements IScreen {
 
     this.beginPath();
 
-    if(App.map.settings.draw.hand){
+    if(App.map.settings.basic.handdrawn){
       this.drawer.hdLine(x, y, x1, y);        
       this.drawer.hdLine(x1, y, x1, y1);
       this.drawer.hdLine(x, y1, x1, y1);
@@ -362,16 +362,18 @@ export class Canvas implements IScreen {
     return this;
   }
 
-  fillText(text: string, x: number, y: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen {
-    this.ctx.font = font;
+  fillText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen {
+    let fontStr = `${fontSize}px ${font}`;
+    this.ctx.font = fontStr;
     this.textAlign(align);
     this.textBaseline(baseline);
     this.ctx.fillText(text, x, y, maxwidth);
     return this;
   }
 
-  strokeText(text: string, x: number, y: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen {
-    this.ctx.font = font;
+  strokeText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen {
+    let fontStr = `${fontSize}px ${font}`;
+    this.ctx.font = fontStr;
     this.textAlign(align);
     this.textBaseline(baseline);    
     this.ctx.strokeText(text, x, y, maxwidth);
@@ -404,35 +406,32 @@ export class Canvas implements IScreen {
 
   // Draw text centered at (x, y), inside an area no wider than <maxWidth>
   drawText(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
-    let fontStr = `${fontSize}px ${font}`;
-    this.ctx.font = fontStr;
     let lineHeight = Math.ceil(fontSize)+1;
     let lines = this.splitText(width, text);
     let xPos = x + width / 2;
     let yPos = y - (lines.length - 1) * lineHeight / 2 + height / 2;
     for(let i = 0; i < lines.length; i++) {
-      this.fillText(lines[i], xPos, yPos, fontStr, TextAlign.Center, TextBaseline.Middle);
+      this.fillText(lines[i], xPos, yPos, fontSize, font, TextAlign.Center, TextBaseline.Middle);
       yPos += lineHeight;
     }
     return this;
   }
 
   drawTextBottom(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
-    let fontStr = `${fontSize}px ${font}`;
-    this.ctx.font = fontStr;
     let lineHeight = Math.ceil(fontSize)+1;
     let lines = this.splitText(width, text);
     let xPos = x + width / 2;
     let yPos = y + height - (lines.length - 1) * lineHeight;
     for(let i = 0; i < lines.length; i++) {
-      this.fillText(lines[i], xPos, yPos, fontStr, TextAlign.Center, TextBaseline.Bottom);
+      this.fillText(lines[i], xPos, yPos, fontSize, font, TextAlign.Center, TextBaseline.Bottom);
       yPos += lineHeight;
     }
     return this;
   }
 
-  textWidth(text: string, font: string): number {
-    this.ctx.font = font;
+  textWidth(text: string, fontSize: number, font: string): number {
+    let fontStr = `${fontSize}px ${font}`;
+    this.ctx.font = fontStr;
     return this.ctx.measureText(text).width;
   }
   
