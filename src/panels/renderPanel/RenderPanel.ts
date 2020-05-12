@@ -1,11 +1,10 @@
-import { Subscriber, Dispatcher } from '../../Dispatcher';
+import { Subscriber, Dispatcher } from '../../Dispatcher'
 import { MapSettings } from '../../models';
 import { AppEvent } from '../../enums/'
 import { App } from '../../App'
 import { Panel }  from '../'
-import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle, Window } from '../../controls';
-import { ObsidianTheme, DiagramTheme } from '../../themes/themes';
-import { HandDrawnTheme } from '../../themes/handDrawnTheme';
+import { IdRange, IdCheck, IdPopup, IdColorPicker, IdShape, IdLineStyle, Window } from '../../controls'
+import { ObsidianTheme, DiagramTheme, HandDrawnTheme } from '../../themes'
 
 export class RenderPanel extends Panel implements Subscriber {
 
