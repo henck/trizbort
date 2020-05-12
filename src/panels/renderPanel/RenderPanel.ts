@@ -14,10 +14,12 @@ export class RenderPanel extends Panel implements Subscriber {
   private ctrlGridOrigin: IdCheck;
   private ctrlGridSnap: IdCheck;
   private ctrlGridSize: IdRange;
+  private ctrlHanddrawn: IdCheck;
   private mapColorPicker: IdColorPicker;
   private mapColorType: string;
   private mapColorButtons: Array<IdPopup>;
   private ctrlFontSize: IdRange;
+  private ctrlFontType: IdCheck;
 
   private ctrlRoomWidth: IdRange;
   private ctrlRoomHeight: IdRange;
@@ -68,6 +70,7 @@ export class RenderPanel extends Panel implements Subscriber {
     this.ctrlGridSnap = new IdCheck('.js-grid-snap', this.elem).addEventListener('input', () => { App.map.settings.grid.snap = this.ctrlGridSnap.checked})
     this.ctrlGridSize = new IdRange('.js-grid-size', this.elem).addEventListener('input', () => { App.map.settings.grid.size = this.ctrlGridSize.value; });
 
+    this.ctrlHanddrawn = new IdCheck('.js-handdrawn', this.elem).addEventListener('input', () => { App.map.settings.basic.handdrawn = this.ctrlHanddrawn.checked})
     this.mapColorPicker = new IdColorPicker('.js-map-color', this.elem).addEventListener('change', () => { this.setMapColor(this.mapColorPicker.color); }) as IdColorPicker;
     // Find map color buttons:
     var buttons = this.elem.querySelectorAll('.map-colortype');
@@ -80,6 +83,7 @@ export class RenderPanel extends Panel implements Subscriber {
     }    
 
     this.ctrlFontSize = new IdRange('.js-font-size', this.elem).addEventListener('input', () => { App.map.settings.basic.fontSize = this.ctrlFontSize.value; });
+    this.ctrlFontType = new IdCheck('.js-font-type', this.elem).addEventListener('input', () => { App.map.settings.basic.fontFamily = this.ctrlFontType.checked ? 'danielbd' :'Roboto'; })
 
     this.elem.querySelector('.js-theme-diagram').addEventListener('click', () => { this.applyTheme('diagram'); });
     this.elem.querySelector('.js-theme-obsidian').addEventListener('click', () => { this.applyTheme('obsidian'); });
@@ -166,7 +170,9 @@ export class RenderPanel extends Panel implements Subscriber {
         this.ctrlGridOrigin.checked = App.map.settings.grid.origin;
         this.ctrlGridSnap.checked = App.map.settings.grid.snap;
         this.ctrlGridSize.value = App.map.settings.grid.size;
+        this.ctrlHanddrawn.checked = App.map.settings.basic.handdrawn;
         this.ctrlFontSize.value = App.map.settings.basic.fontSize;
+        this.ctrlFontType.checked = App.map.settings.basic.fontFamily != 'Roboto';
         
         this.ctrlRoomWidth.value = App.map.settings.room.width;
         this.ctrlRoomHeight.value = App.map.settings.room.height;
