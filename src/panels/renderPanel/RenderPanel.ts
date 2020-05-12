@@ -204,14 +204,14 @@ export class RenderPanel extends Panel implements Subscriber {
       // OK
       switch(theme) {
         case 'obsidian':
-          App.map.settings = new MapSettings().cloneFrom(new ObsidianTheme());
+          App.map.settings = new ObsidianTheme();
           break;
         case 'hand-drawn':
-            App.map.settings = new MapSettings().cloneFrom(new HandDrawnTheme());
-            break;
+          App.map.settings = new HandDrawnTheme();
+          break;
         case 'diagram':
-            App.map.settings = new MapSettings().cloneFrom(new DiagramTheme());
-            break;
+          App.map.settings = new DiagramTheme();
+          break;
         default:
           App.map.settings = new MapSettings();
           break;
