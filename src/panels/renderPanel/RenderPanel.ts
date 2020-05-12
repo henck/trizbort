@@ -159,48 +159,50 @@ export class RenderPanel extends Panel implements Subscriber {
     }        
   }
 
+  private refresh() {
+    // Place settings data in controls:
+    this.ctrlGridVisible.checked = App.map.settings.grid.visible;
+    this.ctrlGridOrigin.checked = App.map.settings.grid.origin;
+    this.ctrlGridSnap.checked = App.map.settings.grid.snap;
+    this.ctrlGridSize.value = App.map.settings.grid.size;
+    this.ctrlHanddrawn.checked = App.map.settings.basic.handdrawn;
+    this.ctrlFontSize.value = App.map.settings.basic.fontSize;
+    this.ctrlFontType.checked = App.map.settings.basic.fontFamily != 'Roboto';
+    
+    this.ctrlRoomWidth.value = App.map.settings.room.width;
+    this.ctrlRoomHeight.value = App.map.settings.room.height;
+    this.ctrlRoomLinewidth.value = App.map.settings.room.lineWidth;
+    this.ctrlRoomRounding.value = App.map.settings.room.rounding;
+    this.ctrlRoomDarknessSize.value = App.map.settings.room.darknessSize;
+    this.setRoomPickerColor();  
+
+    this.ctrlConnectorLinewidth.value = App.map.settings.connector.lineWidth;
+    this.ctrlConnectorStalk.value = App.map.settings.connector.stalk;
+    this.ctrlConnectorLabelDistance.value = App.map.settings.connector.labelDistance;
+    this.ctrlConnectorArrowSize.value = App.map.settings.connector.arrowSize;
+    this.ctrlConnectorCurve.checked = App.map.settings.connector.isCurve;
+    this.ctrlConnectorCurveStrength.value = Math.floor(App.map.settings.connector.curveStrength * 10);
+    this.connectorColorPicker.color = App.map.settings.connector.color;
+
+    this.ctrlNoteWidth.value = App.map.settings.note.width;
+    this.ctrlNoteHeight.value = App.map.settings.note.height;
+    this.ctrlNoteLinewidth.value = App.map.settings.note.lineWidth;
+    this.ctrlNoteRounding.value = App.map.settings.note.rounding;
+    this.setNotePickerColor();  
+
+    this.ctrlBlockWidth.value = App.map.settings.block.width;
+    this.ctrlBlockHeight.value = App.map.settings.block.height;
+    this.ctrlBlockLinewidth.value = App.map.settings.block.lineWidth;
+    this.ctrlBlockRounding.value = App.map.settings.block.rounding;
+    this.setBlockPickerColor();  
+  }
+
   notify(event: AppEvent, obj: any) {
     if(event == AppEvent.More) {
       if(obj instanceof MapSettings) {
         this.open();
         this.settings = obj;
-
-        // Place settings data in controls:
-        this.ctrlGridVisible.checked = App.map.settings.grid.visible;
-        this.ctrlGridOrigin.checked = App.map.settings.grid.origin;
-        this.ctrlGridSnap.checked = App.map.settings.grid.snap;
-        this.ctrlGridSize.value = App.map.settings.grid.size;
-        this.ctrlHanddrawn.checked = App.map.settings.basic.handdrawn;
-        this.ctrlFontSize.value = App.map.settings.basic.fontSize;
-        this.ctrlFontType.checked = App.map.settings.basic.fontFamily != 'Roboto';
-        
-        this.ctrlRoomWidth.value = App.map.settings.room.width;
-        this.ctrlRoomHeight.value = App.map.settings.room.height;
-        this.ctrlRoomLinewidth.value = App.map.settings.room.lineWidth;
-        this.ctrlRoomRounding.value = App.map.settings.room.rounding;
-        this.ctrlRoomDarknessSize.value = App.map.settings.room.darknessSize;
-        this.setRoomPickerColor();  
-
-        this.ctrlConnectorLinewidth.value = App.map.settings.connector.lineWidth;
-        this.ctrlConnectorStalk.value = App.map.settings.connector.stalk;
-        this.ctrlConnectorLabelDistance.value = App.map.settings.connector.labelDistance;
-        this.ctrlConnectorArrowSize.value = App.map.settings.connector.arrowSize;
-        this.ctrlConnectorCurve.checked = App.map.settings.connector.isCurve;
-        this.ctrlConnectorCurveStrength.value = Math.floor(App.map.settings.connector.curveStrength * 10);
-        this.connectorColorPicker.color = App.map.settings.connector.color;
-
-        this.ctrlNoteWidth.value = App.map.settings.note.width;
-        this.ctrlNoteHeight.value = App.map.settings.note.height;
-        this.ctrlNoteLinewidth.value = App.map.settings.note.lineWidth;
-        this.ctrlNoteRounding.value = App.map.settings.note.rounding;
-        this.setNotePickerColor();  
-
-        this.ctrlBlockWidth.value = App.map.settings.block.width;
-        this.ctrlBlockHeight.value = App.map.settings.block.height;
-        this.ctrlBlockLinewidth.value = App.map.settings.block.lineWidth;
-        this.ctrlBlockRounding.value = App.map.settings.block.rounding;
-        this.setBlockPickerColor();  
-        
+        this.refresh();
       }
       else {
         this.close();
@@ -225,6 +227,7 @@ export class RenderPanel extends Panel implements Subscriber {
           App.map.settings = new MapSettings();
           break;
       }
+      this.refresh();
       Dispatcher.notify(AppEvent.Refresh, null);
     }, () => {
       // Cancel
