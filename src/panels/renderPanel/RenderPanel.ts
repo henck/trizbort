@@ -17,6 +17,7 @@ export class RenderPanel extends Panel implements Subscriber {
   private mapColorPicker: IdColorPicker;
   private mapColorType: string;
   private mapColorButtons: Array<IdPopup>;
+  private ctrlFontSize: IdRange;
 
   private ctrlRoomWidth: IdRange;
   private ctrlRoomHeight: IdRange;
@@ -77,6 +78,8 @@ export class RenderPanel extends Panel implements Subscriber {
       this.mapColorButtons.push(popup);
       buttons[i].addEventListener('click', () => { this.onMapColorButton(popup); });
     }    
+
+    this.ctrlFontSize = new IdRange('.js-font-size', this.elem).addEventListener('input', () => { App.map.settings.basic.fontSize = this.ctrlFontSize.value; });
 
     this.elem.querySelector('.js-theme-diagram').addEventListener('click', () => { this.applyTheme('diagram'); });
     this.elem.querySelector('.js-theme-obsidian').addEventListener('click', () => { this.applyTheme('obsidian'); });
@@ -163,6 +166,7 @@ export class RenderPanel extends Panel implements Subscriber {
         this.ctrlGridOrigin.checked = App.map.settings.grid.origin;
         this.ctrlGridSnap.checked = App.map.settings.grid.snap;
         this.ctrlGridSize.value = App.map.settings.grid.size;
+        this.ctrlFontSize.value = App.map.settings.basic.fontSize;
         
         this.ctrlRoomWidth.value = App.map.settings.room.width;
         this.ctrlRoomHeight.value = App.map.settings.room.height;

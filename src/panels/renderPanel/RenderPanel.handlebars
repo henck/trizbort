@@ -11,12 +11,13 @@
 </div>
 
 <div class="tab-body" id="tab-settings-basic">
+  <div class="sec">Grid settings</div>
   <id-check class="js-grid-visible" data-label="Visible"></id-check>
   <id-check class="js-grid-origin" data-label="Show origin"></id-check>
   <id-check class="js-grid-snap" data-label="Snap to grid"></id-check>
   <id-range class="js-grid-size" data-min="16" data-max="128" data-label="Grid size"></id-range>
 
-  <label>Map colors</label>
+  <div class="sec">Map colors</div>
   <div style="display: flex">
     <div style="display: flex; flex-direction: column; flex-wrap: wrap">
       <id-popup title="Map background" class="map-colortype selected" data-type="background">
@@ -28,7 +29,10 @@
     <id-colorpicker class="js-map-color"></id-colorpicker>
   </div>  
 
-  <label>Quick themes</label>
+  <div class="sec">Font settings</div>
+  <id-range class="js-font-size" data-min="6" data-max="32" data-label="Font size"></id-range>
+
+  <div class="sec">Quick themes</div>
   <div class="menuitem">
     <a href="#" class="js-theme-diagram"><svg class="icon small"><use xlink:href="dist/icons.svg#paintbrush"></use></svg> Diagram</a>
   </div>  
