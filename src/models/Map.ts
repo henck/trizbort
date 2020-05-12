@@ -6,12 +6,10 @@ export class Map {
   description: string;
   elements: Model[];
   startRoom: Room;
-
   settings: MapSettings;
 
   constructor() {
     this.settings = new MapSettings();
-
     this.title = "";
     this.author = "";
     this.description = "";

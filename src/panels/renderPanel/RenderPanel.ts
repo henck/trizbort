@@ -78,7 +78,6 @@ export class RenderPanel extends Panel implements Subscriber {
       buttons[i].addEventListener('click', () => { this.onMapColorButton(popup); });
     }    
 
-    this.elem.querySelector('.js-theme-default').addEventListener('click', () => { this.applyTheme('default'); });
     this.elem.querySelector('.js-theme-diagram').addEventListener('click', () => { this.applyTheme('diagram'); });
     this.elem.querySelector('.js-theme-obsidian').addEventListener('click', () => { this.applyTheme('obsidian'); });
     this.elem.querySelector('.js-theme-hand-drawn').addEventListener('click', () => { this.applyTheme('hand-drawn'); });

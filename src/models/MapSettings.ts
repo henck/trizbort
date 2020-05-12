@@ -80,7 +80,7 @@ class MapSettingsBlock {
 }
 
 class MapSettingsDraw {
-  hand = true;
+  hand = false;
 }
 
 export class MapSettings {
