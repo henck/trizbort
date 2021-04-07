@@ -16,10 +16,12 @@ export class Model {
   public map: Map;            // Map that Model is part of
   protected _dirty: boolean;  // Does this Model need updating?
   protected _type: string;    // Model type, e.g. "Room" or "Note". This is used for readig/writing JSON.
+  protected _guid: string;
 
   constructor() {
     this.id = 0;
     this.setDirty();
+    this._guid = ("10000000-1000-4000-8000-100000000000").replace(/[018]/g, (c:string) => (parseInt(c) ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> parseInt(c) / 4).toString(16));
   }
 
   get type(): string {
@@ -82,6 +84,7 @@ export class Model {
         this.cloneToTargetField(target, key);
       }
     }
+    this._guid = ("10000000-1000-4000-8000-100000000000").replace(/[018]/g, (c:string) => (parseInt(c) ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> parseInt(c) / 4).toString(16));
     return target;
   }
 
