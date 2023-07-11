@@ -1,6 +1,6 @@
 import { Model } from '../models'
 import { IScreen } from '../drawing/IScreen';
-import { Rect } from '../util/rect';
+import { Rect } from '../util/Rect';
 
 export class View {
   id: string;

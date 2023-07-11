@@ -1,6 +1,6 @@
 import { IdRadio } from "../idRadio/idRadio";
-import { ConnectorType } from "../../enums/connectorType";
-import { Control } from "../control";
+import { ConnectorType } from "../../enums/ConnectorType";
+import { Control } from "../Control";
 import { Dispatcher } from "../../Dispatcher";
 import { AppEvent } from "../../enums";
 
