@@ -1,5 +1,5 @@
 import { ObjectKind } from "../enums";
-import { Model } from "./model";
+import { Model } from "./Model";
 
 export class Obj extends Model {
   protected _name: string;         // Object name, e.g. "bottle of water"

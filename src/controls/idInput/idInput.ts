@@ -1,4 +1,4 @@
-import { Control } from "../control";
+import { Control } from "../Control";
 import { Dispatcher } from "../../Dispatcher";
 import { AppEvent } from "../../enums";
 

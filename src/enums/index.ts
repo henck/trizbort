@@ -1,4 +1,4 @@
-export * from './AppEvent'
+export * from './appEvent'
 export * from './Direction'
 export * from './ConnectorHandle'
 export * from './ConnectorType'

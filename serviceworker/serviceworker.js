@@ -12,9 +12,9 @@ addEventListener('install', e => {
     './dist/fonts/danielbd.woff2',
     './dist/fonts/fonts.css',
     './dist/icons.svg',
-    'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.runtime.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.21.0/system.js',
+    './dist/handlebars.runtime.min.js',
+    './dist/FileSaver.min.js',
+    './dist/system.js',
   ]).then(() => {
     console.log("install finished")
   })));

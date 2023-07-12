@@ -1,6 +1,6 @@
 import { Dispatcher } from '../Dispatcher'
 import { AppEvent } from '../enums/'
-import { Map } from './map'
+import { Map } from './Map'
 import { Xml } from '../io/xmlMap';
 
 /**
