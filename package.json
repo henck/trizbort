@@ -1,6 +1,6 @@
 {
   "name": "trizbort.io",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Trizbort.io is a JavaScript implementation of Trizbort, the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps,and generate code for TADS, Inform, Quest and other adventure design systems.",
   "main": "app.js",
   "scripts": {
