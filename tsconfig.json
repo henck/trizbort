@@ -10,7 +10,8 @@
     "module": "system",
     "moduleResolution": "node",
     "rootDir": "./src",              // Source TypeScript files
-    "outFile": "./dist/app.js"       // App is built as a single big file
+    "outFile": "./dist/app.js",      // App is built as a single big file
+    "lib": ["es2015", "es2017", "dom"]
   },
   "exclude": [
     "node_modules"
