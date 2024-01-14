@@ -4,7 +4,7 @@ import { Rect } from '../util'
 import { Room, Connector } from '../models'
 import { ConnectorHandle, Direction, LineStyle, Values, ConnectorType } from '../enums'
 import { CapStyle, JoinStyle, IScreen, TextAlign, TextBaseline } from '../drawing/IScreen'
-import { Point } from '../util/point'
+import { Point } from '../util/Point'
 
 export class ConnectorView extends View {
   static LABEL_FONT_FACTOR = 0.7;
