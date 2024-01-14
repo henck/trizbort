@@ -1,4 +1,4 @@
-import { Control } from "../control";
+import { Control } from "../Control";
 
 export class IdPopup extends Control {
   private div: HTMLElement;

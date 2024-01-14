@@ -391,7 +391,7 @@ export class Canvas implements IScreen {
     for(var n = 0; n < words.length; n++) {
       var testLine = line + words[n] + ' ';
       var metrics = this.ctx.measureText(testLine);
-      var testWidth = metrics.width;
+      var testWidth = metrics.width * App.devicePixelRatio;
       if (testWidth > maxWidth && n > 0) {
         lines.push(line.trim());
         line = words[n] + ' ';

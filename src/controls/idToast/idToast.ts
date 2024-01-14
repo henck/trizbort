@@ -1,4 +1,4 @@
-import { Control } from "../control";
+import { Control } from "../Control";
 
 let toast: IdToast = null;
 

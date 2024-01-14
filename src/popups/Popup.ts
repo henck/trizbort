@@ -1,4 +1,4 @@
-import { App } from "../app";
+import { App } from "../App";
 
 export class Popup {
   private id: string;

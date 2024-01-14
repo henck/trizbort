@@ -1,5 +1,5 @@
 import { LineStyle } from "../../enums";
-import { OptionsGroup } from "../optionsGroup";
+import { OptionsGroup } from "../OptionsGroup";
 
 export class IdLineStyle extends OptionsGroup {
   // 

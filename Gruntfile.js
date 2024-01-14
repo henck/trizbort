@@ -16,6 +16,12 @@ module.exports = function(grunt) {
                 expand: true,
                 src: ['manifest.webmanifest', 'icon.png'],
                 dest: 'dist/'
+              },
+              {
+                expand: true,
+                cwd: 'libs/',
+                src: ['**/*'],
+                dest: 'dist/'
               }
           ]
       },
