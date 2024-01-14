@@ -63,7 +63,7 @@ export class Editor implements Subscriber {
     App.mainHTMLCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
     App.mainHTMLCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
     App.mainHTMLCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
-    App.mainHTMLCanvas.addEventListener('wheel', (e:MouseWheelEvent) => { this.canvasMouseWheel(e) } );    
+    App.mainHTMLCanvas.addEventListener('wheel', (e:WheelEvent) => { this.canvasMouseWheel(e) } );    
     App.mainHTMLCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
     App.mainHTMLCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
 
@@ -829,7 +829,7 @@ export class Editor implements Subscriber {
     Dispatcher.notify(AppEvent.Select, null);
   }
 
-  canvasMouseWheel(e:MouseWheelEvent) {
+  canvasMouseWheel(e: WheelEvent) {
     App.centerX += e.deltaX;
     App.centerY += e.deltaY;
     this.refresh(true);
