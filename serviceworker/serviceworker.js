@@ -16,7 +16,7 @@ addEventListener('install', e => {
     './dist/FileSaver.min.js',
     './dist/system.js',
   ]).then(() => {
-    console.log("install finished")
+    console.log("Install finished.")
   })));
 });
 
