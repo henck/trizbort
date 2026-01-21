@@ -3,13 +3,14 @@ layout: default
 ---
 
 <div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- if title -%}
+    <h1 class="page-heading">{{ title }}</h1>
   {%- endif -%}
 
   <div style="text-align:center; padding-bottom:50px;">
     <h1 class="title">Trizbort.io</h1>
     <h1>Map and design <span class="hilite">adventure games</span> in your browser.</h1>
+    <br/>
     <a class="btn" href="app/index.html">Get Started</a>
   </div>
 
@@ -19,9 +20,9 @@ layout: default
     </div>
     <div class="text-col">
       <h1>Create a map in minutes</h1>
-      <p><span class="hilite">Trizbort.io</span> is a browser-based tool that lets you easily map 
-      adventure games. Drag rooms into your map and link them up using connections in all compass 
-      directions. Add a list of objects present in each room. Finally, export your map straight 
+      <p><span class="hilite">Trizbort.io</span> is a browser-based tool that lets you easily map
+      adventure games. Drag rooms into your map and link them up using connections in all compass
+      directions. Add a list of objects present in each room. Finally, export your map straight
       to your adventure game toolkit of choice: TADS, Inform, Quest or Alan.</p>
       <div style="margin-top:50px">
         <a class="btn" href="app/index.html">Create your first map</a>
@@ -32,8 +33,8 @@ layout: default
   <div class="text-col-wrapper">
     <div class="text-col">
       <h1>Edit room details quickly</h1>
-      <p><span class="hilite">Trizbort.io</span> lets you edit the properties of your rooms 
-      using a quick and intuitive editor. Set room name and description, then add room colors, 
+      <p><span class="hilite">Trizbort.io</span> lets you edit the properties of your rooms
+      using a quick and intuitive editor. Set room name and description, then add room colors,
       room borders and elliptical or octagonal room shapes.</p>
       <p>Add named objects with descriptions to your rooms, and even create containment
       relationships - which will be included in your code generation later.
@@ -41,57 +42,55 @@ layout: default
     </div>
     <div class="text-col">
       <img src="/assets/room-details.png" alt="Room details Trizbort.io"/>
-    </div>    
-  </div>  
+    </div>
+  </div>
 
   <div class="text-col-wrapper">
     <div class="text-col">
-      <!-- <img src="/assets/tadscode.png" alt="Trizbort.io TADS export"/> -->
-{% highlight c %}
+{% highlight "c" %}
 versionInfo : GameID
   name = 'Deadly Cave Adventure'
-  desc = 'A thrilling adventure 
+  desc = 'A thrilling adventure
     deep in the earth'
 ;
 
 OutsideCave: Room 'Outside Cave'
-  description = "You are standing outside a 
+  description = "You are standing outside a
     dark, forboding cave. "
   north = EntryChamber
 ;
 
 + lamp: Item 'lamp'
-  description = "An old-fashioned oil lamp. 
+  description = "An old-fashioned oil lamp.
     Rusty but serviceable. "
 ;
 {% endhighlight %}
     </div>
     <div class="text-col">
       <h1>Generate code from your map</h1>
-      <p><span class="hilite">Trizbort.io</span> can export your map to various adventure 
+      <p><span class="hilite">Trizbort.io</span> can export your map to various adventure
       game development systems. It supports TADS, Inform, Quest and Alan, among others. You can
-      also export to YAML if that fits in your development pipeline. 
-      Code is generated for your rooms, connections and objects, and you can 
+      also export to YAML if that fits in your development pipeline.
+      Code is generated for your rooms, connections and objects, and you can
       feed it straight into your compiler.</p>
     </div>
-  </div>  
+  </div>
 
   {{ content }}
 
-  {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "News" }}</h2>
+  {%- if collections.posts.size > 0 -%}
+    <h2 class="post-list-heading">{{ list_title | default: "News" }}</h2>
     <ul class="post-list">
-      {%- for post in site.posts -%}
+      {%- for post in collections.posts -%}
       <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
         <h3>
           <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
+            {{ post.data.title | escape }}
           </a>
         </h3>
         {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
+          {{ post.templateContent | truncate: 300 }}
         {%- endif -%}
         <div>
           <a style="float:right" class="smallbtn" href="{{ post.url | relative_url }}">Read more</a>

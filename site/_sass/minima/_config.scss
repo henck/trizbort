@@ -1,0 +1,55 @@
+@use "sass:color";
+@use "sass:math";
+
+// Base configuration variables
+$base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$base-font-size:   16px !default;
+$base-font-weight: 300 !default;
+$small-font-size:  $base-font-size * 0.875 !default;
+$base-line-height: 1.5 !default;
+
+$spacing-unit:     30px !default;
+
+$text-color:       rgb(239, 218, 185) !default;
+$text-color-hilite: rgb(120, 176, 160) !default;
+$background-color: #353537 !default;
+$footer-background: #2C2A2B !default;
+$menu-background:  #584B4F !default;
+$brand-color:      #2a7ae2 !default;
+$link-color:       #EED152 !default;
+$link-hover-color: #EBAC00 !default;
+
+$grey-color:       #828282 !default;
+$grey-color-light: color.adjust($grey-color, $lightness: 40%) !default;
+$grey-color-dark:  color.adjust($grey-color, $lightness: -25%) !default;
+
+$table-text-align: left !default;
+
+// Width of the content area
+$content-width:    1000px !default;
+
+$on-palm:          600px !default;
+$on-laptop:        1000px !default;
+
+// Mixins
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+    @content;
+  }
+}
+
+@mixin relative-font-size($ratio) {
+  font-size: $base-font-size * $ratio;
+}
+
+// Clearfix placeholder
+%clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+// Vertical rhythm placeholder
+%vertical-rhythm {
+  margin-bottom: math.div($spacing-unit, 2);
+}

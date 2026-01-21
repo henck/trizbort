@@ -1,3 +1,6 @@
+@use "sass:math";
+@use "config" as *;
+
 /**
  * Site header
  */
@@ -48,7 +51,7 @@
   @include media-query($on-palm) {
     position: absolute;
     top: 9px;
-    right: $spacing-unit / 2;
+    right: math.div($spacing-unit, 2);
     background-color: $background-color;
     border: 1px solid $grey-color-light;
     border-radius: 5px;
@@ -111,17 +114,15 @@
 
 .text-col {
   float: left;
-  margin-bottom: $spacing-unit / 2;
-  padding-left: $spacing-unit * 2;  
-  width: -webkit-calc(50% - (#{$spacing-unit} * 2));
-  width:         calc(50% - (#{$spacing-unit} * 2));  
+  margin-bottom: math.div($spacing-unit, 2);
+  padding-left: $spacing-unit * 2;
+  width: calc(50% - (#{$spacing-unit} * 2));
 }
 
 @include media-query($on-palm) {
   .text-col {
     float: none;
-    width: -webkit-calc(100% - (#{$spacing-unit} * 2));
-    width:         calc(100% - (#{$spacing-unit} * 2));
+    width: calc(100% - (#{$spacing-unit} * 2));
   }
 }
 
@@ -138,7 +139,7 @@
 
 .footer-heading {
   @include relative-font-size(1.125);
-  margin-bottom: $spacing-unit / 2;
+  margin-bottom: math.div($spacing-unit, 2);
 }
 
 .contact-list,
@@ -150,49 +151,43 @@
 .footer-col-wrapper {
   @include relative-font-size(0.9375);
   color: $grey-color;
-  margin-left: -$spacing-unit / 2;
+  margin-left: math.div(-$spacing-unit, 2);
   @extend %clearfix;
 }
 
 .footer-col {
   float: left;
-  margin-bottom: $spacing-unit / 2;
-  padding-left: $spacing-unit / 2;
+  margin-bottom: math.div($spacing-unit, 2);
+  padding-left: math.div($spacing-unit, 2);
 }
 
 .footer-col-1 {
-  width: -webkit-calc(35% - (#{$spacing-unit} / 2));
-  width:         calc(35% - (#{$spacing-unit} / 2));
+  width: calc(35% - #{math.div($spacing-unit, 2)});
 }
 
 .footer-col-2 {
-  width: -webkit-calc(20% - (#{$spacing-unit} / 2));
-  width:         calc(20% - (#{$spacing-unit} / 2));
+  width: calc(20% - #{math.div($spacing-unit, 2)});
 }
 
 .footer-col-3 {
-  width: -webkit-calc(45% - (#{$spacing-unit} / 2));
-  width:         calc(45% - (#{$spacing-unit} / 2));
+  width: calc(45% - #{math.div($spacing-unit, 2)});
 }
 
 @include media-query($on-laptop) {
   .footer-col-1,
   .footer-col-2 {
-    width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-    width:         calc(50% - (#{$spacing-unit} / 2));
+    width: calc(50% - #{math.div($spacing-unit, 2)});
   }
 
   .footer-col-3 {
-    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-    width:         calc(100% - (#{$spacing-unit} / 2));
+    width: calc(100% - #{math.div($spacing-unit, 2)});
   }
 }
 
 @include media-query($on-palm) {
   .footer-col {
     float: none;
-    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-    width:         calc(100% - (#{$spacing-unit} / 2));
+    width: calc(100% - #{math.div($spacing-unit, 2)});
   }
 }
 

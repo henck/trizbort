@@ -4,7 +4,11 @@
       "Bash(xargs:*)",
       "Bash(ls:*)",
       "Bash(node scripts/build-svg-sprite.js:*)",
-      "Bash(timeout 8 npm run dev)"
+      "Bash(timeout 8 npm run dev)",
+      "Bash(dir:*)",
+      "Bash(npx @11ty/eleventy)",
+      "Bash(npm run build:sass:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

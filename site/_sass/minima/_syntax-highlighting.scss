@@ -1,3 +1,5 @@
+@use "config" as *;
+
 /**
  * Syntax highlighting styles
  */
@@ -77,5 +79,3 @@ pre.highlight,
 .highlight .vg { color: #F1F2F3 } /* Name.Variable.Global */
 .highlight .vi { color: #F1F2F3 } /* Name.Variable.Instance */
 .highlight .il { color: #FFCD22 } /* Literal.Number.Integer.Long */
-
-

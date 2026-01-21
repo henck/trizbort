@@ -1,0 +1,20 @@
+{
+  "name": "trizbort-website",
+  "version": "1.0.0",
+  "description": "Trizbort.io marketing website",
+  "scripts": {
+    "dev": "npx @11ty/eleventy --serve",
+    "build": "npm run build:sass && npx @11ty/eleventy",
+    "build:sass": "sass _sass/minima.scss:assets/main.css --style=compressed",
+    "watch:sass": "sass _sass/minima.scss:assets/main.css --watch"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-plugin-rss": "^1.2.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "luxon": "^3.4.4",
+    "markdown-it": "^14.0.0",
+    "markdown-it-attrs": "^4.1.6",
+    "sass": "^1.69.5"
+  }
+}

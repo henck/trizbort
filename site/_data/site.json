@@ -1,0 +1,12 @@
+{
+  "title": "Trizbort.io",
+  "email": "info@independent-software.com",
+  "author": "Alexander van Oostenrijk",
+  "description": "_Trizbort.io_ is open-source adventure game mapping and code generation software based on the [Trizbort](http://www.trizbort.com) desktop app by [genstein](http://http://trizbort.genstein.net/) and [Jason Lautzenheiser](https://github.com/JasonLautzenheiser).",
+  "baseurl": "",
+  "url": "",
+  "twitter_username": "IndependentSw",
+  "github_username": "henck/trizbort",
+  "show_excerpts": true,
+  "google_analytics": "UA-62113986-8"
+}

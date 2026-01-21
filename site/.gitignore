@@ -1,3 +1,17 @@
-_site
-.sass-cache
+# Build output
+_site/
+
+# Dependencies
+node_modules/
+
+# Cache files
+.sass-cache/
 .jekyll-metadata
+
+# Generated CSS (from SCSS)
+assets/main.css
+assets/main.css.map
+
+# OS files
+.DS_Store
+Thumbs.db
