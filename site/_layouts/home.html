@@ -30,7 +30,7 @@
           <div>
             <h2>Create a map in minutes</h2>
             <p><strong>Trizbort.io</strong> is a browser-based tool that lets you easily map
-            adventure games. Drag rooms into your map and link them up using connections in all compass
+            adventure games. Drag rooms onto your map and link them up using connections in all compass
             directions. Add a list of objects present in each room. Finally, export your map straight
             to your adventure game toolkit of choice: TADS, Inform, Quest or Alan.</p>
             <a href="app/index.html" role="button" class="secondary">Create your first map</a>
@@ -59,24 +59,22 @@
       <section class="feature-section">
         <div class="grid">
           <div>
-{% highlight "c" %}
-versionInfo : GameID
-  name = 'Deadly Cave Adventure'
-  desc = 'A thrilling adventure
-    deep in the earth'
+<pre class="code-sample"><code><span class="code-id">versionInfo</span>: <span class="code-type">GameID</span>
+  <span class="code-prop">name</span> = <span class="code-str">'Deadly Cave Adventure'</span>
+  <span class="code-prop">desc</span> = <span class="code-str">'A thrilling adventure
+    deep in the earth'</span>
 ;
 
-OutsideCave: Room 'Outside Cave'
-  description = "You are standing outside a
-    dark, forboding cave. "
-  north = EntryChamber
+<span class="code-id">OutsideCave</span>: <span class="code-type">Room</span> <span class="code-str">'Outside Cave'</span>
+  <span class="code-prop">description</span> = <span class="code-str">"You are standing outside a
+    dark, forboding cave. "</span>
+  <span class="code-prop">north</span> = <span class="code-id">EntryChamber</span>
 ;
 
-+ lamp: Item 'lamp'
-  description = "An old-fashioned oil lamp.
-    Rusty but serviceable. "
-;
-{% endhighlight %}
++ <span class="code-id">lamp</span>: <span class="code-type">Item</span> <span class="code-str">'lamp'</span>
+  <span class="code-prop">description</span> = <span class="code-str">"An old-fashioned oil lamp.
+    Rusty but serviceable. "</span>
+;</code></pre>
           </div>
           <div>
             <h2>Generate code from your map</h2>

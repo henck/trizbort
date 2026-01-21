@@ -190,6 +190,34 @@ a[role="button"]:hover {
   color: var(--pico-muted-color);
 }
 
+/* Code sample styling */
+.code-sample {
+  background: #111;
+  border-radius: var(--pico-border-radius);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.code-sample code {
+  color: #F1F2F3;
+}
+
+.code-type {
+  color: #83D8E1;
+}
+
+.code-id {
+  color: #678CB1;
+}
+
+.code-prop {
+  color: #93C763;
+}
+
+.code-str {
+  color: #EC7600;
+}
+
 /* Syntax highlighting styles */
 .highlight {
   background: #111;
