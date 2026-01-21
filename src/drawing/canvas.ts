@@ -382,25 +382,40 @@ export class Canvas implements IScreen {
 
   // Take a string of text and split it into a number of lines,
   // working with a maximum width (minimum 50).
+  // Respects explicit line breaks (\n) in the text.
   private splitText(maxWidth: number, text: string) {
     if(maxWidth < 50) maxWidth = 50;
-    var words = text.trim().split(' ');
-    var line: string = '';
     let lines: Array<string> = new Array<string>();
 
-    for(var n = 0; n < words.length; n++) {
-      var testLine = line + words[n] + ' ';
-      var metrics = this.ctx.measureText(testLine);
-      var testWidth = metrics.width * App.devicePixelRatio;
-      if (testWidth > maxWidth && n > 0) {
-        lines.push(line.trim());
-        line = words[n] + ' ';
+    // First split by explicit line breaks
+    const paragraphs = text.split('\n');
+
+    for (const paragraph of paragraphs) {
+      const trimmed = paragraph.trim();
+      if (trimmed === '') {
+        // Preserve empty lines
+        lines.push('');
+        continue;
       }
-      else {
-        line = testLine;
+
+      // Word-wrap each paragraph
+      const words = trimmed.split(' ');
+      let line: string = '';
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = this.ctx.measureText(testLine);
+        const testWidth = metrics.width * App.devicePixelRatio;
+        if (testWidth > maxWidth && n > 0) {
+          lines.push(line.trim());
+          line = words[n] + ' ';
+        } else {
+          line = testLine;
+        }
       }
+      lines.push(line.trim());
     }
-    lines.push(line.trim());
+
     return lines;
   }
 
