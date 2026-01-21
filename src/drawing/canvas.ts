@@ -22,6 +22,13 @@ export class Canvas implements IScreen {
     this.drawer = new DrawContext(this.ctx);
   }
 
+  // Seed the hand-drawn PRNG. Call before drawing each element to ensure
+  // consistent rendering without jittering.
+  seed(value: number): IScreen {
+    this.drawer.seed(value);
+    return this;
+  }
+
   save(): IScreen {
     this.ctx.save();
     return this;

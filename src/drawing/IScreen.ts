@@ -36,6 +36,8 @@ export interface IScreen {
   translate(x: number, y: number): IScreen;
   rotate(angle: number): IScreen;
   scale(x: number, y?: number): IScreen;
+  // Seed the PRNG for consistent hand-drawn rendering
+  seed(value: number): IScreen;
 
   moveTo(x: number, y: number): IScreen;  
 

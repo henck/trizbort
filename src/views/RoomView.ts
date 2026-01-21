@@ -29,6 +29,7 @@ export class RoomView extends BoxView {
     canvas
       .save()
       .translate(this.room.x, this.room.y)
+      .seed(this.room.id);
 
     this.makeShape(canvas, true);
     
@@ -133,7 +134,8 @@ export class RoomView extends BoxView {
     // Translate to room's coordinates, so we can offset everything from (0,0).
     canvas
       .save()
-      .translate(this.room.x, this.room.y);
+      .translate(this.room.x, this.room.y)
+      .seed(this.room.id);
 
     this.makeShape(canvas, true);
     

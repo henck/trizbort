@@ -5,7 +5,7 @@
   left: 40px;
   background: black;
   border-radius: 8px;
-  padding: 20px 20px 0px 20px;
+  padding: 16px 20px 0px 20px;
   color: white;
   user-select: none;
   box-shadow: 0 6px 6px rgba(0,0,0,0.5);
@@ -13,7 +13,7 @@
   & span {
     position: absolute;
     right: 16px;
-    top: 16px;
+    top: 14px;
     cursor: pointer;
 
     & svg {

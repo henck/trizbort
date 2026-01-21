@@ -21,7 +21,8 @@ export class NoteView extends BoxView {
     // Translate to note's coordinates, so we can offset everything from (0,0).
     canvas
       .save()
-      .translate(this.note.x, this.note.y);
+      .translate(this.note.x, this.note.y)
+      .seed(this.note.id);
 
     this.makeShape(canvas, true);
 
@@ -79,7 +80,8 @@ export class NoteView extends BoxView {
     // Translate to note's coordinates, so we can offset everything from (0,0).
     canvas
       .save()
-      .translate(this.note.x, this.note.y);
+      .translate(this.note.x, this.note.y)
+      .seed(this.note.id);
 
     this.makeShape(canvas, true);
 

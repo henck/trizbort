@@ -53,7 +53,7 @@ export class App {
     new ConnectorPanel();
     new ConnectorPopup();
 
-    IdGuide.guide("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room (or press <kbd>Ctrl/⌘</kbd><kbd>1</kbd>).");
+    IdGuide.guide("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the tool bar and click anywhere on the map to place your first room (or press <kbd>Ctrl/⌘</kbd><kbd>1</kbd>).");
   }  
 
   static pushUndo() {

@@ -102,6 +102,7 @@ export class ConnectorView extends View {
 
     canvas
       .save()
+      .seed(this.connector.id)
       .beginPath();
 
     // There are 4 possibilities:
@@ -119,14 +120,14 @@ export class ConnectorView extends View {
     else if(this.connector.dockStart && this.connector.dockEnd) {
       var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);
       var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);
-    }    
+    }
     // Docked -> Undocked
     else if(this.connector.dockStart && !this.connector.dockEnd) {
-      var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);    
+      var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);
     }
     // Undocked -> Docked
     else {
-      var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);      
+      var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);
     }
 
     arrow1x = startX + (endX - startX) * 0.1;
@@ -305,6 +306,7 @@ export class ConnectorView extends View {
 
     canvas
       .save()
+      .seed(this.connector.id)
       .beginPath();
 
     // There are 4 possibilities:
@@ -322,15 +324,15 @@ export class ConnectorView extends View {
     else if(this.connector.dockStart && this.connector.dockEnd) {
       var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);
       var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);
-    }    
+    }
     // Docked -> Undocked
     else if(this.connector.dockStart && !this.connector.dockEnd) {
-      var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);    
+      var { x: dockStartX, y: dockStartY, dx: startX, dy: startY } = this.dockToPoints(this.connector.dockStart, this.connector.startDir);
     }
     // Undocked -> Docked
     else {
-      var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);      
-    } 
+      var { x: dockEndX, y: dockEndY, dx: endX, dy: endY } = this.dockToPoints(this.connector.dockEnd, this.connector.endDir);
+    }
 
     // Docked -> undocked
     if(!this.connector.dockStart && !this.connector.dockEnd) {

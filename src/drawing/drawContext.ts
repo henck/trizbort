@@ -23,12 +23,31 @@ export class FuzzDrawing {
 export class DrawContext {
 
     fd = new FuzzDrawing();
+    private _seed: number = 1;
+    private _rngState: number = 1;
 
     constructor(
         private ctx: CanvasRenderingContext2D,
         config?: FuzzDrawing
     ) {
         if(config) (<any>Object).assign(this, config);
+    }
+
+    // Seed the PRNG. Call this before drawing each element to ensure
+    // consistent hand-drawn rendering (no jittering on redraw).
+    seed(value: number) {
+        this._seed = value >>> 0 || 1; // Ensure positive 32-bit integer, avoid 0
+        this._rngState = this._seed;
+    }
+
+    // Mulberry32 PRNG - fast 32-bit seeded random number generator.
+    // Returns a value between 0 and 1.
+    private seededRandom(): number {
+        this._rngState |= 0;
+        this._rngState = this._rngState + 0x6D2B79F5 | 0;
+        let t = Math.imul(this._rngState ^ this._rngState >>> 15, 1 | this._rngState);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
     }
 
     private fuzzNormal = {
@@ -39,7 +58,7 @@ export class DrawContext {
     private fuzz(val: number, f: number) {
         // get random number
         var i = this.fuzzNormal.count;
-        var rnd = (Math.random() - 0.5);
+        var rnd = (this.seededRandom() - 0.5);
 
         if(++this.fuzzNormal.count == 2)
             this.fuzzNormal.count = 0;
@@ -146,8 +165,8 @@ export class DrawContext {
         var fh = this.fd.ffc * Math.pow(rh, 0.5) * 0.3 / Math.pow(steps, 0.25);
         var fv = this.fd.ffc * Math.pow(rv, 0.5) * 0.3 / Math.pow(steps, 0.25);
         // distortion of the ellipse
-        var xs = 0.95 + Math.random() * 0.1;
-        var ys = 0.95 + Math.random() * 0.1;
+        var xs = 0.95 + this.seededRandom() * 0.1;
+        var ys = 0.95 + this.seededRandom() * 0.1;
         var rxs = rh * xs;
         var rys = rv * ys;
         // lenght of one segment

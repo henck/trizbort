@@ -20,7 +20,8 @@ export class BlockView extends BoxView {
     // Translate to block's coordinates, so we can offset everything from (0,0).
     canvas
       .save()
-      .translate(this.block.x, this.block.y);
+      .translate(this.block.x, this.block.y)
+      .seed(this.block.id);
 
     this.makeShape(canvas, true);
 
@@ -59,7 +60,8 @@ export class BlockView extends BoxView {
     // Translate to block's coordinates, so we can offset everything from (0,0).
     canvas
       .save()
-      .translate(this.block.x, this.block.y);
+      .translate(this.block.x, this.block.y)
+      .seed(this.block.id);
 
     this.makeShape(canvas, true);
 
