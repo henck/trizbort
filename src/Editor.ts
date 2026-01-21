@@ -63,7 +63,7 @@ export class Editor implements Subscriber {
     App.mainHTMLCanvas.addEventListener('mousedown', (e:MouseEvent) => { this.canvasMouseDown(e) } );
     App.mainHTMLCanvas.addEventListener('mouseup', (e:MouseEvent) => { this.canvasMouseUp(e) } );
     App.mainHTMLCanvas.addEventListener('mousemove', (e:MouseEvent) => { this.canvasMouseMove(e) } );
-    App.mainHTMLCanvas.addEventListener('wheel', (e:WheelEvent) => { this.canvasMouseWheel(e) } );    
+    App.mainHTMLCanvas.addEventListener('wheel', (e:WheelEvent) => { this.canvasMouseWheel(e) }, { passive: false });    
     App.mainHTMLCanvas.addEventListener('dblclick', (e:MouseEvent) => { this.canvasMouseDoubleClick(e)} );
     App.mainHTMLCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
 
@@ -830,9 +830,14 @@ export class Editor implements Subscriber {
   }
 
   canvasMouseWheel(e: WheelEvent) {
-    App.centerX += e.deltaX;
-    App.centerY += e.deltaY;
-    this.refresh(true);
+    e.preventDefault();
+
+    // Scroll up (negative deltaY) = zoom in, scroll down (positive deltaY) = zoom out
+    if (e.deltaY < 0) {
+      this.cmdZoomIn();
+    } else if (e.deltaY > 0) {
+      this.cmdZoomOut();
+    }
   }   
 
   //-----------------------------------------
