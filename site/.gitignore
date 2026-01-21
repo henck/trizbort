@@ -6,7 +6,6 @@ node_modules/
 
 # Cache files
 .sass-cache/
-.jekyll-metadata
 
 # Generated CSS (from SCSS)
 assets/main.css
