@@ -23,13 +23,12 @@ Code generation is more complete for some systems than for others. Experts are v
 
 Trizbort.io is written in TypeScript using the [JAMstack](https://jamstack.org/). There is no server back-end and there are few dependencies. It is simple to get it to run locally so you can hack on it. To do so:
 
-* Install [Node.js](https://nodejs.org/) (even if you have Node.js, a recent version is recommended). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
+* Install [Node.js](https://nodejs.org/) (a recent version is recommended). It will come with [npm](https://www.npmjs.com/), the Node.js package manager.
 * Fork the project to a local directory.
-* Run `npm install` to install all dependencies. This includes TypeScript, [Grunt](https://gruntjs.com/), Handlebars and Express.
-* Build the project by running `grunt build`. 
-* Optionally run `grunt watch`. This will rebuild parts of the project whenever you make a change.
-* Start an Express development server with `npm run start:dev`. This server will listen on port 3000.
-* Open `http://localhost:3000/index.html` in your browser.
+* Run `npm install` to install all dependencies.
+* Start the [Vite](https://vitejs.dev/) development server with `npm run dev`. This will start a server on port 3000 with hot module reloading.
+* Open `http://localhost:3000` in your browser.
+* To create a production build, run `npm run build`. The output will be in the `dist/` directory.
 
 ## Public web application
 
