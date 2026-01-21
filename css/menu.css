@@ -59,6 +59,12 @@ div.menugroup {
   }
 }
 
+div.menuseparator {
+  height: 1px;
+  background-color: #ddd;
+  margin: 4px 0;
+}
+
 div.menuitem {
   user-select: none;
   display: block;
