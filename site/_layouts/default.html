@@ -5,9 +5,17 @@
 
   <body>
 
-    {% include "header.html" %}
+    <div class="post-banner" id="post-banner">
+      {% include "header.html" %}
+    </div>
+    <script>
+      const heroes = ['/assets/hero1.jpg', '/assets/hero2.jpg', '/assets/hero3.jpg'];
+      const hero = heroes[Math.floor(Math.random() * heroes.length)];
+      document.getElementById('post-banner').style.backgroundImage =
+        `linear-gradient(to bottom, transparent 70%, var(--pico-background-color) 100%), url('${hero}')`;
+    </script>
 
-    <main class="container">
+    <main class="container post-content-box">
       {{ content }}
     </main>
 

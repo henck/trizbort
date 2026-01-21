@@ -1,19 +1,20 @@
-<footer class="container">
-  <hr>
-  <div class="grid">
-    <div>
-      <p><strong>{{ site.title | escape }}</strong></p>
-      <p>{{- site.description | markdownify -}}</p>
+<footer class="site-footer">
+  <div class="container">
+    <p><strong>{{ site.title | escape }}</strong></p>
+    <div class="grid footer-grid">
+      <div>
+        {{- site.description | markdownify -}}
+      </div>
+      <div>
+        {% include "social.html" %}
+      </div>
     </div>
-    <div>
-      {% include "social.html" %}
-    </div>
+    <p><small>
+      {%- if site.author -%}
+        &copy; {{ site.author | escape }}
+      {%- else -%}
+        &copy; {{ site.title | escape }}
+      {%- endif -%}
+    </small></p>
   </div>
-  <p><small>
-    {%- if site.author -%}
-      &copy; {{ site.author | escape }}
-    {%- else -%}
-      &copy; {{ site.title | escape }}
-    {%- endif -%}
-  </small></p>
 </footer>

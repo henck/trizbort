@@ -1,3 +1,80 @@
+/* Header */
+.site-header {
+  padding: 1rem 0;
+}
+
+.site-header nav {
+  justify-content: space-between;
+}
+
+.site-header nav ul {
+  gap: 1rem;
+}
+
+/* Hero Banner (home page) */
+.hero-banner {
+  background-image: linear-gradient(to bottom, transparent 70%, var(--pico-background-color) 100%), url('/assets/home.jpg');
+  background-size: cover, cover;
+  background-position: center, center;
+}
+
+/* Post Banner (blog posts) */
+.post-banner {
+  background-image: linear-gradient(to bottom, transparent 70%, var(--pico-background-color) 100%), url('/assets/hero1.jpg');
+  background-size: cover, cover;
+  background-position: center, center;
+  padding-bottom: 11rem;
+}
+
+body:has(.post-banner) {
+  overflow-x: hidden;
+}
+
+/* Post content box - overlaps the banner */
+main.post-content-box {
+  margin-top: -6rem;
+  position: relative;
+}
+
+/* Footer */
+.site-footer {
+  background-color: #2a2a2c;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footer-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* Social links */
+ul.social-links {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+ul.social-links li {
+  margin-bottom: 0.25rem;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Icons */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  margin-right: 0.25em;
+  color: var(--pico-color);
+}
+
 /* Brand colors */
 :root {
   --pico-primary: #FFD152;
@@ -10,9 +87,9 @@
 }
 
 /* Accent text */
-mark, .hilite {
-  background: transparent;
+strong {
   color: rgb(120, 176, 160);
+  font-weight: 600;
 }
 
 /* Title styling */
@@ -24,7 +101,8 @@ mark, .hilite {
 /* Hero section */
 .hero {
   text-align: center;
-  padding: 2rem 0 3rem;
+  padding: 2.5rem 0 4rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero h1 {
@@ -41,6 +119,11 @@ mark, .hilite {
   margin: 3rem 0;
 }
 
+.feature-section .grid {
+  column-gap: 4rem;
+  row-gap: 2rem;
+}
+
 .feature-section img {
   border-radius: var(--pico-border-radius);
   max-width: 100%;
@@ -51,6 +134,24 @@ mark, .hilite {
 .post-list {
   list-style: none;
   padding: 0;
+}
+
+/* Link styles - no underline, underline on hover */
+a {
+  text-decoration: none;
+  color: #7ec8e3;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #a8d8ea;
+}
+
+/* Button links - no text changes on hover */
+a[role="button"],
+a[role="button"]:hover {
+  text-decoration: none;
+  color: #fff;
 }
 
 .post-list li {
@@ -66,6 +167,21 @@ mark, .hilite {
 .post-meta {
   color: var(--pico-muted-color);
   font-size: 0.875rem;
+}
+
+/* Small gold button */
+.btn-small {
+  --pico-font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--pico-primary-background);
+  border-color: var(--pico-primary-background);
+  color: #fff;
+}
+
+.btn-small:hover {
+  background-color: var(--pico-primary-hover-background);
+  border-color: var(--pico-primary-hover-background);
+  color: #fff;
 }
 
 /* RSS link */

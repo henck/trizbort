@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Premilinary export to TADS"
+title:  "Preliminary export to TADS"
 date: 2018-04-20
 categories: trizbort update
 ---
@@ -40,3 +40,4 @@ gameMain: GameMainDef
 ;
 {% endhighlight %}
 
+[handlebars]: https://handlebarsjs.com
