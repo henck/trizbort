@@ -1,5 +1,6 @@
 import { Map, Box, Room, Note, Block, Connector } from "./models";
 import { Direction, LineStyle, RoomShape } from "./enums";
+import { MarkdownParser, TextSegment } from "./util/MarkdownParser";
 
 //
 // The SvgExporter exports the map to an SVG file.
@@ -19,15 +20,64 @@ export class SvgExporter {
   //
   // Export the current map to an SVG file.
   //
-  public export() {
+  public async export() {
     // Calculate bounding box
     this.calculateBounds();
 
+    // Load fonts as base64
+    const fontStyles = await this.loadFonts();
+
     // Generate SVG content
-    const svg = this.generateSvg();
+    const svg = this.generateSvg(fontStyles);
 
     // Download
     this.download(svg);
+  }
+
+  //
+  // Load fonts and convert to base64 for embedding.
+  //
+  private async loadFonts(): Promise<string> {
+    const fonts: { name: string, url: string, weight: string, style: string }[] = [
+      { name: 'danielbd', url: 'fonts/danielbd.woff2', weight: 'normal', style: 'normal' },
+      { name: 'Roboto', url: 'fonts/roboto-v20-latin-regular.woff2', weight: '400', style: 'normal' }
+    ];
+
+    const fontFaces: string[] = [];
+
+    for (const font of fonts) {
+      try {
+        const response = await fetch(font.url);
+        if (response.ok) {
+          const blob = await response.blob();
+          const base64 = await this.blobToBase64(blob);
+          fontFaces.push(`
+      @font-face {
+        font-family: '${font.name}';
+        src: url(${base64}) format('woff2');
+        font-weight: ${font.weight};
+        font-style: ${font.style};
+      }`);
+        }
+      } catch (e) {
+        // Font not available, skip it
+        console.warn(`Could not load font: ${font.name}`);
+      }
+    }
+
+    return fontFaces.join('\n');
+  }
+
+  //
+  // Convert a Blob to a base64 data URL.
+  //
+  private blobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   }
 
   //
@@ -97,12 +147,21 @@ export class SvgExporter {
   //
   // Generate the complete SVG markup.
   //
-  private generateSvg(): string {
+  private generateSvg(fontStyles: string): string {
     const parts: string[] = [];
 
     // SVG header
     parts.push(`<?xml version="1.0" encoding="UTF-8"?>`);
     parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${this.left} ${this.top} ${this.width} ${this.height}" width="${this.width}" height="${this.height}">`);
+
+    // Embedded fonts
+    if (fontStyles) {
+      parts.push(`  <defs>`);
+      parts.push(`    <style type="text/css">`);
+      parts.push(fontStyles);
+      parts.push(`    </style>`);
+      parts.push(`  </defs>`);
+    }
 
     // Background
     parts.push(`  <rect x="${this.left}" y="${this.top}" width="${this.width}" height="${this.height}" fill="${this.map.settings.grid.background}"/>`);
@@ -186,6 +245,40 @@ export class SvgExporter {
   }
 
   //
+  // Get SVG style attributes for a text segment.
+  //
+  private getSegmentStyle(segment: TextSegment): string {
+    const styles: string[] = [];
+    if (segment.bold) {
+      styles.push('font-weight="bold"');
+    }
+    if (segment.italic) {
+      styles.push('font-style="italic"');
+    }
+    return styles.length > 0 ? ' ' + styles.join(' ') : '';
+  }
+
+  //
+  // Render a single line of text with markdown support.
+  //
+  private renderMarkdownText(text: string, x: number, y: number, fontSize: number, fontFamily: string, color: string): string {
+    const segments = MarkdownParser.parse(text);
+    let result = `    <text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle" fill="${color}" font-size="${fontSize}" font-family="${fontFamily}">`;
+
+    for (const segment of segments) {
+      const style = this.getSegmentStyle(segment);
+      if (style) {
+        result += `<tspan${style}>${this.escapeXml(segment.text)}</tspan>`;
+      } else {
+        result += this.escapeXml(segment.text);
+      }
+    }
+
+    result += `</text>`;
+    return result;
+  }
+
+  //
   // Render a room to SVG.
   //
   private renderRoom(room: Room): string {
@@ -214,18 +307,18 @@ export class SvgExporter {
       parts.push(`    <path d="${path}" fill="none" stroke="${room.borderColor}" stroke-width="${room.lineWidth}"${strokeDash}/>`);
     }
 
-    // Room name
+    // Room name with markdown support
     const fontSize = this.map.settings.basic.fontSize;
     const fontFamily = this.map.settings.basic.fontFamily;
     const cx = room.x + room.width / 2;
     const cy = room.y + room.height / 2;
 
-    parts.push(`    <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="middle" fill="${room.nameColor}" font-size="${fontSize}" font-family="${fontFamily}">${this.escapeXml(room.name)}</text>`);
+    parts.push(this.renderMarkdownText(room.name, cx, cy, fontSize, fontFamily, room.nameColor));
 
-    // Subtitle
+    // Subtitle with markdown support
     if (room.subtitle) {
       const subtitleSize = fontSize * 0.8;
-      parts.push(`    <text x="${cx}" y="${cy + fontSize}" text-anchor="middle" dominant-baseline="middle" fill="${room.subtitleColor}" font-size="${subtitleSize}" font-family="${fontFamily}">${this.escapeXml(room.subtitle)}</text>`);
+      parts.push(this.renderMarkdownText(room.subtitle, cx, cy + fontSize, subtitleSize, fontFamily, room.subtitleColor));
     }
 
     parts.push(`  </g>`);
@@ -256,13 +349,34 @@ export class SvgExporter {
       parts.push(`    <path d="${path}" fill="none" stroke="${note.borderColor}" stroke-width="${note.lineWidth}"${strokeDash}/>`);
     }
 
-    // Text
+    // Text with markdown support
     const fontSize = this.map.settings.basic.fontSize;
     const fontFamily = this.map.settings.basic.fontFamily;
     const cx = note.x + note.width / 2;
-    const cy = note.y + note.height / 2;
+    const lineHeight = fontSize * 1.2;
 
-    parts.push(`    <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="middle" fill="${note.textColor}" font-size="${fontSize}" font-family="${fontFamily}">${this.escapeXml(note.text)}</text>`);
+    // Split by newlines and render each line
+    const lines = note.text.split('\n');
+    const totalHeight = lines.length * lineHeight;
+    const startY = note.y + note.height / 2 - totalHeight / 2 + lineHeight / 2;
+
+    lines.forEach((line, lineIndex) => {
+      const lineY = startY + lineIndex * lineHeight;
+      const segments = MarkdownParser.parse(line);
+
+      parts.push(`    <text x="${cx}" y="${lineY}" text-anchor="middle" dominant-baseline="middle" fill="${note.textColor}" font-size="${fontSize}" font-family="${fontFamily}">`);
+
+      segments.forEach(segment => {
+        const style = this.getSegmentStyle(segment);
+        if (style) {
+          parts.push(`<tspan${style}>${this.escapeXml(segment.text)}</tspan>`);
+        } else {
+          parts.push(this.escapeXml(segment.text));
+        }
+      });
+
+      parts.push(`</text>`);
+    });
 
     parts.push(`  </g>`);
 

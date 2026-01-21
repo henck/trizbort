@@ -86,6 +86,7 @@ export interface IScreen {
 
   // Text
   fillText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen;
+  fillTextMarkdown(text: string, x: number, y: number, fontSize: number, font: string): IScreen;
   strokeText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen;
   drawText(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen;
   drawTextBottom(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen;

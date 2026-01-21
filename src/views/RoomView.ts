@@ -117,11 +117,10 @@ export class RoomView extends BoxView {
   }
 
   drawObjects(canvas: IScreen, x: number, y: number, objList: Array<Obj>): number {
-    objList.forEach((obj) => { 
-      canvas.fillText(obj.name, x, y, 
+    objList.forEach((obj) => {
+      canvas.fillTextMarkdown(obj.name, x, y,
         App.map.settings.basic.fontSize * RoomView.OBJECT_FONT_FACTOR,
-        App.map.settings.basic.fontFamily,
-        TextAlign.Left, TextBaseline.Middle);
+        App.map.settings.basic.fontFamily);
       y += 14;
       y = this.drawObjects(canvas, x + 10, y, obj.content);
     });

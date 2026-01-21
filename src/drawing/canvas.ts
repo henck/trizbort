@@ -2,6 +2,7 @@ import { App } from '../App'
 import { IScreen, CapStyle, JoinStyle, TextAlign, TextBaseline } from './IScreen'
 import { LineStyle } from '../enums'
 import { DrawContext } from './drawContext'
+import { MarkdownParser, TextSegment } from '../util/MarkdownParser'
 
 export class Canvas implements IScreen {
 
@@ -420,27 +421,211 @@ export class Canvas implements IScreen {
   }
 
   // Draw text centered at (x, y), inside an area no wider than <maxWidth>
+  // Supports **bold** and *italic* markdown.
   drawText(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
-    let lineHeight = Math.ceil(fontSize)+1;
-    let lines = this.splitText(width, text);
-    let xPos = x + width / 2;
-    let yPos = y - (lines.length - 1) * lineHeight / 2 + height / 2;
-    for(let i = 0; i < lines.length; i++) {
-      this.fillText(lines[i], xPos, yPos, fontSize, font, TextAlign.Center, TextBaseline.Middle);
+    const lineHeight = Math.ceil(fontSize) + 1;
+
+    // Split by explicit line breaks first
+    const paragraphs = text.split('\n');
+    const wrappedLines: TextSegment[][] = [];
+
+    // Process each paragraph
+    for (const paragraph of paragraphs) {
+      if (paragraph.trim() === '') {
+        wrappedLines.push([{ text: '', bold: false, italic: false }]);
+        continue;
+      }
+
+      // Parse markdown for this paragraph
+      const segments = MarkdownParser.parse(paragraph);
+
+      // Word wrap the segments
+      const wrapped = this.wrapSegments(segments, width, fontSize, font);
+      wrappedLines.push(...wrapped);
+    }
+
+    // Calculate vertical centering
+    const xPos = x + width / 2;
+    let yPos = y - (wrappedLines.length - 1) * lineHeight / 2 + height / 2;
+
+    // Render each wrapped line
+    for (const lineSegments of wrappedLines) {
+      this.renderSegments(lineSegments, xPos, yPos, fontSize, font);
       yPos += lineHeight;
     }
+
     return this;
   }
 
+  // Word wrap segments to fit within maxWidth
+  private wrapSegments(segments: TextSegment[], maxWidth: number, fontSize: number, font: string): TextSegment[][] {
+    if (maxWidth < 50) maxWidth = 50;
+
+    const lines: TextSegment[][] = [];
+    let currentLine: TextSegment[] = [];
+    let currentWidth = 0;
+
+    for (const segment of segments) {
+      // Set font for measuring
+      const fontStyle = segment.italic ? 'italic ' : '';
+      const fontWeight = segment.bold ? 'bold ' : '';
+      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+
+      const words = segment.text.split(' ');
+
+      for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        const wordWithSpace = i < words.length - 1 ? word + ' ' : word;
+        const wordWidth = this.ctx.measureText(wordWithSpace).width * App.devicePixelRatio;
+
+        if (currentWidth + wordWidth > maxWidth && currentLine.length > 0) {
+          // Start new line
+          lines.push(currentLine);
+          currentLine = [];
+          currentWidth = 0;
+        }
+
+        // Add word to current line
+        if (currentLine.length > 0) {
+          const lastSeg = currentLine[currentLine.length - 1];
+          if (lastSeg.bold === segment.bold && lastSeg.italic === segment.italic) {
+            // Same formatting, append to last segment
+            lastSeg.text += (lastSeg.text.endsWith(' ') || lastSeg.text === '' ? '' : ' ') + wordWithSpace;
+          } else {
+            // Different formatting, add as new segment
+            currentLine.push({ text: wordWithSpace, bold: segment.bold, italic: segment.italic });
+          }
+        } else {
+          currentLine.push({ text: wordWithSpace, bold: segment.bold, italic: segment.italic });
+        }
+
+        currentWidth += wordWidth;
+      }
+    }
+
+    // Add remaining line
+    if (currentLine.length > 0) {
+      lines.push(currentLine);
+    }
+
+    // Trim trailing spaces from last segment of each line
+    for (const line of lines) {
+      if (line.length > 0) {
+        line[line.length - 1].text = line[line.length - 1].text.trimEnd();
+      }
+    }
+
+    return lines.length > 0 ? lines : [[{ text: '', bold: false, italic: false }]];
+  }
+
+  // Render segments centered at xPos, yPos
+  private renderSegments(segments: TextSegment[], xPos: number, yPos: number, fontSize: number, font: string): void {
+    // Calculate total width for centering
+    let totalWidth = 0;
+    const widths: number[] = [];
+
+    for (const segment of segments) {
+      const fontStyle = segment.italic ? 'italic ' : '';
+      const fontWeight = segment.bold ? 'bold ' : '';
+      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      const w = this.ctx.measureText(segment.text).width;
+      widths.push(w);
+      totalWidth += w;
+    }
+
+    // Render centered
+    let currentX = xPos - totalWidth / 2;
+    this.textBaseline(TextBaseline.Middle);
+
+    for (let i = 0; i < segments.length; i++) {
+      const segment = segments[i];
+      const fontStyle = segment.italic ? 'italic ' : '';
+      const fontWeight = segment.bold ? 'bold ' : '';
+      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.fillText(segment.text, currentX, yPos);
+      currentX += widths[i];
+    }
+  }
+
   drawTextBottom(x: number, y: number, width: number, height: number, fontSize: number, font: string, text: string): IScreen {
-    let lineHeight = Math.ceil(fontSize)+1;
-    let lines = this.splitText(width, text);
-    let xPos = x + width / 2;
-    let yPos = y + height - (lines.length - 1) * lineHeight;
-    for(let i = 0; i < lines.length; i++) {
-      this.fillText(lines[i], xPos, yPos, fontSize, font, TextAlign.Center, TextBaseline.Bottom);
+    const lineHeight = Math.ceil(fontSize) + 1;
+
+    // Split by explicit line breaks first
+    const paragraphs = text.split('\n');
+    const wrappedLines: TextSegment[][] = [];
+
+    // Process each paragraph
+    for (const paragraph of paragraphs) {
+      if (paragraph.trim() === '') {
+        wrappedLines.push([{ text: '', bold: false, italic: false }]);
+        continue;
+      }
+
+      // Parse markdown for this paragraph
+      const segments = MarkdownParser.parse(paragraph);
+
+      // Word wrap the segments
+      const wrapped = this.wrapSegments(segments, width, fontSize, font);
+      wrappedLines.push(...wrapped);
+    }
+
+    // Position at bottom
+    const xPos = x + width / 2;
+    let yPos = y + height - (wrappedLines.length - 1) * lineHeight;
+
+    // Render each wrapped line
+    for (const lineSegments of wrappedLines) {
+      this.renderSegmentsBottom(lineSegments, xPos, yPos, fontSize, font);
       yPos += lineHeight;
     }
+
+    return this;
+  }
+
+  // Render segments centered at xPos, with bottom baseline
+  private renderSegmentsBottom(segments: TextSegment[], xPos: number, yPos: number, fontSize: number, font: string): void {
+    // Calculate total width for centering
+    let totalWidth = 0;
+    const widths: number[] = [];
+
+    for (const segment of segments) {
+      const fontStyle = segment.italic ? 'italic ' : '';
+      const fontWeight = segment.bold ? 'bold ' : '';
+      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      const w = this.ctx.measureText(segment.text).width;
+      widths.push(w);
+      totalWidth += w;
+    }
+
+    // Render centered with bottom baseline
+    let currentX = xPos - totalWidth / 2;
+    this.textBaseline(TextBaseline.Bottom);
+
+    for (let i = 0; i < segments.length; i++) {
+      const segment = segments[i];
+      const fontStyle = segment.italic ? 'italic ' : '';
+      const fontWeight = segment.bold ? 'bold ' : '';
+      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.fillText(segment.text, currentX, yPos);
+      currentX += widths[i];
+    }
+  }
+
+  // Fill text with markdown support (left-aligned, for objects)
+  fillTextMarkdown(text: string, x: number, y: number, fontSize: number, font: string): IScreen {
+    const segments = MarkdownParser.parse(text);
+
+    this.textBaseline(TextBaseline.Middle);
+    let currentX = x;
+
+    for (const segment of segments) {
+      const fontStyle = segment.italic ? 'italic ' : '';
+      const fontWeight = segment.bold ? 'bold ' : '';
+      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.fillText(segment.text, currentX, y);
+      currentX += this.ctx.measureText(segment.text).width;
+    }
+
     return this;
   }
 
