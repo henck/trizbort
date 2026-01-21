@@ -1,3 +1,4 @@
+import { App } from "./App";
 import { Canvas } from "./drawing/canvas";
 import { Map, Box } from "./models";
 import { View, ViewFactory, BlockView, BoxView, ConnectorView, NoteView, RoomView } from "./views";
@@ -37,7 +38,8 @@ export class Exporter {
     this.canvasElem.height = this.height;
 
     this.canvas.save();
-    this.canvas.scale(1);
+    // Scale by 1/devicePixelRatio to counteract Canvas.scale() multiplying by devicePixelRatio
+    this.canvas.scale(1 / App.devicePixelRatio);
 
     if(withBackground) {
       this.canvas
@@ -192,7 +194,7 @@ export class Exporter {
   // 
   private downloadAsBlob() {
     // Create blob. The browser takes a callback function for this:
-    let blob = this.toBlob((blob) => { this.downloadAsBlobCallback(blob) }, "image/png", 1);
+    this.toBlob((blob) => { this.downloadAsBlobCallback(blob) }, "image/png", 1);
   }
 
   private downloadAsBlobCallback(blob: Blob) {
@@ -200,8 +202,8 @@ export class Exporter {
     let title = this.map.title;
     if(!title) title = "untitled";
     // IE supports msSaveBlob:
-    if(navigator.msSaveBlob) {
-      navigator.msSaveBlob(blob, `${title}.png`);
+    if((navigator as any).msSaveBlob) {
+      (navigator as any).msSaveBlob(blob, `${title}.png`);
     } 
     // Other browsers create a temporary link with the blob as URL,
     // click it, and then remove it.
