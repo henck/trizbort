@@ -8,7 +8,7 @@ import { Panel }  from '../'
 import { Map } from '../../models';
 import { PngExporter } from '../../PngExporter';
 import { SvgExporter } from '../../SvgExporter';
-import { IdToast, Window } from '../../controls';
+import { IdGuide, Window, IdToast } from '../../controls';
 
 import { CodeGenerator, TadsGenerator, Inform6Generator, Inform7Generator, Alan2Generator, Alan3Generator,
          QuestGenerator, TextadventurejsGenerator, YamlGenerator, ZilGenerator } from '../../codegen/CodeGeneration'
@@ -34,7 +34,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-load', () => { this.actionLoadMap(); });
     this.createMenuItem('#menu-save', () => { this.actionSaveMap(); });
     this.createMenuItem('#menu-import', () => { this.actionImportMap(); });
-    this.createMenuItem('#menu-image', () => { this.actionExport(); });
+    this.createMenuItem('#menu-image', () => { this.actionExportPNG(); });
     this.createMenuItem('#menu-svg', () => { this.actionExportSvg(); });
 
     this.createMenuGroup('#group-settings');
@@ -85,19 +85,22 @@ export class MenuPanel extends Panel {
     });
   }
 
-  actionExport() {
-    let exporter = new PngExporter(App.map);
-    exporter.export();
+  actionExportPNG() {
+    new PngExporter(App.map).export();
+    this.close();
+    IdToast.toast("Map exported as PNG.");
   }
 
   actionExportSvg() {
-    let exporter = new SvgExporter(App.map);
-    exporter.export();
+    new SvgExporter(App.map).export();
+    this.close();
+    IdToast.toast("Map exported as SVG.");
   }
 
   actionNewMap() {
     new Window('New map', 'This will erase all editor contents. Proceed?', () => {
       // OK
+      this.close();
       App.map = new Map();
       Dispatcher.notify(AppEvent.Load, null);
     }, () => {
@@ -110,11 +113,13 @@ export class MenuPanel extends Panel {
   }
 
   actionSaveMap() {
+    this.close();
     let json:string = MapJSON.save(App.map);
     let blob = new Blob([json], { type: "text/plain; charset:utf-8"});
     let title = App.map.title;
     if(!title) title = "untitled";
     saveAs(blob, `${title}.json`);
+    IdToast.toast(`Map saved as ${title}.json`);
   }
 
   actionImportMap() {
@@ -135,6 +140,7 @@ export class MenuPanel extends Panel {
 
   loadMap(text: string) {
     let map = null;
+    this.close();
     try {
       map = MapJSON.load(text);
     }
@@ -154,6 +160,7 @@ export class MenuPanel extends Panel {
 
   importMap(text: string) {
     let map = null;
+    this.close();
     try {
       map = MapXMLLoader.load(text);
     }
@@ -172,15 +179,17 @@ export class MenuPanel extends Panel {
   }
 
   actionMapSettings() {
+    this.close();
     Dispatcher.notify(AppEvent.More, App.map);
   }
 
   actionRenderSettings() {
+    this.close();
     Dispatcher.notify(AppEvent.More, App.map.settings);
   }
 
   static actionHelp() {
-    IdToast.toast("Help", `
+    IdGuide.guide("Help", `
     <table>
       <tbody>
         <tr>
@@ -294,10 +303,12 @@ export class MenuPanel extends Panel {
   }
 
   actionGenerateCode(generator: CodeGenerator, extension: string) {
+    this.close();
     let code:string = generator.generate();
     let blob = new Blob([code], { type: "text/plain; charset:utf-8"});
     let title = App.map.title;
     if(!title) title = "untitled";
     saveAs(blob, `${title}.${extension}`);    
+    IdToast.toast(`Code generated to file ${title}.${extension}`)
   }
 }

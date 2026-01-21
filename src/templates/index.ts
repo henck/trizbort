@@ -33,7 +33,7 @@ import idRadio from '../controls/idRadio/idRadio.handlebars?raw';
 import idRange from '../controls/idRange/idRange.handlebars?raw';
 import idShape from '../controls/idShape/idShape.handlebars?raw';
 import idTextarea from '../controls/idTextarea/idTextarea.handlebars?raw';
-import idToast from '../controls/idToast/idToast.handlebars?raw';
+import idGuide from '../controls/idGuide/idGuide.handlebars?raw';
 
 // Panels
 import BlockPanel from '../panels/blockPanel/BlockPanel.handlebars?raw';
@@ -85,7 +85,7 @@ const templates: Record<string, string> = {
   idRange,
   idShape,
   idTextarea,
-  idToast,
+  idGuide,
   // Panels
   BlockPanel,
   closePanel,

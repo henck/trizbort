@@ -2,7 +2,7 @@ import { Map } from './models'
 import { Dispatcher } from './Dispatcher'
 import { Values, AppEvent, MouseMode } from './enums/'
 import { Editor } from './Editor'
-import { Tabs, IdToast, Header } from './controls'
+import { Tabs, IdGuide, Header } from './controls'
 import { BlockPopup, ConnectorPopup, NotePopup, RoomPopup } from './popups/'
 import { BlockPanel, ConnectorPanel, RenderPanel, MapPanel, MenuPanel, NotePanel, RoomPanel, ToolPanel } from './panels'
 import { MapJSON } from './io/mapJSON'
@@ -53,7 +53,7 @@ export class App {
     new ConnectorPanel();
     new ConnectorPopup();
 
-    IdToast.toast("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room.");
+    IdGuide.guide("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the left-hand bar and click anywhere on the map to place your first room (or press <kbd>Ctrl/⌘</kbd><kbd>1</kbd>).");
   }  
 
   static pushUndo() {

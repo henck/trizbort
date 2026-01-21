@@ -2,7 +2,7 @@ import { Subscriber, Dispatcher } from '../../Dispatcher';
 import { AppEvent } from '../../enums/'
 import { Room, Obj } from '../../models';
 import { Panel }  from '../'
-import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdToast } from '../../controls';
+import { IdColorPicker, IdInput, IdRange, IdCheck, IdTextarea, IdPopup, IdShape, IdLineStyle, IdGuide } from '../../controls';
 import { IdObjectEditor } from '../../controls/idObjectEditor/idObjectEditor';
 import { App } from "../../App";
 
@@ -70,7 +70,7 @@ export class RoomPanel extends Panel implements Subscriber {
 
     // Show help for first object created.
     if(this.objectsCreated == 0) {
-      IdToast.toast("Container objects", "You've just created your first object. When creating multiple objects in a room, you can <b>drag</b> one object into another one to establish a containment relationship.");
+      IdGuide.guide("Container objects", "You've just created your first object. When creating multiple objects in a room, you can <b>drag</b> one object into another one to establish a containment relationship.");
     }
     this.objectsCreated++;
   }

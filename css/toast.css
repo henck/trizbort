@@ -1,60 +1,27 @@
 .toast {
-  position: absolute;
-  z-index: 999;
-  bottom: 64px;
-  left: 40px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 48px;
+  right: 20px;
   background: black;
   border-radius: 8px;
-  padding: 20px 20px 0px 20px;
+  padding: 16px 20px;
   color: white;
   user-select: none;
-  box-shadow: 0 6px 6px rgba(0,0,0,0.5);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  max-width: 300px;
+}
 
-  & span {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    cursor: pointer;
+.toast.fade-out {
+  animation: toast-fade-out 0.3s ease-out forwards;
+}
 
-    & svg {
-      width: 16px;
-      height: 16px;
-      fill: #ddd;
-      border-radius: 50%;
-      padding: 4px;
-      &:hover {
-        fill: #fff;
-        background-color: #333;
-      }
-    }
+@keyframes toast-fade-out {
+  from {
+    opacity: 1;
   }
-
-  & th {
-    font-weight: normal;
-    vertical-align: top;
-    text-align: left;
-
-    &:not(:first-child) {
-      padding-left: 20px;
-    }
-  }
-
-  & td {
-    white-space: nowrap;
-    vertical-align: top;
-
-    & svg {
-      width: 16px;
-      height: 16px;
-      fill: #fff;
-    }
-
-    &:first-child {
-      padding-right: 6px;
-    }
-  }
-
-  & button {
-    background: white;
+  to {
+    opacity: 0;
   }
 }

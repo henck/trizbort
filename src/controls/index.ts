@@ -12,6 +12,7 @@ export * from './idConnectorType/idConnectorType'
 export * from './idLineStyle/idLineStyle'
 export * from './idQuickColor/idQuickColor'
 export * from './idShape/idShape'
+export * from './idGuide/idGuide'
 export * from './idToast/idToast'
 
 export * from './Header'

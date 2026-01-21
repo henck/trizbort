@@ -1,11 +1,12 @@
 #window {
+  user-select: none;
   position: absolute;
   left: 50%;
   top: 50%;
   width: 50%;
   min-width: 400px;
   transform: translateX(-50%) translateY(-50%);
-  z-index: 999;
+  z-index: 1999;
   box-sizing: border-box;
   padding: 20px;
   display: none;
