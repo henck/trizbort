@@ -20,7 +20,7 @@ function showTooltip(target: HTMLElement, text: string) {
   }
 
   const tooltip = getTooltipElement();
-  tooltip.textContent = text;
+  tooltip.innerHTML = text;
   tooltip.className = 'tooltip'; // Reset classes
 
   // Make visible but transparent to measure
