@@ -12,8 +12,8 @@
 
   & span {
     position: absolute;
-    right: 12px;
-    top: 12px;
+    right: 16px;
+    top: 16px;
     cursor: pointer;
 
     & svg {
