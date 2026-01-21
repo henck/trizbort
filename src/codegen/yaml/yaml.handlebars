@@ -1,6 +1,6 @@
 game:
-  name: {{{map.title}}}
-  author: {{{map.author}}}
+  name: {{#if map.title}}{{{map.title}}}{{else}}Untitled Adventure{{/if}}
+  author: {{#if map.author}}{{{map.author}}}{{else}}Anonymous{{/if}}
   {{#if map.description}}
   description: > 
     {{> DescriptionPartial content=map.description }}

@@ -4,8 +4,8 @@
 #include <en_us.h>
 
 versionInfo: GameID
-  name = '{{{map.title}}}'
-  byline = 'by {{{map.author}}}'
+  name = '{{#if map.title}}{{{map.title}}}{{else}}Untitled Adventure{{/if}}'
+  byline = '{{#if map.author}}by {{{map.author}}}{{/if}}'
   version = '1.0'
   desc = '{{{map.description}}}'
 
