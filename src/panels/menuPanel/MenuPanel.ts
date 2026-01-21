@@ -49,9 +49,6 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-export-yaml', () => { this.actionGenerateCode(new YamlGenerator(App.map), 'yaml'); });
     this.createMenuItem('#menu-export-zil', () => { this.actionGenerateCode(new ZilGenerator(App.map), 'zil'); });
 
-    this.createMenuGroup('#group-help');
-    this.createMenuItem('#menu-help', () => { this.actionHelp(); });
-
     this.inputLoad.addEventListener('change', this.handleInputLoad);
     this.inputImport.addEventListener('change', this.handleInputImport);
   }
@@ -175,7 +172,7 @@ export class MenuPanel extends Panel {
     Dispatcher.notify(AppEvent.More, App.map.settings);
   }
 
-  actionHelp() {
+  static actionHelp() {
     IdToast.toast("Keyboard help", `
     <table>
       <tbody>
@@ -255,27 +252,27 @@ export class MenuPanel extends Panel {
                   <td>Create room in dir</td>
                 </tr>
                 <tr>
-                  <td><kbd>R</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>1</kbd></td>
                   <td>Add room</td>
                 </tr>        
                 <tr>
-                  <td><kbd>N</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>2</kbd></td>
                   <td>Add note</td>
                 </tr>        
                 <tr>
-                  <td><kbd>B</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>3</kbd></td>
                   <td>Add block</td>
                 </tr>        
                 <tr>
-                  <td><kbd>A</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>7</kbd></td>
                   <td>Toggle one-way</td>
                 </tr>
                 <tr>
-                  <td><kbd>V</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>8</kbd></td>
                   <td>Reverse connector</td>
                 </tr>
                 <tr>
-                  <td><kbd>K</kbd></td>
+                  <td><kbd>Ctrl/⌘</kbd><kbd>9</kbd></td>
                   <td>Toggle darkness</td>
                 </tr>
               </tbody>

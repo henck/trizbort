@@ -85,6 +85,10 @@ header {
     padding: 0 5px 0 5px;
   }
 
+  & #control-help {
+    margin-right: auto;
+  }
+
   & .icon {
     cursor: pointer;
     fill: #666;
