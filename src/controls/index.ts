@@ -1,4 +1,5 @@
 export * from './Control'
+export * from './Tooltip'
 
 export * from './idInput/idInput'
 export * from './idTextarea/idTextarea'

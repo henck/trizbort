@@ -6,7 +6,7 @@ import { Canvas } from './drawing/canvas'
 import { Block, Box, Note, Connector, Room, Model } from './models'
 import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomView } from './views'
 import { MapJSON } from './io/mapJSON'
-import { IdToast } from './controls'
+import { IdToast, showTooltip, hideTooltip } from './controls'
 import { Rect } from './util/Rect'
 import { MenuPanel } from './panels'
 
@@ -76,6 +76,12 @@ export class Editor implements Subscriber {
     this.ctrlZoom = <HTMLInputElement> document.getElementById('control-zoom');
     this.ctrlZoom.addEventListener('change', () => { this.cmdZoom(); });
     this.updateZoomPercentage();
+
+    // Setup fancy tooltips for status bar buttons (appear above since bar is at bottom)
+    this.setupStatusTooltip('control-help', 'Help');
+    this.setupStatusTooltip('control-center', 'Center map');
+    this.setupStatusTooltip('control-zoomin', 'Zoom in');
+    this.setupStatusTooltip('control-zoomout', 'Zoom out');
     App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
       // Firefox treats backspace as a back button
       if (e.key === 'Backspace') e.preventDefault();
@@ -1076,6 +1082,14 @@ export class Editor implements Subscriber {
 
   updateZoomPercentage() {
     this.ctrlZoom.value = Math.floor(App.zoom * 100) + '%';
+  }
+
+  setupStatusTooltip(id: string, text: string) {
+    const elem = document.getElementById(id);
+    if (!elem) return;
+    elem.removeAttribute('title'); // Remove native tooltip
+    elem.addEventListener('mouseenter', () => showTooltip(elem, text, 'above'));
+    elem.addEventListener('mouseleave', () => hideTooltip());
   }
 
   cmdZoom() {
