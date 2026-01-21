@@ -1,8 +1,8 @@
 #toolpanel {
   position: absolute;
   z-index: 2;
-  top: calc(var(--header-height) + 16px);
-  left: 16px;
+  top: calc(var(--header-height) + 32px);
+  left: 32px;
   display: flex;
   flex-direction: row;
   gap: 8px;
@@ -14,7 +14,7 @@
 
 .panel {
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
   top: var(--header-height);
   bottom: var(--status-height);
   width: var(--panel-width);
@@ -22,13 +22,17 @@
   box-shadow: var(--shadow-panel);
   padding: 20px 20px 20px 20px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .panel-left {
   visibility: hidden;
-  left: 0;
+  left: 24px;
   right: auto;
-  transform: translateX(-100%);
+  top: calc(var(--header-height) + 24px);
+  bottom: calc(var(--status-height) + 24px);
+  border-radius: 8px;
+  transform: translateX(calc(-100% - 24px));
   transition: transform 0.25s ease-out, visibility 0s linear 0.25s;
 
   &.show {
@@ -40,8 +44,11 @@
 
 .panel-right {
   visibility: hidden;
-  right: 0;
+  right: 24px;
   left: auto;
+  top: calc(var(--header-height) + 24px);
+  bottom: calc(var(--status-height) + 24px);
+  border-radius: 8px;
 
   &.show {
     visibility: visible;
