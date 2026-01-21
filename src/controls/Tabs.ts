@@ -1,6 +1,7 @@
 export class Tabs {
   private elem: HTMLElement;
   private tabs: Array<Tab>;
+  private underline: HTMLElement;
 
   /**
    * Create a Tabs instance for each element with
@@ -13,16 +14,49 @@ export class Tabs {
       // For each element found, create a new Tabs instance.
       new Tabs(tabsList[i] as HTMLElement);
     }
-  } 
+  }
 
   constructor(elem: HTMLElement) {
     this.elem = elem;
     this.tabs = new Array<Tab>();
+
+    // Create the animated underline element
+    this.underline = document.createElement('div');
+    this.underline.className = 'tabs-underline';
+    this.elem.appendChild(this.underline);
+
     // Find all tab elements inside the Tabs.
     let tabList = this.elem.querySelectorAll('.tab');
     for(let i = 0; i < tabList.length; i++) {
       // For each element found, create a new Tab instance.
       this.tabs.push(new Tab(this, tabList[i] as HTMLElement));
+    }
+
+    // Position underline on the initially selected tab
+    const selectedTab = this.tabs.find(t => t.isSelected());
+    if (selectedTab) {
+      this.moveUnderline(selectedTab.getElement(), false);
+    }
+  }
+
+  /**
+   * Move the underline to the given tab element.
+   * @param tabElem The tab element to position under
+   * @param animate Whether to animate the transition
+   */
+  moveUnderline(tabElem: HTMLElement, animate: boolean = true) {
+    if (!animate) {
+      // Disable transition for initial positioning
+      this.underline.style.transition = 'none';
+    }
+
+    this.underline.style.left = tabElem.offsetLeft + 'px';
+    this.underline.style.width = tabElem.offsetWidth + 'px';
+
+    if (!animate) {
+      // Force reflow, then re-enable transition
+      this.underline.offsetHeight;
+      this.underline.style.transition = '';
     }
   }
 
@@ -34,6 +68,7 @@ export class Tabs {
     for(let i = 0; i < this.tabs.length; i++) {
       if(this.tabs[i] == tab) {
         this.tabs[i].select();
+        this.moveUnderline(this.tabs[i].getElement());
       } else {
         this.tabs[i].unselect();
       }
@@ -63,6 +98,14 @@ class Tab {
     this.elem.addEventListener('click', () => {
       this.tabs.select(this);
     });
+  }
+
+  getElement(): HTMLElement {
+    return this.elem;
+  }
+
+  isSelected(): boolean {
+    return this.elem.classList.contains('selected');
   }
 
   select() {

@@ -1,7 +1,16 @@
 .tabs {
+  position: relative;
   display: flex;
   flex-wrap: nowrap;
   margin-bottom: 25px;
+}
+
+.tabs-underline {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: left 0.25s ease, width 0.25s ease;
 }
 
 .tab {
@@ -16,8 +25,7 @@
   margin-right: 4px;
   color: rgba(0, 0, 0, 0.54);
   cursor: pointer;
-  transition: all ease 0.2s;
-  border-bottom: solid 2px #ffffff;
+  transition: color ease 0.2s, background ease 0.2s;
 
   &:first-child {
     margin-left: 0px;
@@ -34,7 +42,6 @@
 
   &.selected {
     color: rgba(0, 0, 0, 0.87);
-    border-bottom: solid 2px var(--color-primary);
   }
 }
 
