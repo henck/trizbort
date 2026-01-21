@@ -5,6 +5,8 @@ import Handlebars from 'handlebars';
 import alan2 from '../codegen/alan2/alan2.handlebars?raw';
 import alan3 from '../codegen/alan3/alan3.handlebars?raw';
 import alan3Object from '../codegen/alan3/alan3Object.handlebars?raw';
+import inform6 from '../codegen/inform6/inform6.handlebars?raw';
+import inform6Object from '../codegen/inform6/inform6Object.handlebars?raw';
 import inform7 from '../codegen/inform7/inform7.handlebars?raw';
 import inform7Object from '../codegen/inform7/inform7Object.handlebars?raw';
 import quest from '../codegen/quest/quest.handlebars?raw';
@@ -56,6 +58,8 @@ const templates: Record<string, string> = {
   alan2,
   alan3,
   alan3Object,
+  inform6,
+  inform6Object,
   inform7,
   inform7Object,
   quest,
@@ -103,8 +107,16 @@ const templates: Record<string, string> = {
 Handlebars.templates = Handlebars.templates || {};
 
 // Compile and register each template
+// Wrap templates to allow prototype property access (needed for class getters like map.rooms)
 for (const [name, source] of Object.entries(templates)) {
-  Handlebars.templates[name] = Handlebars.compile(source);
+  const compiled = Handlebars.compile(source);
+  Handlebars.templates[name] = (context: unknown, options?: Handlebars.RuntimeOptions) => {
+    return compiled(context, {
+      ...options,
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    });
+  };
 }
 
 // Declare Handlebars on window for backward compatibility

@@ -90,9 +90,9 @@ export class Map {
     return false;
   }
 
-  // 
+  //
   // List of rooms on the map.
-  // 
+  //
   get rooms(): Array<Room> {
     return this.elements.filter((elem) => { return elem instanceof Room; }) as Array<Room>;
   }
