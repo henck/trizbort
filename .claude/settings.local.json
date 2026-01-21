@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs:*)",
+      "Bash(ls:*)",
+      "Bash(node scripts/build-svg-sprite.js:*)",
+      "Bash(timeout 8 npm run dev)"
+    ]
+  }
+}

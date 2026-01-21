@@ -1,26 +1,28 @@
 {
   "name": "trizbort.io",
-  "version": "1.1.0",
-  "description": "Trizbort.io is a JavaScript implementation of Trizbort, the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps,and generate code for TADS, Inform, Quest and other adventure design systems.",
-  "main": "app.js",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Trizbort.io is a JavaScript implementation of Trizbort, the adventure game mapping and code generation software. It aims to provide all Trizbort features in the browser, so that no download is required to create and share Trizbort maps, and generate code for TADS, Inform, Quest and other adventure design systems.",
   "scripts": {
-    "start:dev": "node dev-server.js",
-    "build": "grunt build"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:icons": "node scripts/build-svg-sprite.js"
   },
   "author": "Alexander van Oostenrijk / Independent Software (www.independent-software.com)",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "file-saver": "^2.0.5"
+  },
   "devDependencies": {
-    "express": "^4.17.1",
-    "grunt": "^1.1.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-stylus": "^1.2.0",
-    "grunt-contrib-uglify": "^4.0.1",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-handlebars-compiler": "^0.4.0",
-    "grunt-svgstore": "^2.0.0",
-    "grunt-ts": "^6.0.0-beta.22",
+    "@types/file-saver": "^2.0.7",
+    "@types/node": "^25.0.9",
+    "@vitejs/plugin-legacy": "^6.1.1",
     "handlebars": "^4.7.6",
-    "typescript": "^3.8.3"
+    "stylus": "^0.64.0",
+    "terser": "^5.46.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.4.1",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }

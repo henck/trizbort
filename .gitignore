@@ -7,3 +7,4 @@ serviceworker.js
 dist
 tscommand-*.tmp.txt
 _site
+public/icons.svg

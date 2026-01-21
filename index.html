@@ -5,19 +5,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Trizbort.io</title>
-  <link href="icon.png" rel="icon">
-  <link rel="stylesheet" href="dist/fonts/fonts.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.webmanifest">
+  <link href="/icon.png" rel="icon">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <style>
+    /* Prevent FOUC - hide body until CSS loads */
+    body { opacity: 0; }
+    body.loaded { opacity: 1; transition: opacity 0.1s ease-in; }
+  </style>
 </head>
 <body>
-  <p style="font-family: 'danielbd';">Trizbort.io</p>
+  <!-- Font preload (hidden) -->
+  <p style="font-family: 'danielbd'; position: absolute; visibility: hidden;">.</p>
   <header id="app-header">
-     <svg id="menu" class="icon" style="cursor: pointer; fill:#fff"><use xlink:href="dist/icons.svg#bars"></use></svg>
+     <svg id="menu" class="icon" style="cursor: pointer; fill:#fff"><use href="/icons.svg#bars"></use></svg>
      <h1 id="title"></h1>
      <p class="subtitle" style="margin-left: 10px;" id="content"></p>
   </header>
-      
+
   <canvas id="hittest" style="display: none; width: 1px; height: 1px"></canvas>
 
   <canvas id="export" style="display: none"></canvas>
@@ -35,9 +40,9 @@
 
   <div id="editor">
     <div id="status">
-      <div id="control-center" title="Center map"><svg class="icon small"><use xlink:href="dist/icons.svg#center"></use></svg></div>
-      <div id="control-zoomin" title="Zoom in"><svg class="icon small"><use xlink:href="dist/icons.svg#zoom-in"></use></svg></div>
-      <div id="control-zoomout" title="Zoom out"><svg class="icon small"><use xlink:href="dist/icons.svg#zoom-out"></use></svg></div>
+      <div id="control-center" title="Center map"><svg class="icon small"><use href="/icons.svg#center"></use></svg></div>
+      <div id="control-zoomin" title="Zoom in"><svg class="icon small"><use href="/icons.svg#zoom-in"></use></svg></div>
+      <div id="control-zoomout" title="Zoom out"><svg class="icon small"><use href="/icons.svg#zoom-out"></use></svg></div>
       <input id="control-zoom" type="text" value="100%">
     </div>
     <!-- <canvas id="canvas" tabindex='1' ></canvas> -->
@@ -46,74 +51,21 @@
   </div>
 
   <div id="toolpanel" class="panel panel-left show" style="width:75px"></div>
-  <div id="menupanel" class="panel panel-left" style="padding-left: 0; padding-right: 0"></div>  
+  <div id="menupanel" class="panel panel-left" style="padding-left: 0; padding-right: 0"></div>
   <div id="renderpanel" class="panel panel-right"></div>
   <div id="mappanel" class="panel panel-right"></div>
   <div id="roompanel" class="panel panel-right"></div>
-  <div id="connectorpanel" class="panel panel-right"></div>  
-  <div id="notepanel" class="panel panel-right"></div>  
-  <div id="blockpanel" class="panel panel-right"></div>  
-  
+  <div id="connectorpanel" class="panel panel-right"></div>
+  <div id="notepanel" class="panel panel-right"></div>
+  <div id="blockpanel" class="panel panel-right"></div>
+
   <div id="roompopup" class="popup"></div>
   <div id="notepopup" class="popup"></div>
   <div id="blockpopup" class="popup"></div>
-  <div id="connectorpopup" class="popup"></div>  
+  <div id="connectorpopup" class="popup"></div>
 
   <div id="toast" class="toast"></div>
 
-  <script src="dist/handlebars.runtime.min.js"></script>
-  <script src="dist/FileSaver.min.js"></script>
-  <script src="dist/system.js"></script>
-  <script src="dist/handlebars.js"></script>
-  <script src="dist/app.min.js"></script>
-  <script>
-    System.import('App').then(function(m) {
-      m.App.initialize();
-    });
-  </script>
-  <script type="module">
-    navigator.serviceWorker.register('serviceworker.js').then(reg => {
-
-      // refresh when new SW activates (work around "Update on reload")
-      let refreshing = false;
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (refreshing) return;
-        refreshing = true;
-        window.location.reload();
-      });
-
-      // wait for reg.waiting or for reg.installing to covert to reg.waiting
-      function listenForWaitingServiceWorker(reg, callback) {
-        function awaitStateChange(sw) {
-          sw.addEventListener('statechange', () => {
-            if (sw.state === 'installed') callback(reg);
-          });
-        }
-        if (!reg) return;
-        if (reg.waiting) return callback(reg);
-        if (reg.installing) awaitStateChange(reg.installing);
-        reg.addEventListener('updatefound', () => awaitStateChange(reg.installing));
-      }
-
-      function promptUserToRefresh() {
-        let toast = document.getElementById("toast");
-        if (!toast) {
-          setTimeout(promptUserToRefresh, 5000);
-          return;
-        }
-        toast.style.display = 'block';
-        toast.querySelector('h3').innerHTML = "New version available";
-        let text = toast.querySelector('p')
-        text.innerHTML = "Please click here to refresh the page. <button>Refresh Now</button>";
-        text.querySelector("button").addEventListener('click', e => {
-          // skipWaiting will activate the waiting SW, which will refresh the page
-          reg.waiting.postMessage('skipWaiting');
-        })
-      }
-
-      listenForWaitingServiceWorker(reg, promptUserToRefresh);
-
-    });
-  </script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

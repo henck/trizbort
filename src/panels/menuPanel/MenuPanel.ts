@@ -1,3 +1,4 @@
+import { saveAs } from 'file-saver';
 import { App } from '../../App'
 import { MapXMLLoader } from '../../io/mapXML'
 import { Dispatcher } from '../../Dispatcher'
@@ -8,7 +9,7 @@ import { Map } from '../../models';
 import { Exporter } from '../../Exporter';
 import { IdToast, Window } from '../../controls';
 
-import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator, 
+import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator,
          QuestGenerator, TextadventurejsGenerator, YamlGenerator, ZilGenerator } from '../../codegen/CodeGeneration'
 
 
@@ -109,7 +110,7 @@ export class MenuPanel extends Panel {
     let blob = new Blob([json], { type: "text/plain; charset:utf-8"});
     let title = App.map.title;
     if(!title) title = "untitled";
-    window.saveAs(blob, `${title}.json`);
+    saveAs(blob, `${title}.json`);
   }
 
   actionImportMap() {
@@ -219,7 +220,7 @@ export class MenuPanel extends Panel {
             <table>
               <tbody>
                 <tr>
-                  <td><svg><use xlink:href="dist/icons.svg#arrows"></use></svg></td>
+                  <td><svg><use href="/icons.svg#arrows"></use></svg></td>
                   <td>Pan map</td>
                 </tr>
                 <tr>
@@ -250,7 +251,7 @@ export class MenuPanel extends Panel {
             <table>
               <tbody>
                 <tr>
-                  <td><kbd>Shift</kbd> <svg><use xlink:href="dist/icons.svg#arrows"></use></svg></td>
+                  <td><kbd>Shift</kbd> <svg><use href="/icons.svg#arrows"></use></svg></td>
                   <td>Create room in dir</td>
                 </tr>
                 <tr>
@@ -293,6 +294,6 @@ export class MenuPanel extends Panel {
     let blob = new Blob([code], { type: "text/plain; charset:utf-8"});
     let title = App.map.title;
     if(!title) title = "untitled";
-    window.saveAs(blob, `${title}.${extension}`);    
+    saveAs(blob, `${title}.${extension}`);    
   }
 }
