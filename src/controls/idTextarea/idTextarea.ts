@@ -12,11 +12,12 @@ export class IdTextarea extends Control {
   constructor(elem: HTMLElement|string, base?: HTMLElement) {
     super(elem, base);
 
-    // Get label attribute:
+    // Get label and placeholder attributes:
     let label = this.elem.dataset.label;
+    let placeholder = this.elem.dataset.placeholder;
 
     // Expand a handlebars template into the top element.
-    this.elem.innerHTML = Handlebars.templates.idTextarea({ label: label });
+    this.elem.innerHTML = Handlebars.templates.idTextarea({ label: label, placeholder: placeholder });
 
     // Save inner <textarea> element so we can attach
     // an event listener to it.

@@ -17,6 +17,25 @@ input, textarea {
 
 textarea {
   resize: none;
+  box-sizing: border-box;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 100px;
+
+  &:focus,
+  &:hover {
+    border-color: var(--color-primary);
+  }
+
+  &::placeholder {
+    color: #999;
+  }
+}
+
+/* Remove the underline for textarea since it now has a border */
+textarea + .input-line {
+  display: none;
 }
 
 .input-line {
