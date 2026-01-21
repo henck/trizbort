@@ -8,6 +8,7 @@ import { ViewFactory, View, BlockView, BoxView, ConnectorView, NoteView, RoomVie
 import { MapJSON } from './io/mapJSON'
 import { IdToast } from './controls'
 import { Rect } from './util/Rect'
+import { MenuPanel } from './panels'
 
 export class Editor implements Subscriber {
   private mainCanvas: Canvas;
@@ -68,6 +69,7 @@ export class Editor implements Subscriber {
     App.mainHTMLCanvas.addEventListener('contextmenu', (e:MouseEvent) => { this.canvasContextMenu(e)} );
 
     // Status bar event listeners:
+    document.getElementById('control-help').addEventListener('click', () => { MenuPanel.actionHelp(); });
     document.getElementById('control-center').addEventListener('click', () => { this.cmdCenterView(); });
     document.getElementById('control-zoomin').addEventListener('click', () => { this.cmdZoomIn(); });
     document.getElementById('control-zoomout').addEventListener('click', () => { this.cmdZoomOut(); });
@@ -111,12 +113,6 @@ export class Editor implements Subscriber {
   keyUp(e: KeyboardEvent) {
     if(!e.ctrlKey && !e.shiftKey) {
       switch(e.key) {
-        case 'a': this.cmdToggleOneWay(); break;
-        case 'v': this.cmdReverseConnector(); break;
-        case 'k': this.cmdToggleDarkness(); break;
-        case 'r': this.cmdAddRoom(); break;
-        case 'n': this.cmdAddNote(); break;
-        case 'b': this.cmdAddBlock(); break;
         case 'Escape': this.cmdUnselectAll(); break;
         case 'Delete': this.cmdDelete(); break;
         case 'Backspace': this.cmdDelete(); break;
@@ -141,10 +137,16 @@ export class Editor implements Subscriber {
 
     if(e.ctrlKey) {
       switch(e.key) {
+        case '1': this.cmdAddRoom(); break;
+        case '2': this.cmdAddNote(); break;
+        case '3': this.cmdAddBlock(); break;
+        case '7': this.cmdToggleOneWay(); break;
+        case '8': this.cmdReverseConnector(); break;
+        case '9': this.cmdToggleDarkness(); break;
         case 'a': this.cmdSelectAll(); break;
         case 'c': this.cmdCopySelection(); break;
         case 'v': this.cmdPaste(); break;
-        case 'z':  
+        case 'z':
           App.undo();
           break;
       }
