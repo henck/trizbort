@@ -54,3 +54,59 @@ id-popup.alpha .popup-button:hover {
   display: none;
   cursor: default;
 }
+
+/* Custom tooltip */
+.tooltip {
+  position: fixed;
+  padding: 12px 16px;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  /* Arrow */
+  &::after {
+    content: '';
+    position: absolute;
+    border: 6px solid transparent;
+  }
+
+  /* Arrow positions */
+  &.tooltip-above::after {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top-color: #000;
+  }
+
+  &.tooltip-below::after {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom-color: #000;
+  }
+
+  &.tooltip-left::after {
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left-color: #000;
+  }
+
+  &.tooltip-right::after {
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-right-color: #000;
+  }
+}
