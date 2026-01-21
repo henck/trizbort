@@ -1,18 +1,47 @@
-div.menugroup {
-  margin-bottom: 20px;
+#menupanel {
+  padding-top: 0;
+}
 
-  & a {
-    display: block;
+div.menugroup {
+  &:not(:first-of-type) {
+    border-top: solid 1px #aaa;
+  }
+
+  /* Direct child link is the group title */
+  & > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     outline: none;
     background-color: var(--color-bg-light);
     color: var(--color-text-dark);
-    padding: 10px 10px 10px 20px;
+    padding: 16px 15px 16px 20px;
     text-decoration: none;
     text-transform: uppercase;
     transition: background-color 0.2s;
 
+    /* Caret indicator */
+    &::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid #888;
+      border-bottom: 2px solid #888;
+      transform: rotate(-45deg);
+      transition: transform 0.2s;
+    }
+
     &:hover {
       background-color: #e0e0e0;
+    }
+  }
+
+  /* Open state */
+  &.open > a {
+    background-color: #e0e0e0;
+
+    &::after {
+      transform: rotate(45deg);
     }
   }
 }
@@ -25,7 +54,7 @@ div.menuitem {
     display: flex;
     align-items: center;
     outline: none;
-    padding: 10px 10px 10px 10px;
+    padding: 16px 10px 16px 10px;
     color: var(--color-text-dark);
     background-color: transparent;
     text-decoration: none;
@@ -56,8 +85,4 @@ div.menuitem {
   & a.open ~ div.menuitem {
     display: block;
   }
-}
-
-div.menuseparator {
-  height: 10px;
 }
