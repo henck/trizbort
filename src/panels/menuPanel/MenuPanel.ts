@@ -6,7 +6,8 @@ import { AppEvent } from '../../enums'
 import { MapJSON } from '../../io/mapJSON'
 import { Panel }  from '../'
 import { Map } from '../../models';
-import { Exporter } from '../../Exporter';
+import { PngExporter } from '../../PngExporter';
+import { SvgExporter } from '../../SvgExporter';
 import { IdToast, Window } from '../../controls';
 
 import { CodeGenerator, TadsGenerator, Inform7Generator, Alan2Generator, Alan3Generator,
@@ -34,6 +35,7 @@ export class MenuPanel extends Panel {
     this.createMenuItem('#menu-save', () => { this.actionSaveMap(); });
     this.createMenuItem('#menu-import', () => { this.actionImportMap(); });
     this.createMenuItem('#menu-image', () => { this.actionExport(); });
+    this.createMenuItem('#menu-svg', () => { this.actionExportSvg(); });
 
     this.createMenuGroup('#group-settings');
     this.createMenuItem('#menu-map', () => { this.actionMapSettings(); });
@@ -83,7 +85,12 @@ export class MenuPanel extends Panel {
   }
 
   actionExport() {
-    let exporter = new Exporter(App.map);
+    let exporter = new PngExporter(App.map);
+    exporter.export();
+  }
+
+  actionExportSvg() {
+    let exporter = new SvgExporter(App.map);
     exporter.export();
   }
 

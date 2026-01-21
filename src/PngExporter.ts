@@ -6,7 +6,7 @@ import { View, ViewFactory, BlockView, BoxView, ConnectorView, NoteView, RoomVie
 //
 // The Exporter exports the a map to an image file.
 // 
-export class Exporter {
+export class PngExporter {
   private map: Map;
   private canvasElem: HTMLCanvasElement;
   private canvas: Canvas;
