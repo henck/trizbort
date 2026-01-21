@@ -13,9 +13,8 @@
 }
 
 .panel {
-  position: absolute;
+  position: fixed;
   z-index: 2;
-  right: calc(-1 * var(--panel-width));
   top: var(--header-height);
   bottom: var(--status-height);
   width: var(--panel-width);
@@ -27,23 +26,25 @@
 
 .panel-left {
   visibility: hidden;
-  left: calc(-1 * var(--panel-width));
+  left: 0;
   right: auto;
+  transform: translateX(-100%);
+  transition: transform 0.25s ease-out, visibility 0s linear 0.25s;
 
   &.show {
     visibility: visible;
-    left: 0;
+    transform: translateX(0);
+    transition: transform 0.25s ease-out, visibility 0s linear 0s;
   }
 }
 
 .panel-right {
   visibility: hidden;
-  right: calc(-1 * var(--panel-width));
+  right: 0;
   left: auto;
 
   &.show {
     visibility: visible;
-    right: 0;
   }
 }
 
