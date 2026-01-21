@@ -98,23 +98,13 @@ export class Editor implements Subscriber {
     this.scrollbarThumbH = this.scrollbarH.querySelector('.scrollbar-thumb');
     this.scrollbarThumbV = this.scrollbarV.querySelector('.scrollbar-thumb');
     this.setupScrollbars();
-    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
-      // Firefox treats backspace as a back button
-      if (e.key === 'Backspace') e.preventDefault();
-    });
-    App.mainHTMLCanvas.addEventListener('keyup', (e: KeyboardEvent) => { this.keyUp(e); });
+    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => { this.keyDown(e); });
     document.body.addEventListener('copy', (e: KeyboardEvent) => {
       this.cmdCopySelection();
     });
     /* document.body.addEventListener('paste', (e: ClipboardEvent) => {
       this.cmdPaste();
     }); */
-    App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.metaKey) switch(e.key) {
-        case 'a': this.cmdSelectAll(); break;
-        case 'z': App.undo(); break;
-      }
-    });
 
     this.resize();
 
@@ -132,8 +122,8 @@ export class Editor implements Subscriber {
     window.requestAnimationFrame(this.render);
   }
 
-  keyUp(e: KeyboardEvent) {
-    if(!e.ctrlKey && !e.shiftKey) {
+  keyDown(e: KeyboardEvent) {
+    if(!e.ctrlKey && !e.metaKey && !e.shiftKey) {
       switch(e.key) {
         case 'Escape': this.cmdUnselectAll(); break;
         case 'Delete': this.cmdDelete(); break;
@@ -153,11 +143,11 @@ export class Editor implements Subscriber {
         case 'PageUp':     this.moveCenter(1, -1); break;
         case 'PageDown':   this.moveCenter(1, 1); break;
         case 'End':        this.moveCenter(-1, 1); break;
-        case 'Home':       this.moveCenter(-1, -1); break;          
+        case 'Home':       this.moveCenter(-1, -1); break;
       }
     }
 
-    if(e.ctrlKey) {
+    if(e.ctrlKey || e.metaKey) {
       switch(e.key) {
         case '1': this.cmdAddRoom(); break;
         case '2': this.cmdAddNote(); break;

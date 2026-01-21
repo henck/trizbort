@@ -179,7 +179,7 @@ export class MenuPanel extends Panel {
   }
 
   static actionHelp() {
-    IdToast.toast("Keyboard help", `
+    IdToast.toast("Help", `
     <table>
       <tbody>
         <tr>
