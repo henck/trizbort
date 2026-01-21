@@ -23,3 +23,58 @@ body {
 canvas.dragcursor {
   cursor: pointer;
 }
+
+/* Scrollbars */
+.scrollbar-track {
+  position: absolute;
+  background: transparent;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+}
+
+.scrollbar-track-h {
+  left: 0;
+  right: 12px;
+  bottom: var(--status-height);
+  height: 12px;
+}
+
+.scrollbar-track-v {
+  top: 0;
+  bottom: calc(var(--status-height) + 12px);
+  right: 0;
+  width: 12px;
+}
+
+.scrollbar-thumb {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &.dragging {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.scrollbar-track-h .scrollbar-thumb {
+  top: 2px;
+  height: 8px;
+  min-width: 30px;
+}
+
+.scrollbar-track-v .scrollbar-thumb {
+  left: 2px;
+  width: 8px;
+  min-height: 30px;
+}

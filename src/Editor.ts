@@ -23,6 +23,15 @@ export class Editor implements Subscriber {
   private copy: Array<Model> = new Array<Model>();
   private ctrlZoom: HTMLInputElement;
 
+  // Scrollbar elements
+  private scrollbarH: HTMLElement;
+  private scrollbarV: HTMLElement;
+  private scrollbarThumbH: HTMLElement;
+  private scrollbarThumbV: HTMLElement;
+  private scrollbarDragging: 'h' | 'v' | null = null;
+  private scrollbarDragStart: number = 0;
+  private scrollbarDragOrigin: number = 0;
+
   // Track help system state:
   private roomsPlaced: number = 0;
 
@@ -82,6 +91,13 @@ export class Editor implements Subscriber {
     this.setupStatusTooltip('control-center', 'Center map');
     this.setupStatusTooltip('control-zoomin', 'Zoom in');
     this.setupStatusTooltip('control-zoomout', 'Zoom out');
+
+    // Initialize scrollbars
+    this.scrollbarH = document.getElementById('scrollbar-h');
+    this.scrollbarV = document.getElementById('scrollbar-v');
+    this.scrollbarThumbH = this.scrollbarH.querySelector('.scrollbar-thumb');
+    this.scrollbarThumbV = this.scrollbarV.querySelector('.scrollbar-thumb');
+    this.setupScrollbars();
     App.mainHTMLCanvas.addEventListener('keydown', (e: KeyboardEvent) => {
       // Firefox treats backspace as a back button
       if (e.key === 'Backspace') e.preventDefault();
@@ -422,6 +438,9 @@ export class Editor implements Subscriber {
 
     this.mainCanvas.restore();
     this.bgCanvas.restore();
+
+    // Update scrollbars based on content and viewport
+    this.updateScrollbars();
 
     //window.requestAnimationFrame(this.render);
   }
@@ -1183,5 +1202,238 @@ export class Editor implements Subscriber {
     block.y = Grid.snap(this.mouseY);
     this.views.push(ViewFactory.create(block));
     this.refresh();
-  } 
+  }
+
+  //
+  // Calculate the bounding box of all map content in world coordinates.
+  // Returns { minX, minY, maxX, maxY } or null if no content.
+  //
+  private getContentBounds(): { minX: number, minY: number, maxX: number, maxY: number } | null {
+    if (this.views.length === 0) return null;
+
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    let hasContent = false;
+
+    this.views.forEach((view: View) => {
+      if (view instanceof BoxView) {
+        const box: Box = view.getModel();
+        hasContent = true;
+        if (box.x < minX) minX = box.x;
+        if (box.y < minY) minY = box.y;
+        if (box.x + box.width > maxX) maxX = box.x + box.width;
+        if (box.y + box.height > maxY) maxY = box.y + box.height;
+      } else if (view instanceof ConnectorView) {
+        const connector = view.getModel() as Connector;
+        hasContent = true;
+        // Include connector endpoints
+        const startX = connector.dockStart ? connector.dockStart.x + connector.dockStart.width / 2 : connector.startX;
+        const startY = connector.dockStart ? connector.dockStart.y + connector.dockStart.height / 2 : connector.startY;
+        const endX = connector.dockEnd ? connector.dockEnd.x + connector.dockEnd.width / 2 : connector.endX;
+        const endY = connector.dockEnd ? connector.dockEnd.y + connector.dockEnd.height / 2 : connector.endY;
+        if (startX < minX) minX = startX;
+        if (startY < minY) minY = startY;
+        if (endX > maxX) maxX = endX;
+        if (endY > maxY) maxY = endY;
+        if (startX > maxX) maxX = startX;
+        if (startY > maxY) maxY = startY;
+        if (endX < minX) minX = endX;
+        if (endY < minY) minY = endY;
+      }
+    });
+
+    if (!hasContent) return null;
+
+    // Add some padding around content
+    const padding = 50;
+    return {
+      minX: minX - padding,
+      minY: minY - padding,
+      maxX: maxX + padding,
+      maxY: maxY + padding
+    };
+  }
+
+  //
+  // Calculate the viewport bounds in world coordinates.
+  //
+  private getViewportBounds(): { minX: number, minY: number, maxX: number, maxY: number } {
+    const dpr = App.devicePixelRatio;
+    const canvasWidth = App.mainHTMLCanvas.offsetWidth / dpr;
+    const canvasHeight = App.mainHTMLCanvas.offsetHeight / dpr;
+    const centerX = App.centerX / dpr;
+    const centerY = App.centerY / dpr;
+
+    return {
+      minX: (-canvasWidth / 2 - centerX) / App.zoom,
+      minY: (-canvasHeight / 2 - centerY) / App.zoom,
+      maxX: (canvasWidth / 2 - centerX) / App.zoom,
+      maxY: (canvasHeight / 2 - centerY) / App.zoom
+    };
+  }
+
+  //
+  // Update scrollbar visibility and thumb positions based on content and viewport.
+  //
+  private updateScrollbars() {
+    const content = this.getContentBounds();
+    const viewport = this.getViewportBounds();
+
+    if (!content) {
+      // No content, hide scrollbars
+      this.scrollbarH.classList.remove('visible');
+      this.scrollbarV.classList.remove('visible');
+      return;
+    }
+
+    // Calculate total scrollable area (union of content and viewport)
+    const totalMinX = Math.min(content.minX, viewport.minX);
+    const totalMinY = Math.min(content.minY, viewport.minY);
+    const totalMaxX = Math.max(content.maxX, viewport.maxX);
+    const totalMaxY = Math.max(content.maxY, viewport.maxY);
+    const totalWidth = totalMaxX - totalMinX;
+    const totalHeight = totalMaxY - totalMinY;
+
+    const viewportWidth = viewport.maxX - viewport.minX;
+    const viewportHeight = viewport.maxY - viewport.minY;
+
+    // Determine if scrollbars are needed
+    const needHorizontal = content.minX < viewport.minX || content.maxX > viewport.maxX;
+    const needVertical = content.minY < viewport.minY || content.maxY > viewport.maxY;
+
+    // Update horizontal scrollbar
+    if (needHorizontal) {
+      this.scrollbarH.classList.add('visible');
+      const trackWidth = this.scrollbarH.offsetWidth;
+      const thumbWidth = Math.max(30, (viewportWidth / totalWidth) * trackWidth);
+      const thumbLeft = ((viewport.minX - totalMinX) / totalWidth) * trackWidth;
+
+      this.scrollbarThumbH.style.width = thumbWidth + 'px';
+      this.scrollbarThumbH.style.left = Math.max(0, Math.min(trackWidth - thumbWidth, thumbLeft)) + 'px';
+    } else {
+      this.scrollbarH.classList.remove('visible');
+    }
+
+    // Update vertical scrollbar
+    if (needVertical) {
+      this.scrollbarV.classList.add('visible');
+      const trackHeight = this.scrollbarV.offsetHeight;
+      const thumbHeight = Math.max(30, (viewportHeight / totalHeight) * trackHeight);
+      const thumbTop = ((viewport.minY - totalMinY) / totalHeight) * trackHeight;
+
+      this.scrollbarThumbV.style.height = thumbHeight + 'px';
+      this.scrollbarThumbV.style.top = Math.max(0, Math.min(trackHeight - thumbHeight, thumbTop)) + 'px';
+    } else {
+      this.scrollbarV.classList.remove('visible');
+    }
+  }
+
+  //
+  // Set up scrollbar event handlers.
+  //
+  private setupScrollbars() {
+    // Horizontal scrollbar thumb drag
+    this.scrollbarThumbH.addEventListener('mousedown', (e: MouseEvent) => {
+      e.preventDefault();
+      this.scrollbarDragging = 'h';
+      this.scrollbarDragStart = e.clientX;
+      this.scrollbarDragOrigin = App.centerX;
+      this.scrollbarThumbH.classList.add('dragging');
+    });
+
+    // Vertical scrollbar thumb drag
+    this.scrollbarThumbV.addEventListener('mousedown', (e: MouseEvent) => {
+      e.preventDefault();
+      this.scrollbarDragging = 'v';
+      this.scrollbarDragStart = e.clientY;
+      this.scrollbarDragOrigin = App.centerY;
+      this.scrollbarThumbV.classList.add('dragging');
+    });
+
+    // Global mouse move for scrollbar dragging
+    document.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!this.scrollbarDragging) return;
+
+      const content = this.getContentBounds();
+      const viewport = this.getViewportBounds();
+      if (!content) return;
+
+      const totalMinX = Math.min(content.minX, viewport.minX);
+      const totalMinY = Math.min(content.minY, viewport.minY);
+      const totalMaxX = Math.max(content.maxX, viewport.maxX);
+      const totalMaxY = Math.max(content.maxY, viewport.maxY);
+      const totalWidth = totalMaxX - totalMinX;
+      const totalHeight = totalMaxY - totalMinY;
+
+      if (this.scrollbarDragging === 'h') {
+        const trackWidth = this.scrollbarH.offsetWidth;
+        const deltaPixels = e.clientX - this.scrollbarDragStart;
+        const deltaWorld = (deltaPixels / trackWidth) * totalWidth * App.zoom * App.devicePixelRatio;
+        App.centerX = this.scrollbarDragOrigin - deltaWorld;
+        this.refresh(true);
+      } else if (this.scrollbarDragging === 'v') {
+        const trackHeight = this.scrollbarV.offsetHeight;
+        const deltaPixels = e.clientY - this.scrollbarDragStart;
+        const deltaWorld = (deltaPixels / trackHeight) * totalHeight * App.zoom * App.devicePixelRatio;
+        App.centerY = this.scrollbarDragOrigin - deltaWorld;
+        this.refresh(true);
+      }
+    });
+
+    // Global mouse up to end scrollbar dragging
+    document.addEventListener('mouseup', () => {
+      if (this.scrollbarDragging) {
+        this.scrollbarThumbH.classList.remove('dragging');
+        this.scrollbarThumbV.classList.remove('dragging');
+        this.scrollbarDragging = null;
+      }
+    });
+
+    // Track click to jump to position
+    this.scrollbarH.addEventListener('click', (e: MouseEvent) => {
+      if (e.target === this.scrollbarThumbH) return; // Don't handle thumb clicks
+
+      const content = this.getContentBounds();
+      if (!content) return;
+
+      const viewport = this.getViewportBounds();
+      const totalMinX = Math.min(content.minX, viewport.minX);
+      const totalMaxX = Math.max(content.maxX, viewport.maxX);
+      const totalWidth = totalMaxX - totalMinX;
+
+      const rect = this.scrollbarH.getBoundingClientRect();
+      const clickRatio = (e.clientX - rect.left) / rect.width;
+      const targetWorldX = totalMinX + clickRatio * totalWidth;
+
+      // Center the viewport on the clicked position
+      const viewportWidth = viewport.maxX - viewport.minX;
+      const newViewportMinX = targetWorldX - viewportWidth / 2;
+      App.centerX = -newViewportMinX * App.zoom * App.devicePixelRatio - App.mainHTMLCanvas.offsetWidth / 2;
+      this.refresh(true);
+    });
+
+    this.scrollbarV.addEventListener('click', (e: MouseEvent) => {
+      if (e.target === this.scrollbarThumbV) return; // Don't handle thumb clicks
+
+      const content = this.getContentBounds();
+      if (!content) return;
+
+      const viewport = this.getViewportBounds();
+      const totalMinY = Math.min(content.minY, viewport.minY);
+      const totalMaxY = Math.max(content.maxY, viewport.maxY);
+      const totalHeight = totalMaxY - totalMinY;
+
+      const rect = this.scrollbarV.getBoundingClientRect();
+      const clickRatio = (e.clientY - rect.top) / rect.height;
+      const targetWorldY = totalMinY + clickRatio * totalHeight;
+
+      // Center the viewport on the clicked position
+      const viewportHeight = viewport.maxY - viewport.minY;
+      const newViewportMinY = targetWorldY - viewportHeight / 2;
+      App.centerY = -newViewportMinY * App.zoom * App.devicePixelRatio - App.mainHTMLCanvas.offsetHeight / 2;
+      this.refresh(true);
+    });
+  }
 }
