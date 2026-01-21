@@ -20,7 +20,7 @@ gameMain: GameMainDef
 {{className this.name}}: {{#if this.dark}}DarkRoom{{else}}Room{{/if}} '{{{this.name}}}'
   "{{{this.description}}}"
   {{#each this.connections}}
-  {{dirToStr this.startDir this.startType}}: {{{className this.room.name}}} 
+  {{dirToStr this.startDir this.startType}} = {{{className this.room.name}}}{{#if this.name}} /* {{{this.name}}} */{{/if}}
   {{/each}}
 ;
 

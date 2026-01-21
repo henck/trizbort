@@ -3,7 +3,7 @@
   (LOC ROOMS)
   (DESC "{{this.name}}")
   {{#each this.connections}}
-  ({{upperDirToStr this.startDir this.startType }} TO {{zilName this.room.name}})
+  ({{upperDirToStr this.startDir this.startType }} TO {{zilName this.room.name}}){{#if this.name}} ; {{{this.name}}}{{/if}}
   {{/each}}
   (FLAGS {{#unless this.dark}}ONBIT{{/unless}})
   >

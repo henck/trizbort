@@ -26,7 +26,7 @@
     {{/if}} {{#each this.connections}}
     <exit alias="{{dirToStr this.startDir this.startType}}" to="{{{this.room.name}}}">
       <inherit name="{{dirToStr this.startDir this.startType}}direction" />
-    </exit>
+    </exit>{{#if this.name}} <!-- {{{this.name}}} -->{{/if}}
     {{/each}} {{#each this.objects}} {{> questObject object=this}} {{/each}}
   </object>
   {{/each}}

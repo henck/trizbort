@@ -355,20 +355,46 @@ export class Room extends Box {
           && (conn.dockStart == this || conn.dockEnd == this); }) as Connector[];
   }
 
-  /** 
-   * List of StartDirection, StartType, EndDirection, EndType, Room tuples representing connections
-   * from this room.
+  /**
+   * List of connection data representing connections from this room.
    *
    * This is of use for code generators who are interested in all connections starting OR
-   * ending at this room.
-   */ 
-  get connections(): Array<{ startDir: Direction, startType: ConnectorType, endDir: Direction, endType: ConnectorType, room: Room }> {
+   * ending at this room. Includes connector metadata (name, labels) for use in code comments.
+   */
+  get connections(): Array<{
+    startDir: Direction,
+    startType: ConnectorType,
+    endDir: Direction,
+    endType: ConnectorType,
+    room: Room,
+    name: string,
+    startLabel: string,
+    endLabel: string
+  }> {
     let connectors = this.connectors;
-    return connectors.map((conn) => { 
+    return connectors.map((conn) => {
       if(conn.dockStart == this) {
-        return {startDir: conn.startDir, startType: conn.startType, endDir: conn.endDir, endType: conn.endType, room: conn.dockEnd};
-      } else { 
-        return {startDir: conn.endDir, startType: conn.endType, endDir: conn.startDir, endType: conn.startType, room: conn.dockStart};
+        return {
+          startDir: conn.startDir,
+          startType: conn.startType,
+          endDir: conn.endDir,
+          endType: conn.endType,
+          room: conn.dockEnd,
+          name: conn.name,
+          startLabel: conn.startLabel,
+          endLabel: conn.endLabel
+        };
+      } else {
+        return {
+          startDir: conn.endDir,
+          startType: conn.endType,
+          endDir: conn.startDir,
+          endType: conn.startType,
+          room: conn.dockStart,
+          name: conn.name,
+          startLabel: conn.endLabel,
+          endLabel: conn.startLabel
+        };
       }
     });
   }

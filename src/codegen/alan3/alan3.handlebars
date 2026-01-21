@@ -7,7 +7,7 @@ The {{{className this.name}}} Isa location
   {{/if}}
   {{~#if this.dark}}Is not lit.{{/if}}
   {{#each this.connections}}
-  Exit {{ dirToStr this.startDir this.startType }} To {{{className this.room.name}}}.
+  Exit {{ dirToStr this.startDir this.startType }} To {{{className this.room.name}}}.{{#if this.name}} -- {{{this.name}}}{{/if}}
   {{/each}}
 End The {{{className this.name}}}.
 

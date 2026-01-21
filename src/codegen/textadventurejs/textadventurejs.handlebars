@@ -27,7 +27,7 @@ var gameData = {
           {{ dirToStr this.startDir this.startType }}: {
             displayName: '{{ capitalizeDirToStr this.startDir }}',
             destination: '{{className this.room.name}}'
-          },
+          },{{#if this.name}} // {{{this.name}}}{{/if}}
         {{/each}}
       },
     },

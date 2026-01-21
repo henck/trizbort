@@ -11,7 +11,7 @@ Include "VerbLib";
 {{#each map.rooms}}
 Object {{{i6ValidName this.name}}} "{{{this.name}}}"
   with description "{{#if this.description}}{{{this.description}}}{{else}}{{{this.name}}}{{/if}}"{{#each this.connections}},
-       {{{i6DirProp this.startDir this.startType}}} {{{i6ValidName this.room.name}}}{{/each}}
+       {{{i6DirProp this.startDir this.startType}}} {{{i6ValidName this.room.name}}}{{#if this.name}} ! {{{this.name}}}{{/if}}{{/each}}
   has {{#if this.dark}}~light{{else}}light{{/if}};
 
 {{#each this.objects}}

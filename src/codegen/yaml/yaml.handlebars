@@ -17,7 +17,7 @@ rooms:
     {{#if this.connections.length}}
     exits:
       {{#each this.connections}}
-      {{dirToStr this.startDir this.startType}}: {{{className this.room.name}}} 
+      {{dirToStr this.startDir this.startType}}: {{{className this.room.name}}}{{#if this.name}} # {{{this.name}}}{{/if}}
       {{/each}}
     {{/if}}
     {{#if this.objects.length}}

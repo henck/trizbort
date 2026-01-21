@@ -8,7 +8,7 @@ There is a room called {{{validName this.name}}}. {{#if this.dark}}It is dark.{{
 {{#if (isStartRoom this)}}The player is in {{{validName this.name}}}.{{/if}}
 {{!-- Connections for this room --}}
 {{#each this.connections}}
-{{ capitalize (dirToStr this.startDir this.startType) }} of {{{validName ../this.name}}} is {{dirToStr this.endDir this.endType}} of {{{validName this.room.name}}}.
+{{ capitalize (dirToStr this.startDir this.startType) }} of {{{validName ../this.name}}} is {{dirToStr this.endDir this.endType}} of {{{validName this.room.name}}}.{{#if this.name}} [{{{this.name}}}]{{/if}}
 {{/each}}
 
 {{#each this.objects}}
