@@ -3,6 +3,7 @@
 }
 
 div.menugroup {
+  user-select: none;
   &:not(:first-of-type) {
     border-top: solid 1px #aaa;
   }
