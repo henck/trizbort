@@ -51,11 +51,17 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  transition: all ease 0.25s;
   cursor: pointer;
-  font-size: 140%;
 
-  &:hover {
-    color: black;
+  & svg {
+    width: 16px;
+    height: 16px;
+    fill: #333;
+    border-radius: 50%;
+    padding: 4px;
+    &:hover {
+      fill: #000;
+      background-color: #eee;
+    }
   }
 }
