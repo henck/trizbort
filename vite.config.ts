@@ -42,6 +42,7 @@ function svgSpritePlugin() {
 
 export default defineConfig({
   root: '.',
+  base: '/app/',
   publicDir: 'public',
   server: {
     port: 3000,

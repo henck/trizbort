@@ -233,7 +233,7 @@ export class MenuPanel extends Panel {
             <table>
               <tbody>
                 <tr>
-                  <td><svg><use href="/icons.svg#arrows"></use></svg></td>
+                  <td><svg><use href="icons.svg#arrows"></use></svg></td>
                   <td>Pan map</td>
                 </tr>
                 <tr>
@@ -264,7 +264,7 @@ export class MenuPanel extends Panel {
             <table>
               <tbody>
                 <tr>
-                  <td><kbd>Shift</kbd> <svg><use href="/icons.svg#arrows"></use></svg></td>
+                  <td><kbd>Shift</kbd> <svg><use href="icons.svg#arrows"></use></svg></td>
                   <td>Create room in dir</td>
                 </tr>
                 <tr>
