@@ -13,7 +13,9 @@ function getTooltipElement(): HTMLElement {
   return tooltipElement;
 }
 
-function showTooltip(target: HTMLElement, text: string) {
+type TooltipPosition = 'above' | 'below' | 'left' | 'right';
+
+function showTooltip(target: HTMLElement, text: string, forcedPosition?: TooltipPosition) {
   if (hideTimeout) {
     clearTimeout(hideTimeout);
     hideTimeout = null;
@@ -31,33 +33,34 @@ function showTooltip(target: HTMLElement, text: string) {
   const tooltipRect = tooltip.getBoundingClientRect();
   const gap = 12; // Space between tooltip and target
 
-  // Calculate available space in each direction
-  const spaceAbove = targetRect.top;
-  const spaceBelow = window.innerHeight - targetRect.bottom;
-  const spaceLeft = targetRect.left;
-  const spaceRight = window.innerWidth - targetRect.right;
-
-  let position: 'above' | 'below' | 'left' | 'right' = 'above';
+  let position: TooltipPosition = forcedPosition || 'above';
   let top: number;
   let left: number;
 
-  // Prefer above, then below, then right, then left
-  if (spaceRight <= tooltipRect.width + gap) {
-    position = 'left';
-  } else if (spaceLeft <= tooltipRect.width + gap) {
-    position = 'right';
-  } else if (spaceAbove <= tooltipRect.height + gap) {
-    position = 'below';
+  // Only auto-position if no forced position was specified
+  if (!forcedPosition) {
+    const spaceAbove = targetRect.top;
+    const spaceBelow = window.innerHeight - targetRect.bottom;
+    const spaceLeft = targetRect.left;
+    const spaceRight = window.innerWidth - targetRect.right;
+
+    if (spaceRight <= tooltipRect.width + gap) {
+      position = 'left';
+    } else if (spaceLeft <= tooltipRect.width + gap) {
+      position = 'right';
+    } else if (spaceAbove <= tooltipRect.height + gap) {
+      position = 'below';
+    }
   } 
 
   switch (position) {
     case 'above':
       top = targetRect.top - tooltipRect.height - gap;
-      left = targetRect.left + (targetRect.width - tooltipRect.width) / 2;
+      left = targetRect.left + (targetRect.width - tooltipRect.width) / 2 - 4;
       break;
     case 'below':
       top = targetRect.bottom + gap;
-      left = targetRect.left + (targetRect.width - tooltipRect.width) / 2;
+      left = targetRect.left + (targetRect.width - tooltipRect.width) / 2 - 4;
       break;
     case 'left':
       top = targetRect.top + (targetRect.height - tooltipRect.height) / 2;
@@ -136,8 +139,10 @@ export class IdPopup extends Control {
     const tooltipText = this.elem.dataset.tooltip;
     if (!tooltipText) return;
 
+    const forcedPosition = this.elem.dataset.tooltipPosition as TooltipPosition | undefined;
+
     this.elem.addEventListener('mouseenter', () => {
-      showTooltip(this.elem, tooltipText);
+      showTooltip(this.elem, tooltipText, forcedPosition);
     });
 
     this.elem.addEventListener('mouseleave', () => {

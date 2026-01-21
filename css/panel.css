@@ -1,3 +1,17 @@
+#toolpanel {
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--header-height) + 16px);
+  left: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  background: #fff;
+  padding: 10px 8px 2px 12px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-panel);
+}
+
 .panel {
   position: absolute;
   z-index: 2;
