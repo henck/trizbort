@@ -1,8 +1,13 @@
-<header class="site-header" role="banner">
-
-  <div class="wrapper">
-    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
-
-    {%- comment -%} Navigation is disabled - not used on this site {%- endcomment -%}
-  </div>
+<header class="container">
+  <nav>
+    <ul>
+      <li><a href="{{ "/" | relative_url }}"><strong>{{ site.title | escape }}</strong></a></li>
+    </ul>
+    <ul>
+      <li><a href="{{ "/app/index.html" | relative_url }}">Launch App</a></li>
+      {%- if site.github_username -%}
+      <li><a href="https://github.com/{{ site.github_username }}">GitHub</a></li>
+      {%- endif -%}
+    </ul>
+  </nav>
 </header>

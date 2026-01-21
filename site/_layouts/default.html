@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ lang | default: site.lang | default: "en" }}">
+<html lang="{{ lang | default: site.lang | default: "en" }}" data-theme="dark">
 
   {% include "head.html" %}
 
@@ -7,10 +7,8 @@
 
     {% include "header.html" %}
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
-      </div>
+    <main class="container">
+      {{ content }}
     </main>
 
     {% include "footer.html" %}

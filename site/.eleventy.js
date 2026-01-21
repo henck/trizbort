@@ -13,7 +13,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/*.png");
   eleventyConfig.addPassthroughCopy("assets/*.jpg");
   eleventyConfig.addPassthroughCopy("assets/*.svg");
-  eleventyConfig.addPassthroughCopy("assets/main.css");
+  eleventyConfig.addPassthroughCopy("assets/custom.css");
   eleventyConfig.addPassthroughCopy("app");
 
   // Markdown configuration with attributes support (for {:class="btn"} syntax)
@@ -99,9 +99,6 @@ module.exports = function(eleventyConfig) {
       return b.date - a.date;
     });
   });
-
-  // Watch for SCSS changes (for dev server)
-  eleventyConfig.addWatchTarget("./_sass/");
 
   // Add .markdown as an alias for .md
   eleventyConfig.addExtension("markdown", {

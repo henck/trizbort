@@ -2,51 +2,55 @@
 layout: default
 ---
 
-<div class="home">
-  {%- if title -%}
-    <h1 class="page-heading">{{ title }}</h1>
-  {%- endif -%}
+{%- if title -%}
+  <h1>{{ title }}</h1>
+{%- endif -%}
 
-  <div style="text-align:center; padding-bottom:50px;">
-    <h1 class="title">Trizbort.io</h1>
-    <h1>Map and design <span class="hilite">adventure games</span> in your browser.</h1>
-    <br/>
-    <a class="btn" href="app/index.html">Get Started</a>
-  </div>
+<!-- Hero Section -->
+<header class="hero">
+  <h1 class="title">Trizbort.io</h1>
+  <h2>Map and design <mark class="hilite">adventure games</mark> in your browser.</h2>
+  <a href="app/index.html" role="button">Get Started</a>
+</header>
 
-  <div class="text-col-wrapper">
-    <div class="text-col">
-      <img src="/assets/map.png" alt="A map in Trizbort.io"/>
+<!-- Feature: Map Screenshot -->
+<section class="feature-section">
+  <div class="grid">
+    <div>
+      <img src="/assets/map.png" alt="A map in Trizbort.io">
     </div>
-    <div class="text-col">
-      <h1>Create a map in minutes</h1>
-      <p><span class="hilite">Trizbort.io</span> is a browser-based tool that lets you easily map
+    <div>
+      <h2>Create a map in minutes</h2>
+      <p><mark class="hilite">Trizbort.io</mark> is a browser-based tool that lets you easily map
       adventure games. Drag rooms into your map and link them up using connections in all compass
       directions. Add a list of objects present in each room. Finally, export your map straight
       to your adventure game toolkit of choice: TADS, Inform, Quest or Alan.</p>
-      <div style="margin-top:50px">
-        <a class="btn" href="app/index.html">Create your first map</a>
-      </div>
+      <a href="app/index.html" role="button" class="secondary">Create your first map</a>
     </div>
   </div>
+</section>
 
-  <div class="text-col-wrapper">
-    <div class="text-col">
-      <h1>Edit room details quickly</h1>
-      <p><span class="hilite">Trizbort.io</span> lets you edit the properties of your rooms
+<!-- Feature: Room Details -->
+<section class="feature-section">
+  <div class="grid">
+    <div>
+      <h2>Edit room details quickly</h2>
+      <p><mark class="hilite">Trizbort.io</mark> lets you edit the properties of your rooms
       using a quick and intuitive editor. Set room name and description, then add room colors,
       room borders and elliptical or octagonal room shapes.</p>
       <p>Add named objects with descriptions to your rooms, and even create containment
-      relationships - which will be included in your code generation later.
-      </p>
+      relationships - which will be included in your code generation later.</p>
     </div>
-    <div class="text-col">
-      <img src="/assets/room-details.png" alt="Room details Trizbort.io"/>
+    <div>
+      <img src="/assets/room-details.png" alt="Room details Trizbort.io">
     </div>
   </div>
+</section>
 
-  <div class="text-col-wrapper">
-    <div class="text-col">
+<!-- Feature: Code Generation -->
+<section class="feature-section">
+  <div class="grid">
+    <div>
 {% highlight "c" %}
 versionInfo : GameID
   name = 'Deadly Cave Adventure'
@@ -66,41 +70,39 @@ OutsideCave: Room 'Outside Cave'
 ;
 {% endhighlight %}
     </div>
-    <div class="text-col">
-      <h1>Generate code from your map</h1>
-      <p><span class="hilite">Trizbort.io</span> can export your map to various adventure
+    <div>
+      <h2>Generate code from your map</h2>
+      <p><mark class="hilite">Trizbort.io</mark> can export your map to various adventure
       game development systems. It supports TADS, Inform, Quest and Alan, among others. You can
       also export to YAML if that fits in your development pipeline.
       Code is generated for your rooms, connections and objects, and you can
       feed it straight into your compiler.</p>
     </div>
   </div>
+</section>
 
-  {{ content }}
+{{ content }}
 
-  {%- if collections.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ list_title | default: "News" }}</h2>
+{%- if collections.posts.size > 0 -%}
+  <section>
+    <h2>{{ list_title | default: "News" }}</h2>
     <ul class="post-list">
       {%- for post in collections.posts -%}
       <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <small class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</small>
         <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
+          <a href="{{ post.url | relative_url }}">
             {{ post.data.title | escape }}
           </a>
         </h3>
         {%- if site.show_excerpts -%}
-          {{ post.templateContent | truncate: 300 }}
+          <p>{{ post.templateContent | truncate: 300 }}</p>
         {%- endif -%}
-        <div>
-          <a style="float:right" class="smallbtn" href="{{ post.url | relative_url }}">Read more</a>
-          <div style="clear:both"></div>
-        </div>
+        <a href="{{ post.url | relative_url }}" role="button" class="outline secondary">Read more</a>
       </li>
       {%- endfor -%}
     </ul>
 
-    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
-  {%- endif -%}
-
-</div>
+    <p class="rss-subscribe">Subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
+  </section>
+{%- endif -%}

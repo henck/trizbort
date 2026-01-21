@@ -1,19 +1,93 @@
-@use "config" as *;
+/* Brand colors */
+:root {
+  --pico-primary: #FFD152;
+  --pico-primary-hover: #FFC31F;
+}
 
-/**
- * Syntax highlighting styles
- */
+[data-theme="dark"] {
+  --pico-background-color: #353537;
+  --pico-card-background-color: #2C2A2B;
+}
+
+/* Accent text */
+mark, .hilite {
+  background: transparent;
+  color: rgb(120, 176, 160);
+}
+
+/* Title styling */
+.title {
+  font-size: 3rem;
+  margin-bottom: 0;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: 2rem 0 3rem;
+}
+
+.hero h1 {
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+/* Feature sections */
+.feature-section {
+  margin: 3rem 0;
+}
+
+.feature-section img {
+  border-radius: var(--pico-border-radius);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Post list */
+.post-list {
+  list-style: none;
+  padding: 0;
+}
+
+.post-list li {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-meta {
+  color: var(--pico-muted-color);
+  font-size: 0.875rem;
+}
+
+/* RSS link */
+.rss-subscribe {
+  font-size: 0.875rem;
+  color: var(--pico-muted-color);
+}
+
+/* Syntax highlighting styles */
 .highlight {
-  background: #000;
-  @extend %vertical-rhythm;
-
-  .highlighter-rouge & {
-    background: #111;
-  }
+  background: #111;
+  border-radius: var(--pico-border-radius);
+  margin: 1rem 0;
 }
 
 pre.highlight,
-.highlight pre { background-color: #111; }
+.highlight pre {
+  background-color: #111;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
 .highlight .hll { background-color: #22282A }
 .highlight .c { color: #99AA8A } /* Comment */
 .highlight .err { color: #960050; background-color: #1e0010 } /* Error */

@@ -1,7 +1,0 @@
-@charset "utf-8";
-
-// Load partials using modern @use syntax
-// Each partial @uses the shared config module
-@use "minima/base";
-@use "minima/layout";
-@use "minima/syntax-highlighting";
