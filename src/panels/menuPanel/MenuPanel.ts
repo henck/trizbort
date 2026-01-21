@@ -72,17 +72,13 @@ export class MenuPanel extends Panel {
   private createMenuGroup(selector: string) {
     let elem: HTMLElement = document.querySelector(selector);
     elem.addEventListener('click', (e: Event) => {
-      // Remove open class from all groups and hide their content:
+      // Remove open class from all groups:
       let groups = this.elem.querySelectorAll(".menugroup");
       for (let i = 0; i < groups.length; i++) {
         groups[i].classList.remove('open');
-        (groups[i].querySelector(':scope > div') as HTMLElement).style.display = 'none';
       }
-      // Add open class to clicked group and show its content:
-      let group = elem.parentElement;
-      group.classList.add('open');
-      let node: HTMLElement = group.querySelector(':scope > div');
-      node.style.display = 'block';
+      // Add open class to clicked group:
+      elem.parentElement.classList.add('open');
     });
   }
 
