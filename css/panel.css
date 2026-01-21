@@ -1,0 +1,47 @@
+.panel {
+  position: absolute;
+  z-index: 2;
+  right: calc(-1 * var(--panel-width));
+  top: var(--header-height);
+  bottom: var(--status-height);
+  width: var(--panel-width);
+  background: #fff;
+  box-shadow: var(--shadow-panel);
+  padding: 20px 20px 20px 20px;
+  box-sizing: border-box;
+}
+
+.panel-left {
+  visibility: hidden;
+  left: calc(-1 * var(--panel-width));
+  right: auto;
+
+  &.show {
+    visibility: visible;
+    left: 0;
+  }
+}
+
+.panel-right {
+  visibility: hidden;
+  right: calc(-1 * var(--panel-width));
+  left: auto;
+
+  &.show {
+    visibility: visible;
+    right: 0;
+  }
+}
+
+.panel-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  transition: all ease 0.25s;
+  cursor: pointer;
+  font-size: 140%;
+
+  &:hover {
+    color: black;
+  }
+}

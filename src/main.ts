@@ -1,5 +1,5 @@
 // Import styles
-import '../styl/main.styl';
+import '../css/main.css';
 
 // Import Handlebars templates
 import './templates';

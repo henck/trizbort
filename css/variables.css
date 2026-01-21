@@ -1,0 +1,26 @@
+:root {
+  /* Brand colors */
+  --color-primary: #008475;
+  --color-primary-hover: #15908f;
+  --color-accent: #6557d2;
+  --color-link: #26418f;
+  --color-heading: #5c6bc0;
+
+  /* Grays */
+  --color-text: rgb(102, 102, 102);
+  --color-text-dark: #333;
+  --color-border: #dfdfdf;
+  --color-border-dark: #999;
+  --color-bg-light: #f0f0f0;
+  --color-bg-hover: #eee;
+
+  /* Shadows */
+  --shadow-panel: -2px 0px 12px #888;
+  --shadow-popup: 0 0 3px #ccc;
+  --shadow-header: 0 2px 3px #aaa;
+
+  /* Spacing */
+  --panel-width: 350px;
+  --header-height: 50px;
+  --status-height: 30px;
+}
