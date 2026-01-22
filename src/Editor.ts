@@ -1108,10 +1108,14 @@ export class Editor implements Subscriber {
     // Convert to number. Ignore result on failure.
     let zoomPercentage = parseFloat(zoomStr);
     if(!isNaN(zoomPercentage)) {
+      let oldZoom = App.zoom;
       // Set zoom level (clamp range)
       App.zoom = zoomPercentage / 100;
       if(App.zoom >= 10) App.zoom = 10;
       if(App.zoom <= 0.1) App.zoom = 0.1;
+      // Adjust center to keep the same world point at view center
+      App.centerX = App.centerX * App.zoom / oldZoom;
+      App.centerY = App.centerY * App.zoom / oldZoom;
     }
     // Place new zoom percentage in control.
     this.updateZoomPercentage();
@@ -1119,6 +1123,7 @@ export class Editor implements Subscriber {
   }
 
   cmdZoomIn() {
+    let oldZoom = App.zoom;
     if(App.zoom < 1) {
       App.zoom = App.zoom * Values.ZOOM_FRACTION;
     } else {
@@ -1127,11 +1132,15 @@ export class Editor implements Subscriber {
     // Clamp zoom level
     if(App.zoom >= 10) App.zoom = 10;
     if(App.zoom <= 0.1) App.zoom = 0.1;
+    // Adjust center to keep the same world point at view center
+    App.centerX = App.centerX * App.zoom / oldZoom;
+    App.centerY = App.centerY * App.zoom / oldZoom;
     this.updateZoomPercentage();
     this.refresh(true);
   }
 
   cmdZoomOut() {
+    let oldZoom = App.zoom;
     if(App.zoom <= 1) {
       App.zoom = App.zoom / Values.ZOOM_FRACTION;
     } else {
@@ -1140,12 +1149,19 @@ export class Editor implements Subscriber {
     // Clamp zoom level
     if(App.zoom >= 10) App.zoom = 10;
     if(App.zoom <= 0.1) App.zoom = 0.1;
+    // Adjust center to keep the same world point at view center
+    App.centerX = App.centerX * App.zoom / oldZoom;
+    App.centerY = App.centerY * App.zoom / oldZoom;
     this.updateZoomPercentage();
     this.refresh(true);
   }
 
   cmdZoomNormal() {
+    let oldZoom = App.zoom;
     App.zoom = 1;
+    // Adjust center to keep the same world point at view center
+    App.centerX = App.centerX * App.zoom / oldZoom;
+    App.centerY = App.centerY * App.zoom / oldZoom;
     this.updateZoomPercentage();
     this.refresh(true);
   }
