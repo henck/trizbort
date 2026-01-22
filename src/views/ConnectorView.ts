@@ -430,10 +430,13 @@ export class ConnectorView extends View {
 
   isIn(x: number, y: number, width: number, height: number) {
     let r = new Rect(x, y, x + width, y + height);
-    var {x, y} = this.getStartHandleLocation();
-    if(r.contains(x, y)) return true;
-    var {x, y} = this.getEndHandleLocation();
-    if(r.contains(x, y)) return true;
+    // Check if endpoint handles are in the region
+    var {x: sx, y: sy} = this.getStartHandleLocation();
+    if(r.contains(sx, sy)) return true;
+    var {x: ex, y: ey} = this.getEndHandleLocation();
+    if(r.contains(ex, ey)) return true;
+    // Check if the connector's bounding box overlaps with the region
+    if(this.clearRegion && r.intersects(this.clearRegion)) return true;
     return false;
   }  
 

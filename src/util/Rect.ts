@@ -34,4 +34,12 @@ export class Rect {
   contains(x: number, y: number) {
     return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height;
   }
+
+  /**
+   * Returns `true` if this rectangle intersects with another rectangle.
+   */
+  intersects(r: Rect) {
+    return this.x < r.x + r.width && this.x + this.width > r.x &&
+           this.y < r.y + r.height && this.y + this.height > r.y;
+  }
 }

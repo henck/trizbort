@@ -118,7 +118,9 @@ export class Editor implements Subscriber {
   }
 
   refresh(all = false) {
-    this.refreshAll = all;
+    // Keep refreshAll true if already set - prevents race condition where
+    // a mouse event overwrites a pending full refresh (e.g., during zoom)
+    this.refreshAll = this.refreshAll || all;
     window.requestAnimationFrame(this.render);
   }
 
@@ -330,25 +332,32 @@ export class Editor implements Subscriber {
           this.mainCanvas.clip(reg);
           //console.log('Clearing view', view);
 
+          // Redraw in visual order: Blocks, Connectors, Rooms/Notes
+          // Blocks behind (z-order)
           this.views.forEach((v: View) => {
-            if((v != view) && (v instanceof BlockView)){ 
+            if((v != view) && (v instanceof BlockView)){
               let isBack = v.getModel().isBackwardOf(view.getModel());
               let isIn = view.isIn(v.getModel().x, v.getModel().y, v.getModel().width, v.getModel().height);
-              //console.log('Block: is back', isBack, '& view is in', isIn);
               if(isBack && (isIn || v.isIn(rect.x, rect.y, rect.width, rect.height))) v.draw(this.mainCanvas, false);
             }
           });
+          // Connectors: always behind rooms, use z-order for connector-to-connector
+          this.views.forEach((v: View) => {
+            if((v != view) && (v instanceof ConnectorView)) {
+              let isBack = v.getModel().isBackwardOf(view.getModel());
+              // If current view is a room/note, connectors are always behind; otherwise check z-order
+              let shouldDraw = (view instanceof RoomView || view instanceof NoteView) ? true : isBack;
+              if(shouldDraw && v.isIn(rect.x, rect.y, rect.width, rect.height)) v.draw(this.mainCanvas, false);
+            }
+          });
+          // Rooms/Notes behind (z-order)
           this.views.forEach((v: View) => {
             if((v != view) && ((v instanceof RoomView)||(v instanceof NoteView))) {
               let isBack = v.getModel().isBackwardOf(view.getModel());
               let isIn = view.isIn(v.getModel().x, v.getModel().y, v.getModel().width, v.getModel().height);
-              //console.log('Room || Note: is back', isBack, '& view is in', isIn);
               if(isBack && (isIn || v.isIn(rect.x, rect.y, rect.width, rect.height))) v.draw(this.mainCanvas, false);
             }
           });
-          /* this.views.forEach((v: View) => {
-            if((v != view) && (v instanceof ConnectorView) && view.isIn(v.getModel().x, v.getModel().y, v.getModel().width, v.getModel().height)) v.draw(this.mainCanvas, false);
-          }); */
         }
       }
       view.draw(this.mainCanvas, this.hover == view && App.mouseMode != MouseMode.Select);
@@ -359,14 +368,27 @@ export class Editor implements Subscriber {
         let r = rect || ((view instanceof BoxView)? new Rect(view.getModel().x, view.getModel().y, view.getModel().x + view.getModel().width, view.getModel().y + view.getModel().height) : undefined);
 
         if(r) {
+          // Redraw in visual order: Blocks, Connectors, Rooms/Notes
+          // Blocks in front (z-order)
           this.views.forEach((v: View) => {
             if((v != view) && (v instanceof BlockView) && v.isIn(r.x, r.y, r.width, r.height) && view.getModel().isBackwardOf(v.getModel())) v.draw(this.mainCanvas, false);
           });
+          // Connectors in front (z-order, but never in front of rooms)
           this.views.forEach((v: View) => {
-            if((v != view) && ((v instanceof RoomView)||(v instanceof NoteView)) && v.isIn(r.x, r.y, r.width, r.height) && view.getModel().isBackwardOf(v.getModel())) v.draw(this.mainCanvas, false);
+            if((v != view) && (v instanceof ConnectorView) && v.isIn(r.x, r.y, r.width, r.height)) {
+              // Only draw connectors in front if current view is not a room/note
+              if(!(view instanceof RoomView || view instanceof NoteView)) {
+                if(view.getModel().isBackwardOf(v.getModel())) v.draw(this.mainCanvas, false);
+              }
+            }
           });
+          // Rooms/Notes: always in front of connectors, use z-order for room-to-room
           this.views.forEach((v: View) => {
-            if((v != view) && (v instanceof ConnectorView) && v.isIn(r.x, r.y, r.width, r.height)) v.draw(this.mainCanvas, false);
+            if((v != view) && ((v instanceof RoomView)||(v instanceof NoteView)) && v.isIn(r.x, r.y, r.width, r.height)) {
+              // If current view is a connector, rooms are always in front; otherwise check z-order
+              let shouldDraw = (view instanceof ConnectorView) ? true : view.getModel().isBackwardOf(v.getModel());
+              if(shouldDraw) v.draw(this.mainCanvas, false);
+            }
           });
         }
 
@@ -386,16 +408,16 @@ export class Editor implements Subscriber {
       }
     });
 
-    // Draw all rooms and notes:
+    // Draw all connectors (under rooms so rooms appear on top):
     this.views.forEach((view: View) => {
-      if((view instanceof RoomView || view instanceof NoteView) && (view != excludedView)) {
+      if(view instanceof ConnectorView && (view != excludedView)) {
         this.renderView(view);
       }
     });
 
-    // Draw all connectors:
+    // Draw all rooms and notes:
     this.views.forEach((view: View) => {
-      if(view instanceof ConnectorView && (view != excludedView)) {
+      if((view instanceof RoomView || view instanceof NoteView) && (view != excludedView)) {
         this.renderView(view);
       }
     });
@@ -431,6 +453,9 @@ export class Editor implements Subscriber {
 
     // Update scrollbars based on content and viewport
     this.updateScrollbars();
+
+    // Reset refreshAll after render completes so future events can use dirty-region rendering
+    this.refreshAll = false;
 
     //window.requestAnimationFrame(this.render);
   }
