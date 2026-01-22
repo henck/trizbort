@@ -2,7 +2,9 @@
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  margin-bottom: 25px;
+  margin-left: -20px;
+  margin-right: -20px;
+  box-shadow: 0 6px 6px rgba(0,0,0,0.1);
 }
 
 .tabs-underline {
@@ -25,7 +27,7 @@
   margin-right: 4px;
   color: rgba(0, 0, 0, 0.54);
   cursor: pointer;
-  transition: color ease 0.2s, background ease 0.2s;
+  transition: color ease 0.2s, background-color ease 0.2s;
 
   &:first-child {
     margin-left: 0px;
@@ -49,7 +51,8 @@
   display: none;
   position: absolute;
   left: 20px;
-  top: 100px;
+  top: 81px;
+  padding-top: 16px;
   right: 0;
   bottom: 0;
   padding-right: 20px;
