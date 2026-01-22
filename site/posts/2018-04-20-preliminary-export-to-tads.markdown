@@ -4,8 +4,9 @@ title:  "Preliminary export to TADS"
 date: 2018-04-20
 categories: trizbort update
 ---
-Trizbort.io is now able to export your map straight to TADS .t format. The export includes rooms, connections and objects in the rooms. Notes and blocks play no role in TADS (or any other adventure design system). Under the hood, [Handlebars][handlebars] templates are used to generate all the code, which makes it simple to add additional code generators (with an understanding of
-the language involved first).
+Trizbort.io is now able to export your map straight to TADS .t format. The export includes rooms, connections and objects in the rooms. Notes and blocks play no role in TADS (or any other adventure design system). Under the hood, [Handlebars][handlebars] templates are used to generate all the code, which makes it simple to add additional code generators (with an understanding of the language involved first).
+
+<!-- more -->
 
 Here is a sample snippet of TADS code generation.
 

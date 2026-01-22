@@ -87,6 +87,14 @@ module.exports = function(eleventyConfig) {
     return str.substring(0, length) + "...";
   });
 
+  // Excerpt filter - extracts content before <!--more--> tag
+  eleventyConfig.addFilter("excerpt", (content) => {
+    if (!content) return "";
+    const separator = /<!--\s*more\s*-->/i;
+    const match = content.split(separator);
+    return match[0] || content;
+  });
+
   // Size filter for arrays
   eleventyConfig.addFilter("size", (arr) => {
     if (!arr) return 0;

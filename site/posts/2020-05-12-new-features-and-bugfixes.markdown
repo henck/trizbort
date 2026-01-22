@@ -20,7 +20,7 @@ These include:
 * Clicking a connector dot previously created a very small connector. Now, a connector is only created when you actually drag the mouse.
 * New render settings were added for hand-drawn line styles, font type, and font size.
 
-[Try it out!](/app/index.html){:class="btn"}
+[Try it out!](/app/index.html){.btn}
 
 
 

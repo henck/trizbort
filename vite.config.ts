@@ -5,6 +5,7 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import legacy from '@vitejs/plugin-legacy';
 import { VitePWA } from 'vite-plugin-pwa';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -55,6 +56,14 @@ export default defineConfig({
     svgSpritePlugin(),
     legacy({
       targets: ['defaults', 'not IE 11'],
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'maps',
+          dest: '.',
+        },
+      ],
     }),
     VitePWA({
       registerType: 'prompt',

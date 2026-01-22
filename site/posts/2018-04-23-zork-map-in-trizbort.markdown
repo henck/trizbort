@@ -6,7 +6,9 @@ categories: trizbort update
 ---
 A good test case for Trizbort.io is drawing up a map of Zork. The original map contains lots of ideosyncracies for map drawing: angled connections, (nested) objects in the rooms, one-way passages, connectors that lead off the map, and a shaded block around the White House. 
 
-[Open this map directly in Trizbort](/app/index.html?map=https://www.trizbort.io/app/maps/zork.json){:class="btn"}
+<!-- more -->
+
+[Open this map directly in Trizbort](/app/index.html?map=https://www.trizbort.io/app/maps/zork.json){.btn}
 
 ![Original Zork map]({{ "/assets/zork-map-original.jpg" | absolute_url }})
 

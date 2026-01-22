@@ -101,9 +101,7 @@
                   {{ post.data.title | escape }}
                 </a>
               </h3>
-              {%- if site.show_excerpts -%}
-                <p>{{ post.templateContent | truncate: 300 }}</p>
-              {%- endif -%}
+              {{ post.templateContent | excerpt }}
               <a href="{{ post.url | relative_url }}" role="button" class="btn-small">Read more</a>
             </li>
             {%- endfor -%}

@@ -6,6 +6,8 @@ categories: trizbort update
 ---
 Trizbort.io can now generate code for the Alan (both versions 2 and 3) and Quest adventure design systems, complete with rooms, connections and objects. The resulting code is ready for compilation with Alan, and can be imported straight into the Quest editor.
 
+<!-- more -->
+
 Alan 2 snippet:
 
 {% highlight "text" %}

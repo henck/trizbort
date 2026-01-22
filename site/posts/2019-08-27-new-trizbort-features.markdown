@@ -8,6 +8,8 @@ There've been many updates to Trizbort.io over the past months, and I'd like to 
 some of them here. Since Trizbort.io is now on Github, there have been wonderful contributions from
 several developers, making the application steadily better.
 
+<!-- more -->
+
 ### Important bugfixes
 
 * **Panning the map** - Previously, the map could only be panned by holding down the mouse wheel. This

@@ -23,7 +23,7 @@ Here is a list of changes:
 
 To use the hand-drawn theme, go to _Settings_ -> _Render settings_, then pick _Hand Drawn_ from the list of Quick Themes.
 
-[Try it out!](/app/index.html){:class="btn"}
+[Try it out!](/app/index.html){.btn}
 
 
 

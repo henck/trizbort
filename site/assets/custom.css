@@ -133,7 +133,9 @@ strong {
 /* Post list */
 .post-list {
   list-style: none;
+  list-style-type: none;
   padding: 0;
+  padding-left: 0;
 }
 
 /* Link styles - no underline, underline on hover */
@@ -155,6 +157,8 @@ a[role="button"]:hover {
 }
 
 .post-list li {
+  list-style: none;
+  list-style-type: none;
   margin-bottom: 2rem;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--pico-muted-border-color);
@@ -167,6 +171,25 @@ a[role="button"]:hover {
 .post-meta {
   color: var(--pico-muted-color);
   font-size: 0.875rem;
+}
+
+/* Button link style (for markdown links with {:class="btn"}) */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--pico-primary-background);
+  border: 1px solid var(--pico-primary-background);
+  border-radius: var(--pico-border-radius);
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--pico-primary-hover-background);
+  border-color: var(--pico-primary-hover-background);
+  color: #fff;
+  text-decoration: none;
 }
 
 /* Small gold button */
