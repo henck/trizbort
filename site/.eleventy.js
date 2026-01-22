@@ -13,6 +13,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets/*.png");
   eleventyConfig.addPassthroughCopy("assets/*.jpg");
   eleventyConfig.addPassthroughCopy("assets/*.svg");
+  eleventyConfig.addPassthroughCopy("assets/*.ico");
   eleventyConfig.addPassthroughCopy("assets/custom.css");
   eleventyConfig.addPassthroughCopy("app");
 

@@ -11,6 +11,13 @@
   gap: 1rem;
 }
 
+/* Hide elements on mobile */
+@media (max-width: 576px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+
 /* Hero Banner (home page) */
 .hero-banner {
   background-image: linear-gradient(to bottom, transparent 70%, var(--pico-background-color) 100%), url('/assets/home.jpg');
