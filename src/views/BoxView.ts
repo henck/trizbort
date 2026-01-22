@@ -56,16 +56,15 @@ export class BoxView extends View {
     // Resize handles
     if(this.selected && selectionSize == 1) {
       canvas.fillStyle(Values.COLOR_RESIZE).strokeStyle(Values.COLOR_LINE);
-      for(let i = 0; i < 16; i++) {
-        if(!Direction.isCardinal(i)) continue;
-        let { x, y } = this.box.directionToPos(i, false);
+      for(const dir of Direction.CARDINAL) {
+        let { x, y } = this.box.directionToPos(dir, false);
         // If mouse is over resize handle, then highlight it.
         if  (mouseX >= x - Values.DIMEN_RESIZE_HANDLE && mouseX <= x + Values.DIMEN_RESIZE_HANDLE
           && mouseY >= y - Values.DIMEN_RESIZE_HANDLE && mouseY <= y + Values.DIMEN_RESIZE_HANDLE) {
           canvas.fillStyle(Values.COLOR_RESIZE_HIGHLIGHT);
         } else {
           canvas.fillStyle(Values.COLOR_RESIZE);
-        }        
+        }
         canvas
           .beginPath()
           .moveTo(x - Values.DIMEN_RESIZE_HANDLE, y - Values.DIMEN_RESIZE_HANDLE)
@@ -85,8 +84,8 @@ export class BoxView extends View {
       .lineWidth(1)
       .strokeStyle(Values.COLOR_LINE);
       
-    for (let i = 0; i < 16; i++) {
-      let { x, y } = this.box.directionToPos(i, false);
+    for (const dir of Direction.ALL) {
+      let { x, y } = this.box.directionToPos(dir, false);
       // If mouse is over connector handle, then highlight it.
       if  (mouseX >= x - Values.DIMEN_CONNECTOR_HANDLE && mouseX <= x + Values.DIMEN_CONNECTOR_HANDLE
         && mouseY >= y - Values.DIMEN_CONNECTOR_HANDLE && mouseY <= y + Values.DIMEN_CONNECTOR_HANDLE) {
@@ -106,24 +105,23 @@ export class BoxView extends View {
   }  
 
   isResizeHandle(x: number, y: number): Direction {
-    for (let i = 0; i < 16; i++) {
-      if(!Direction.isCardinal(i)) continue;
-      let { x: px, y: py } = this.box.directionToPos(i, false);
-      if  (x >= px - Values.DIMEN_RESIZE_HANDLE 
-        && x <= px + Values.DIMEN_RESIZE_HANDLE 
-        && y >= py - Values.DIMEN_RESIZE_HANDLE 
-        && y <= py + Values.DIMEN_RESIZE_HANDLE) return i;
+    for (const dir of Direction.CARDINAL) {
+      let { x: px, y: py } = this.box.directionToPos(dir, false);
+      if  (x >= px - Values.DIMEN_RESIZE_HANDLE
+        && x <= px + Values.DIMEN_RESIZE_HANDLE
+        && y >= py - Values.DIMEN_RESIZE_HANDLE
+        && y <= py + Values.DIMEN_RESIZE_HANDLE) return dir;
     }
     return undefined;
   }  
 
   isConnectorHandle(x: number, y: number): Direction {
-    for (let i = 0; i < 16; i++) {
-      let { x: px, y: py } = this.box.directionToPos(i, false);
-      if  (x >= px - Values.DIMEN_CONNECTOR_HANDLE 
-        && x <= px + Values.DIMEN_CONNECTOR_HANDLE 
-        && y >= py - Values.DIMEN_CONNECTOR_HANDLE 
-        && y <= py + Values.DIMEN_CONNECTOR_HANDLE) return i;
+    for (const dir of Direction.ALL) {
+      let { x: px, y: py } = this.box.directionToPos(dir, false);
+      if  (x >= px - Values.DIMEN_CONNECTOR_HANDLE
+        && x <= px + Values.DIMEN_CONNECTOR_HANDLE
+        && y >= py - Values.DIMEN_CONNECTOR_HANDLE
+        && y <= py + Values.DIMEN_CONNECTOR_HANDLE) return dir;
     }
     return undefined;
   }  

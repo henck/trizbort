@@ -18,6 +18,18 @@ export enum Direction {
 }
 
 export namespace Direction {
+  // Pre-computed arrays to avoid looping through all 16 directions
+  export const CARDINAL: readonly Direction[] = [
+    Direction.N, Direction.NE, Direction.E, Direction.SE,
+    Direction.S, Direction.SW, Direction.W, Direction.NW
+  ];
+  export const ALL: readonly Direction[] = [
+    Direction.N, Direction.NNE, Direction.NE, Direction.ENE,
+    Direction.E, Direction.ESE, Direction.SE, Direction.SSE,
+    Direction.S, Direction.SSW, Direction.SW, Direction.WSW,
+    Direction.W, Direction.WNW, Direction.NW, Direction.NNW
+  ];
+
   /**
    * Return opposite of Direction.
    * @param direction `Direction` to evaluate

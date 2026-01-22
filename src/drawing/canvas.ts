@@ -8,6 +8,8 @@ export class Canvas implements IScreen {
 
   private drawer: DrawContext;
   private ctx: CanvasRenderingContext2D;
+  // Cache for font strings to avoid repeated concatenation
+  private fontCache: Map<string, string> = new Map();
   
   constructor(
     private canvas: HTMLCanvasElement
@@ -370,8 +372,21 @@ export class Canvas implements IScreen {
     return this;
   }
 
+  // Get a cached font string to avoid repeated concatenation
+  private getFontString(fontSize: number, font: string, bold: boolean = false, italic: boolean = false): string {
+    const key = `${bold}|${italic}|${fontSize}|${font}`;
+    let fontStr = this.fontCache.get(key);
+    if (!fontStr) {
+      const fontStyle = italic ? 'italic ' : '';
+      const fontWeight = bold ? 'bold ' : '';
+      fontStr = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.fontCache.set(key, fontStr);
+    }
+    return fontStr;
+  }
+
   fillText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen {
-    let fontStr = `${fontSize}px ${font}`;
+    const fontStr = this.getFontString(fontSize, font);
     this.ctx.font = fontStr;
     this.textAlign(align);
     this.textBaseline(baseline);
@@ -380,8 +395,7 @@ export class Canvas implements IScreen {
   }
 
   strokeText(text: string, x: number, y: number, fontSize: number, font: string, align: TextAlign, baseline: TextBaseline, maxwidth?: number): IScreen {
-    let fontStr = `${fontSize}px ${font}`;
-    this.ctx.font = fontStr;
+    this.ctx.font = this.getFontString(fontSize, font);
     this.textAlign(align);
     this.textBaseline(baseline);    
     this.ctx.strokeText(text, x, y, maxwidth);
@@ -474,9 +488,7 @@ export class Canvas implements IScreen {
 
     for (const segment of segments) {
       // Set font for measuring
-      const fontStyle = segment.italic ? 'italic ' : '';
-      const fontWeight = segment.bold ? 'bold ' : '';
-      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.font = this.getFontString(fontSize, font, segment.bold, segment.italic);
 
       const words = segment.text.split(' ');
 
@@ -532,9 +544,7 @@ export class Canvas implements IScreen {
     const widths: number[] = [];
 
     for (const segment of segments) {
-      const fontStyle = segment.italic ? 'italic ' : '';
-      const fontWeight = segment.bold ? 'bold ' : '';
-      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.font = this.getFontString(fontSize, font, segment.bold, segment.italic);
       const w = this.ctx.measureText(segment.text).width;
       widths.push(w);
       totalWidth += w;
@@ -546,9 +556,7 @@ export class Canvas implements IScreen {
 
     for (let i = 0; i < segments.length; i++) {
       const segment = segments[i];
-      const fontStyle = segment.italic ? 'italic ' : '';
-      const fontWeight = segment.bold ? 'bold ' : '';
-      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.font = this.getFontString(fontSize, font, segment.bold, segment.italic);
       this.ctx.fillText(segment.text, currentX, yPos);
       currentX += widths[i];
     }
@@ -596,9 +604,7 @@ export class Canvas implements IScreen {
     const widths: number[] = [];
 
     for (const segment of segments) {
-      const fontStyle = segment.italic ? 'italic ' : '';
-      const fontWeight = segment.bold ? 'bold ' : '';
-      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.font = this.getFontString(fontSize, font, segment.bold, segment.italic);
       const w = this.ctx.measureText(segment.text).width;
       widths.push(w);
       totalWidth += w;
@@ -610,9 +616,7 @@ export class Canvas implements IScreen {
 
     for (let i = 0; i < segments.length; i++) {
       const segment = segments[i];
-      const fontStyle = segment.italic ? 'italic ' : '';
-      const fontWeight = segment.bold ? 'bold ' : '';
-      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.font = this.getFontString(fontSize, font, segment.bold, segment.italic);
       this.ctx.fillText(segment.text, currentX, yPos);
       currentX += widths[i];
     }
@@ -626,9 +630,7 @@ export class Canvas implements IScreen {
     let currentX = x;
 
     for (const segment of segments) {
-      const fontStyle = segment.italic ? 'italic ' : '';
-      const fontWeight = segment.bold ? 'bold ' : '';
-      this.ctx.font = `${fontStyle}${fontWeight}${fontSize}px ${font}`;
+      this.ctx.font = this.getFontString(fontSize, font, segment.bold, segment.italic);
       this.ctx.fillText(segment.text, currentX, y);
       currentX += this.ctx.measureText(segment.text).width;
     }
@@ -637,8 +639,7 @@ export class Canvas implements IScreen {
   }
 
   textWidth(text: string, fontSize: number, font: string): number {
-    let fontStr = `${fontSize}px ${font}`;
-    this.ctx.font = fontStr;
+    this.ctx.font = this.getFontString(fontSize, font);
     return this.ctx.measureText(text).width;
   }
   
