@@ -44,15 +44,16 @@ export class NoteView extends BoxView {
       .fillStyle(this.note.fillColor)
       .fill();
 
-    // Note fold (drawn using clipping)
+    // Note fold (drawn using clipping, constant size)
     canvas.clip();
     this.makeShape(canvas, false);
+    let foldSize = Values.DIMEN_NOTE_FOLD;
     canvas
       .lineWidth(this.note.lineWidth / 2)
       .strokeStyle(this.note.borderColor)
       .beginPath()
-      .moveTo(this.note.width - this.note.height * 0.6, 0)
-      .lineTo(this.note.width, this.note.height * 0.6)
+      .moveTo(this.note.width - foldSize, 0)
+      .lineTo(this.note.width, foldSize)
       .stroke();
 
     // Note border:

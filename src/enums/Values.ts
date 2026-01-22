@@ -32,6 +32,7 @@ export class Values {
   static readonly DIMEN_RESIZE_HANDLE = 6;
   static readonly DIMEN_CONNECTOR_HANDLE = 5;
   static readonly DIMEN_CONNECTOR_WIDE = 20;
+  static readonly DIMEN_NOTE_FOLD = 15;
 
   static readonly VIEWS_FIRSTID = 100;
 }
