@@ -321,12 +321,14 @@ export class Editor implements Subscriber {
   private renderView(view: View) {
     if((!this.resfreshAlways) && (view.getModel().isDirty || this.refreshAll)) {
       let rect: Rect;
-      
+      let didSave = false;
+
       //clearing the view and restoring the back area
       if(!this.refreshAll) {
         rect = view.clear(this.mainCanvas);
         if(rect) {
           this.mainCanvas.save();
+          didSave = true;
           let reg = new Path2D();
           reg.rect(rect.x, rect.y, rect.width, rect.height);
           this.mainCanvas.clip(reg);
@@ -392,10 +394,13 @@ export class Editor implements Subscriber {
           });
         }
 
-        this.mainCanvas.restore();
+        // Only restore if save was called (rect was defined)
+        if(didSave) {
+          this.mainCanvas.restore();
+        }
         //this.renderViews(view);
       }
-    } 
+    }
     else if(this.resfreshAlways)
       view.draw(this.mainCanvas, this.hover == view && App.mouseMode != MouseMode.Select);
   }
@@ -977,7 +982,8 @@ export class Editor implements Subscriber {
     newRoom.y = room.y + room.height / 2 + dy*room.height + App.map.settings.grid.size * 2 * dy - newRoom.height/2;
 
     // Add new room view to editor.
-    this.views.push(ViewFactory.create(newRoom));
+    let newRoomView = ViewFactory.create(newRoom);
+    this.views.push(newRoomView);
 
     // Create connector.
     let newConnector = new Connector(App.map.settings);
@@ -991,6 +997,13 @@ export class Editor implements Subscriber {
     this.views.push(ViewFactory.create(newConnector));
     let id = 1;
     App.map.elements.forEach((elem) => elem.id = id++);
+
+    // Select the new room and open its panel.
+    App.selection.unselectAll();
+    App.selection.add([newRoomView]);
+    newRoomView.select();
+    Dispatcher.notify(AppEvent.More, newRoom);
+
     this.refresh();
   }
 
