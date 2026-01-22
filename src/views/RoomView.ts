@@ -68,7 +68,7 @@ export class RoomView extends BoxView {
     // Darkness stripe
     canvas.save(); // before clip
     canvas.clip();
-    this.makeShape(canvas, false);
+    // Path from makeShape above survives clip(), no need to recreate
     if(this.room.dark) {
       let darknessSize = this.room.map.settings.room.darknessSize;
       canvas
@@ -83,9 +83,12 @@ export class RoomView extends BoxView {
     canvas.restore(); // remove clip
 
     // Room border
-    if(this.room.lineStyle != LineStyle.None) { 
-      this.makeShape(canvas, false);
-      canvas 
+    if(this.room.lineStyle != LineStyle.None) {
+      // Only recreate shape if darkness drawing destroyed the path
+      if(this.room.dark) {
+        this.makeShape(canvas, false);
+      }
+      canvas
         .strokeStyle(this.room.borderColor)
         .lineWidth(this.room.lineWidth)
         .lineDash(this.room.lineStyle)
