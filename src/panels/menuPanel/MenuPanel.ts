@@ -138,7 +138,7 @@ export class MenuPanel extends Panel {
     reader.readAsText(file);
   }  
 
-  loadMap(text: string) {
+  loadMap = (text: string) => {
     let map = null;
     this.close();
     try {
@@ -147,7 +147,7 @@ export class MenuPanel extends Panel {
     catch (error) {
       console.error(error);
       new Window(
-        'Map loading error', 
+        'Map loading error',
         'Unfortunately, an error occurred and map loading could not proceed. Perhaps the map file is in the wrong format?',
         true,
         false);
@@ -158,7 +158,7 @@ export class MenuPanel extends Panel {
     Dispatcher.notify(AppEvent.Load, null);
   }
 
-  importMap(text: string) {
+  importMap = (text: string) => {
     let map = null;
     this.close();
     try {
@@ -166,13 +166,13 @@ export class MenuPanel extends Panel {
     }
     catch {
       new Window(
-        'Map import error', 
+        'Map import error',
         'Unfortunately, an error occurred and map import could not proceed. Perhaps the map file is in the wrong format?',
         true,
         false);
-      return;      
+      return;
     }
-    
+
     App.map = map;
     // Broadcast that we've loaded a new map:
     Dispatcher.notify(AppEvent.Load, null);
