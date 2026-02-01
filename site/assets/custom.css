@@ -327,3 +327,31 @@ pre.highlight,
 .highlight .vg { color: #F1F2F3 } /* Name.Variable.Global */
 .highlight .vi { color: #F1F2F3 } /* Name.Variable.Instance */
 .highlight .il { color: #FFCD22 } /* Literal.Number.Integer.Long */
+
+/* Text adventure game output style */
+blockquote {
+  background-color: #0a0a0a;
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #c0c0c0;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+blockquote p {
+  margin: 0 0 0.75rem 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Command prompt styling for strong text in blockquotes */
+blockquote strong {
+  color: #ffcc00;
+  font-weight: normal;
+}
