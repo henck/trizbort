@@ -19,7 +19,7 @@
     "@types/node": "^25.0.9",
     "@vitejs/plugin-legacy": "^6.1.1",
     "autoprefixer": "^10.4.23",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.9",
     "postcss": "^8.5.6",
     "postcss-nesting": "^13.0.2",
     "terser": "^5.46.0",
