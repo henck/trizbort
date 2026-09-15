@@ -36,6 +36,9 @@ export class Panel {
 
   open() {
     this.elem.classList.add('show');
+    // Always start on the first tab when a panel opens.
+    const firstTab = this.elem.querySelector('.tabs .tab') as HTMLElement;
+    if (firstTab) firstTab.click();
   }
 
   close() {
