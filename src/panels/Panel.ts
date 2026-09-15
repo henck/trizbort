@@ -19,9 +19,11 @@ export class Panel {
     let closeButton = document.querySelector(`#${id} .panel-close`);
     if(closeButton) closeButton.addEventListener('click', () => { this.close(); });  
 
-    this.elem.addEventListener('keyup', (e: KeyboardEvent) => {
-      // Close panel when Esc is pressed.
-      if (e.key === 'Escape') {
+    // Listen on document so Esc still works when focus left the panel
+    // (e.g. after clicking a non-focusable Objects tab).
+    document.addEventListener('keyup', (e: KeyboardEvent) => {
+      // Close panel when Esc is pressed while this panel is open.
+      if (e.key === 'Escape' && this.elem.classList.contains('show')) {
         this.close();
         e.stopImmediatePropagation();
         App.mainHTMLCanvas.focus();
