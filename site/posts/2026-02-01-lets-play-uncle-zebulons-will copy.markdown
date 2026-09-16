@@ -7,14 +7,14 @@ categories: walkthrough
 
 Let's play _Uncle Zebulon's Will_, a small but solid text adventure.
 
-<!--more-->
-
 It's pretty amazing that TADS ("Text Adventure Design System") has been around 
 for such a long time. Looking at the intro for _Uncle Zebulon's Will_, we're told 
 that TADS is copyright 1993, 2012 by Michael J. Roberts -- thats's 19 years. 
 TADS (well, TADS3) is still used today to develop text adventures, so that
 makes it 33 years. _Uncle Zebulon_'s initial release year is 1995, first written 
 then when TADS was celebrating its second birthday. 
+
+<!--more-->
 
 On to the game. For an intro, we're told that:
 
