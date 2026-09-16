@@ -1,6 +1,6 @@
 import { App } from './App'
 import { Dispatcher, Subscriber } from './Dispatcher'
-import { AppEvent, MouseMode, ConnectorHandle, Direction, Values } from './enums'
+import { AppEvent, MouseMode, ConnectorHandle, Direction, ConnectorType, Values } from './enums'
 import { Grid } from "./Grid"
 import { Canvas } from './drawing/canvas'
 import { Block, Box, Note, Connector, Room, Model } from './models'
@@ -178,6 +178,8 @@ export class Editor implements Subscriber {
         case 'PageDown': case '#': case '3':   this.cmdNewRoomInDir(Direction.SE); break;
         case 'End': case '!': case '1':        this.cmdNewRoomInDir(Direction.SW); break;
         case 'Home': case '&': case '7':       this.cmdNewRoomInDir(Direction.NW); break;
+        case 'U': case 'u':                    this.cmdNewRoomInType(ConnectorType.Up); break;
+        case 'D': case 'd':                    this.cmdNewRoomInType(ConnectorType.Down); break;
         case 'Enter':      this.cmdCenterView(); break;
       }
     }
@@ -958,35 +960,127 @@ export class Editor implements Subscriber {
     // Select existing room if there is already a connection in the desired direction.
     let existingRoom = room.findConnectingRoom(dir);
     if (existingRoom) {
-      let view = this.views.find(view => view.getModel() === existingRoom);
-      if (view) {
-        App.selection.unselectAll();
-        App.selection.add([view]);
-        view.select();
-      }
+      this.selectRoom(existingRoom);
       return;
     }
 
+    this.createRoomConnectedTo(room, dir);
+  }
+
+  /**
+   * Create a room connected via Up/Down (or similar) connector type.
+   * Places the new room wherever it fits among N/NE/NW (Up) or S/SE/SW (Down).
+   * Docks on a free half-wind port, preferring the side that matches placement
+   * (e.g. NNW/WNW when placing NW) to avoid crossing connectors.
+   */
+  cmdNewRoomInType(type: ConnectorType) {
+    if(!App.selection.isSingle() || !(App.selection.first() instanceof RoomView)) return;
+
+    let room: Room = (App.selection.first() as RoomView).getModel();
+
+    let existingRoom = room.findConnectingRoomByType(type);
+    if (existingRoom) {
+      this.selectRoom(existingRoom);
+      return;
+    }
+
+    let placementDirs = type === ConnectorType.Up
+      ? [Direction.N, Direction.NE, Direction.NW]
+      : [Direction.S, Direction.SE, Direction.SW];
+
+    let placeDir = placementDirs[0];
+    let offset = true;
+    for (let candidate of placementDirs) {
+      if (!room.findConnectingRoom(candidate)) {
+        placeDir = candidate;
+        offset = false;
+        break;
+      }
+    }
+
+    // Prefer dock ports on the same side as placement to avoid crossing connectors.
+    let dockDirs: Direction[];
+    switch (placeDir) {
+      case Direction.NE:
+        dockDirs = [Direction.NNE, Direction.ENE, Direction.NNW, Direction.WNW];
+        break;
+      case Direction.NW:
+        dockDirs = [Direction.NNW, Direction.WNW, Direction.NNE, Direction.ENE];
+        break;
+      case Direction.SE:
+        dockDirs = [Direction.SSE, Direction.ESE, Direction.SSW, Direction.WSW];
+        break;
+      case Direction.SW:
+        dockDirs = [Direction.SSW, Direction.WSW, Direction.SSE, Direction.ESE];
+        break;
+      case Direction.S:
+        dockDirs = [Direction.SSE, Direction.SSW, Direction.ESE, Direction.WSW];
+        break;
+      default: // N / Up
+        dockDirs = [Direction.NNE, Direction.NNW, Direction.ENE, Direction.WNW];
+        break;
+    }
+
+    let dockDir = dockDirs[0];
+    for (let candidate of dockDirs) {
+      if (!room.findConnectingRoom(candidate)) {
+        dockDir = candidate;
+        break;
+      }
+    }
+
+    let endType = type === ConnectorType.Up ? ConnectorType.Down
+      : type === ConnectorType.Down ? ConnectorType.Up
+      : type === ConnectorType.In ? ConnectorType.Out
+      : type === ConnectorType.Out ? ConnectorType.In
+      : ConnectorType.Default;
+
+    this.createRoomConnectedTo(room, placeDir, type, endType, offset, dockDir);
+  }
+
+  private selectRoom(room: Room) {
+    let view = this.views.find(view => view.getModel() === room);
+    if (view) {
+      App.selection.unselectAll();
+      App.selection.add([view]);
+      view.select();
+    }
+  }
+
+  private createRoomConnectedTo(
+    room: Room,
+    placeDir: Direction,
+    startType: ConnectorType = ConnectorType.Default,
+    endType: ConnectorType = ConnectorType.Default,
+    offset = false,
+    dockDir?: Direction
+  ) {
     App.pushUndo();
 
     // Create new room in the specified direction.
     let newRoom = new Room(App.map.settings);
     App.map.add(newRoom);
-    let {x: dx, y: dy} = Direction.toVector(dir);
+    let {x: dx, y: dy} = Direction.toVector(placeDir);
     newRoom.x = room.x + room.width / 2 + dx*room.width + App.map.settings.grid.size * 2 * dx - newRoom.width/2;
     newRoom.y = room.y + room.height / 2 + dy*room.height + App.map.settings.grid.size * 2 * dy - newRoom.height/2;
+    if (offset) {
+      newRoom.x += App.map.settings.grid.size;
+    }
 
     // Add new room view to editor.
     let newRoomView = ViewFactory.create(newRoom);
     this.views.push(newRoomView);
 
     // Create connector.
+    let startDir = dockDir !== undefined ? dockDir : placeDir;
     let newConnector = new Connector(App.map.settings);
     App.map.add(newConnector);
     newConnector.dockStart = room;
     newConnector.dockEnd = newRoom;
-    newConnector.startDir = dir;
-    newConnector.endDir = Direction.opposite(dir);
+    newConnector.startDir = startDir;
+    newConnector.endDir = Direction.opposite(startDir);
+    newConnector.startType = startType;
+    newConnector.endType = endType;
 
     // Add new connector view to editor.
     this.views.push(ViewFactory.create(newConnector));

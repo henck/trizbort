@@ -327,6 +327,22 @@ export class Room extends Box {
     return found;
   }
 
+  /**
+   * Returns the room connected via the specified connector type (e.g. Up/Down).
+   * @param type ConnectorType
+   * @returns Room with that connection type, or `null` if none found.
+   */
+  findConnectingRoomByType(type: ConnectorType): Room {
+    let found = null;
+    this.map.elements.forEach((model) => {
+      if(model instanceof Connector) {
+        if(model.dockStart == this && model.startType == type) found = model.dockEnd;
+        if(model.dockEnd == this && model.endType == type) found = model.dockStart;
+      }
+    });
+    return found;
+  }
+
   protected cloneToTargetField(target: Model, key: string) {
     switch (key) {
       case 'objects':

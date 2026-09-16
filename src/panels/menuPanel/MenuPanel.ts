@@ -268,6 +268,14 @@ export class MenuPanel extends Panel {
                   <td>Create room in dir</td>
                 </tr>
                 <tr>
+                  <td><kbd>Shift</kbd><kbd>U</kbd></td>
+                  <td>Create room up</td>
+                </tr>
+                <tr>
+                  <td><kbd>Shift</kbd><kbd>D</kbd></td>
+                  <td>Create room down</td>
+                </tr>
+                <tr>
                   <td><kbd>Ctrl/⌘</kbd><kbd>1</kbd></td>
                   <td>Add room</td>
                 </tr>        
