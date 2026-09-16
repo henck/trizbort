@@ -103,6 +103,7 @@ export class MenuPanel extends Panel {
       this.close();
       App.map = new Map();
       Dispatcher.notify(AppEvent.Load, null);
+      IdGuide.resetTipsForNewMap();
     }, () => {
       // Cancel
     });
@@ -307,7 +308,7 @@ export class MenuPanel extends Panel {
     </table>
  
  
-    `, true);
+    `, true, true);
   }
 
   actionGenerateCode(generator: CodeGenerator, extension: string) {

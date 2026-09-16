@@ -1,10 +1,12 @@
 import { Control } from "../Control";
 
 let guide: IdGuide = null;
+const HIDE_TIPS_KEY = 'hideGuideTips';
 
 export class IdGuide extends Control {
   private title: HTMLHeadingElement;
   private text: HTMLParagraphElement;
+  private dismissTipsLink: HTMLAnchorElement;
 
   //
   // Create a new instance of IdGuide by providing a query selector that
@@ -19,13 +21,21 @@ export class IdGuide extends Control {
     // Keep a reference to guide text to be able to set the text:
     this.title = this.elem.querySelector('h3');
     this.text = this.elem.querySelector('p');
+    this.dismissTipsLink = this.elem.querySelector('.js-dismiss-tips');
 
     // Close guide when close-icon is clicked:
     this.elem.querySelector('span').addEventListener('click', this.handleClose);
+    this.dismissTipsLink.addEventListener('click', this.handleDismissTips);
   }
 
   private handleClose = () => {
     this.elem.style.display = 'none';
+  }
+
+  private handleDismissTips = (e: Event) => {
+    e.preventDefault();
+    localStorage.setItem(HIDE_TIPS_KEY, '1');
+    this.handleClose();
   }
 
   public setText(title: string, text: string, autoWidth: boolean) {
@@ -40,7 +50,14 @@ export class IdGuide extends Control {
     }
   }
 
-  public static guide(title: string, text: string, autoWidth?: boolean) {
+  public static resetTipsForNewMap(): void {
+    localStorage.removeItem(HIDE_TIPS_KEY);
+    IdGuide.guide("Welcome to Trizbort.io!", "To start building your map, click the <b>room icon</b> in the tool bar and click anywhere on the map to place your first room (or press <kbd>Ctrl/⌘</kbd><kbd>1</kbd>).");
+  }
+
+  // Pass force=true for requested help so it still appears after tips are dismissed.
+  public static guide(title: string, text: string, autoWidth?: boolean, force?: boolean) {
+    if(!force && localStorage.getItem(HIDE_TIPS_KEY) === '1') return;
     if(guide == null) guide = new IdGuide("#guide");
     guide.setText(title, text, !!autoWidth);
   }
